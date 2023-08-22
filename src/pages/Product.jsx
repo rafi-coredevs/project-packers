@@ -45,7 +45,7 @@ const Product = () => {
   return (
     <>
       <main>
-        <Breadcrumb />
+        <Breadcrumb title={product?.data?.name} />
         <div className="container mx-auto my-12">
           <div className="grid grid-cols-5 px-2 sm:px-0 gap-8">
             <div className="col-span-5 sm:col-span-3">

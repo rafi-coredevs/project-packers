@@ -1571,3 +1571,56 @@ export const paymentList = [
     status: "pending",
   },
 ];
+
+export const chatData = [
+  {
+  type: 'customer',
+  date: '4 aug',
+  message: 'lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor'
+},
+{
+  type: 'user',
+  date: '4 aug',
+  message: 'lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor'
+},
+{
+  type: 'customer',
+  date: '4 aug',
+  message: 'lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor'
+},
+{
+  type: 'customer',
+  date: '4 aug',
+  message: 'lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor'
+},
+{
+  type: 'user',
+  date: '4 aug',
+  message: 'lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor'
+},
+{
+  type: 'customer',
+  date: '4 aug',
+  message: 'lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor'
+},
+{
+  type: 'user',
+  date: '4 aug',
+  message: 'lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor'
+},
+{
+  type: 'customer',
+  date: '4 aug',
+  message: 'lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor'
+},
+{
+  type: 'customer',
+  date: '4 aug',
+  message: 'lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor'
+},
+{
+  type: 'user',
+  date: '4 aug',
+  message: 'lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor'
+},
+]
