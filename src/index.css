@@ -58,3 +58,20 @@ main {
 
 	
 }
+
+.select{
+appearance: none;
+  background-image: url("../src/assets/icons/Vector.svg");
+  background-repeat: no-repeat;
+  background-position: right 0.8rem top 50%;
+  background-size: 0.65rem auto;
+
+}
+
+select option:checked{
+	background-color: #F2C852 !important;
+}
+
+select option:hover{
+	background-color: #F2C852 !important;
+}
