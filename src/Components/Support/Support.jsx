@@ -62,7 +62,7 @@ const Support = () => {
       <form action="" className="grid gap-5">
         <Input label="Your Name" type="text" placeholder="Enter your name" />
         <Input label="Email address" type="email" placeholder="Enter your Email" />
-        {/* <div className="">
+        <div className="">
           <label htmlFor="type" className="">Type of support request</label>
           <select name="type" id="">
             <option value="account">Account</option>
@@ -70,7 +70,7 @@ const Support = () => {
             <option value="payment">Payment</option>
             <option value="refund">Refund</option>
           </select>
-        </div> */}
+        </div>
       </form>
     </div></div>
     }

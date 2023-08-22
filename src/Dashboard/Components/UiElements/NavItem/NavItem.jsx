@@ -59,7 +59,8 @@ const NavItem = ({
     );
   } else {
     return (
-      <NavLink to={url} end>
+      // end removed
+      <NavLink to={url} >
         {({ isActive }) => (
           <div className="flex relative">
             <div
