@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import ProductCard from '../ProductCard/ProductCard';
+import { ProductCard } from '../ProductCard/ProductCard';
+
 
 const Slider = ({items:cards}) => {
 
@@ -19,7 +20,7 @@ console.log(cards);
     <div className="container mx-auto">
       <div className="flex overflow-x-auto">
         {cards?.map((card) => (
-          <ProductCard key={card.id} id={card.id} url={card?.images[0]} title={card?.name} price={card?.price + card?.tax + card?.fee}  />
+          <ProductCard key={card.id} id={card.id} url={card?.images[0]} title={card?.name} price={card?.price + card?.tax + card?.fee} isShop={false}  />
         ))}
       </div>
       <div className="slider-buttons">

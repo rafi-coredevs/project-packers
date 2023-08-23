@@ -6,7 +6,6 @@ import Carousel from "../Components/UiElements/Carousel/Carousel";
 import Faq from "../Components/Faq/Faq";
 import { carousel, brand } from "../Store/Data";
 import { useEffect, useState } from "react";
-import { getApi } from "../Util/apiCall";
 import { terminal } from "../contexts/terminal/Terminal";
 
 const Home = () => {
