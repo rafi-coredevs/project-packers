@@ -9,6 +9,7 @@ const Shop = () => {
   const [data, setData] = useState([]);
   const [categories,setCategories]= useState(null)
   const [loading, setLoading] = useState(false);
+  
   useLayoutEffect(() => {
     fetchData();
    
