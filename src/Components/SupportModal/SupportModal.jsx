@@ -43,7 +43,7 @@ const SupportModal = () => {
       )}
 
       
-        <div className={`bg-secondary p-5 border-[#6BCCCB] border rounded-2xl min-w-[375px]  z-50 fixed duration-300 ${isVisible?'bottom-0 md:bottom-4 right-0 md:right-4':'-bottom-[1000px] -right-[1000px]'}  overflow-y-auto max-h-[90vh]`}>
+        <div className={`bg-secondary p-5 border-[#6BCCCB] border rounded-2xl min-w-[23.437rem]  z-50 fixed duration-300 ${isVisible?'bottom-0 md:bottom-4 right-0 md:right-4':'-bottom-[62.5rem] -right-[62.5rem]'}  overflow-y-auto max-h-[90vh]`}>
           <div className="flex justify-between items-center mb-5">
             <span className="text-white font-sans font-bold text-2xl">
               Contact us
@@ -188,7 +188,7 @@ const SupportModal = () => {
                 {chat?.map((chat, index) => {
                   return (
                     <div key={index}
-                    className={`flex gap-3 h-fit max-w-[400px] ${
+                    className={`flex gap-3 h-fit max-w-[25rem] ${
                       chat?.type !== "customer"
                         ? "ml-auto flex-row-reverse"
                         : ""

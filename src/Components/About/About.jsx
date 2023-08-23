@@ -9,7 +9,7 @@ import video from "../../assets/Image/video1.mp4";
 const About = () => {
   return (
     <div className=" bg-[#cff6ef33]">
-      <div className="container flex justify-evenly flex-wrap  mx-auto my-[34px] sm:my-[74px] py-12 sm:py-24 px-5 sm:px-0">
+      <div className="container flex justify-evenly flex-wrap  mx-auto my-[2.1rem] sm:my-[4.7rem] py-12 sm:py-24 px-5 sm:px-0">
         <div className="mb-8">
           <p className="text-secondary text-[28px] sm:text-[32px] font-semibold font-sans m-0 ">
             How Project Packers works
