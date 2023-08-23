@@ -60,16 +60,6 @@ export const router = createBrowserRouter([
       {
         path: "/shop",
         element: <Shop />,
-        // loader: async () =>{
-        //   return await
-        // }
-      },
-      {
-        path: "/success",
-        element: <Shop />,
-        loader: async () =>{
-          return getApi('/user/social').then(res => res);
-        }
       },
       {
         path: "shop/:productId",

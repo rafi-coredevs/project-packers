@@ -2,9 +2,14 @@ import { useParams } from "react-router-dom";
 import Breadcrumb from "../Components/UiElements/Breadcrumb/Breadcrumb";
 import user from "../assets/Image/user.jpeg";
 import img from "../assets/Image/blog-post.png";
+
+/**
+ * 
+ * @returns a detailed single blog post as whole
+ */ 
 const BlogPost = () => {
   const { postId } = useParams();
-  console.log(postId);
+
   return (
     <main>
       <Breadcrumb />

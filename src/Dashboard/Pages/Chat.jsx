@@ -1,6 +1,5 @@
 import { useState, useEffect, useContext } from "react";
 import ChatCard from "../Components/UiElements/ChatCard/ChatCard";
-
 import ChatBubble from "../Components/UiElements/ChatBubble/ChatBubble";
 import Button from '../Components/UiElements/Button/Button'
 import { getApi, postApi } from "../../Util/apiCall";
@@ -8,10 +7,15 @@ import { SocketContext } from "../../Providers/SocketProviders";
 import { useDispatch, useSelector } from "react-redux";
 import { storeSupportRoom } from "../../Store/userSlice";
 import { storeActiveChat } from "../../Store/supportSlice";
+// 
 const buttonStyle = {
   active: "bg-secondary text-white",
   deactive: "bg-white text-black",
 };
+/**
+ * 
+ * @returns 
+ */
 const Chat = () => {
   const [chatData,setChatData]= useState([]);
   const [filteredData,setFilteredData]= useState([]);

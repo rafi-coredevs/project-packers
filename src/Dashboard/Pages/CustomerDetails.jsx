@@ -5,14 +5,19 @@ import SideCard from "../Components/UiElements/SideCard/SideCard";
 import arrowLeft from "../../assets/icons/cd-arrow-left-1.svg";
 import { customerDetails } from "../../Store/Data";
 import Table from "../Components/UiElements/Table/Table";
+/**
+ *
+ * @returns A detailed view of a single customer after selecting from the customer table.
+ * @concern @remove  a chunk of commented code apeears to be unuseful.
+ */
 const CustomerDetails = () => {
-    const { customerId } = useParams();
+  const { customerId } = useParams();
   const updateHandler = () => {
     console.log("update clicked");
   };
   return (
     <div className="px-5 h-full">
-      <Heading  title={`#${customerId}`}>
+      <Heading title={`#${customerId}`}>
         <div className="flex items-center gap-1">
           <Button style="delete" onClick={updateHandler}>
             Delete
@@ -25,7 +30,11 @@ const CustomerDetails = () => {
               <img className="h-[19px] w-[19px]" src={arrowLeft} alt="" />
             </Button>
             <Button style="outline">
-              <img className="h-[19px] w-[19px] rotate-180" src={arrowLeft} alt="" />
+              <img
+                className="h-[19px] w-[19px] rotate-180"
+                src={arrowLeft}
+                alt=""
+              />
             </Button>
           </div>
         </div>
@@ -34,7 +43,7 @@ const CustomerDetails = () => {
         <div className="col-span-3 sm:col-span-2 grid gap-5">
           <div className="grid gap-5 rounded p-5">
             <div className="grid gap-3 relative overflow-x-auto">
-              <Table type='customerDetails' data={customerDetails} />
+              <Table type="customerDetails" data={customerDetails} />
             </div>
           </div>
           {/* <div className="grid gap-5 border border-[#0000001c] rounded p-5">
@@ -90,8 +99,16 @@ const CustomerDetails = () => {
         <div className="col-span-3 sm:col-span-1 h-fit grid gap-5 pb-3">
           <div className=" border border-[#0000001c] divide-y  rounded-lg ">
             <SideCard types="customer" name="Ramjan Ali Anik" />
-            <SideCard types="address" title="Address" address="2118 Thornridge Cir. Syracuse, Connecticut 35624" />
-            <SideCard types="address" title="Total Spent" address={`$${(244).toFixed(2)}`} />
+            <SideCard
+              types="address"
+              title="Address"
+              address="2118 Thornridge Cir. Syracuse, Connecticut 35624"
+            />
+            <SideCard
+              types="address"
+              title="Total Spent"
+              address={`$${(244).toFixed(2)}`}
+            />
           </div>
         </div>
       </div>

@@ -6,6 +6,12 @@ import Input from "../Components/UiElements/Input/Input";
 import search from "../../assets/icons/cd-search2.svg";
 import remove from "../../assets/icons/cd-cancel.svg";
 import { products } from "../../Store/Data";
+/**
+ *
+ * @returns  JSX: a detailed view of a single order instance.
+ * @concern @remove no connection with api been established yet
+ *
+ */
 const OrderDetails = () => {
   const { orderId } = useParams();
   const updateHandler = () => {
@@ -161,7 +167,6 @@ const OrderDetails = () => {
           </div>
           <div className=" border border-[#0000001c] divide-y  rounded-lg ">
             <SideCard types="note" message="Hello world" />
-            
           </div>
         </div>
       </div>

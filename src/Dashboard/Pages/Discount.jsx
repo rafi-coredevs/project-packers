@@ -8,7 +8,10 @@ import filter from "../../assets/icons/cd-filter.svg";
 import sort from "../../assets/icons/cd-arrow-data-transfer-vertical-round.svg";
 import search from "../../assets/icons/cd-search2.svg";
 import { discountData } from "../../Store/Data";
-
+/**
+ * 
+ * @returns tabular view of discounts along with view filter options and search 
+ */
 const Discount = () => {
     const [active, setActive] = useState("all");
     const [tableData] = useState(discountData);

@@ -1,4 +1,19 @@
-import { useState } from "react";
+/**
+ * NavItem() returns JSX Element
+ * this component has two types. 
+ * collapsible and non collapsible
+ * 
+ * @param {string} type define  types of element
+ * @param {string} icon icon url
+ * @param {string} title navlink title
+ * @param {string} url route
+ * @param {object} children only work for collapsible items
+ * @param {boolean} end to define endpoints
+ * 
+ * @returns JSX Element  
+ */
+
+import {  useState } from "react";
 import { NavLink } from "react-router-dom";
 
 const NavItem = ({
@@ -7,10 +22,12 @@ const NavItem = ({
   title = "no title",
   url,
   children,
+  end
 }) => {
-  const [collapse] = useState(true);
+  const [collapse,setCollapse] = useState(false);
+
   const collapseHandler = () => {
-    // setCollapse(!collapse);
+    setCollapse(!collapse);
   };
 
   if (type === "collapse") {
@@ -59,7 +76,8 @@ const NavItem = ({
     );
   } else {
     return (
-      <NavLink to={url} end>
+      // end removed
+      <NavLink to={url} end={end}>
         {({ isActive }) => (
           <div className="flex relative">
             <div
@@ -73,7 +91,8 @@ const NavItem = ({
               }  w-full py-2 px-3`}
             >
               <div className="h-6 w-6">
-                {icon && <img className="h-full w-full" src={icon} alt="" />}
+                {icon && <img className={`${isActive? 'filter hue-rotate-180  contrast-200' : ""} h-full w-full`} src={icon} alt="" />}
+             
               </div>
               <p className={`${isActive ? "text-white" : "text-secondary"}`}>
                 {title}

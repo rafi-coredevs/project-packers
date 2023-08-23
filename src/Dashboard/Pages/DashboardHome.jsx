@@ -9,6 +9,11 @@ import Table from "../Components/UiElements/Table/Table";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getApi } from "../../Util/apiCall";
+/**
+ * 
+ * @returns first appearance after admin login; holding summery data, statistical view and tables.
+ * 
+ */
 const DashboardHome = () => {
   const [active, setActive] = useState("order");
   const [tableData] = useState(orderTable);

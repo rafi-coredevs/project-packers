@@ -5,6 +5,11 @@ import { carousel } from "../Store/Data";
 import about from "../assets/Image/about.png";
 import about1 from "../assets/Image/about1.png";
 import about2 from "../assets/Image/about2.png";
+/**
+ * 
+ * @returns 
+ */
+
 const About = () => {
   return (
     <main>

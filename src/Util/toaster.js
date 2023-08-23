@@ -1,36 +1,12 @@
+import toast from 'react-hot-toast';
+
 /**
- * Toaster components
- * used to show error or success messages
- * @param {string} message message to show.
- * @returns JSX Element
+ * @param toaster function is used to show a toast
+ * @param {type, message} data recieves the type of the toast and the message to be displayed
+ * @returns the toast
  */
-
-import { toast } from "react-hot-toast";
-
-export const successToast = (message) => {
-  return toast.success(message, {
-    style: {
-      // border: "1px solid #0D3D4B",
-      padding: "16px",
-      color: "#0D3D4B",
-      backgroundColor: "#F2C852",
-    },
-    iconTheme: {
-      primary: "#198754",
-      secondary: "#FFFAEE",
-    },
-  });
+const toaster = ({ type, message }) => {
+    toast[type](message, { id: message });
 };
-export const errorToast = (message) => {
-  return toast.error(message, {
-    style: {
-      padding: "16px",
-      color: "#0D3D4B",
-      backgroundColor: "#F2C852",
-    },
-    iconTheme: {
-      primary: "#FF0000",
-      secondary: "#FFFAEE",
-    },
-  });
-};
+
+export default toaster;

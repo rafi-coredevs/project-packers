@@ -3,7 +3,7 @@ import { Outlet } from "react-router-dom";
 import Footer from "../Components/Footer/Footer";
 import Sidebar from "../Components/Header/Sidebar";
 import { useState } from "react";
-import Support from "../Components/Support/Support";
+import SupportModal from "../Components/SupportModal/SupportModal";
 
 const Main = () => {
   const [toggle, setToggle] = useState(false);
@@ -16,7 +16,7 @@ const Main = () => {
           toggle ? "ml-[18rem] sm:ml-0 sm:duration-0" : ""
         }`}
       >
-        <Support />
+        <SupportModal />
         <Header sideBar={toggleHandler} state={toggle} />
         <Outlet />
         <Footer />

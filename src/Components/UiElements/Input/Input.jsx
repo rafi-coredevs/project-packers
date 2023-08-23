@@ -56,6 +56,7 @@ const Input = ({
           name={name}
           placeholder={placeholder}
           type={type}
+          min={0} 
           minLength={min}
           maxLength={max}
           onChange={change}

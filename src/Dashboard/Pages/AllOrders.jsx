@@ -1,5 +1,4 @@
 import { useState } from "react";
-// import { Link } from "react-router-dom";
 import Heading from "../Components/UiElements/Heading/Heading";
 import filter from "../../assets/icons/cd-filter.svg";
 import sort from "../../assets/icons/cd-arrow-data-transfer-vertical-round.svg";
@@ -9,6 +8,10 @@ import Input from "../Components/UiElements/Input/Input";
 import search from "../../assets/icons/cd-search2.svg";
 import { orderTable } from "../../Store/Data";
 import { adminCard } from "../../Store/Data";
+/**
+ *
+ * @returns
+ */
 const AllOrders = () => {
   const [active, setActive] = useState("all");
   const [tableData] = useState(orderTable);

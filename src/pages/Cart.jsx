@@ -1,101 +1,12 @@
-import { useDispatch, useSelector } from "react-redux";
 import PriceCard from "../Components/PriceCard/PriceCard";
 import Breadcrumb from "../Components/UiElements/Breadcrumb/Breadcrumb";
 import Button from "../Components/UiElements/Buttons/Button";
 import CartItem from "../Components/UiElements/CartItem/CartItem";
 import Input from "../Components/UiElements/Input/Input";
-import { useEffect, useState } from "react";
-import { patchApi, postApi } from "../Util/apiCall";
-import { successToast } from "../Util/toaster";
-import { userSignin } from "../Store/userSlice";
+
 
 const Cart = () => {
-  const { user } = useSelector((state) => state.userInfo);
-  const [cart, setCart] = useState(user?.cart);
-  const dispatch = useDispatch();
-  const [disabled, setDisabled] = useState(false);
-  const [cost, setCost] = useState(null);
-  const [error, setError] = useState(null);
-  const [discount, setDiscount] = useState(null);
 
-  useEffect(() => {
-    let discountPrice = 0,
-      normalPrice = 0,
-      usTax = 0,
-      packersFee = 0;
-    cart.forEach((item) => {
-      usTax += item?.product?.tax * item?.quantity;
-      packersFee += item?.product?.fee * item?.quantity;
-      console.log(item);
-      if (discount) {
-        if (
-          discount?.category === item?.product?.category &&
-          discount?.subCategory === item?.product?.subCategory
-        ) {
-          discountPrice += item?.product?.price * item?.quantity;
-        } else {
-          normalPrice += item?.product?.price * item?.quantity;
-        }
-      } else {
-        normalPrice += item?.product?.price * item?.quantity;
-      }
-    });
-    //const sellerTakes = discountPrice + normalPrice;
-    console.log(normalPrice);
-    const sellerTakes = discount
-      ? discount.type === "f"
-        ? discountPrice - discount?.amount + normalPrice
-        : (discountPrice * (100 - discount?.amount)) / 100 + normalPrice
-      : normalPrice;
-    const total = sellerTakes + usTax + packersFee;
-    setCost({ sellerTakes, usTax, packersFee, total });
-  }, [cart, discount]);
-
-  const qthandler = (id, qt) => {
-    let updateItem = cart.find((item) => item.product.id === id);
-    const newCart = cart.map((item) => {
-      if (item.product.id === id) {
-        return {
-          id: item.id,
-          quantity: qt,
-          product: updateItem.product,
-        };
-      }
-      return item;
-    });
-    setCart(newCart);
-    setDisabled(true);
-  };
-
-  const undateCartHandler = () => {
-    console.log(cart);
-    patchApi("/user/cart", { cart }).then((res) => {
-      if (res.status === 200) {
-        successToast("Cart Updated");
-        dispatch(userSignin(res.data));
-        setCart(res?.data?.cart);
-        setDisabled(false);
-      }
-    });
-  };
-  const discountHandler = (event) => {
-    setError(null);
-    event.preventDefault();
-    console.log(event.target.discount.value);
-    postApi("/discount-check", { code: event.target.discount.value }).then(
-      (res) => {
-        console.log(res);
-        if (res.status === 200) {
-          setDiscount(res.data);
-        } else {
-          setError(res.data);
-        }
-      }
-    );
-  };
-  const checkoutHandler = () => {
-    console.log("clicked");
-  };
 
   return (
     <>

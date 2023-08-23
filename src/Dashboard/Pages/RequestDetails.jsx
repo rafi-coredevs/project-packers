@@ -5,6 +5,10 @@ import Input from "../Components/UiElements/Input/Input";
 import globe from "../../assets/icons/cd-internet.svg";
 import ImageUploader from "../../Components/UiElements/ImageUploader/ImageUploader";
 import SideCard from "../Components/UiElements/SideCard/SideCard";
+/**
+ * 
+ * @returns  JSX: detailed view of a single request made by customer
+ */
 const RequestDetails = () => {
   const { requestId } = useParams();
   const updateHandler = () => {

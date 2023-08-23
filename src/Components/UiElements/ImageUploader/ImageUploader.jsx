@@ -14,7 +14,7 @@ const ImageUploader = ({ title, data, onChange, onRemove }) => {
     // CHAT GPT
     const files = element.target.files[0];
     console.log(files)
-    const newImageData = Array.from(files);
+    // const newImageData = Array.from(files);
 
     // console.log(element.target.value)
     // const url = element.target.files[0]

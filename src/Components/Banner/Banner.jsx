@@ -15,7 +15,6 @@ import search from "../../assets/icons/cd-search2.svg";
 import Modal from "../UiElements/Modal/Modal";
 import RequestModal from "./RequestModal";
 import SuccessModal from "./SuccessModal";
-import { errorToast } from "../../Util/toaster";
 const Banner = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [modalState, setModalState] = useState("request");
@@ -23,14 +22,9 @@ const Banner = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    if(e.target[0].value != ''){
-
-      setUrl(e.target[0].value);
-      setIsOpen(true);
-      e.target[0].value= "";
-    }else{
-      errorToast("Please Provide product link")
-    }
+    setUrl(e.target[0].value);
+    setIsOpen(true);
+    e.target[0].value = "";
   };
   const handleOnClose = () => {
     setIsOpen(false);

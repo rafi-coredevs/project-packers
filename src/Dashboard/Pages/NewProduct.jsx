@@ -1,12 +1,3 @@
-/**
- * NewProduct() returns JSX Element
- * Component used to add or edit product
- * edit product id coming from url
- * @returns JSX Element product add form
- *
- *  TODO add fetch method in useEffect
- */
-
 import Heading from "../Components/UiElements/Heading/Heading";
 import { useParams } from "react-router-dom";
 import Input from "../Components/UiElements/Input/Input";
@@ -16,7 +7,12 @@ import { useFormik } from "formik";
 import { productSchema } from "../../Util/ValidationSchema";
 import { useEffect, useState } from "react";
 import { getApi, postApi } from "../../Util/apiCall";
-import { errorToast, successToast } from "../../Util/toaster";
+/**
+ * @returns JSX: to handle addition and edition of a single product.
+ * for edition it depends on route params to select the product 
+ * @concern @remove interaction with api been commented/disabled
+ * 
+ */
 const NewProduct = () => {
   const { productId } = useParams();
   const [imageData, setImageData] = useState([]);
@@ -39,14 +35,14 @@ const NewProduct = () => {
     setCategoryerror({ ...categoryError });
   }, [selectedCategeory, selectedSubcategeory]);
   useEffect(() => {
-    getApi("/category").then((res) => {
-      if (res.status === 200) {
-        setCategories(res?.data);
-      }
-      console.log(res);
-    });
-    // getApi()
-    console.log(productId);
+    // getApi("/category").then((res) => {
+    //   if (res.status === 200) {
+    //     setCategories(res?.data);
+    //   }
+    //   console.log(res);
+    // });
+    // // getApi()
+    // console.log(productId);
   }, [productId]);
   const productForm = useFormik({
     initialValues: {
