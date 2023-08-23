@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { BASE_URL } from '../../../Util/apiCall';
+import { boolean } from 'yup';
 
 /**
  * Lazy loading Component
@@ -57,7 +57,7 @@ export const ProductCard = ({
       >
         <div className={`h-40 lg:h-80 rounded-xl overflow-hidden ${isShop?'w-[40%] lg:w-full' : 'w-full'}`}>
           <img
-            src={`${BASE_URL}/api/${img}`}
+            src={img}
             alt='Product Image'
             className='h-full w-full object-cover duration-500 group-hover:scale-105 bg-slate-600'
           />

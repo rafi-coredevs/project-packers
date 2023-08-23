@@ -32,7 +32,7 @@ const useUser = () => {
 			}
 			setLoading(false);
 		});
-	}, [user]);
+	}, []);
 
 	return {
 		setUser,

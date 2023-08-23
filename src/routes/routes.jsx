@@ -7,7 +7,6 @@ import Signup from "../pages/Signup";
 import Test from "../pages/Test";
 import Shop from "../pages/Shop";
 import Product from "../pages/Product";
-import { getApi } from "../Util/apiCall";
 import Cart from "../pages/Cart";
 import Checkout from "../pages/Checkout";
 import Blog from "../pages/Blog";
@@ -36,6 +35,7 @@ import Discount from "../Dashboard/Pages/Discount";
 import NewDiscount from "../Dashboard/Pages/NewDiscount";
 import Category from "../Dashboard/Pages/Category";
 import Payment from "../Dashboard/Pages/Payment";
+import { terminal } from "../contexts/terminal/Terminal";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -65,7 +65,7 @@ export const router = createBrowserRouter([
         path: "shop/:productId",
         element: <Product />,
         loader: async ({ params }) => {
-          return  getApi(`/product/${params.productId}`).then(res => res);
+          return terminal.request({ name: 'singleProduct', params: { id: params.productId } })
         },
       },
       {
@@ -161,7 +161,7 @@ export const router = createBrowserRouter([
             <Products />
           </Secure>
         ),
-        
+
       },
       {
         path: "products/new-product",
