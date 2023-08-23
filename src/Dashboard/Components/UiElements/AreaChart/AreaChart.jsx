@@ -102,6 +102,9 @@ const AreaChart = ({ data }) => {
           Request vs Order
         </h4>
         <div className="bg-[#CFF6EF] px-2 py-1 absolute right-0 top-0  rounded">
+          <div className="">
+            <span className=""></span>
+          </div>
           <select
             className="text-xs text-secondary border-none bg-[#CFF6EF] outline-none rounded-md py-0 px-0"
             onChange={onChangeHandler}

@@ -59,7 +59,7 @@ export const productSchema = object({
   link: string().required(),
   tags: string().required(),
   deliveryTime: object({
-    min: string().required(),
-    max: string().required(),
+    min: string().matches(/^\d+(\.\d+)?$/,"Not valid").required(),
+    max: string().matches(/^\d+(\.\d+)?$/,"Not valid").required(),
   }),
 });
