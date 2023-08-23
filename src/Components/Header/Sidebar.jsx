@@ -56,7 +56,7 @@ const Sidebar = ({state, onChange}) => {
           <div className="flex gap-3 items-center">
             <Icon type="actual" icon={support} />
             <Link onClick={()=> onChange()}
-              to="/"
+              to="/support"
               className="font-sans text-base font-normal text-secondary"
             >
               Support
