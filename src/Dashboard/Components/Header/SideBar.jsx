@@ -1,4 +1,4 @@
-import Dashboard from "../../../assets/icons/cd-dashboard.svg";
+import  Dashboard from "../../../assets/icons/cd-dashboard.svg";
 import orders from "../../../assets/icons/cd-order.svg";
 import products from "../../../assets/icons/cd-products.svg";
 import customer from "../../../assets/icons/cd-user-list.svg";

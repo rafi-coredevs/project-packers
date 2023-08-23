@@ -9,34 +9,32 @@ import { useEffect, useState } from "react";
 const Product = () => {
   const product = useLoaderData();
   const [relatedProduct, setrelatedProduct] = useState([]);
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   //  API FETCHING FOR RELATED PRODUCT
-  // useEffect(() => {
-  //   if (product.status !== 200) {
-  //     return <div>Something wents wrong</div>;
-  //   } else {
-  //     getApi(
-  //       `/product?limit=8&paginate=true&category=${product?.data?.category}`
-  //     ).then((res) => {
-  //       if (res.status === 200) {
-  //         setrelatedProduct(res.data.docs);
-  //       } else console.log(res.response.data);
-  //     });
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (product.status !== 200) {
+      return <div>Something wents wrong</div>;
+    } else {
+      getApi(
+        `/product?limit=8&paginate=true&category=${product?.data?.category}`
+      ).then((res) => {
+        if (res.status === 200) {
+          setrelatedProduct(res.data.docs);
+        } else console.log(res.response.data);
+      });
+    }
+  }, []);
   const requsetItemHandler = () => {
-    // const data = {
-    //   productId: product.data._id,
-    //   quantity: 1,
-    // };
-    // postApi("/user/cart", data).then((res) => {
-    //   if (res.status === 200) {
-    //     successToast("Successfully aded to cart");
-    //     dispatch(userSignin(res.data));
-    //   } else {
-    //     errorToast(res.data);
-    //   }
-    // });
+    const data = {
+      productId: product.data._id,
+      quantity: 1,
+    };
+    postApi("/user/cart", data).then((res) => {
+      if (res.status === 200) {
+  
+        dispatch(userSignin(res.data));
+      } 
+    });
   };
   return (
     <>

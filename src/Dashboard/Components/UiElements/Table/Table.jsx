@@ -52,6 +52,7 @@ const head = {
     "Payment Status",
   ],
 };
+
 const Table = ({ type, data = [], reFatch, pageItem }) => {
   const navigate = useNavigate();
   const [currentpage, setCuurentpage] = useState(1);

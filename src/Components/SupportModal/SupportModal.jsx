@@ -11,7 +11,7 @@ import Button from "../UiElements/Buttons/Button";
 import { useFormik } from "formik";
 import { chatData } from "../../Store/Data";
 const SupportModal = () => {
-  const [isVisible, setVisible] = useState(true);
+  const [isVisible, setVisible] = useState(false);
   const [chat, setChat] = useState(chatData);
   const supportForm = useFormik({
     initialValues: {
@@ -25,9 +25,9 @@ const SupportModal = () => {
     },
   });
 
-  // useEffect(() => {
-  //   setChat(chatData);
-  // }, []);
+  useEffect(() => {
+    setChat(chatData);
+  }, []);
   return (
     <>
       {!isVisible && (
