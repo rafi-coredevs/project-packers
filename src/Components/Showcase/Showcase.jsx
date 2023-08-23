@@ -8,16 +8,16 @@ const Showcase = ({ type, title, description, data }) => {
   return (
     <div className="container mx-auto flex flex-col items-center my-[34px] sm:my-[74px] px-4">
       <Heading title={title} description={description} />
-      <div className="grid grid-cols-2 sm:grid-cols-4">
-        {data?.slice(0, item).map((item) => {
+      <div className="grid  py-[1px] gap-[1px]   grid-cols-2 sm:grid-cols-4">
+        {data?.slice(0, item).map((item,i) => {
           return (
             <ProductCard
-              key={item._id}
-              id={item._id}
-              url={item.thumbnails[0]}
-              title={item.name}
-              price={item.price}
-              isShop={false}
+            key={i}
+            id={item?.id}
+            img={item?.images[0]}
+            title={item?.name}
+            price={item?.price + item?.tax + item?.fee}
+            isShop={false}
             />
           );
         })}

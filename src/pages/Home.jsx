@@ -6,18 +6,17 @@ import Carousel from "../Components/UiElements/Carousel/Carousel";
 import Faq from "../Components/Faq/Faq";
 import { carousel, brand } from "../Store/Data";
 import { useEffect, useState } from "react";
-import { getApi } from "../Util/apiCall";
+import { terminal } from "../contexts/terminal/Terminal";
 
 const Home = () => {
   const [products, setProducts] = useState([]);
   useEffect(() => {
-    getApi("/product?limit=8&paginate=true").then((res) => {
-      if (res.status === 200) {
-        setProducts(res?.data?.docs);
-      } else {
-        console.log(res?.response?.data);
-      }
-    });
+    terminal.request({name: 'allProduct', queries : { limit: 8}})
+    .then(res=> {
+      console.log(res);
+      setProducts(res?.docs);
+    })
+   
   }, []);
   return (
     <>
