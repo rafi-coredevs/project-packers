@@ -1,3 +1,7 @@
+/**
+ * 
+ */
+
 import { useState } from "react";
 import StaffCard from "../Components/StaffCard/StaffCard";
 import Button from "../Components/UiElements/Button/Button";
@@ -6,7 +10,7 @@ import Input from "../Components/UiElements/Input/Input";
 import Modal from "../../Components/UiElements/Modal/Modal";
 
 const Staff = () => {
-  const [modal, setModal] = useState(true);
+  const [modal, setModal] = useState(false);
   const submitHandler = () => {
     console.log("update clicked");
   };
