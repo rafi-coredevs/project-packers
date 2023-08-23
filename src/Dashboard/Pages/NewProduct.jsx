@@ -16,7 +16,7 @@ import { useFormik } from "formik";
 import { productSchema } from "../../Util/ValidationSchema";
 import { useEffect, useState } from "react";
 import { getApi, postApi } from "../../Util/apiCall";
-import { errorToast, successToast } from "../../Util/toaster";
+
 const NewProduct = () => {
   const { productId } = useParams();
   const [imageData, setImageData] = useState([]);
@@ -39,14 +39,14 @@ const NewProduct = () => {
     setCategoryerror({ ...categoryError });
   }, [selectedCategeory, selectedSubcategeory]);
   useEffect(() => {
-    getApi("/category").then((res) => {
-      if (res.status === 200) {
-        setCategories(res?.data);
-      }
-      console.log(res);
-    });
-    // getApi()
-    console.log(productId);
+    // getApi("/category").then((res) => {
+    //   if (res.status === 200) {
+    //     setCategories(res?.data);
+    //   }
+    //   console.log(res);
+    // });
+    // // getApi()
+    // console.log(productId);
   }, [productId]);
   const productForm = useFormik({
     initialValues: {

@@ -14,7 +14,6 @@ import { useFormik } from "formik";
 import { subCategorySchema } from "../../../Util/ValidationSchema";
 import {  useEffect, useState } from "react";
 import { getApi, postApi } from "../../../Util/apiCall";
-import { errorToast, successToast } from "../../../Util/toaster";
 
 const SubCategory = () => {
   const [categories, setCategories] = useState([]);
@@ -28,23 +27,7 @@ const SubCategory = () => {
     validationSchema: subCategorySchema,
     onSubmit: (values) => {
       values.id = selected.id;
-      postApi("/category-sub", values).then((res) => {
-        if (res.status === 200) {
-          successToast("Sub category successfully added");
-          setSelected(res.data);
-          const newCat = categories.map((item) => {
-            if (item.id === res.data.id) return res.data;
-            else {
-              return item;
-            }
-          });
-          setCategories(newCat);
-
-          //fetch subcategories
-        } else {
-          errorToast(res.data);
-        }
-      });
+      
     },
   });
 
@@ -62,7 +45,7 @@ const SubCategory = () => {
       <div className="col-span-6 sm:col-span-2">
         <form action="" onSubmit={subCategoryForm.handleSubmit}>
           <div className="grid gap-3">
-            <h2 className="text-base text-secondary font-semibold">
+            <h2 className="text-base text-secondary font-semibold pb-[0.88rem]">
               Add Sub Category
             </h2>
             <div className="border border-[#0000001c] rounded-lg p-3 grid gap-3">

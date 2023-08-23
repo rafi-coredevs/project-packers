@@ -13,7 +13,6 @@ import Table from "../UiElements/Table/Table";
 import { categorySchema } from "../../../Util/ValidationSchema";
 import sort from "../../../assets/icons/cd-arrow-data-transfer-vertical-round.svg";
 import { getApi, postApi } from "../../../Util/apiCall";
-import { errorToast, successToast } from "../../../Util/toaster";
 import { useEffect, useState } from "react";
 
 const MainCategory = () => {
@@ -40,14 +39,7 @@ const MainCategory = () => {
     },
     validationSchema: categorySchema,
     onSubmit: (values) => {
-      postApi("/category", values).then((res) => {
-        if (res.status === 200) {
-          successToast("New category successfully created.");
-          setRefatch(!refatch);
-        } else {
-          errorToast(res.data);
-        }
-      });
+     
     },
   });
   return (
@@ -55,7 +47,7 @@ const MainCategory = () => {
       <div className="col-span-6 sm:col-span-2">
         <form action="" onSubmit={categoryForm.handleSubmit}>
           <div className="grid gap-3">
-            <h2 className="text-base text-secondary font-semibold">
+            <h2 className="text-base text-secondary font-semibold pb-[0.88rem]">
               Add New Category
             </h2>
             <div className="border border-[#0000001c] rounded-lg p-3 grid gap-3">

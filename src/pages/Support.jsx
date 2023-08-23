@@ -28,7 +28,7 @@ const Support = () => {
 				</div>
 			</div>
 			<div className='container mx-auto my-12 flex items-start flex-col md:flex-row gap-12 md:gap-[4.12rem]'>
-				<div className='container'>
+				<div className='w-full md:w-[17.4375rem]'>
           {/* sidebar title */}
 					<div className='font-semibold w-full text-xl text-[#124E58] p-[0.625rem]'>
 						Articles in this section
@@ -114,7 +114,7 @@ const SupportMenuButton = ({
 	return (
 		<button
 			{...eventHandler}
-			className={`p-[0.75rem] text-slate-600 flex items-center gap-2   ${
+			className={`p-[0.75rem] text-slate-600 flex items-center gap-2 w-full  ${
 				activeContent === activeNumber &&
 				'bg-[#F2C852] text-black rounded-[3.125rem]'
 			}  `}
@@ -142,7 +142,7 @@ const Content3 = () => {
 			<div className='flex flex-col gap-12'>
 				{/* How to pay */}
 				<div>
-					<h2 className='text-[2rem] text-[#124E58] font-semibold'>
+					<h2 className='text-[2rem] text-[#124E58] font-semibold mb-4'>
 						How do I pay for items?
 					</h2>
 					<p className='text-base text-slate-600 font-normal'>
@@ -157,7 +157,7 @@ const Content3 = () => {
 
 				{/* bKash barcode */}
 				<div>
-					<h2 className='text-[2rem] text-[#124E58] font-semibold'>bKash</h2>
+					<h2 className='text-[2rem] text-[#124E58] font-semibold mb-4'>bKash</h2>
 					<p className='text-base text-slate-600 font-normal'>
 						This is one of our more popular payment methods and if you have
 						access to a personal bKash wallet, you can easily send payment for
@@ -169,7 +169,7 @@ const Content3 = () => {
 				</div>
 				{/* step 1 */}
 				<div>
-					<h2 className='text-[2rem] text-[#124E58] font-semibold'>Step 1</h2>
+					<h2 className='text-[2rem] text-[#124E58] font-semibold mb-4'>Step 1</h2>
 					<p className='text-base text-slate-600 font-normal'>
 						Check out with the item in your cart or hit Buy Now to take an item
 						to checkout directly from the item page.
@@ -177,7 +177,7 @@ const Content3 = () => {
 				</div>
 				{/* step 2 */}
 				<div>
-					<h2 className='text-[2rem] text-[#124E58] font-semibold'>Step 2</h2>
+					<h2 className='text-[2rem] text-[#124E58] font-semibold mb-4'>Step 2</h2>
 					<p className='text-base text-slate-600 font-normal'>
 						After selecting preferred delivery method, in the next section,
 						select “Pay via bKash (BDT)”

@@ -1,7 +1,6 @@
 import Heading from "../UiElements/Heading/Heading";
-import ProductCard from "../UiElements/ProductCard/ProductCard";
+import {ProductCard} from "../UiElements/ProductCard/ProductCard";
 import Button from "../UiElements/Buttons/Button";
-// import Slider from "../UiElements/Slider/Slider";
 import { useNavigate } from "react-router-dom";
 const Showcase = ({ type, title, description, data }) => {
   const navigate = useNavigate();
@@ -18,6 +17,7 @@ const Showcase = ({ type, title, description, data }) => {
               url={item.thumbnails[0]}
               title={item.name}
               price={item.price}
+              isShop={false}
             />
           );
         })}

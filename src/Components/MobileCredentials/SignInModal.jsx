@@ -12,11 +12,8 @@ import Button from "../UiElements/Buttons/Button";
 import Input from "../UiElements/Input/Input";
 import { loginSchema } from "../../Util/ValidationSchema";
 import { postApi } from "../../Util/apiCall";
-import { useDispatch } from "react-redux";
-import { userSignin } from "../../Store/userSlice";
 import { toast } from "react-hot-toast";
 const SignInModal = ({ stateHandler, onClose }) => {
-  const dispatch = useDispatch();
 
   const clickHandler = (state) => {
     stateHandler(state);
@@ -30,40 +27,40 @@ const SignInModal = ({ stateHandler, onClose }) => {
     },
     validationSchema: loginSchema,
     onSubmit: (values) => {
-      postApi("/user/login", values).then((res) => {
-        if (res.status === 200) {
-          dispatch(userSignin(res.data));
-          loginForm.resetForm();
-          toast.success("Login Successful", {
-            style: {
-              padding: "16px",
-              color: "#0D3D4B",
-              backgroundColor: "#F2C852",
-              zIndex: 60,
-            },
-            iconTheme: {
-              primary: "#198754",
-              secondary: "#FFFAEE",
-            },
-          });
-          onClose();
-        } else {
-          loginForm.setFieldError("email", "not valid");
-          loginForm.setFieldError("password", "not valid");
-          toast.error(res.data, {
-            style: {
-              padding: "16px",
-              color: "#0D3D4B",
-              backgroundColor: "#F2C852",
-              zIndex: 60,
-            },
-            iconTheme: {
-              primary: "#FF0000",
-              secondary: "#FFFAEE",
-            },
-          });
-        }
-      });
+      // postApi("/user/login", values).then((res) => {
+      //   if (res.status === 200) {
+      //     // dispatch(userSignin(res.data));
+      //     loginForm.resetForm();
+      //     toast.success("Login Successful", {
+      //       style: {
+      //         padding: "16px",
+      //         color: "#0D3D4B",
+      //         backgroundColor: "#F2C852",
+      //         zIndex: 60,
+      //       },
+      //       iconTheme: {
+      //         primary: "#198754",
+      //         secondary: "#FFFAEE",
+      //       },
+      //     });
+      //     onClose();
+      //   } else {
+      //     loginForm.setFieldError("email", "not valid");
+      //     loginForm.setFieldError("password", "not valid");
+      //     toast.error(res.data, {
+      //       style: {
+      //         padding: "16px",
+      //         color: "#0D3D4B",
+      //         backgroundColor: "#F2C852",
+      //         zIndex: 60,
+      //       },
+      //       iconTheme: {
+      //         primary: "#FF0000",
+      //         secondary: "#FFFAEE",
+      //       },
+      //     });
+      //   }
+      // });
     },
   });
 

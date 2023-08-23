@@ -14,15 +14,12 @@ import reload from "../../assets/icons/cd-reload.svg";
 import { useState } from "react";
 import ImageUploader from "../UiElements/ImageUploader/ImageUploader";
 import { useFormik } from "formik";
-import { errorToast, successToast } from "../../Util/toaster";
 import { postApi } from "../../Util/apiCall";
-import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 const RequestModal = ({ url, confirmSubmit }) => {
   const [imageData, setImageData] = useState([]);
   const [active, setActive] = useState("link");
-  const { user } = useSelector((state) => state.userInfo);
   const navigate = useNavigate();
   const itemRequestForm = useFormik({
     initialValues: {
@@ -33,24 +30,7 @@ const RequestModal = ({ url, confirmSubmit }) => {
     },
     onSubmit: (values) => {
       if (user) {
-        const data = JSON.stringify(values);
-        const formData = new FormData();
-        formData.append("data", data);
-        for (const image of imageData) {
-          formData.append("thumbnails", image, image.name);
-          console.log(image, image.name);
-        }
 
-        postApi("/request-product", formData)
-          .then((res) => {
-            if (res.status === 200) {
-              successToast("Product Uploaded Successfully");
-              confirmSubmit("success");
-            } else {
-              errorToast("Something went wrong");
-            }
-          })
-          .catch((error) => errorToast(error));
       } else {
         navigate("/login");
       }

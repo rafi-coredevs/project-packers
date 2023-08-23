@@ -4,10 +4,6 @@ import Showcase from "../Components/Showcase/Showcase";
 import Breadcrumb from "../Components/UiElements/Breadcrumb/Breadcrumb";
 import GalleryCard from "../Components/UiElements/GalleryCard/GalleryCard";
 import { useEffect, useState } from "react";
-import { getApi, postApi } from "../Util/apiCall";
-import { errorToast, successToast } from "../Util/toaster";
-import { useDispatch } from "react-redux";
-import { userSignin } from "../Store/userSlice";
 // import Slider from "../Components/UiElements/Slider/Slider";
 
 const Product = () => {
@@ -35,17 +31,15 @@ const Product = () => {
     };
     postApi("/user/cart", data).then((res) => {
       if (res.status === 200) {
-        successToast("Successfully aded to cart");
+  
         dispatch(userSignin(res.data));
-      } else {
-        errorToast(res.data);
-      }
+      } 
     });
   };
   return (
     <>
       <main>
-        <Breadcrumb />
+        <Breadcrumb title={product?.data?.name} />
         <div className="container mx-auto my-12">
           <div className="grid grid-cols-5 px-2 sm:px-0 gap-8">
             <div className="col-span-5 sm:col-span-3">
