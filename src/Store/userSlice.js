@@ -19,8 +19,6 @@ export const userSlice = createSlice({
     
     userSignin: (state, action) => {
       state.user= action.payload;
-      
-     
     },
     userSignout: (state) => {
         state.user= null;
