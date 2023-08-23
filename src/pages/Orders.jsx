@@ -13,7 +13,6 @@ import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import { profileSchema } from "../Util/ValidationSchema";
 import { patchApi } from "../Util/apiCall";
-import { errorToast, successToast } from "../Util/toaster";
 
 const Orders = () => {
   const [active, setActive] = useState("orders");

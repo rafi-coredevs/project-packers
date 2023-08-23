@@ -23,7 +23,6 @@ import { useState } from "react";
 import Dropdown from "../UiElements/Dropdown/Dropdown";
 import ScrollTop from "../../Util/ScrollTop";
 import { useDispatch, useSelector } from "react-redux";
-import { Toaster } from "react-hot-toast";
 import LoginModal from "../MobileModal/LoginModal";
 import { readNotification } from "../../Store/userSlice";
 
@@ -73,7 +72,7 @@ const Header = ({ sideBar, state }) => {
     <>
     <div className="sticky top-0 mt-0 pt-0  bg-white z-50">
       <div className=" z-[100]">
-      <Toaster  />
+
       </div>
       
       <div className="container hidden  sm:flex mx-auto navbar gap-4 py-[10px] items-center justify-between">

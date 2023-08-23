@@ -16,28 +16,28 @@ const Shop = () => {
 
 
   useEffect(()=>{
-    getApi(`/category?paginate`)
-    .then(res=> {
-      console.log(res);
-      if(res.status===200){
-        setCategories(res.data)
-      }
-    })
+    // getApi(`/category?paginate`)
+    // .then(res=> {
+    //   console.log(res);
+    //   if(res.status===200){
+    //     setCategories(res.data)
+    //   }
+    // })
 
 
   },[])
 
   const fetchData = (page=1)=>{
     setLoading(true)
-    getApi(`/product?page=${page}&limit=9&paginate=true`).then((res) => {
-      if (res.status === 200) {
-        setData(res?.data);
-        setLoading(false)
+    // getApi(`/product?page=${page}&limit=9&paginate=true`).then((res) => {
+    //   if (res.status === 200) {
+    //     setData(res?.data);
+    //     setLoading(false)
         
-      } else {
-        console.log(res?.response?.data);
-      }
-    });
+    //   } else {
+    //     console.log(res?.response?.data);
+    //   }
+    // });
   }
   const handlePagination = (e) => {
     fetchData(e)
