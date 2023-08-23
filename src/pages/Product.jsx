@@ -5,7 +5,6 @@ import Breadcrumb from "../Components/UiElements/Breadcrumb/Breadcrumb";
 import GalleryCard from "../Components/UiElements/GalleryCard/GalleryCard";
 import { useEffect, useState } from "react";
 import { getApi, postApi } from "../Util/apiCall";
-import { errorToast, successToast } from "../Util/toaster";
 import { useDispatch } from "react-redux";
 import { userSignin } from "../Store/userSlice";
 // import Slider from "../Components/UiElements/Slider/Slider";
@@ -35,11 +34,9 @@ const Product = () => {
     };
     postApi("/user/cart", data).then((res) => {
       if (res.status === 200) {
-        successToast("Successfully aded to cart");
+  
         dispatch(userSignin(res.data));
-      } else {
-        errorToast(res.data);
-      }
+      } 
     });
   };
   return (

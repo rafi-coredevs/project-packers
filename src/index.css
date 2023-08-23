@@ -72,6 +72,6 @@ select option:checked{
 	background-color: #F2C852 !important;
 }
 
-select option:hover{
+select option:focus{
 	background-color: #F2C852 !important;
 }
