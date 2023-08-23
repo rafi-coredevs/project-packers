@@ -4,8 +4,6 @@
  * 
  * @returns JSX Modal Element
  */
-
-
 import Button from "../UiElements/Buttons/Button";
 import Input from "../UiElements/Input/Input";
 import globe from "../../assets/icons/cd-internet.svg";
