@@ -1,34 +1,43 @@
 import { useEffect, useLayoutEffect, useState } from "react";
 import Breadcrumb from "../Components/UiElements/Breadcrumb/Breadcrumb";
 // import ProductCard from "../Components/UiElements/ProductCard/ProductCard";
+// import ProductCard from "../Components/UiElements/ProductCard/ProductCard";
 import { LazyProductCard, ProductCard } from "../Components/UiElements/ProductCard/ProductCard";
 import Category from "../Components/UiElements/Category/Category";
 import Paginate from "../Components/UiElements/Paginate/Paginate";
 import { getApi } from "../Util/apiCall";
-import loader from "../assets/loader.svg";
 const Shop = () => {
   const [data, setData] = useState([]);
-  const [categories,setCategories]= useState(null)
-  const [loading, setLoading] = useState(false);
-
+  const [categories, setCategories] = useState(null)
+  const [loading, setLoading] = useState(true);
   useLayoutEffect(() => {
     fetchData();
-   
+
   }, []);
 
 
-  useEffect(()=>{
+  useEffect(() => {
     getApi(`/category?paginate`)
-    .then(res=> {
-      console.log(res);
-      if(res.status===200){
-        setCategories(res.data)
-      }
-    })
+      .then(res => {
+        console.log(res);
+        if (res.status === 200) {
+          setCategories(res.data)
+        }
+      })
 
 
   },[])
 
+  const fetchData = (page = 1) => {
+    getApi(`/product?page=${page}&limit=9&paginate=true`).then((res) => {
+      if (res.status === 200) {
+        setData(res?.data);
+        setLoading(false)
+
+      } else {
+        console.log(res?.response?.data);
+      }
+    });
   const fetchData = (page=1)=>{
     setLoading(true)
     getApi(`/product?page=${page}&limit=9&paginate=true`).then((res) => {
@@ -44,6 +53,7 @@ const Shop = () => {
   const handlePagination = (e) => {
     fetchData(e)
   };
+
   return (
     <>
       <Breadcrumb />
@@ -96,5 +106,6 @@ const Shop = () => {
     </>
   );
 };
+}
 
 export default Shop;
