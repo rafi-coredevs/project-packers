@@ -81,6 +81,7 @@ const Input = ({
           disabled={disabled}
           minLength={min}
           maxLength={max}
+          min={0}
           required={required}
         />
       </div>
@@ -158,6 +159,7 @@ const Input = ({
           placeholder={placeholder}
           onChange={change}
           onBlur={blur}
+          min={0}
           disabled={disabled}
           minLength={min}
           maxLength={max}

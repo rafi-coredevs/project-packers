@@ -45,7 +45,7 @@ const SubCategory = () => {
       <div className="col-span-6 sm:col-span-2">
         <form action="" onSubmit={subCategoryForm.handleSubmit}>
           <div className="grid gap-3">
-            <h2 className="text-base text-secondary font-semibold">
+            <h2 className="text-base text-secondary font-semibold pb-[0.88rem]">
               Add Sub Category
             </h2>
             <div className="border border-[#0000001c] rounded-lg p-3 grid gap-3">
