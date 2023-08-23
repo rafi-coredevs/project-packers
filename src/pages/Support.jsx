@@ -5,7 +5,7 @@ import search from '../assets/icons/cd-search2.svg';
 import bKash from '../assets/bKash.png';
 import bKashPay from '../assets/bKashPay.png';
 import { Link } from 'react-router-dom';
-import Button from '../Components/UiElements/Buttons/Button';
+// import Button from '../Components/UiElements/Buttons/Button';
 const Support = () => {
 	const [activeContent, setActiveContent] = useState('3');
 	// Function to handle content change
@@ -27,96 +27,68 @@ const Support = () => {
 					</div>
 				</div>
 			</div>
-			<div className='container mx-auto my-12 flex flex-col md:flex-row gap-[4.12rem]'>
-				<div className='flex items-start flex-row overflow-x-scroll md:flex-col  flex-shrink-0  md:w-[17.4375rem] gap-[0.625rem]'>
-					<Button type='secondary'>Sign Up</Button>
+			<div className='container mx-auto my-12 flex items-start flex-col md:flex-row gap-12 md:gap-[4.12rem]'>
+				<div className='container'>
+          {/* sidebar title */}
+					<div className='font-semibold w-full text-xl text-[#124E58] p-[0.625rem]'>
+						Articles in this section
+						<hr className='mt-3 w-full' />
+					</div>
+          {/* sidebar buttons */}
+					<div className='flex flex-nowrap items-start flex-row overflow-x-scroll  md:flex-col w-full md:w-[17.4375rem] gap-[0.625rem]'>
+						{/* 1 */}
+						<SupportMenuButton
+							buttonName={'How do I pay for items?'}
+							activeContent={activeContent}
+							onClick={() => handleContentChange('1')}
+							activeNumber='1'
+						/>
 
-					{/* 1 */}
-					<button
-						className={`p-[0.75rem] text-slate-600 flex items-center gap-2 w-full  ${
-							activeContent === '1' &&
-							'bg-[#F2C852] text-black rounded-[3.125rem]'
-						} `}
-						onClick={() => handleContentChange('1')}
-					>
-						<div className='w-2 h-2 rounded-full bg-slate-600'></div>
-						<p className=' text-start text-base font-normal'>
-							How do I pay for items?
-						</p>
-					</button>
+						{/* 2 */}
+						<SupportMenuButton
+							buttonName={'	What is Backpack? How do I order items?'}
+							activeContent={activeContent}
+							onClick={() => handleContentChange('2')}
+							activeNumber='2'
+						/>
 
-					{/* 2 */}
-					<button
-						className={`p-[0.75rem] text-slate-600 flex items-center gap-2  w-full  ${
-							activeContent === '2' &&
-							'bg-[#F2C852] text-black rounded-[3.125rem]'
-						} `}
-						onClick={() => handleContentChange('2')}
-					>
-						<div className='w-2 h-2 rounded-full bg-slate-600'></div>
-						<p className=' text-start text-base font-normal'>
-							What is Backpack? How do I order items?
-						</p>
-					</button>
+						{/* 3 */}
+						<SupportMenuButton
+							buttonName={'How do I pay for items?'}
+							activeContent={activeContent}
+							onClick={() => handleContentChange('3')}
+							activeNumber='3'
+						/>
 
-					{/* 3 */}
-					<button
-						className={`p-[0.75rem] text-slate-600 flex items-center gap-2  w-full  ${
-							activeContent === '3' &&
-							'bg-[#F2C852] text-black rounded-[3.125rem]'
-						} `}
-						onClick={() => handleContentChange('3')}
-					>
-						<div className='w-2 h-2 rounded-full bg-slate-600'></div>
-						<p className=' text-start text-base font-normal'>
-							How do I pay for items?
-						</p>
-					</button>
+						{/* 4 */}
 
-					{/* 4 */}
-					<button
-						className={`p-[0.75rem] text-slate-600 flex items-center justify-start gap-2  w-full  ${
-							activeContent === '4' &&
-							'bg-[#F2C852] text-black rounded-[3.125rem]'
-						} `}
-						onClick={() => handleContentChange('4')}
-					>
-						<div className='w-[8px] h-2 rounded-full bg-slate-600'></div>
-						<p className=' text-start text-base font-normal'>
-							What is Backpack? How do I order items?
-						</p>
-					</button>
+						<SupportMenuButton
+							buttonName={'	What is Backpack? How do I order items?'}
+							activeContent={activeContent}
+							onClick={() => handleContentChange('4')}
+							activeNumber='4'
+						/>
 
-					{/* 5 */}
-					<button
-						className={`p-[0.75rem] text-slate-600 flex items-center gap-2  w-full  ${
-							activeContent === '5' &&
-							'bg-[#F2C852] text-black rounded-[3.125rem]'
-						} `}
-						onClick={() => handleContentChange('5')}
-					>
-						<div className='w-[8px] h-2 rounded-full bg-slate-600'></div>
-						<p className=' text-start text-base font-normal'>
-							What is Backpack? How do I order items?
-						</p>
-					</button>
+						{/* 5 */}
+						<SupportMenuButton
+							buttonName={'	What is Backpack? How do I order items?'}
+							activeContent={activeContent}
+							onClick={() => handleContentChange('5')}
+							activeNumber='5'
+						/>
 
-					{/* 6 */}
-					<button
-						className={`p-[0.75rem] text-slate-600 flex items-center gap-2  w-full  ${
-							activeContent === '6' &&
-							'bg-[#F2C852] text-black rounded-[3.125rem]'
-						} `}
-						onClick={() => handleContentChange('6')}
-					>
-						<div className='w-[8px] h-2 rounded-[50%] bg-slate-600'></div>
-						<p className=' text-start text-base font-normal'>
-							What is Backpack? How do I order items?
-						</p>
-					</button>
+						{/* 6 */}
+
+						<SupportMenuButton
+							buttonName={'	What is Backpack? How do I order items?'}
+							activeContent={activeContent}
+							onClick={() => handleContentChange('6')}
+							activeNumber='6'
+						/>
+					</div>
 				</div>
 
-				<div className='w-full pr-60'>
+				<div className='w-full px-4 lg:pr-60'>
 					{/* Conditional rendering based on activeContent */}
 					{activeContent === '1' && <Content1 />}
 					{activeContent === '2' && <Content2 />}
@@ -131,6 +103,29 @@ const Support = () => {
 };
 
 export default Support;
+
+// support button
+const SupportMenuButton = ({
+	activeContent,
+	activeNumber,
+	buttonName,
+	...eventHandler
+}) => {
+	return (
+		<button
+			{...eventHandler}
+			className={`p-[0.75rem] text-slate-600 flex items-center gap-2   ${
+				activeContent === activeNumber &&
+				'bg-[#F2C852] text-black rounded-[3.125rem]'
+			}  `}
+		>
+			<div className={`w-2 h-2 rounded-full bg-slate-600 `}></div>
+			<p className=' text-start text-base flex-nowrap font-normal w-max md:w-full'>
+				{buttonName}
+			</p>
+		</button>
+	);
+};
 
 // Components for different content
 const Content1 = () => {

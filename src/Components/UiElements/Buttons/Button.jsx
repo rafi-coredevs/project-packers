@@ -1,49 +1,47 @@
-/*
-Props:=>
-text: the text value shown in the button
-primary: is the button primary,
-secondary: is the button secondary,
-onClick: function will trigger when clicked to the button,
-onBlur: function will trigger when button will blur
-arrow: arrow left will appear
-[if primary or secondary is not passed there will be apply a default style ]
-               
-*/
+/**
+ *
+ * @param {boolean} arrow - receives true or false for showing arrow
+ * @param {object} children - receives children component inside button for showing button name
+ * @param {boolean} full - receives true or false for showing with full width or not
+ * @param {string} buttonType - receives button type means for what reason this button will be used for like form submit
+ * @param {string} className - receives extra styles for button
+ * @param {boolean} disabled - receives true or false for showing button with disabled
+ * @param {function} eventHandlers - receive one or more eventHandlers for any action that will be done by this button.
+ * @returns
+ */
+
 const Button = ({
 	arrow,
 	children,
 	full,
 	type,
-	
 	buttonType,
 	disabled,
-  className,
-  ...eventHandlers
+	className,
+	...eventHandlers
 }) => {
 	const styles = {
 		text: `${className}`,
 		primary: `bg-primary text-secondary py-[12px] px-[20px] ${className}`,
 		secondary: `bg-secondary text-white py-[11px] px-[20px] ${className}`,
-		outline:
-			`bg-transparent text-secondary py-[11px] px-[20px] border border-primary ${className}`,
+		outline: `bg-transparent text-secondary py-[11px] px-[20px] border border-primary ${className}`,
 		light: `bg-[#F8FAFC] font-normal text-secondary py-[11px] px-[20px] ${className}`,
 		lightGreen: `bg-[#CFF6EF] font-normal text-secondary py-[11px] px-[30px] ${className}`,
 		default: `bg-[#ffffff] text-secondary border-2 border-primary ${className}`,
 	};
 	return (
 		<button
-		{...eventHandlers}
+			{...eventHandlers}
 			type={buttonType}
 			disabled={disabled}
-			className={`${
-				type
+			className={`
+             rounded-[50px] font-sans w-full ${full != undefined ? 'w-full' : 'sm:max-w-fit'
+				} text-center  text-sm font-bold 
+             hover:drop-shadow-lg active:scale-[0.99]
+             ${type
 					? styles[type]
 					: 'bg-[#ffffff] text-secondary border-2 border-primary'
-			}
-             rounded-[50px] font-sans w-full ${
-								full != undefined ? 'w-full' : 'sm:max-w-fit'
-							} text-center  text-sm font-bold 
-             hover:drop-shadow-lg active:scale-[0.99]
+				}
         `}
 		>
 			<span className='justify-center flex gap-3 '>
