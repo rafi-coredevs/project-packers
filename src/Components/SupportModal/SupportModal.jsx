@@ -10,10 +10,9 @@ import Input from "../UiElements/Input/Input";
 import Button from "../UiElements/Buttons/Button";
 import { useFormik } from "formik";
 import { chatData } from "../../Store/Data";
-
 const SupportModal = () => {
   const [isVisible, setVisible] = useState(true);
-  const [chat, setChat] = useState([]);
+  const [chat, setChat] = useState(chatData);
   const supportForm = useFormik({
     initialValues: {
       name: "",

@@ -15,13 +15,11 @@ import { useState } from "react";
 import ImageUploader from "../UiElements/ImageUploader/ImageUploader";
 import { useFormik } from "formik";
 import { postApi } from "../../Util/apiCall";
-import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 const RequestModal = ({ url, confirmSubmit }) => {
   const [imageData, setImageData] = useState([]);
   const [active, setActive] = useState("link");
-  const { user } = useSelector((state) => state.userInfo);
   const navigate = useNavigate();
   const itemRequestForm = useFormik({
     initialValues: {

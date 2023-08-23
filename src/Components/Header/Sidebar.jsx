@@ -15,18 +15,16 @@ import notification from "../../assets/icons/cd-notification.svg";
 import support from "../../assets/icons/cd-customer-support.svg";
 import logout from "../../assets/icons/logout-01.svg";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { userSignout } from "../../Store/userSlice";
 const Sidebar = ({state, onChange}) => {
 
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const logoutHandler = () =>{
-    dispatch(userSignout());
-    navigate('/');
-    onChange();
-  }
+  // const logoutHandler = () =>{
+  //   dispatch(userSignout());
+  //   navigate('/');
+  //   onChange();
+  // }
   if (state) {
     return (
       <div className=" absolute sm:hidden top-0 bottom-0 right-20 left-0 bg-white z-[101] p-5">

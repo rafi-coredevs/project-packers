@@ -4,9 +4,6 @@ import Showcase from "../Components/Showcase/Showcase";
 import Breadcrumb from "../Components/UiElements/Breadcrumb/Breadcrumb";
 import GalleryCard from "../Components/UiElements/GalleryCard/GalleryCard";
 import { useEffect, useState } from "react";
-import { getApi, postApi } from "../Util/apiCall";
-import { useDispatch } from "react-redux";
-import { userSignin } from "../Store/userSlice";
 // import Slider from "../Components/UiElements/Slider/Slider";
 
 const Product = () => {
