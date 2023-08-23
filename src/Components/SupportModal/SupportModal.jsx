@@ -12,7 +12,7 @@ import { useFormik } from "formik";
 import { chatData } from "../../Store/Data";
 
 const SupportModal = () => {
-  const [isVisible, setVisible] = useState(true);
+  const [isVisible, setVisible] = useState(false);
   const [chat, setChat] = useState([]);
   const supportForm = useFormik({
     initialValues: {
