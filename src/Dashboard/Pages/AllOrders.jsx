@@ -27,7 +27,7 @@ const AllOrders = () => {
   useEffect(() => {
     terminal.request({ name: 'allOrders' })
       .then(res => setTableData(() => {
-        return res.map(orderResp => {
+        return res?.docs?.length > 0 && res?.docs?.map(orderResp => {
           return {
             id: orderResp.id,
             name: orderResp.products.length > 0 ? orderResp.products[0].product.name : '',
@@ -35,7 +35,7 @@ const AllOrders = () => {
             user: orderResp.user?.fullName || orderResp.user.email,
             status: orderResp.status,
             items: orderResp.products.length,
-            total: orderResp.total 
+            total: orderResp.total
           }
         });
       }))

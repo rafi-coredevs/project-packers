@@ -1,127 +1,66 @@
 /**
-
 * Header() returns JSX Element
-
 * Two different header section. 1 for small screen and another for the rest
-
 *
-
 * @param {function} sideBar This function only work for small screen to open side nav menu
-
 * @param {boolean} state  used to change button icon for small header.
-
 *
-
 * @returns JSX Element
-
 */
 
-
-
-import { Link, useNavigate } from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom"
 import Logo from "../../assets/logo.svg";
-
 import menu from "../../assets/icons/menu-01.svg";
-
 import cross from "../../assets/icons/cd-cancel.svg";
-
 import Button from "../UiElements/Buttons/Button";
-
 import Input from "../UiElements/Input/Input";
-
 import cart from "../../assets/icons/cd-products.svg";
-
 import notification from "../../assets/icons/cd-notification.svg";
-
 import profile from "../../assets/icons/user-1.svg";
-
 import Icon from "../UiElements/Icon/Icon";
-
 import search from "../../assets/icons/cd-search.svg";
-
 import { useEffect, useState } from "react";
-
 import Dropdown from "../UiElements/Dropdown/Dropdown";
-
 import ScrollTop from "../../Util/ScrollTop";
-
 import LoginModal from "../MobileModal/LoginModal";
-
 import { useUserCtx } from "../../contexts/user/UserContext";
-
 import { terminal } from "../../contexts/terminal/Terminal";
 
-
-
 const DUMMY_CART = [
-
   {
-
     id: 1,
-
     image: 'https://source.unsplash.com/random/300×300/?Iphone',
-
     title:
-
       'OTTERBOX COMMUTER SERIES Case for iPhone 12 & iPhone 12 Pro OTTERBOX COMMUTER SERIES Case for iPhone 12 & iPhone 12 Pro',
-
     price: '720',
-
     qty: '1',
-
   },
-
   {
-
     id: 2,
-
     image: 'https://source.unsplash.com/random/301×300/?Iphone',
-
     title: 'OTTERBOX COMMUTER SERIES Case for iPhone 12 & iPhone 12 Pro',
-
     price: '720',
-
     qty: '1',
-
   },
-
   {
-
     id: 3,
-
     image: 'https://source.unsplash.com/random/302×300/?Iphone',
-
     title: 'OTTERBOX COMMUTER SERIES Case for iPhone 12 & iPhone 12 Pro',
-
     price: '720',
-
     qty: '1',
-
   },
-
 ];
 
 const Header = ({ sideBar, state }) => {
-
   const [cartState, setCartState] = useState(false);
-
   const [notifyState, setNotifyState] = useState(false);
-
   const [loginModal, setLoginModal] = useState(false)
-
   const [notifications, setNotifications] = useState()
-
   const { user } = useUserCtx()
-
   const navigate = useNavigate();
-
   ScrollTop();
-
   const clickHandler = () => {
-
     sideBar();
-
   };
   useEffect(() => {
     user?.id && terminal.request({ name: 'getNotification' }).then(data => data.docs && setNotifications(data.docs))

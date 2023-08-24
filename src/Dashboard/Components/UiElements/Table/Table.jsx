@@ -216,28 +216,28 @@ const Table = ({ type, data, reFatch, pageItem }) => {
   );
 
   // all category page table
-  // const categoryDataTable = data.docs.map((item, index) => <tr
-  //   key={index}
-  //   className="border-y border-[#0000001c] hover:bg-[#FEF9DC]"
-  // >
-  //   <td className="text-left py-[10px] pl-4 w-[10px]">
-  //     <input type="checkbox" className="accent-yellow-300" />
-  //   </td>
+  const categoryDataTable = data.map((item, index) => <tr
+    key={index}
+    className="border-y border-[#0000001c] hover:bg-[#FEF9DC]"
+  >
+    <td className="text-left py-[10px] pl-4 w-[10px]">
+      <input type="checkbox" className="accent-yellow-300" />
+    </td>
 
-  //   <td
-  //     onClick={() => selectHandler(item.id)}
-  //     className="px-4 py-[18px] text-black text-sm cursor-pointer line-clamp-2"
-  //   >
-  //     {item.name}
-  //   </td>
-  //   <td className="px-4 py-[18px] text-black text-sm ">
-  //     {item.slug}
-  //   </td>
-  //   <td className="px-4 py-[18px] text-black text-sm ">
-  //     {item.post}
-  //   </td>
-  // </tr>
-  // );
+    <td
+      onClick={() => selectHandler(item.id)}
+      className="px-4 py-[18px] text-black text-sm cursor-pointer line-clamp-2"
+    >
+      {item.name}
+    </td>
+    <td className="px-4 py-[18px] text-black text-sm ">
+      {item.slug}
+    </td>
+    <td className="px-4 py-[18px] text-black text-sm ">
+      {item.post}
+    </td>
+  </tr>
+  );
 
 
 

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Dropdown from "../../../Components/UiElements/Dropdown/Dropdown";
 import Icon from "../../../Components/UiElements/Icon/Icon";
@@ -8,6 +8,7 @@ import logo from "../../../assets/logo.svg";
 import notification from "../../../assets/icons/cd-notification.svg";
 import profile from "../../../assets/icons/user-1.svg";
 import { useUserCtx } from "../../../contexts/user/UserContext";
+import { terminal } from "../../../contexts/terminal/Terminal";
 
 const DUMMY_NOTIFICATION = [
   {
@@ -38,7 +39,20 @@ const DUMMY_NOTIFICATION = [
 
 const Header = () => {
   const [notifyState, setNotifyState] = useState(false);
-  const { currentUser: user } = useUserCtx()
+  const { user } = useUserCtx()
+  const [notifications, setNotifications] = useState()
+  useEffect(() => {
+    user?.id && terminal.request({ name: 'getNotification' }).then(data => data.docs && setNotifications(data.docs))
+  }, [user])
+
+  useEffect(() => {
+    terminal.socket.on('notification', (data) => {
+      setNotifications(prev => [data, ...prev])
+    })
+    return () => {
+      terminal.socket.off('notification')
+    }
+  })
   return (
     <div className="sticky top-0 mt-0 pt-0  bg-white z-50 shadow-sm ">
       <div className="mx-6 hidden  sm:flex navbar gap-4 py-[10px] items-center justify-between">
@@ -70,16 +84,16 @@ const Header = () => {
                   setNotifyState(!notifyState);
                 }}
               >
-                <Icon unread={true} icon={notification} />
+                <Icon unread={false} icon={notification} />
               </span>
               <Dropdown
                 type="notification"
                 isOpen={notifyState}
+                onClick={() => setNotifyState(false)}
                 title="Notification"
-                data={DUMMY_NOTIFICATION}
+                data={notifications}
               />
             </div>
-
             <div className="relative">
               <Link
                 to="/admin"
