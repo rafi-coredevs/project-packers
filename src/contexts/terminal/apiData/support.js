@@ -32,6 +32,13 @@ export const support = {
             id: "Please provide an id"
         }
     },
+    userSupport: {
+        method: "GET",
+        uri: "usersupport",
+        suggestions: {
+            raw: "A raw example of the uri: 'usersupport'.",
+        }
+    },
     updateSupport: {
         method: "PATCH",
         uri: "support",

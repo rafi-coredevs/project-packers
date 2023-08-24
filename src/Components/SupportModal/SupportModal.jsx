@@ -10,8 +10,8 @@ import Input from "../UiElements/Input/Input";
 import Button from "../UiElements/Buttons/Button";
 import { useFormik } from "formik";
 import attachment from '../../assets/icons/attachment.svg'
-import { chatData } from "../../Store/Data";
 import toaster from "../../Util/toaster";
+import { terminal } from "../../contexts/terminal/Terminal";
 const SupportModal = () => {
   const [isVisible, setVisible] = useState(false);
   const [chat, setChat] = useState([]);
@@ -25,10 +25,25 @@ const SupportModal = () => {
     },
     onSubmit: (values) => {
       const data = { message: values.message, type: values.type };
-      console.log(data, images);
+      terminal.request({ name: 'registerSupport', body: { data, images } }).then(data => {
+        if (data.id) {
+          terminal.request({ name: 'getMessage', params: { id: data.id } }).then(data => {
+            data.docs && setChat(data.docs)
+          })
+        }
+      })
     },
   });
 
+  useEffect(() => {
+    isVisible && terminal.request({ name: 'userSupport' }).then(data => {
+      if (data.id) {
+        terminal.request({ name: 'getMessage', params: { id: data.id } }).then(data => {
+          data.docs?.length > 0 && setChat(data.docs)
+        })
+      }
+    })
+  }, [isVisible])
   const handleImage = (event) => {
     const files = event.target.files;
     const filesArray = Array.from(files);
@@ -39,7 +54,9 @@ const SupportModal = () => {
     }
   };
   useEffect(() => {
-    setChat([]);
+    terminal.socket.on('error',(data)=>{
+      
+    })
   }, []);
   return (
     <>

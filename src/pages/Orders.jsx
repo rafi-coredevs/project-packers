@@ -9,8 +9,7 @@ import Badge from "../Components/UiElements/Badge/Badge";
 import Button from "../Components/UiElements/Buttons/Button";
 import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
-import { profileSchema } from "../Util/ValidationSchema";
-import { patchApi } from "../Util/apiCall";
+import { profileSchema } from "../Util/ValidationSchema"
 
 const Orders = () => {
   const [active, setActive] = useState("orders");
@@ -31,8 +30,7 @@ const Orders = () => {
   // }, [user]);
   const profileForm = useFormik({
     initialValues: {
-      firstName: "",
-      lastName: "",
+      fullName: "",
       email: "",
       phone: "",
       currentPassword: "",
@@ -56,21 +54,13 @@ const Orders = () => {
         const data = {
           email: values.email,
           phone: values.phone,
-          name: values.firstName + " " + values.lastName,
+          fullName: values.fullName,
         };
         if (values.newPassword !== "")
           data.password = {
             new: values.newPassword,
             old: values.currentPassword,
           };
-        patchApi("/user/me", data).then((res) => {
-          if (res.status === 200) {
-            dispatch(userSignin(res.data));
-            successToast("Profile successfully updated");
-          } else {
-            errorToast(res.response.data);
-          }
-        });
       }
     },
   });
@@ -89,24 +79,22 @@ const Orders = () => {
               <div className="p-5 flex flex-row sm:flex-col gap-5 border rounded-xl text-base font-semibold ">
                 <button
                   onClick={() => setActive("orders")}
-                  className={`py-3 px-8 flex  gap-[10px] w-full rounded-full hover:bg-primary ${
-                    active === "orders" ? "bg-primary" : "bg-white border"
-                  }`}
+                  className={`py-3 px-8 flex  gap-[10px] w-full rounded-full hover:bg-primary ${active === "orders" ? "bg-primary" : "bg-white border"
+                    }`}
                 >
                   <img src={order} />
                   <span className="hidden sm:block">Orders</span>
                 </button>
                 <button
                   onClick={() => setActive("account")}
-                  className={`py-3 px-8 flex  gap-[10px] w-full rounded-full hover:bg-primary ${
-                    active === "account" ? "bg-primary" : "bg-white border"
-                  }`}
+                  className={`py-3 px-8 flex  gap-[10px] w-full rounded-full hover:bg-primary ${active === "account" ? "bg-primary" : "bg-white border"
+                    }`}
                 >
                   <img src={profile} />
                   <span className="hidden sm:block">User Account</span>
                 </button>
                 <button
-                  onClick={logoutHandler}
+                  // onClick={logoutHandler}
                   className={`py-3 px-8 flex  gap-[10px] w-full rounded-full hover:bg-primary bg-white border`}
                 >
                   <img src={logout} />
@@ -247,42 +235,24 @@ const Orders = () => {
                     onSubmit={profileForm.handleSubmit}
                     className="grid gap-4"
                   >
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <Input
-                        styles="primary"
-                        type="text"
-                        name="firstName"
-                        change={profileForm.handleChange}
-                        blur={profileForm.handleBlur}
-                        value={profileForm.values.firstName}
-                        error={
-                          profileForm.touched.firstName &&
-                          profileForm.errors.firstName
-                            ? profileForm.errors.firstName
-                            : null
-                        }
-                        label="First Name"
-                        placeholder="Enter your First Name"
-                        border
-                      />
-                      <Input
-                        styles="primary"
-                        type="text"
-                        name="lastName"
-                        change={profileForm.handleChange}
-                        blur={profileForm.handleBlur}
-                        value={profileForm.values.lastName}
-                        error={
-                          profileForm.touched.lastName &&
-                          profileForm.errors.lastName
-                            ? profileForm.errors.lastName
-                            : null
-                        }
-                        label="Last Name"
-                        placeholder="Enter your Last Name"
-                        border
-                      />
-                    </div>
+                    <Input
+                      styles="primary"
+                      type="text"
+                      name="firstName"
+                      change={profileForm.handleChange}
+                      blur={profileForm.handleBlur}
+                      value={profileForm.values.fullName}
+                      error={
+                        profileForm.touched.fullName &&
+                          profileForm.errors.fullName
+                          ? profileForm.errors.fullName
+                          : null
+                      }
+                      label="First Name"
+                      placeholder="Enter your First Name"
+                      border
+                    />
+
                     <Input
                       styles="primary"
                       type="email"
@@ -328,7 +298,7 @@ const Orders = () => {
                       value={profileForm.values.currentPassword}
                       error={
                         profileForm.touched.currentPassword &&
-                        profileForm.errors.currentPassword
+                          profileForm.errors.currentPassword
                           ? profileForm.errors.currentPassword
                           : profileForm.errors.currentPassword
                       }
@@ -345,7 +315,7 @@ const Orders = () => {
                       value={profileForm.values.newPassword}
                       error={
                         profileForm.touched.newPassword &&
-                        profileForm.errors.newPassword
+                          profileForm.errors.newPassword
                           ? profileForm.errors.newPassword
                           : profileForm.errors.newPassword
                       }
@@ -362,7 +332,7 @@ const Orders = () => {
                       value={profileForm.values.confirmPassword}
                       error={
                         profileForm.touched.confirmPassword &&
-                        profileForm.errors.confirmPassword
+                          profileForm.errors.confirmPassword
                           ? profileForm.errors.confirmPassword
                           : profileForm.errors.confirmPassword
                       }
