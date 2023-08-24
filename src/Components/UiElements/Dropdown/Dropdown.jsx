@@ -4,6 +4,7 @@ import prod from '../../../assets/icons/cd-products.svg'
 import minor from "../../../assets/icons/cd-select_minor.svg";
 import { Link } from "react-router-dom";
 import { useEffect, useRef } from "react";
+import formatTimeAgo from "../../../Util/formatTimeAgo";
 
 const Dropdown = ({ isOpen, onClick, type, title, data }) => {
   const ref = useRef(null);
@@ -39,7 +40,7 @@ const Dropdown = ({ isOpen, onClick, type, title, data }) => {
             </div>
             <div className="overflow-y-auto scrollbar max-h-[352px]">
               {data ? (
-                data.map((item,i) => {
+                data.map((item, i) => {
                   return (
                     <div
                       onClick={() => clickHandler(item.id)}
@@ -47,19 +48,16 @@ const Dropdown = ({ isOpen, onClick, type, title, data }) => {
                       className="cursor-pointer flex gap-3 py-2 border-t border-[#0000001A]"
                     >
                       <div className="h-12 w-12">
-                        {item.type==='account'? <img src={acc}/>: <img className="bg-[#CFF6EF] p-1 rounded-md" src={prod}/>}
-                       
+                        {item.type === 'account' ? <img src={acc} /> : <img className="bg-[#CFF6EF] p-1 rounded-md" src={prod} />}
+
                       </div>
 
                       <div className="">
                         <p className="font-sans font-medium text-sm overflow-hidden">
-                          {item.msg}
-                        </p>
-                        <p className="font-sans font-medium text-sm overflow-hidden">
-                          {item.description}
+                          {item.message}
                         </p>
                         <p className="font-sans font-normal text-xs text-[#00000066] overflow-hidden">
-                          {item.time}
+                          {formatTimeAgo(item.time)}
                         </p>
                       </div>
                     </div>
@@ -71,7 +69,7 @@ const Dropdown = ({ isOpen, onClick, type, title, data }) => {
             </div>
           </div>
         )}
-  </div>
+      </div>
     );
   }
   if (type === "cart") {
@@ -89,7 +87,7 @@ const Dropdown = ({ isOpen, onClick, type, title, data }) => {
             </div>
             <div className="overflow-y-auto scrollbar max-h-[352px]">
               {data ? (
-                data.map((item,i) => {
+                data.map((item, i) => {
                   return (
                     <div
                       onClick={() => clickHandler(item.id)}
@@ -129,7 +127,7 @@ const Dropdown = ({ isOpen, onClick, type, title, data }) => {
       </div>
     );
   }
- 
+
 };
 
 export default Dropdown;

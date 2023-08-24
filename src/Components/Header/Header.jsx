@@ -124,7 +124,7 @@ const Header = ({ sideBar, state }) => {
                     isOpen={notifyState}
                     onClick={() => setNotifyState(false)}
                     title="Notification"
-                    data={notifications?.data}
+                    data={notifications}
                   />
                 </div>
                 <div className="relative">
