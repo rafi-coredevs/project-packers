@@ -114,7 +114,7 @@ const AllOrders = () => {
             </div>
 
             <Table type="order" data={tableData} />
-          </div>
+          </div >
         </div>
       </div>
     </div>
