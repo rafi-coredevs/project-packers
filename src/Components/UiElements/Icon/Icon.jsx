@@ -27,7 +27,7 @@ const Icon = ({ type, icon, unread }) => {
           </span>
         </>
       )}
-      <img className="h-full w-full shrink-0" src={icon} alt="" />
+      <img className="h-9 w-9 shrink-0" src={icon} alt="" />
     </div>
   );
 };
