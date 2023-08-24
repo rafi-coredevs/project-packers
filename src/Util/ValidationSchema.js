@@ -49,7 +49,7 @@ export const subCategorySchema = object({
 
 export const productSchema = object({
 	name: string().required(),
-	desc: string().required(),
+	description: string().required(),
 	price: string()
 		.matches(/^\d+(\.\d+)?$/, 'Not valid')
 		.required(),
@@ -59,18 +59,12 @@ export const productSchema = object({
 	fee: string()
 		.matches(/^\d+(\.\d+)?$/, 'Not valid')
 		.required(),
-	stock: string()
+	quantity: string()
 		.matches(/^\d+(\.\d+)?$/, 'Not valid')
 		.required(),
-	from: string().required(),
+	origin: string().required(),
 	link: string().required(),
 	tags: string().required(),
-	deliveryTime: object({
-		min: string()
-			.matches(/^\d+(\.\d+)?$/, 'Not valid')
-			.required(),
-		max: string()
-			.matches(/^\d+(\.\d+)?$/, 'Not valid')
-			.required(),
-	}),
+ 
+	
 });
