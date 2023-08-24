@@ -101,7 +101,7 @@ const Header = () => {
               >
                 <Icon type="active" unread={false} icon={profile} />
                 <p className="font-sans text-secondary text-sm font-semibold">
-                  {user?.name || "User"}
+                  {user?.fullName || "User"}
                 </p>
               </Link>
             </div>

@@ -14,7 +14,7 @@ export const support = {
             message: "Please enter a message"
         }
     },
-    allSupports: {
+    allSupport: {
         method: "GET",
         uri: "support",
         suggestions: {
@@ -42,6 +42,17 @@ export const support = {
     updateSupport: {
         method: "PATCH",
         uri: "support",
+        params: {
+            id: undefined
+        },
+        suggestions: {
+            raw: "A raw example of the uri: 'support/64d0e49ce38a875d6f3e49ee'.",
+            id: "Please provide an id"
+        }
+    },
+    acceptSupport: {
+        method: "PATCH",
+        uri: "acceptsupport",
         params: {
             id: undefined
         },

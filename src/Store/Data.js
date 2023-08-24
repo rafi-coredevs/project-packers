@@ -1237,55 +1237,6 @@ export const chatCardData = [
     message:
       "t is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters,",
   },
-  {
-    id: 2,
-    status: "close",
-    type: "payment",
-    message:
-      "t is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters,",
-  },
-  {
-    id: 3,
-    status: "pending",
-    type: "payment",
-    message:
-      "t is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters,",
-  },
-  {
-    id: 4,
-    status: "open",
-    type: "refund",
-    message:
-      "t is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters,",
-  },
-  {
-    id: 5,
-    status: "close",
-    type: "account",
-    message:
-      "t is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters,",
-  },
-  {
-    id: 6,
-    status: "open",
-    type: "account",
-    message:
-      "t is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters,",
-  },
-  {
-    id: 7,
-    status: "close",
-    type: "order",
-    message:
-      "t is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters,",
-  },
-  {
-    id: 8,
-    status: "open",
-    type: "account",
-    message:
-      "t is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters,",
-  },
 ];
 
 export const customer = [
