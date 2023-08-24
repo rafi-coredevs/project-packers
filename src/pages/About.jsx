@@ -1,3 +1,4 @@
+import { useTitle } from "../Components/Hooks/useTitle";
 import Breadcrumb from "../Components/UiElements/Breadcrumb/Breadcrumb";
 import Carousel from "../Components/UiElements/Carousel/Carousel";
 import Heading from "../Components/UiElements/Heading/Heading";
@@ -6,6 +7,7 @@ import about from "../assets/Image/about.png";
 import about1 from "../assets/Image/about1.png";
 import about2 from "../assets/Image/about2.png";
 const About = () => {
+  useTitle("About");
   return (
     <main>
       <Breadcrumb />
@@ -56,23 +58,22 @@ const About = () => {
             <h4 className="text-[32px] font-semibold ">Our Values</h4>
             <p className="text-[#475569]">
               It’s been named as one of the Most Innovative Companies in 2019 by
-              “Fast Company”. <br /> <br /> The digital transformation journey started back in
-              2015, when KW decided to reposition itself as a tech company. The
-              company invested heavily in its own software, the cloud, and AI.
-              It has scooped up top talent from the market and created its own
-              Labs division, KW Labs. KW Labs acts as the innovation hub of
-              Keller Williams, working in a similar fashion to Google and
-              Amazon. <br /> <br /> To stay ahead of competitors, Keller Williams have also
-              undertaken one of the most ambitious projects in the industry – to
-              leverage their data to boost artificial intelligence-powered
-              technology.
+              “Fast Company”. <br /> <br /> The digital transformation journey
+              started back in 2015, when KW decided to reposition itself as a
+              tech company. The company invested heavily in its own software,
+              the cloud, and AI. It has scooped up top talent from the market
+              and created its own Labs division, KW Labs. KW Labs acts as the
+              innovation hub of Keller Williams, working in a similar fashion to
+              Google and Amazon. <br /> <br /> To stay ahead of competitors,
+              Keller Williams have also undertaken one of the most ambitious
+              projects in the industry – to leverage their data to boost
+              artificial intelligence-powered technology.
             </p>
           </div>
         </div>
         <div className="mx-auto">
-
-        <Heading title="Our users love  Project Packers" />
-        <Carousel data={carousel} />
+          <Heading title="Our users love  Project Packers" />
+          <Carousel data={carousel} />
         </div>
       </div>
     </main>

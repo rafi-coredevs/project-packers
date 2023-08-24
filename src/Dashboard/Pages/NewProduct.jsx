@@ -17,8 +17,10 @@ import { productSchema } from "../../Util/ValidationSchema";
 import { useEffect, useState } from "react";
 
 import removeEmptyFields from "../../Util/removeEmptyFields";
+import { useTitle } from "../../Components/Hooks/useTitle";
 
 const NewProduct = () => {
+  useTitle("New Product")
   const { productId } = useParams();
   const [categories, setCategories] = useState([]);
   const [subCategories, setSubcategories] = useState([]);

@@ -5,23 +5,29 @@ import Breadcrumb from "../Components/UiElements/Breadcrumb/Breadcrumb";
 import GalleryCard from "../Components/UiElements/GalleryCard/GalleryCard";
 import { useEffect, useState } from "react";
 import { terminal } from "../contexts/terminal/Terminal";
+import { useTitle } from "../Components/Hooks/useTitle";
 
 const Product = () => {
+  useTitle("Products");
   const product = useLoaderData();
-  
-  const [relatedProduct, setrelatedProduct] = useState([]);
-  useEffect(()=> {
-    terminal.request({ name: 'allProduct', query: { category: product?.category?.id, subcategory: product?.subcategory}})
-    .then(res=> {
-      setrelatedProduct(res.docs.filter(item=> item.id!==product.id))
-     
-    })
-  },[product]);
- console.log(relatedProduct);
-  const requsetItemHandler = () => {
 
-  }
- 
+  const [relatedProduct, setrelatedProduct] = useState([]);
+  useEffect(() => {
+    terminal
+      .request({
+        name: "allProduct",
+        query: {
+          category: product?.category?.id,
+          subcategory: product?.subcategory,
+        },
+      })
+      .then((res) => {
+        setrelatedProduct(res.docs.filter((item) => item.id !== product.id));
+      });
+  }, [product]);
+  console.log(relatedProduct);
+  const requsetItemHandler = () => {};
+
   return (
     <>
       <main>
@@ -35,11 +41,9 @@ const Product = () => {
               <PriceCard
                 type={"product"}
                 price={product?.price + product?.tax + product?.fee}
-                source={new URL(product?.link).hostname.replace(/^www\./, '') }
+                source={new URL(product?.link).hostname.replace(/^www\./, "")}
                 origin={product?.origin}
-                arrival={
-                  '1 - 2 weeks'
-                }
+                arrival={"1 - 2 weeks"}
                 onSubmit={requsetItemHandler}
               />
             </div>

@@ -1,6 +1,3 @@
-/**
- * 
- */
 
 import { useState } from "react";
 import StaffCard from "../Components/StaffCard/StaffCard";
@@ -8,8 +5,10 @@ import Button from "../Components/UiElements/Button/Button";
 import Heading from "../Components/UiElements/Heading/Heading";
 import Input from "../Components/UiElements/Input/Input";
 import Modal from "../../Components/UiElements/Modal/Modal";
+import { useTitle } from "../../Components/Hooks/useTitle";
 
 const Staff = () => {
+  useTitle("Staff");
   const [modal, setModal] = useState(false);
   const submitHandler = () => {
     console.log("update clicked");
@@ -139,7 +138,7 @@ const Staff = () => {
               id=""
             />
             <label htmlFor="" className="text-[#4F4F4F] font-normal">
-            Product upload and edit
+              Product upload and edit
             </label>
           </div>
           <div className="space-x-2">
@@ -150,7 +149,7 @@ const Staff = () => {
               id=""
             />
             <label htmlFor="" className="text-[#4F4F4F] font-normal">
-            Order management 
+              Order management
             </label>
           </div>
           <div className="space-x-2">
@@ -161,12 +160,11 @@ const Staff = () => {
               id=""
             />
             <label htmlFor="" className="text-[#4F4F4F] font-normal">
-            Request management  
+              Request management
             </label>
           </div>
           <div className="text-end">
-
-          <Button style="green">Save & Exit</Button>
+            <Button style="green">Save & Exit</Button>
           </div>
         </div>
       </Modal>

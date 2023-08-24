@@ -8,87 +8,88 @@ import filter from "../../assets/icons/cd-filter.svg";
 import sort from "../../assets/icons/cd-arrow-data-transfer-vertical-round.svg";
 import search from "../../assets/icons/cd-search2.svg";
 import { discountData } from "../../Store/Data";
+import { useTitle } from "../../Components/Hooks/useTitle";
 
 const Discount = () => {
-    const [active, setActive] = useState("all");
-    const [tableData] = useState(discountData);
-  
-    const navigate = useNavigate()
-    const tableButtonHandler = (value) => {
-      setActive(value);
-      console.log(value);
-    };
-    
-    return (
-      <div className="h-full px-5 ">
-        <Heading title="Discount">
-          <Button style="primary" onClick={()=> navigate('new-discount')}>
-           Add Coupon
-          </Button>
-        </Heading>
-        <div className="grid grid-cols-3 gap-5 py-5">
-          <div className="col-span-3 sm:col-span-3">
-            <div className="w-full bg-white p-5 border border-[#0000001f] rounded-md">
-              <div className="flex justify-between">
-                <div className="py-2 my-auto">
-                  <button
-                    onClick={() => tableButtonHandler("all")}
-                    className={`py-2 px-3 text-[#475569] text-xs font-semibold ${
-                      active === "all" ? "bg-[#CFF6EF] rounded" : "bg-transparent"
-                    }`}
-                  >
-                    All
-                  </button>
-                  <button
-                    onClick={() => tableButtonHandler("active")}
-                    className={`py-2 px-3 text-[#475569] text-xs font-semibold ${
-                      active === "active"
-                        ? "bg-[#CFF6EF] rounded"
-                        : "bg-transparent"
-                    }`}
-                  >
-                    Active
-                  </button>
-                  <button
-                    onClick={() => tableButtonHandler("draft")}
-                    className={`py-2 px-3 text-[#475569] text-xs font-semibold ${
-                      active === "draft"
-                        ? "bg-[#CFF6EF] rounded"
-                        : "bg-transparent"
-                    }`}
-                  >
-                    Draft
-                  </button>
-                  <button
-                    onClick={() => tableButtonHandler("archived")}
-                    className={`py-2 px-3 text-[#475569] text-xs font-semibold ${
-                      active === "archived"
-                        ? "bg-[#CFF6EF] rounded"
-                        : "bg-transparent"
-                    }`}
-                  >
-                    Archived
-                  </button>
-         
-                </div>
-                <div className="py-2 flex gap-1">
-                  <Input type="text" placeholder="Search" styles="secondary">
-                    <img src={search} alt="" />
-                  </Input>
-                  <button className="border border-[#0000001f] p-2  ">
-                    <img className="opacity-70" src={filter} alt="" />
-                  </button>
-                  <button className="border border-[#0000001f] p-2  ">
-                    <img className="opacity-70" src={sort} alt="" />
-                  </button>
-                </div>
+  useTitle("Active Discounts");
+  const [active, setActive] = useState("all");
+  const [tableData] = useState(discountData);
+
+  const navigate = useNavigate();
+  const tableButtonHandler = (value) => {
+    setActive(value);
+    console.log(value);
+  };
+
+  return (
+    <div className="h-full px-5 ">
+      <Heading title="Discount">
+        <Button style="primary" onClick={() => navigate("new-discount")}>
+          Add Coupon
+        </Button>
+      </Heading>
+      <div className="grid grid-cols-3 gap-5 py-5">
+        <div className="col-span-3 sm:col-span-3">
+          <div className="w-full bg-white p-5 border border-[#0000001f] rounded-md">
+            <div className="flex justify-between">
+              <div className="py-2 my-auto">
+                <button
+                  onClick={() => tableButtonHandler("all")}
+                  className={`py-2 px-3 text-[#475569] text-xs font-semibold ${
+                    active === "all" ? "bg-[#CFF6EF] rounded" : "bg-transparent"
+                  }`}
+                >
+                  All
+                </button>
+                <button
+                  onClick={() => tableButtonHandler("active")}
+                  className={`py-2 px-3 text-[#475569] text-xs font-semibold ${
+                    active === "active"
+                      ? "bg-[#CFF6EF] rounded"
+                      : "bg-transparent"
+                  }`}
+                >
+                  Active
+                </button>
+                <button
+                  onClick={() => tableButtonHandler("draft")}
+                  className={`py-2 px-3 text-[#475569] text-xs font-semibold ${
+                    active === "draft"
+                      ? "bg-[#CFF6EF] rounded"
+                      : "bg-transparent"
+                  }`}
+                >
+                  Draft
+                </button>
+                <button
+                  onClick={() => tableButtonHandler("archived")}
+                  className={`py-2 px-3 text-[#475569] text-xs font-semibold ${
+                    active === "archived"
+                      ? "bg-[#CFF6EF] rounded"
+                      : "bg-transparent"
+                  }`}
+                >
+                  Archived
+                </button>
               </div>
-              <Table type="discount" data={tableData} />
+              <div className="py-2 flex gap-1">
+                <Input type="text" placeholder="Search" styles="secondary">
+                  <img src={search} alt="" />
+                </Input>
+                <button className="border border-[#0000001f] p-2  ">
+                  <img className="opacity-70" src={filter} alt="" />
+                </button>
+                <button className="border border-[#0000001f] p-2  ">
+                  <img className="opacity-70" src={sort} alt="" />
+                </button>
+              </div>
             </div>
+            <Table type="discount" data={tableData} />
           </div>
         </div>
       </div>
-    );
+    </div>
+  );
 };
 
 export default Discount;

@@ -7,13 +7,14 @@ import Faq from "../Components/Faq/Faq";
 import { carousel, brand } from "../Store/Data";
 import { useEffect, useState } from "react";
 import { terminal } from "../contexts/terminal/Terminal";
+import { useTitle } from "../Components/Hooks/useTitle";
 
 const Home = () => {
+  useTitle("Home")
   const [products, setProducts] = useState([]);
   useEffect(() => {
     terminal.request({name: 'allProduct', queries : { limit: 8}})
     .then(res=> {
-      console.log(res);
       setProducts(res?.docs);
     })
    

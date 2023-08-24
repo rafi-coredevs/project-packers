@@ -1,8 +1,10 @@
+import { useTitle } from "../../Components/Hooks/useTitle";
 import Button from "../Components/UiElements/Button/Button";
 import Heading from "../Components/UiElements/Heading/Heading";
 import Input from "../Components/UiElements/Input/Input";
 
 const NewCustomer = () => {
+  useTitle("New Customer");
   const submitHandler = () => {
     console.log("update clicked");
   };

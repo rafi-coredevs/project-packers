@@ -6,7 +6,10 @@ import Input from "../Components/UiElements/Input/Input";
 import search from "../../assets/icons/cd-search2.svg";
 import remove from "../../assets/icons/cd-cancel.svg";
 import { products } from "../../Store/Data";
+import { useTitle } from "../../Components/Hooks/useTitle";
+// 
 const OrderDetails = () => {
+  useTitle("Order Details");
   const { orderId } = useParams();
   const updateHandler = () => {
     console.log("update clicked");

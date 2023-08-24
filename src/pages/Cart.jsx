@@ -7,8 +7,10 @@ import { terminal } from '../contexts/terminal/Terminal';
 import { useCartCtx } from '../contexts/cart/CartContext';
 import CartCard from '../Components/UiElements/CartItem/CartCard';
 import toaster from '../Util/toaster';
+import { useTitle } from '../Components/Hooks/useTitle';
 
 const Cart = () => {
+  useTitle("My Cart")
   let sellerTakes = 0;
   let tax = 0;
   let fee = 0;
@@ -146,7 +148,10 @@ const Cart = () => {
                     totalPrice += (request?.request?.price + request?.request?.tax + request?.request?.fee) * request.requestQuantity
                     return <CartCard
                       key={request?.request?.id}
+<<<<<<< HEAD
                       updateQuantity={updateQuantity}
+=======
+>>>>>>> origin/masumk
                       ProductQuantity={request?.requestQuantity}
                       productImg={request?.request?.images[0]}
                       price={(request?.request?.price + request?.request?.tax + request?.request?.fee) * request.requestQuantity}

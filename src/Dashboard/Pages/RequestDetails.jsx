@@ -5,7 +5,10 @@ import Input from "../Components/UiElements/Input/Input";
 import globe from "../../assets/icons/cd-internet.svg";
 import ImageUploader from "../../Components/UiElements/ImageUploader/ImageUploader";
 import SideCard from "../Components/UiElements/SideCard/SideCard";
+import { useTitle } from "../../Components/Hooks/useTitle";
+//
 const RequestDetails = () => {
+  useTitle("Request Detail");
   const { requestId } = useParams();
   const updateHandler = () => {
     console.log("update clicked");
@@ -100,8 +103,16 @@ const RequestDetails = () => {
         <div className="col-span-3 sm:col-span-1 h-fit grid gap-5 border border-[#0000001c] divide-y  rounded-lg ">
           <SideCard types="customer" name="Ramjan Ali Anik" />
           <SideCard types="contact" email="example@gamil.com" />
-          <SideCard types="address" title="Shipping Address" address="No Address" />
-          <SideCard types="address" title="Billing Address" address="No Address" />
+          <SideCard
+            types="address"
+            title="Shipping Address"
+            address="No Address"
+          />
+          <SideCard
+            types="address"
+            title="Billing Address"
+            address="No Address"
+          />
         </div>
       </div>
     </div>

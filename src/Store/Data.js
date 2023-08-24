@@ -601,7 +601,6 @@ export const brand = [
   "https://i.dummyjson.com/data/products/1/thumbnail.jpg",
   "https://i.dummyjson.com/data/products/1/thumbnail.jpg",
   "https://i.dummyjson.com/data/products/1/thumbnail.jpg",
-
 ];
 export const posts = [
   {
@@ -1574,53 +1573,62 @@ export const paymentList = [
 
 export const chatData = [
   {
-  type: 'customer',
-  date: '4 aug',
-  message: 'lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor'
-},
-{
-  type: 'user',
-  date: '4 aug',
-  message: 'lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor'
-},
-{
-  type: 'customer',
-  date: '4 aug',
-  message: 'lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor'
-},
-{
-  type: 'customer',
-  date: '4 aug',
-  message: 'lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor'
-},
-{
-  type: 'user',
-  date: '4 aug',
-  message: 'lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor'
-},
-{
-  type: 'customer',
-  date: '4 aug',
-  message: 'lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor'
-},
-{
-  type: 'user',
-  date: '4 aug',
-  message: 'lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor'
-},
-{
-  type: 'customer',
-  date: '4 aug',
-  message: 'lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor'
-},
-{
-  type: 'customer',
-  date: '4 aug',
-  message: 'lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor'
-},
-{
-  type: 'user',
-  date: '4 aug',
-  message: 'lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor'
-},
-]
+    type: "customer",
+    date: "4 aug",
+    message: "lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor",
+  },
+  {
+    type: "user",
+    date: "4 aug",
+    message: "lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor",
+  },
+  {
+    type: "customer",
+    date: "4 aug",
+    message: "lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor",
+  },
+  {
+    type: "customer",
+    date: "4 aug",
+    message: "lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor",
+  },
+  {
+    type: "user",
+    date: "4 aug",
+    message: "lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor",
+  },
+  {
+    type: "customer",
+    date: "4 aug",
+    message: "lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor",
+  },
+  {
+    type: "user",
+    date: "4 aug",
+    message: "lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor",
+  },
+  {
+    type: "customer",
+    date: "4 aug",
+    message: "lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor",
+  },
+  {
+    type: "customer",
+    date: "4 aug",
+    message: "lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor",
+  },
+  {
+    type: "user",
+    date: "4 aug",
+    message: "lorem ipsum dolor lorem ipsum dolor lorem ipsum dolor",
+  },
+];
+
+export const suppoortArticles = [
+  "How do I pay for items?",
+  "	What is Backpack? How do I order items?",
+  "How do I pay for items?",
+  "	What is Backpack? How do I order items?",
+  "	What is Backpack? How do I order items?",
+  "	What is Backpack? How do I order items?",
+];

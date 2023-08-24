@@ -9,8 +9,9 @@ import Input from "../Components/UiElements/Input/Input";
 import search from "../../assets/icons/cd-search2.svg";
 import { orderTable } from "../../Store/Data";
 import { adminCard } from "../../Store/Data";
-import Overview from "../Components/Overview/Overview";
+import { useTitle } from "../../Components/Hooks/useTitle";
 const AllOrders = () => {
+  useTitle("Order list");
   const [active, setActive] = useState("all");
   const [tableData] = useState(orderTable);
 

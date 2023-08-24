@@ -9,7 +9,10 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getApi } from "../../Util/apiCall";
 import Overview from "../Components/Overview/Overview";
+import { useTitle } from "../../Components/Hooks/useTitle";
+// 
 const DashboardHome = () => {
+  useTitle("Dashboard")
   const [active, setActive] = useState("order");
   const [tableData] = useState(orderTable);
 

@@ -4,8 +4,10 @@ import { LazyProductCard, ProductCard } from "../Components/UiElements/ProductCa
 import Category from "../Components/UiElements/Category/Category";
 import Paginate from "../Components/UiElements/Paginate/Paginate";
 import { terminal } from "../contexts/terminal/Terminal";
+import { useTitle } from "../Components/Hooks/useTitle";
 
 const Shop = () => {
+  useTitle("Trending Items");
   const [data, setData] = useState({});
   const [categories, setCategories] = useState(null)
   const [loading, setLoading] = useState(true);
