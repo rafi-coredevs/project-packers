@@ -1,189 +1,330 @@
-import { useState } from "react";
-import PriceCard from "../Components/PriceCard/PriceCard";
-import Breadcrumb from "../Components/UiElements/Breadcrumb/Breadcrumb";
-import Input from "../Components/UiElements/Input/Input";
-import Modal from "../Components/UiElements/Modal/Modal";
-import icon from "../assets/icons/product-ok.svg";
-import Button from "../Components/UiElements/Buttons/Button";
-const cartItems = [
-  {
-    id: 1,
-    title: "OTTERBOX COMMUTER SERIES Case for iPhone 12 & iPhone 12 Pro",
-    price: 699,
-    quantity: 5,
-  },
-  {
-    id: 2,
-    title: "OTTERBOX COMMUTER SERIES Case for iPhone 12 & iPhone 12 Pro",
-    price: 699,
-    quantity: 4,
-  },
-  {
-    id: 2,
-    title: "OTTERBOX COMMUTER SERIES Case for iPhone 12 & iPhone 12 Pro",
-    price: 699,
-    quantity: 6,
-  },
-];
+import { useEffect, useState } from 'react';
+// import { useForm } from 'react-hook-form';
+import { useSearchParams } from 'react-router-dom';
+import { terminal } from '../contexts/terminal/Terminal';
+import toaster from '../Util/toaster';
+import { useTitle } from '../Components/Hooks/useTitle';
+
 const Checkout = () => {
-  const [modal, setModal] = useState(false);
-  const modalHandler = () => {
-    setModal(false);
+  useTitle("My Checkout")
+  let totalPrice = 0;
+  const [cart, setCart] = useState();
+  const [discount, setDiscount] = useState();
+  const [price, setPrice] = useState()
+  const [inside, setInside] = useState(true)
+  const [orderModal, setOrderModal] = useState(false);
+  const [searchParams] = useSearchParams();
+  const orderqueries = searchParams.get('order');
+  let orderstatus = orderqueries?.split('?')[0]
+  let orderid = orderqueries?.split('?')[1]
+
+  useEffect(() => {
+    terminal.request({ name: 'getCart' }).then(data => {
+      if (data.id) {
+        setCart(data);
+        if (data.discountApplied) setDiscount(data.discountApplied);
+      }
+    })
+    if (orderstatus === 'success') {
+      setOrderModal(true)
+    }
+  }, [orderstatus]);
+
+  useEffect(() => {
+    let discountItemsTotal = 0;
+    let nondiscountItemsTotal = 0;
+    let discountamount = 0;
+    let totalPrice = 0;
+    if (cart) {
+      cart.products.forEach(product => {
+        const total = (product.product.price + product.product.tax + product.product.fee) * product.productQuantity;
+        if (discount?.code && product.product.category.toString() === discount.category && product.product.subcategory.toString() === discount.subcategory) {
+          discountItemsTotal += total;
+        } else {
+          nondiscountItemsTotal += total;
+        }
+      });
+      discountamount = discount?.percentage ? (discountItemsTotal * discount.percentage) / 100 : discount?.amount;
+      totalPrice = discountamount ? totalPrice + nondiscountItemsTotal - discountamount : totalPrice + nondiscountItemsTotal;
+      totalPrice = inside ? totalPrice + 99 : totalPrice + 150
+      setPrice(totalPrice);
+    }
+  }, [cart, discount, inside]);
+
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = (data) => {
+    const body = {
+      email: data.email,
+      phone: data.phone,
+      alternativephone: data.alternativephone?.length > 4 ? data.alternativephone : null,
+      instructions: data?.deliveryInstruction ? data.deliveryInstruction : null,
+      insideDhaka: data.insideDhaka,
+      shippingaddress: {
+        name: data.firstName + ' ' + data.lastName,
+        address: data.address,
+        city: data.city,
+        area: data.area,
+        zip: data.zipCode,
+      }
+    }
+    terminal.request({ name: 'registerOrder', body }).then(data => {
+    if (data.url) { window.location.replace(data.url); reset(); }
+      else {
+        toaster({ type: 'error', message: data.message })
+      }
+    })
+
   };
-  const submitHandler = () => {
-    setModal(true);
-  };
+
   return (
-    <>
-      <Breadcrumb />
-      <div className="container mx-auto py-12 ">
-        <div className="grid grid-cols-5 gap-8">
-          <div className="col-span-5 sm:col-span-3 px-5 sm:px-0">
-            <div className="mb-6">
-              <h3 className="text-secondary font-semibold mb-6">
-                Contact Information
-              </h3>
-              <div className="grid gap-4">
-                <Input
-                  styles="primary"
-                  type="email"
-                  label="Email Address."
-                  placeholder="Enter your Email Address."
-                  border
-                />
-                <Input
-                  styles="primary"
-                  type="tel"
-                  label="Phone Number."
-                  placeholder="Enter your Phone Number"
-                  border
-                  required
-                />
-                <Input
-                  styles="primary"
-                  type="tel"
-                  label="Alternative phone number (Optional)."
-                  placeholder="Enter your Phone Number"
-                  border
-                />
-              </div>
-            </div>
-            <div className="">
-              <h3 className="text-secondary font-semibold mb-6">
-                Shipping Address.
-              </h3>
-              <div className="grid gap-4">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <Input
-                    styles="primary"
-                    type="text"
-                    label="First Name"
-                    placeholder="Enter your first name."
-                    border
-                  />
-                  <Input
-                    styles="primary"
-                    type="text"
-                    label="Last Name"
-                    placeholder="Enter your last name."
-                    border
-                  />
-                </div>
-                <Input
-                  styles="primary"
-                  type="text"
-                  label="Address"
-                  placeholder="Enter your Address."
-                  border
-                />
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                  <Input
-                    styles="primary"
-                    type="text"
-                    label="City"
-                    placeholder="City"
-                    border
-                  />
-                  <Input
-                    styles="primary"
-                    type="text"
-                    label="Area"
-                    placeholder="Area"
-                    border
-                  />
-                  <Input
-                    styles="primary"
-                    type="number"
-                    label="Zip Code"
-                    placeholder="Zip Code"
-                    border
-                  />
-                </div>
-                <div className="w-full">
-                  <label className="block pb-3">
-                    Delivery Instructions (Optional)
-                  </label>
-                  <textarea
-                    className="border  w-full text-secondary placeholder:text-secondary p-2"
-                    placeholder="Write Here..."
-                    rows={8}
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="col-span-5 sm:col-span-2">
-            <PriceCard
-              onSubmit={submitHandler}
-              type="checkout"
-              products={cartItems}
-              estimated={30010}
-            />
-          </div>
-        </div>
-      </div>
-      <Modal show={modal} onClose={modalHandler}>
-        <div className="flex flex-col gap-5">
-          <div className="p-8 flex w-full items-start flex-col gap-10">
-            <img className="w-fit h-auto" src={icon} alt="" />
-            <div className="text-start grid gap-3">
-              <h5 className="text-xl font-semibold text-secondary mb-2">
-                Thanks your for your order.
-              </h5>
-              <p className="text-sm font-normal max-w-[360px] text-[#00000386]">
-                we sent an order confirmation to:
-                <span className="text-secondary font-semibold block">
-                  johnsmith@gmail.com
-                </span>
-              </p>
-              <p className="text-sm font-normal max-w-[360px] text-[#00000386]">
-                Your order number is:
-                <span className="text-secondary font-semibold block">
-                  #343895
-                </span>
-              </p>
-              <p className="text-sm font-normal max-w-[360px] text-[#00000386]">
-                Your order will deliver on:
-                <span className="text-secondary font-semibold block">
-                  Thursday, Nov 23 - Saturday, Nov 29
-                </span>
-              </p>
+    <></>
+    // <div className='md:min-h-screen mt-12 mb-20'>
+    //   <form
+    //     onSubmit={handleSubmit(onSubmit)}
+    //     className='wrapper flex flex-col md:flex-row  gap-[30px] justify-between'
+    //   >
+    //     <div className='w-full md:w-[691px]'>
+    //       <h3 className='mb-6 text-lg font-medium text-[#0D3D4B]'>
+    //         Contact Information
+    //       </h3>
+    //       <div className='space-y-4'>
+    //         {/* Email address */}
+    //         <InputField
+    //           placeholder='Enter your email address'
+    //           name='email'
+    //           type='email'
+    //           errors={errors}
+    //           register={register}
+    //           required={true}
+    //           label='Email Address'
+    //           neededFor='homepage'
+    //         />
+    //         {/* Phone number */}
+    //         <InputField
+    //           placeholder='Enter your phone Number'
+    //           name='phone'
+    //           label='Phone Number'
+    //           register={register}
+    //           required={true}
+    //           errors={errors}
+    //           neededFor='homepage'
+    //         />
+    //         {/* Alternative phone number (Optional) */}
+    //         <InputField
+    //           placeholder='Enter your phone Number'
+    //           name='alternativephone'
+    //           label='Alternative phone number (Optional)'
+    //           register={register}
+    //           required={true}
+    //           errors={errors}
+    //           neededFor='homepage'
+    //         />
+    //       </div>
 
-              <p className="text-sm font-normal max-w-[360px] text-[#00000386]">
-                to the address:
-                <span className="text-secondary font-semibold block">
-                  3829 Main St.<br /> Los Angeles. CA 90210
-                </span>
-              </p>
-            </div>
-          </div>
+    //       {/* Shipping Address */}
+    //       <h3 className='mb-6 text-lg font-medium text-[#0D3D4B]'>
+    //         Shipping address
+    //       </h3>
+    //       <div className='space-y-4'>
+    //         <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+    //           {/* First Name */}
+    //           <InputField
+    //             placeholder='Enter your first name'
+    //             name='firstName'
+    //             type='text'
+    //             errors={errors}
+    //             register={register}
+    //             required={true}
+    //             label='First Name'
+    //             neededFor='homepage'
+    //           />
+    //           {/* Last Name */}
+    //           <InputField
+    //             placeholder='Enter your last name'
+    //             name='lastName'
+    //             type='text'
+    //             errors={errors}
+    //             register={register}
+    //             required={true}
+    //             label='Last Name'
+    //             neededFor='homepage'
+    //           />
+    //         </div>
+    //         {/* address */}
+    //         <InputField
+    //           placeholder='Enter your address'
+    //           name='address'
+    //           type='text'
+    //           errors={errors}
+    //           register={register}
+    //           required={true}
+    //           label='Address'
+    //           neededFor='homepage'
+    //         />
 
-          <Button onClick={submitHandler} type="primary" full>
-            Keep Shopping
-          </Button>
-        </div>
-      </Modal>
-    </>
+    //         <div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
+    //           {/* city */}
+    //           <InputField
+    //             placeholder='city'
+    //             name='city'
+    //             type='text'
+    //             errors={errors}
+    //             register={register}
+    //             required={true}
+    //             label='City'
+    //             neededFor='homepage'
+    //           />
+    //           {/* area */}
+    //           <InputField
+    //             placeholder='area'
+    //             name='area'
+    //             type='text'
+    //             errors={errors}
+    //             register={register}
+    //             required={true}
+    //             label='Area'
+    //             neededFor='homepage'
+    //           />
+    //           {/* Zip Code */}
+    //           <InputField
+    //             placeholder='zip code'
+    //             name='zipCode'
+    //             type='text'
+    //             errors={errors}
+    //             register={register}
+    //             required={true}
+    //             label='Zip Code'
+    //             neededFor='homepage'
+    //             className="appearance-none"
+    //           />
+    //         </div>
+    //         {/* Delivery Instruction */}
+    //         <div className='flex flex-col'>
+    //           <label htmlFor='deliveryInstruction'>
+    //             Delivery Instruction (Optional)
+    //           </label>
+    //           <textarea
+    //             name='deliveryInstruction'
+    //             {...register('deliveryInstruction')}
+    //             id='deliveryInstruction'
+    //             cols='30'
+    //             rows='5'
+    //             className={`rounded- [4px] p-[14px_20px] border border-slate-200  outline-none text-[#124E58]`}
+    //           ></textarea>
+    //         </div>
+    //       </div>
+    //     </div>
+    //     {/* right side */}
+    //     <div className='w-full md:w-[492px] p-5 border rounded-[8px] h-full '>
+    //       <h3 className='text-xl font-medium text-[#0D3D4B] py-4 border-b'>
+    //         Your Order
+    //       </h3>
+    //       {/* Products details */}
+    //       <div>
+    //         <div className='flex items-center justify-between border-b pt-4 pb-2 text-base font-semibold '>
+    //           <p className='text-start'>Product</p>
+    //           <p className='text-end'>Subtotal</p>
+    //         </div>
+    //         {
+    //           cart?.products?.length > 0 && cart?.products?.map(product => <div key={product.product.id} className='flex items-center justify-between border-b py-4 text-base text-slate-600 font-medium'>
+    //             <p className='text-start'>{product.product.name}</p>
+    //             <p className='text-end'>৳ {(product?.product?.price + product?.product?.tax + product?.product?.fee) * product.productQuantity} </p>
+    //           </div>
+    //           )
+    //         }
+    //         {
+    //           cart?.requests?.length > 0 && cart?.requests?.map(request => {
+    //             totalPrice += (request?.request?.price + request?.request?.tax + request?.request?.fee) * request.requestQuantity
+    //             return <div key={request.request.id} className='flex items-center justify-between border-b py-4 text-base text-slate-600 font-medium'>
+    //               <p className='text-start'>{request.request.name}</p>
+    //               <p className='text-end'>৳ {(request?.request?.price + request?.request?.tax + request?.request?.fee) * request.requestQuantity} </p>
+    //             </div>
+    //           })
+    //         }
+    //         {
+    //           discount?.code &&
+    //           <div className='flex items-center justify-between border-b py-4 text-base text-slate-600 font-medium'>
+    //             <p className='text-start'>{discount.code}</p>
+    //             <p className='text-end'>{discount.amount ? `৳ ${discount.amount} tk` : discount.percentage}</p>
+    //           </div>
+
+    //         }
+    //         {/* Subtotal */}
+    //         <div className='flex items-center justify-between border-b py-4 text-base text-slate-600 font-medium'>
+    //           <p className='text-start'>Subtotal</p>
+    //           <p className='text-end text-black'>৳ {price + totalPrice}tk </p>
+    //         </div>
+    //       </div>
+    //       <h4 className='flex items-center justify-between pt-4 text-base text-slate-600 font-medium'>
+    //         Shipping
+    //       </h4>
+    //       {/* Radio Buttons */}
+    //       <div className=' border-b py-4 text-base text-slate-600 font-medium'>
+    //         {/* Radio Buttons for inside dhaka */}
+    //         <div className='flex gap-2'>
+    //           <input
+    //             type='radio'
+    //             id='insideDhaka'
+    //             checked={inside}
+    //             value={true}
+    //             onClick={() => { setInside(true) }}
+    //             {...register('insideDhaka')}
+    //           />
+    //           <label
+    //             htmlFor='insideDhaka'
+    //             className='flex justify-between items-center w-full '
+    //           >
+    //             <span>Inside Dhaka</span>
+    //             <span>99tk</span>
+    //           </label>
+    //         </div>
+
+    //         {/* Radio Buttons for outside dhaka */}
+    //         <div className='flex gap-2'>
+    //           <input
+    //             type='radio'
+    //             id='outsideDhaka'
+    //             checked={!inside}
+    //             value={false}
+    //             onClick={() => { setInside(false) }}
+    //             {...register('insideDhaka')}
+    //           />
+    //           <label
+    //             htmlFor='outsideDhaka'
+    //             className='flex justify-between items-center w-full '
+    //           >
+    //             <span>Outside Dhaka</span>
+    //             <span>150tk</span>
+    //           </label>
+    //         </div>
+    //       </div>
+    //       {/* Estimated Total */}
+    //       <div className='flex items-center justify-between py-4 text-base text-black font-medium'>
+    //         <p className='text-start'>Estimated total</p>
+    //         <p className='text-end text-xl font-bold'>৳ {price + totalPrice}tk </p>
+    //       </div>
+    //       <Button
+    //         buttonType='secondaryButton'
+    //         name='Continue to payment'
+    //         className='w-full py-3 mt-8 px-[10px] '
+    //       >
+    //         <input type='submit' />
+    //       </Button>
+    //     </div>
+    //   </form>
+    //   {/* <Modal show={modal} onClose={modalHandler}>
+    //     <OrderSuccessModal
+    //       id={orderid.split('=')[1]}
+    //       setShowModal={modalHandler}
+    //     />
+    //   </Modal> */}
+    // </div>
   );
 };
 

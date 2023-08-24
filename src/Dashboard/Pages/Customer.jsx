@@ -8,11 +8,10 @@ import filter from "../../assets/icons/cd-filter.svg";
 import sort from "../../assets/icons/cd-arrow-data-transfer-vertical-round.svg";
 import search from "../../assets/icons/cd-search2.svg";
 import { customer } from "../../Store/Data";
-/**
- * 
- * @returns 
- */
+import { useTitle } from "../../Components/Hooks/useTitle";
+//
 const Customer = () => {
+  useTitle("Customers");
   const [active, setActive] = useState("all");
   const [tableData] = useState(customer);
 

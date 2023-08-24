@@ -2,12 +2,9 @@ import BlogCard from "../Components/UiElements/BlogCard/BlogCard";
 import Breadcrumb from "../Components/UiElements/Breadcrumb/Breadcrumb";
 import { posts } from "../Store/Data";
 import Paginate from "../Components/UiElements/Paginate/Paginate";
-/**
- *
- * @returns returns 20 blog posts
- * @concern @remove  is slice neccessary ?
- */
+import { useTitle } from "../Components/Hooks/useTitle";
 const Blog = () => {
+  useTitle("Latest Blog Posts");
   return (
     <>
       <Breadcrumb />

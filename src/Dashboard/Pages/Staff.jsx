@@ -1,16 +1,18 @@
+/**
+ *
+ */
+
 import { useState } from "react";
 import StaffCard from "../Components/StaffCard/StaffCard";
 import Button from "../Components/UiElements/Button/Button";
 import Heading from "../Components/UiElements/Heading/Heading";
 import Input from "../Components/UiElements/Input/Input";
 import Modal from "../../Components/UiElements/Modal/Modal";
-/**
- *
- * @returns JSX: tabular view of staff members with view filter options
- *
- */
+import { useTitle } from "../../Components/Hooks/useTitle";
+
 const Staff = () => {
-  const [modal, setModal] = useState(true);
+  useTitle("Staff");
+  const [modal, setModal] = useState(false);
   const submitHandler = () => {
     console.log("update clicked");
   };
@@ -112,7 +114,6 @@ const Staff = () => {
           </form>
         </div>
       </div>
-      {/* modal that defines user access after a new user been added */}
       <Modal show={modal} onClose={() => setModal(false)}>
         <div className="shadow-sm pb-5">
           <h3 className="font-semibold ">User Access</h3>

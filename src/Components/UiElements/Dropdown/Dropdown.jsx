@@ -47,7 +47,7 @@ const Dropdown = ({ isOpen, onClick, type, title, data }) => {
                       className="cursor-pointer flex gap-3 py-2 border-t border-[#0000001A]"
                     >
                       <div className="h-12 w-12">
-                        {item.type==='gen'? <img src={acc}/>: <img className="bg-[#CFF6EF] p-1 rounded-md" src={prod}/>}
+                        {item.type==='account'? <img src={acc}/>: <img className="bg-[#CFF6EF] p-1 rounded-md" src={prod}/>}
                        
                       </div>
 

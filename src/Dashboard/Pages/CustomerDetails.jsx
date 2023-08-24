@@ -5,12 +5,10 @@ import SideCard from "../Components/UiElements/SideCard/SideCard";
 import arrowLeft from "../../assets/icons/cd-arrow-left-1.svg";
 import { customerDetails } from "../../Store/Data";
 import Table from "../Components/UiElements/Table/Table";
-/**
- *
- * @returns A detailed view of a single customer after selecting from the customer table.
- * @concern @remove  a chunk of commented code apeears to be unuseful.
- */
+import { useTitle } from "../../Components/Hooks/useTitle";
+//
 const CustomerDetails = () => {
+  useTitle("replace-with-customer-name");
   const { customerId } = useParams();
   const updateHandler = () => {
     console.log("update clicked");

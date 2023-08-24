@@ -4,64 +4,46 @@ import Showcase from "../Components/Showcase/Showcase";
 import Breadcrumb from "../Components/UiElements/Breadcrumb/Breadcrumb";
 import GalleryCard from "../Components/UiElements/GalleryCard/GalleryCard";
 import { useEffect, useState } from "react";
-import { getApi, postApi } from "../Util/apiCall";
-import { useDispatch } from "react-redux";
-import { userSignin } from "../Store/userSlice";
-// import Slider from "../Components/UiElements/Slider/Slider";
+import { terminal } from "../contexts/terminal/Terminal";
+import { useTitle } from "../Components/Hooks/useTitle";
 
 const Product = () => {
+  useTitle("Products");
   const product = useLoaderData();
+
   const [relatedProduct, setrelatedProduct] = useState([]);
-  // const dispatch = useDispatch();
-  //  API FETCHING FOR RELATED PRODUCT
-  // useEffect(() => {
-  //   if (product.status !== 200) {
-  //     return <div>Something wents wrong</div>;
-  //   } else {
-  //     getApi(
-  //       `/product?limit=8&paginate=true&category=${product?.data?.category}`
-  //     ).then((res) => {
-  //       if (res.status === 200) {
-  //         setrelatedProduct(res.data.docs);
-  //       } else console.log(res.response.data);
-  //     });
-  //   }
-  // }, []);
-  const requsetItemHandler = () => {
-    // const data = {
-    //   productId: product.data._id,
-    //   quantity: 1,
-    // };
-    // postApi("/user/cart", data).then((res) => {
-    //   if (res.status === 200) {
-    //     successToast("Successfully aded to cart");
-    //     dispatch(userSignin(res.data));
-    //   } else {
-    //     errorToast(res.data);
-    //   }
-    // });
-  };
+  useEffect(() => {
+    terminal
+      .request({
+        name: "allProduct",
+        query: {
+          category: product?.category?.id,
+          subcategory: product?.subcategory,
+        },
+      })
+      .then((res) => {
+        setrelatedProduct(res.docs.filter((item) => item.id !== product.id));
+      });
+  }, [product]);
+  console.log(relatedProduct);
+  const requsetItemHandler = () => {};
+
   return (
     <>
       <main>
-        <Breadcrumb title={product?.data?.name} />
+        <Breadcrumb title={product?.name} />
         <div className="container mx-auto my-12">
           <div className="grid grid-cols-5 px-2 sm:px-0 gap-8">
             <div className="col-span-5 sm:col-span-3">
-              <GalleryCard data={product?.data?.thumbnails} />
+              <GalleryCard data={product?.images} />
             </div>
             <div className="col-span-5 sm:col-span-2">
               <PriceCard
                 type={"product"}
-                price={product?.data?.price}
-                source={product?.data?.whereToBuy}
-                origin={product?.data?.from}
-                arrival={
-                  product?.data?.deliveryTime?.min +
-                  " - " +
-                  product?.data?.deliveryTime?.max +
-                  " days"
-                }
+                price={product?.price + product?.tax + product?.fee}
+                source={new URL(product?.link).hostname.replace(/^www\./, "")}
+                origin={product?.origin}
+                arrival={"1 - 2 weeks"}
                 onSubmit={requsetItemHandler}
               />
             </div>
@@ -81,7 +63,7 @@ const Product = () => {
               description="Get inspired by what people in your city are buying from abroad with the biggest savings"
               data={relatedProduct}
             />
-            {/* <Slider items={products} /> */}
+            {/* <Slider items={relatedProduct} /> */}
           </div>
         </div>
       </main>

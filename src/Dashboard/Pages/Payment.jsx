@@ -7,11 +7,10 @@ import filter from "../../assets/icons/cd-filter.svg";
 import sort from "../../assets/icons/cd-arrow-data-transfer-vertical-round.svg";
 import search from "../../assets/icons/cd-search2.svg";
 import Input from "../Components/UiElements/Input/Input";
-/**
- *
- * @returns  JSX: tabular view of payments of a particular customer.
- */
+import { useTitle } from "../../Components/Hooks/useTitle";
+
 const Payment = () => {
+  useTitle("Payment List");
   const [active, setActive] = useState("all");
   const [tableData] = useState(paymentList);
 

@@ -1,30 +1,20 @@
 import { useState, useEffect, useContext } from "react";
 import ChatCard from "../Components/UiElements/ChatCard/ChatCard";
+
 import ChatBubble from "../Components/UiElements/ChatBubble/ChatBubble";
 import Button from '../Components/UiElements/Button/Button'
 import { getApi, postApi } from "../../Util/apiCall";
-import { SocketContext } from "../../Providers/SocketProviders";
-import { useDispatch, useSelector } from "react-redux";
-import { storeSupportRoom } from "../../Store/userSlice";
-import { storeActiveChat } from "../../Store/supportSlice";
-// 
+import { useTitle } from "../../Components/Hooks/useTitle";
+
 const buttonStyle = {
   active: "bg-secondary text-white",
   deactive: "bg-white text-black",
 };
-/**
- * 
- * @returns 
- */
 const Chat = () => {
+  useTitle("User Support")
   const [chatData,setChatData]= useState([]);
   const [filteredData,setFilteredData]= useState([]);
   const [toggle,setToggle]= useState('all');
-  const { activeChat } = useSelector((state) => state.support);
-  const { supportRoom } = useSelector((state) => state.userInfo);
-  const { socket } = useContext(SocketContext);
-
-  const dispatch = useDispatch();
  
 
  
@@ -32,35 +22,35 @@ const Chat = () => {
   
 
 
-  useEffect(()=>{
-    getApi('/support').then(res=>{
-      setChatData(res.docs);
-    },)
+  // useEffect(()=>{
+  //   getApi('/support').then(res=>{
+  //     setChatData(res.docs);
+  //   },)
 
-  },[]);
+  // },[]);
   useEffect(()=>{
     setFilteredData(chatData);
   },[chatData])
 
-  useEffect(()=>{
-    socket?.emit('joinRoom','supportRoom');
-    Object.keys(supportRoom).forEach(item=>socket?.emit('joinRoom',item));
-    socket?.on('newChat',(data)=>{
-      setChatData(prev=>[data,...prev])
-    });
-    socket?.on('supportChat',(data)=>{
-      if(data.id===activeChat.id){
-        dispatch(storeActiveChat(data))
-      }
-      const index = chatData.findIndex(item=> item.id===data.id);
-      chatData[index]=data;
-      setChatData(prev=>[...prev]);
+  // useEffect(()=>{
+  //   socket?.emit('joinRoom','supportRoom');
+  //   Object.keys(supportRoom).forEach(item=>socket?.emit('joinRoom',item));
+  //   socket?.on('newChat',(data)=>{
+  //     setChatData(prev=>[data,...prev])
+  //   });
+  //   socket?.on('supportChat',(data)=>{
+  //     if(data.id===activeChat.id){
+  //       dispatch(storeActiveChat(data))
+  //     }
+  //     const index = chatData.findIndex(item=> item.id===data.id);
+  //     chatData[index]=data;
+  //     setChatData(prev=>[...prev]);
 
-    })
+  //   })
 
     
 
-  },[socket])
+  // },[socket])
 
   
   

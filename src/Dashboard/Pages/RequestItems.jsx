@@ -7,11 +7,11 @@ import Table from "../Components/UiElements/Table/Table";
 import Input from "../Components/UiElements/Input/Input";
 import { requestTable } from "../../Store/Data";
 import Button from "../Components/UiElements/Button/Button";
-/**
- *
- * @returns  JSX: tabular view of requests made by customer
- */
+import { useTitle } from "../../Components/Hooks/useTitle";
+// 
 const RequestItems = () => {
+  
+  useTitle("Requested Items")
   const [active, setActive] = useState("all");
   const [tableData] = useState(requestTable);
 

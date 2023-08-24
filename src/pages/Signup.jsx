@@ -10,7 +10,10 @@ import CountryCodeSelector from "../Components/UiElements/CountryCodeSelectior/C
 import { useState } from "react";
 import { BASE_URL, postApi } from "../Util/apiCall";
 import toast from "react-hot-toast";
+import { useTitle } from "../Components/Hooks/useTitle";
+// 
 const Signup = () => {
+  useTitle("Signup");
   const [conutryCode, setCountryCode] = useState(null);
   const navigate = useNavigate();
   const codeGetter = (v) => {

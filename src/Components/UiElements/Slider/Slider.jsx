@@ -1,14 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import ProductCard from '../ProductCard/ProductCard';
+import { useState } from 'react';
+import { ProductCard } from '../ProductCard/ProductCard';
 
-const Slider = ({items}) => {
-const [cards, setCards] = useState([])
+
+const Slider = ({items:cards}) => {
+
   const [currentIndex, setCurrentIndex] = useState(null);
-  console.log(items)
-useEffect(()=>{
-    setCards(items)
-    console.log(items)
-},[])
+
+console.log(cards);
 
   const handleNextClick = () => {
     setCurrentIndex((prevIndex) => (prevIndex + 2 < cards.length ? prevIndex + 2 : 0));
@@ -22,7 +20,7 @@ useEffect(()=>{
     <div className="container mx-auto">
       <div className="flex overflow-x-auto">
         {cards?.map((card) => (
-          <ProductCard key={card.id} id={card.id} url={card.thumbnail} title={card.title} price={card.price}  />
+          <ProductCard key={card.id} id={card.id} url={card?.images[0]} title={card?.name} price={card?.price + card?.tax + card?.fee} isShop={false}  />
         ))}
       </div>
       <div className="slider-buttons">

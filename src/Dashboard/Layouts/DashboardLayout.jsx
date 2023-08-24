@@ -1,11 +1,8 @@
 import { Outlet } from "react-router-dom";
 import Header from "../Components/Header/Header";
-import SideBar from "../Components/Header/SideBar";
 
-/**
- * 
- * @returns JSX: All admin pages maintain a certain view/page structure. this layout offers that.
- */
+import DDNav from "../Components/DDNav/DDNav";
+
 const DashboardLayout = () => {
   return (
     <div className="grid grid-cols-12 font-inter">
@@ -13,7 +10,8 @@ const DashboardLayout = () => {
         <Header />
       </div>
       <div className="col-span-2 h-[calc(100vh-68px)] hidden sm:block">
-        <SideBar />
+
+        <DDNav />
       </div>
       <div className="col-span-12 sm:col-span-10  shadow-md overflow-y-auto h-full sm:h-[calc(100vh-68px)]">
         <Outlet />

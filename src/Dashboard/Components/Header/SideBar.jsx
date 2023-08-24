@@ -1,14 +1,10 @@
-import Dashboard from "../../../assets/icons/cd-dashboard.svg";
+import  Dashboard from "../../../assets/icons/cd-dashboard.svg";
 import orders from "../../../assets/icons/cd-order.svg";
 import products from "../../../assets/icons/cd-products.svg";
 import customer from "../../../assets/icons/cd-user-list.svg";
 import chat from "../../../assets/icons/cd-chat.svg";
 import user from "../../../assets/icons/user-1.svg";
 import NavItem from "../UiElements/NavItem/NavItem";
-/**
- * 
- * @returns JSX: 
- */
 const SideBar = () => {
   return (
     <div className="bg-[#F8FAFC] h-full pt-8 pe-2 flex flex-col gap-2">

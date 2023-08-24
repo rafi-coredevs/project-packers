@@ -1,13 +1,10 @@
+import { useTitle } from "../../Components/Hooks/useTitle";
 import Button from "../Components/UiElements/Button/Button";
 import Heading from "../Components/UiElements/Heading/Heading";
 import Input from "../Components/UiElements/Input/Input";
-/**
- *
- * @returns a component for new discount addition that holds a form, submit handler
- * @concern @remove state to hold and handle form data missing
- * @concern @remove interaction with api endpoint missing
- */
+
 const NewDiscount = () => {
+  useTitle("New Discount");
   const submitHandler = () => {
     console.log("update clicked");
   };
@@ -22,14 +19,8 @@ const NewDiscount = () => {
             </h2>
             <div className="border border-[#0000001c] rounded-lg p-3 grid gap-3">
               <div className="flex items-end gap-2 ">
-                <Input
-                  styles="basic"
-                  label="Coupon Code"
-                  placeholder="Coupon"
-                />
-                <button className="shrink-0 py-[10px] px-3 rounded-md border border-[#0000001c] h-fit text-sm text-[#000316]">
-                  Generate Coupone
-                </button>
+                <Input styles="basic" label="Coupon Code"  placeholder="Coupon" />
+                <button className="shrink-0 py-[10px] px-3 rounded-md border border-[#0000001c] h-fit text-sm text-[#000316]">Generate Coupone</button>
               </div>
               <Input
                 styles="area"
@@ -62,12 +53,8 @@ const NewDiscount = () => {
               <Input styles="basic" label="Tags" placeholder="Tags" />
             </div>
             <div className="flex justify-between">
-              <Button type="reset" style="outline">
-                Discard
-              </Button>
-              <Button type="submit" style="green">
-                Save
-              </Button>
+                <Button type="reset" style='outline'>Discard</Button>
+                <Button type="submit" style='green'>Save</Button>
             </div>
           </div>
         </div>

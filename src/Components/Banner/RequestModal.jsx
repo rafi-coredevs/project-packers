@@ -14,38 +14,38 @@ import reload from "../../assets/icons/cd-reload.svg";
 import { useState } from "react";
 import ImageUploader from "../UiElements/ImageUploader/ImageUploader";
 import { useFormik } from "formik";
-import { postApi } from "../../Util/apiCall";
-import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import removeEmptyFields from "./../../Util/removeEmptyFields";
 
 const RequestModal = ({ url, confirmSubmit }) => {
-  const [imageData, setImageData] = useState([]);
   const [active, setActive] = useState("link");
-  const { user } = useSelector((state) => state.userInfo);
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
+
+  const user = true; //Pujon-TODO:remove this variable
+
   const itemRequestForm = useFormik({
     initialValues: {
       link: url,
       name: "",
       quantity: 1,
       notes: "",
+      images: [],
     },
     onSubmit: (values) => {
-      if (user) {
+      removeEmptyFields(values);
 
-      } else {
-        navigate("/login");
-      }
+      const { images, ...rest } = values;
+
+      console.log("images", images);
+      console.log("rest", rest);
+
+      //Pujon- TODO:handle use user login or not from here
+
+      //if (user) {
+      //} else {
+      //  navigate("/login");
+      //}
     },
   });
-
-  const imageSetter = (value) => {
-    setImageData((prev) => [...prev, value]);
-  };
-
-  const handleRemove = (values) => {
-    setImageData(values);
-  };
 
   return (
     <form action="" onSubmit={itemRequestForm.handleSubmit}>
@@ -88,7 +88,10 @@ const RequestModal = ({ url, confirmSubmit }) => {
                   <img src={globe} alt="" />
                 </Input>
               </div>
-              <button type="button" className="cursor-pointer duration-500 active:rotate-180">
+              <button
+                type="button"
+                className="cursor-pointer duration-500 active:rotate-180"
+              >
                 <img
                   className="p-4  rounded-full bg-[#00031615] "
                   src={reload}
@@ -111,12 +114,7 @@ const RequestModal = ({ url, confirmSubmit }) => {
           </>
         )}
         {active === "image" && (
-          <ImageUploader
-            title="Image Upload"
-            data={imageData}
-            onChange={imageSetter}
-            onRemove={handleRemove}
-          />
+          <ImageUploader title="Image Upload" formikProps={itemRequestForm} />
         )}
         <div className="flex gap-3 items-center">
           <div className="border-[#0000004d] border rounded-full w-fit flex items-center justify-center">

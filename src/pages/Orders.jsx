@@ -7,32 +7,30 @@ import eye from "../assets/icons/eye.svg";
 import { useEffect, useState } from "react";
 import Badge from "../Components/UiElements/Badge/Badge";
 import Button from "../Components/UiElements/Buttons/Button";
-import { useDispatch, useSelector } from "react-redux";
-import { userSignin, userSignout } from "../Store/userSlice";
 import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import { profileSchema } from "../Util/ValidationSchema";
 import { patchApi } from "../Util/apiCall";
+import { useTitle } from "../Components/Hooks/useTitle";
 
 const Orders = () => {
+  useTitle("Orders")
   const [active, setActive] = useState("orders");
 
-  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { user } = useSelector((state) => state.userInfo);
-  useEffect(() => {
-    const name = user?.name.split(" ");
-    console.log(name);
-    profileForm.setValues({
-      firstName: name[0],
-      lastName: name[1],
-      phone: user?.phone,
-      email: user?.email,
-      currentPassword: "",
-      newPassword: "",
-      confirmPassword: "",
-    });
-  }, [user]);
+  // useEffect(() => {
+  //   const name = user?.name.split(" ");
+  //   console.log(name);
+  //   profileForm.setValues({
+  //     firstName: name[0],
+  //     lastName: name[1],
+  //     phone: user?.phone,
+  //     email: user?.email,
+  //     currentPassword: "",
+  //     newPassword: "",
+  //     confirmPassword: "",
+  //   });
+  // }, [user]);
   const profileForm = useFormik({
     initialValues: {
       firstName: "",
@@ -79,10 +77,10 @@ const Orders = () => {
     },
   });
 
-  const logoutHandler = () => {
-    dispatch(userSignout());
-    navigate("/");
-  };
+  // const logoutHandler = () => {
+  //   dispatch(userSignout());
+  //   navigate("/");
+  // };
   return (
     <>
       <Breadcrumb />

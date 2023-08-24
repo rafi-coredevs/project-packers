@@ -1,7 +1,6 @@
-import Card from "../Components/UiElements/Card/Card";
 import arrowRight from "../../assets/icons/cd-arrow-right-2.svg";
 import Heading from "../Components/UiElements/Heading/Heading";
-import { adminCard, orderTable } from "../../Store/Data";
+import {  orderTable } from "../../Store/Data";
 import AreaChart from "../Components/UiElements/AreaChart/AreaChart";
 import { areaChart } from "../../Store/Data";
 import HeatMap from "../Components/UiElements/HeatMap/HeatMap";
@@ -9,12 +8,11 @@ import Table from "../Components/UiElements/Table/Table";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getApi } from "../../Util/apiCall";
-/**
- * 
- * @returns first appearance after admin login; holding summery data, statistical view and tables.
- * 
- */
+import Overview from "../Components/Overview/Overview";
+import { useTitle } from "../../Components/Hooks/useTitle";
+// 
 const DashboardHome = () => {
+  useTitle("Dashboard")
   const [active, setActive] = useState("order");
   const [tableData] = useState(orderTable);
 
@@ -31,12 +29,8 @@ const DashboardHome = () => {
     <div className="h-full px-5 ">
       <Heading title="Overview" />
       <div className="grid grid-cols-3 gap-5">
-        <div className="col-span-3  border-b border-[#0000001c] py-5">
-          <div className="grid lg:grid-cols-5 ">
-            {adminCard?.map((item, key) => (
-              <Card key={key} type={item.title} data={item.value} />
-            ))}
-          </div>
+        <div className="col-span-3">
+          <Overview />
         </div>
         <div className="col-span-3 grid gap-5 grid-cols-7">
           <div className="col-span-7 sm:col-span-5">

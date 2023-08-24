@@ -10,7 +10,6 @@ import Button from "../UiElements/Buttons/Button";
 import google from "../../assets/icons/google-icon.svg";
 import apple from "../../assets/icons/apple.svg";
 import facebook from "../../assets/icons/facebook.svg";
-//
 const AccountModal = ({ stateHandler, onClose }) => {
   const clickHandler = (state) => {
     stateHandler(state);

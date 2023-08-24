@@ -6,11 +6,13 @@
  *
  */
 
+import { useTitle } from "../../Components/Hooks/useTitle";
 import MainCategory from "../Components/MainCategory/MainCategory";
 import SubCategory from "../Components/SubCategory/SubCategory";
 import Heading from "../Components/UiElements/Heading/Heading";
 
 const Category = () => {
+  useTitle("Product Categories");
   return (
     <div className="px-5 h-full">
       <Heading type="navigate" title={`Category`} back="product"></Heading>

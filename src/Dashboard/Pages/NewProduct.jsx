@@ -1,3 +1,12 @@
+/**
+ * NewProduct() returns JSX Element
+ * Component used to add or edit product
+ * edit product id coming from url
+ * @returns JSX Element product add form
+ *
+ *  TODO add fetch method in useEffect
+ */
+
 import Heading from "../Components/UiElements/Heading/Heading";
 import { useParams } from "react-router-dom";
 import Input from "../Components/UiElements/Input/Input";
@@ -6,16 +15,13 @@ import Button from "../Components/UiElements/Button/Button";
 import { useFormik } from "formik";
 import { productSchema } from "../../Util/ValidationSchema";
 import { useEffect, useState } from "react";
-import { getApi, postApi } from "../../Util/apiCall";
-/**
- * @returns JSX: to handle addition and edition of a single product.
- * for edition it depends on route params to select the product 
- * @concern @remove interaction with api been commented/disabled
- * 
- */
+
+import removeEmptyFields from "../../Util/removeEmptyFields";
+import { useTitle } from "../../Components/Hooks/useTitle";
+
 const NewProduct = () => {
+  useTitle("New Product")
   const { productId } = useParams();
-  const [imageData, setImageData] = useState([]);
   const [categories, setCategories] = useState([]);
   const [subCategories, setSubcategories] = useState([]);
   const [selectedCategeory, setSelectedcategory] = useState("default");
@@ -34,16 +40,7 @@ const NewProduct = () => {
     }
     setCategoryerror({ ...categoryError });
   }, [selectedCategeory, selectedSubcategeory]);
-  useEffect(() => {
-    // getApi("/category").then((res) => {
-    //   if (res.status === 200) {
-    //     setCategories(res?.data);
-    //   }
-    //   console.log(res);
-    // });
-    // // getApi()
-    // console.log(productId);
-  }, [productId]);
+
   const productForm = useFormik({
     initialValues: {
       name: "",
@@ -57,6 +54,7 @@ const NewProduct = () => {
       category: "",
       subCategory: "",
       tags: "",
+      images: [],
       deliveryTime: {
         min: "",
         max: "",
@@ -64,41 +62,19 @@ const NewProduct = () => {
     },
     validationSchema: productSchema,
     onSubmit: (values) => {
-      if (
-        categoryError.category === true ||
-        categoryError.subCategory === true
-      ) {
-        return;
-      }
-      values.category = selectedCategeory.id;
-      values.subCategory = selectedSubcategeory;
-      const data = JSON.stringify(values);
-      const formData = new FormData();
-      formData.append("data", data);
-      for (const image of imageData) {
-        formData.append("thumbnails", image, image.name);
-        console.log(image, image.name);
-      }
-
-      postApi("/product", formData)
-        .then((res) => {
-          if (res.status === 200) {
-            successToast("Product Uploaded Successfully");
-          } else {
-            errorToast("Something went wrong");
-          }
-        })
-        .catch((error) => errorToast(error));
+      //if (
+      //  categoryError.category === true ||
+      //  categoryError.subCategory === true
+      //) {
+      //  return;
+      //}
+      //values.category = selectedCategeory.id;
+      //values.subCategory = selectedSubcategeory;
+      removeEmptyFields(values);
+      const { images, ...rest } = values; //Pujon- TODO:Add Api here
     },
   });
 
-  const imageSetter = (value) => {
-    setImageData((prev) => [...prev, value]);
-  };
-
-  const handleRemove = (values) => {
-    setImageData(values);
-  };
   const categoryHandler = (value) => {
     const _category = categories.find((item) => item.id === value);
 
@@ -223,11 +199,7 @@ const NewProduct = () => {
               Product Images
             </h2>
             <div className="border border-[#0000001c] rounded-lg p-3">
-              <ImageUploader
-                data={imageData}
-                onChange={imageSetter}
-                onRemove={handleRemove}
-              />
+              <ImageUploader formikProps={productForm} />
             </div>
             <h2 className="text-base text-secondary font-semibold">Pricing</h2>
             <div className="border border-[#0000001c] grid grid-cols-2 gap-3 rounded-lg p-3">
