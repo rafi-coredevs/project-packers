@@ -31,7 +31,7 @@ const AllOrders = () => {
           return {
             id: orderResp.id,
             name: orderResp.products.length > 0 ? orderResp.products[0].product.name : '',
-            date: (new Date(orderResp.date)).toLocaleDateString('en-US', { month: 'short', year: "numeric", date: 'numeric' }),
+            date: new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric' }).format(new Date(orderResp.date)),
             user: orderResp.user?.fullName || orderResp.user.email,
             status: orderResp.status,
             items: orderResp.products.length,
