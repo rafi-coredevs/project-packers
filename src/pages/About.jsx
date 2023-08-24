@@ -72,8 +72,11 @@ const About = () => {
           </div>
         </div>
         <div className="mx-auto">
+
           <Heading title="Our users love  Project Packers" />
-          <Carousel data={carousel} />
+          <div className='mb-16'>
+            <Carousel isHome={false} />
+          </div>
         </div>
       </div>
     </main>

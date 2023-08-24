@@ -17,13 +17,13 @@ import { useEffect, useState } from "react";
 
 const MainCategory = () => {
   const [categories, setCategories] = useState([]);
-  const [refatch,setRefatch]=useState(false)
+  const [refatch, setRefatch] = useState(false)
 
   useEffect(() => {
     getApi("/category?paginate=true&limit=5&page=1").then((res) => {
       setCategories(res.data);
     });
-   
+
   }, [refatch]);
 
   const reFatch = (page) => {
@@ -39,7 +39,7 @@ const MainCategory = () => {
     },
     validationSchema: categorySchema,
     onSubmit: (values) => {
-     
+
     },
   });
   return (

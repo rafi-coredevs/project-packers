@@ -60,7 +60,7 @@ const Banner = () => {
                   name="search"
                   placeholder="Paste Product url here"
                 >
-                  <img src={search} alt="" />
+                  <img src={search} alt="" className="py-5" />
                 </Input>
               </div>
               <Button buttonType="submit" type="primary">

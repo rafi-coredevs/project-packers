@@ -22,8 +22,8 @@ const Home = () => {
   return (
     <>
       <Banner />
-      <div className="-mt-[13rem]">
-        <Carousel data={carousel} />
+      <div className="container mx-auto -mt-[13rem]">
+        <Carousel isHome={true} />
       </div>
       <Brands data={brand} />
       <Showcase

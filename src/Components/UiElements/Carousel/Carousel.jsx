@@ -1,17 +1,37 @@
-import ShortsPlayer from "./ShortsPlayer";
+import React, { useEffect, useState } from "react";
 
-const Carousel = ({ title,data }) => {
-  return (
+/**
+ * YouTube Shots
+ * @param {Boolean} isHome location home page true / other page false  
+ * @returns YouTube Shots Component
+ */
+const Carousel = ({ isHome = Boolean }) => {
+    const value = isHome
+    const [slides, setSlides] = useState();
+    useEffect(() => {
+        const options = { method: 'GET' };
+        fetch('/youtubeLink.json', options)
+            .then(response => response.json())
+            .then(response => setSlides(response))
+            .catch(err => console.error(err))
+    }, [])
 
-    <div className="container mx-auto  mb-[48px] sm:mb-[8rem] relative z-10">
-    {title && <h1 className="text-center font-semibold text-4xl my-12">{title }</h1>}
-    <div className="flex items-center gap-8 justify-center pl-[15rem] sm:pl-0 overflow-x-auto">
-        {data?.map((url, i) => (
-        <ShortsPlayer key={i} videoId={url.slice(31)} />
-      ))}
-    </div>
-    </div>
-  );
+    return <section
+        className={`max-w flex gap-4 w-full px-5 overflow-scroll no-scrollbar 
+            ${isHome && '-mb-12 relative -top-10 z-40'}`}
+    >
+        {
+            slides?.map((slide, i) => <React.Fragment key={i}>
+                <iframe
+                    title="YouTube Short Video"
+                    src={`https://www.youtube.com/embed/${slide.videoId}?autoplay=0&loop=1&playlist=${slide.videoId}&controls=0`}
+                    allow="autoplay; encrypted-media"
+                    allowFullScreen
+                    className='rounded-2xl h-[370px] w-[260px]'
+                />
+            </React.Fragment>)
+        }
+    </section>
 };
 
 export default Carousel;

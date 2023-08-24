@@ -27,31 +27,11 @@ const Login = () => {
 			data = data.rememberMe
 				? data
 				: { email: data.email, password: data.password };
-
-			// hit login api with data
 			Login(data).then((data) => {
-				setUser(data);
-
-				// check is loggedIn successful or not
 				if (data.status === false) {
-					// show toaster
-					toaster({ type: 'error', message: data.message });
+					toaster({ type: 'error', message: data.message })
 				} else {
-					// check does login page need hit any api after login or not
-					// if (sendRequest) {
-					//   // hitting api for register request
-					//   plane
-					//     .request({
-					//       name: 'registerRequest',
-					//       body: requestItemData,
-					//     })
-					//     .then((d) => {
-					//       // console.log('item request response from login', d);
-					//       navigate('/home', { state: true });
-					//     });
-					// } else {
-					//   navigate(path);
-					// }
+					setUser(data);
 					navigate('/');
 				}
 			});
