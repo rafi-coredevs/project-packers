@@ -14,34 +14,30 @@ import { useUserCtx } from "../contexts/user/UserContext";
 import { terminal } from "../contexts/terminal/Terminal";
 
 const Orders = () => {
-  const { Logout } = useUserCtx()
+  const { Logout, user } = useUserCtx()
   const [active, setActive] = useState("orders");
   const [order, setOrder] = useState([])
   const navigate = useNavigate();
-  // useEffect(() => {
-  //   const name = user?.name.split(" ");
-  //   console.log(name);
-  //   profileForm.setValues({
-  //     firstName: name[0],
-  //     lastName: name[1],
-  //     phone: user?.phone,
-  //     email: user?.email,
-  //     currentPassword: "",
-  //     newPassword: "",
-  //     confirmPassword: "",
-  //   });
-  // }, [user]);
+  useEffect(() => {
+    profileForm.setValues({
+      'fullName': user?.fullName,
+      'phone': user?.phone,
+      'email': user?.email,
+    });
+  }, [user]);
   const profileForm = useFormik({
     initialValues: {
-      fullName: "",
-      email: "",
-      phone: "",
+      fullName:  '',
+      email: '',
+      phone: '',
       currentPassword: "",
       newPassword: "",
       confirmPassword: "",
     },
     validationSchema: profileSchema,
     onSubmit: (values) => {
+      removeEmptyFields(values)
+      delete values.email
       if (values.currentPassword !== "" && values.newPassword === "") {
         profileForm.setFieldError("newPassword", "New Password Required");
         profileForm.setFieldError(
@@ -55,7 +51,6 @@ const Orders = () => {
         );
       } else {
         const data = {
-          email: values.email,
           phone: values.phone,
           fullName: values.fullName,
         };
@@ -64,6 +59,13 @@ const Orders = () => {
             new: values.newPassword,
             old: values.currentPassword,
           };
+        console.log(data);
+        // terminal.request({ name: 'updateOwnProfile', body: { data } }).then(data => {
+        //   if (data.id) {
+        //     setUser(data)
+        //     toaster({ type: 'success', message: 'Profile Updated Successfully!!' })
+        //   }
+        // })
       }
     },
   });
@@ -188,7 +190,7 @@ const Orders = () => {
                     <Input
                       styles="primary"
                       type="text"
-                      name="firstName"
+                      name="fullName"
                       change={profileForm.handleChange}
                       blur={profileForm.handleBlur}
                       value={profileForm.values.fullName}
@@ -210,14 +212,10 @@ const Orders = () => {
                       change={profileForm.handleChange}
                       blur={profileForm.handleBlur}
                       value={profileForm.values.email}
-                      error={
-                        profileForm.touched.email && profileForm.errors.email
-                          ? profileForm.errors.email
-                          : null
-                      }
                       label="Email Address"
                       placeholder="Enter your Email id"
                       border
+                      disabled
                     />
                     <Input
                       styles="primary"
