@@ -1,5 +1,12 @@
+/**
+ * @returns JSX - header for admin pages
+ * @params {string} title - page title 
+ * @params {string} back - link that take user back to origin page/ previous page 
+ * @params {string} type - defining factor of what jsx this component shpould return
+ */
 import arrow from "../../../../assets/icons/cd-arrow-left.svg";
 import { useNavigate } from "react-router-dom";
+// 
 const Heading = ({ type, title, children, back }) => {
   const navigate = useNavigate();
   const navigateHandler = () => {

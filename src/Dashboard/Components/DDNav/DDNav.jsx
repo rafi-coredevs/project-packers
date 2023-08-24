@@ -1,4 +1,4 @@
-// import  { useState } from 'react';
+
 import dashboard from '../../../assets/icons/cd-dashboard.svg';
 import order from '../../../assets/icons/cd-order.svg';
 import products from '../../../assets/icons/cd-products.svg';
@@ -6,13 +6,13 @@ import userList from '../../../assets/icons/cd-user-list.svg';
 import chat from '../../../assets/icons/cd-chat.svg';
 import NavDropdown from './NavDropdown';
 import NavNoDropdown from './NavNoDropdown';
-
+/**
+ * returns JSX for admin sidebar
+ * collapsible and non-collapsible
+ * navlist hold the structure for the admin sidebar 
+ */
 const DDNav = () => {
-    // const [active, setActive] = useState();
-    // const [isOpen, setOpen] = useState(false);
-    // const dropdown = () => {
 
-    // };
 
     const navList = [
         {

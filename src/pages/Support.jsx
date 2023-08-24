@@ -88,10 +88,9 @@ const SupportMenuButton = ({
   return (
     <li
       onClick={handleContentChange}
-      className={`p-[0.75rem] text-slate-600   w-[16.0rem] outline-none flex justify-start   items-start gap-[0.5rem]   ${
-        activeContent === activeNumber &&
+      className={`p-[0.75rem] text-slate-600   w-[16.0rem] outline-none flex justify-start   items-start gap-[0.5rem]   ${activeContent === activeNumber &&
         "bg-[#F2C852] text-black text-md font-semibold rounded-full"
-      }  `}
+        }  `}
     >
       <Dot />
       <span className="text-start   flex-grow w-[15.5rem] "> {buttonName}</span>

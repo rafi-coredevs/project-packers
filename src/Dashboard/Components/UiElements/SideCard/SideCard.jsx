@@ -1,12 +1,12 @@
 /**
- * @types customer || contact || note || address || amount
- * @params types, onClick, title, name,  data
- * @returns
+ * @params {string } args.types to determine where and how the card is to be used and it's inside jsx
+ * @params {function} args.onClick - event handler function for button 
  *
  */
 import canceled from "../../../../assets/icons/cd-cancel.svg";
 import copy from "../../../../assets/icons/cd-copy.svg";
-const SideCard = ({ types, onClick, title, name, email, phone,address, orders, message  }) => {
+// 
+const SideCard = ({ types, onClick, title, name, email, phone, address, orders, message }) => {
   if (types === "customer") {
     return (
       <div className="grid gap-5 p-5 ">
@@ -14,7 +14,7 @@ const SideCard = ({ types, onClick, title, name, email, phone,address, orders, m
           <p className="text-base text-secondary font-semibold">Customer</p>
           <button onClick={onClick}>
 
-          <img src={canceled} alt="" />
+            <img src={canceled} alt="" />
           </button>
         </div>
         <div className="grid gap-2">
@@ -24,34 +24,34 @@ const SideCard = ({ types, onClick, title, name, email, phone,address, orders, m
       </div>
     );
   }
-  if(types === "contact"){
+  if (types === "contact") {
     return (
-        <div className="grid gap-5 p-5">
-            <div className="flex justify-between">
-              <p className="text-base text-secondary font-semibold">
-                Contact information
-              </p>
-              <button className="text-emerald-500">Edit</button>
-            </div>
-            <div className="grid gap-2">
-              <div className="flex justify-between items-center">
-                <p className=" text-emerald-500">{email || "No Details"}</p>
-                <button
-                  onClick={() => {
-                    navigator.clipboard.writeText("Hello world");
-                  }}
-                >
-                  <img className="opacity-70" src={copy} alt="" />
-                </button>
-              </div>
-              <p className="text-[#475569]">{phone || "No Phone Number"}</p>
-            </div>
+      <div className="grid gap-5 p-5">
+        <div className="flex justify-between">
+          <p className="text-base text-secondary font-semibold">
+            Contact information
+          </p>
+          <button className="text-emerald-500">Edit</button>
+        </div>
+        <div className="grid gap-2">
+          <div className="flex justify-between items-center">
+            <p className=" text-emerald-500">{email || "No Details"}</p>
+            <button
+              onClick={() => {
+                navigator.clipboard.writeText("Hello world");
+              }}
+            >
+              <img className="opacity-70" src={copy} alt="" />
+            </button>
           </div>
+          <p className="text-[#475569]">{phone || "No Phone Number"}</p>
+        </div>
+      </div>
     )
   }
-  if(types === "address"){
+  if (types === "address") {
     return (
-        <div className="grid gap-5 p-5">
+      <div className="grid gap-5 p-5">
         <div className="flex justify-between">
           <p className="text-base text-secondary font-semibold">
             {title}
@@ -64,20 +64,20 @@ const SideCard = ({ types, onClick, title, name, email, phone,address, orders, m
       </div>
     )
   }
-  if(types === "note"){
+  if (types === "note") {
     return (
-        <div className="grid gap-5 p-5">
+      <div className="grid gap-5 p-5">
         <div className="flex justify-between">
           <p className="text-base text-secondary font-semibold">
             Note
           </p>
           <button onClick={onClick}>
 
-          <img src={canceled} alt="" />
+            <img src={canceled} alt="" />
           </button>
         </div>
         <div className="grid gap-2">
-          <p className="text-[#475569]">{message  || "No Message"}</p>
+          <p className="text-[#475569]">{message || "No Message"}</p>
         </div>
       </div>
     )
