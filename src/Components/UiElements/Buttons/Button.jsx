@@ -20,6 +20,7 @@ const Button = ({
 	className,
 	...eventHandlers
 }) => {
+	// console.log(disabled)
 	const styles = {
 		text: `${className}`,
 		primary: `bg-primary text-secondary py-[12px] px-[20px] ${className}`,
@@ -34,14 +35,16 @@ const Button = ({
 			{...eventHandlers}
 			type={buttonType}
 			disabled={disabled}
-			className={`
-             rounded-[50px] font-sans w-full ${full != undefined ? 'w-full' : 'sm:max-w-fit'
-				} text-center  text-sm font-bold 
+			className={`disabled:cursor-not-allowed
+             rounded-[50px] font-sans w-full ${
+								full != undefined ? 'w-full' : 'sm:max-w-fit'
+							} text-center  text-sm font-bold 
              hover:drop-shadow-lg active:scale-[0.99]
-             ${type
-					? styles[type]
-					: 'bg-[#ffffff] text-secondary border-2 border-primary'
-				}
+             ${
+								type
+									? styles[type]
+									: 'bg-[#ffffff] text-secondary border-2 border-primary'
+							}
         `}
 		>
 			<span className='justify-center flex gap-3 '>
