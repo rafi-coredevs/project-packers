@@ -1,71 +1,103 @@
-/**
- * imageUploader() return JSX Component
- * Image uploader component
- * @param {string} title for set header title
- * @param {function} getData callback function for retrive data
- *
- * @returns JSX element
- */
-
-import camera from "../../../assets/icons/cd-camera.svg";
+import { useEffect, useState } from "react";
 import cancel from "../../../assets/icons/cd-cancel.svg";
-const ImageUploader = ({ title, data, onChange, onRemove }) => {
-  const imageInputHandler = (element) => {
-    // CHAT GPT
-    const files = element.target.files[0];
-    console.log(files)
-    // const newImageData = Array.from(files);
+import ImageUpload from "../../../assets/icons/cd-camera.svg";
 
-    // console.log(element.target.value)
-    // const url = element.target.files[0]
-    // const url = URL.createObjectURL(element.target.files[0]);
-    // setPreviewImage((prev) => [...prev, url]);
-    onChange(files);
+const ImageUploader = ({ formikProps, className }) => {
+  const [previewImages, setPreviewImages] = useState([]);
+  const [allImages, setAllImages] = useState([]);
+
+  /**
+   *
+   * @description - used for image add
+   */
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    setAllImages((prev) => [...prev, file]);
+    setPreviewImages((prev) => [...prev, URL.createObjectURL(file)]);
   };
 
-  const imageRemoveHandler = (removeIndex) => {
-    const updateArray = data?.filter((item, index) => index !== removeIndex);
-
-    onRemove(updateArray);
+  /**
+   *
+   * @description - used for image delete
+   */
+  const handleImageDelete = (index) => {
+    const updatedPreviewImages = previewImages.filter((_, i) => i !== index);
+    const updatedAllImages = allImages.filter((_, i) => i !== index);
+    setPreviewImages(updatedPreviewImages);
+    setAllImages(updatedAllImages);
   };
+
+  /**
+   *
+   * @description - for add image in form
+   */
+  useEffect(() => {
+    formikProps.setFieldValue("images", allImages); // Register the allImages array
+    return () => {
+      previewImages.forEach((image) => URL.revokeObjectURL(image));
+    };
+  }, [allImages, previewImages]);
+
+  /**
+   *
+   * @description - used for image drag and drop
+   */
+  const handleDrop = (event) => {
+    event.preventDefault();
+    const file = event.dataTransfer.files[0];
+    setAllImages((prev) => [...prev, file]);
+    setPreviewImages((prev) => [...prev, URL.createObjectURL(file)]);
+  };
+
   return (
     <>
-      {title && <p className="text-secondary font-semibold">{title}</p>}
-      <div className="flex gap-2">
-        <label htmlFor="file">
-          <div className="flex h-full  flex-col gap-4 items-center p-4 border  border-[#00000023] rounded-md cursor-pointer">
-            <img src={camera} alt="" />
-            <p className="text-secondary text-xs">upload Image</p>
+      <div className="p-3 rounded-lg ">
+        <div className="flex items-center gap-3">
+          <div className="flex  max-w-[400px]  overflow-x-scroll overscroll-y-none">
+            {/* Preview Images */}
+            {previewImages.map((image, index) => (
+              <div
+                key={index}
+                className={`w-[134px] h-[133px] border rounded-lg flex items-center justify-center relative p-3	`}
+              >
+                <img
+                  src={image}
+                  alt=""
+                  className="max-w-[123px] min-w-[123px] "
+                />
+
+                {/* image cancel button */}
+                <button
+                  className="p-1 bg-[#CFF6EF] rounded-full absolute right-2 top-2"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleImageDelete(index);
+                  }}
+                >
+                  <img src={cancel} alt="" className="w-4" />
+                </button>
+              </div>
+            ))}
           </div>
-        </label>
-        <input
-          className="hidden"
-          type="file"
-          name="file"
-          id="file"
-        
-          onChange={imageInputHandler}
-        />
-        {data?.reverse().map((image, index) => {
-          return (
-            <div
-              key={index}
-              className="relative p-2 border border-[#00000023] rounded-md "
+          {/* image select button */}
+          <div>
+            <label
+              htmlFor="file"
+              onDrop={handleDrop}
+              onDragOver={(e) => e.preventDefault()}
+              className={`cursor-pointer w-[134px] h-[133px] border rounded-lg flex flex-col items-center justify-center`}
             >
-              <img
-                onClick={() => imageRemoveHandler(index)}
-                className="absolute top-1 right-1 rounded-full p-1 bg-[#CFF6EF] h-5 w-5 cursor-pointer"
-                src={cancel}
-                alt=""
-              />
-              <img
-                className="w-[80px] h-[80px]"
-                src={URL.createObjectURL(image)}
-                alt=""
-              />
-            </div>
-          );
-        })}
+              <img src={ImageUpload} alt="" />
+              <span>Upload Image</span>
+            </label>
+            <input
+              type="file"
+              id="file"
+              onChange={handleFileChange}
+              className="hidden"
+            />
+          </div>
+        </div>
       </div>
     </>
   );

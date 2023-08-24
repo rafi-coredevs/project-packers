@@ -15,11 +15,11 @@ import Button from "../Components/UiElements/Button/Button";
 import { useFormik } from "formik";
 import { productSchema } from "../../Util/ValidationSchema";
 import { useEffect, useState } from "react";
-import { getApi, postApi } from "../../Util/apiCall";
+
+import removeEmptyFields from "../../Util/removeEmptyFields";
 
 const NewProduct = () => {
   const { productId } = useParams();
-  const [imageData, setImageData] = useState([]);
   const [categories, setCategories] = useState([]);
   const [subCategories, setSubcategories] = useState([]);
   const [selectedCategeory, setSelectedcategory] = useState("default");
@@ -38,16 +38,7 @@ const NewProduct = () => {
     }
     setCategoryerror({ ...categoryError });
   }, [selectedCategeory, selectedSubcategeory]);
-  useEffect(() => {
-    // getApi("/category").then((res) => {
-    //   if (res.status === 200) {
-    //     setCategories(res?.data);
-    //   }
-    //   console.log(res);
-    // });
-    // // getApi()
-    // console.log(productId);
-  }, [productId]);
+
   const productForm = useFormik({
     initialValues: {
       name: "",
@@ -61,6 +52,7 @@ const NewProduct = () => {
       category: "",
       subCategory: "",
       tags: "",
+      images: [],
       deliveryTime: {
         min: "",
         max: "",
@@ -68,41 +60,19 @@ const NewProduct = () => {
     },
     validationSchema: productSchema,
     onSubmit: (values) => {
-      if (
-        categoryError.category === true ||
-        categoryError.subCategory === true
-      ) {
-        return;
-      }
-      values.category = selectedCategeory.id;
-      values.subCategory = selectedSubcategeory;
-      const data = JSON.stringify(values);
-      const formData = new FormData();
-      formData.append("data", data);
-      for (const image of imageData) {
-        formData.append("thumbnails", image, image.name);
-        console.log(image, image.name);
-      }
-
-      postApi("/product", formData)
-        .then((res) => {
-          if (res.status === 200) {
-            successToast("Product Uploaded Successfully");
-          } else {
-            errorToast("Something went wrong");
-          }
-        })
-        .catch((error) => errorToast(error));
+      //if (
+      //  categoryError.category === true ||
+      //  categoryError.subCategory === true
+      //) {
+      //  return;
+      //}
+      //values.category = selectedCategeory.id;
+      //values.subCategory = selectedSubcategeory;
+      removeEmptyFields(values);
+      const { images, ...rest } = values; //Pujon- TODO:Add Api here
     },
   });
 
-  const imageSetter = (value) => {
-    setImageData((prev) => [...prev, value]);
-  };
-
-  const handleRemove = (values) => {
-    setImageData(values);
-  };
   const categoryHandler = (value) => {
     const _category = categories.find((item) => item.id === value);
 
@@ -227,11 +197,7 @@ const NewProduct = () => {
               Product Images
             </h2>
             <div className="border border-[#0000001c] rounded-lg p-3">
-              <ImageUploader
-                data={imageData}
-                onChange={imageSetter}
-                onRemove={handleRemove}
-              />
+              <ImageUploader formikProps={productForm} />
             </div>
             <h2 className="text-base text-secondary font-semibold">Pricing</h2>
             <div className="border border-[#0000001c] grid grid-cols-2 gap-3 rounded-lg p-3">
