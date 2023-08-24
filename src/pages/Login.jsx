@@ -7,17 +7,19 @@ import google from '../assets/icons/google-icon.svg';
 import facebook from '../assets/icons/facebook.svg';
 import apple from '../assets/icons/apple.svg';
 import { useUserCtx } from '../contexts/user/UserContext';
-import { toast } from 'react-hot-toast';
+import toaster from '../Util/toaster';
 
 const Login = () => {
 	const navigate = useNavigate();
+
+	const BASE_URL = import.meta.env.VITE_SERVER_URL;
 
 	const { Login, setUser } = useUserCtx();
 	const loginForm = useFormik({
 		initialValues: {
 			email: '',
 			password: '',
-			remember: false,
+			rememberMe: false,
 		},
 		validationSchema: loginSchema,
 		onSubmit: (data) => {
@@ -33,18 +35,7 @@ const Login = () => {
 				// check is loggedIn successful or not
 				if (data.status === false) {
 					// show toaster
-					toast.error('login unsuccessful', {
-						style: {
-							border: '1px solid #0D3D4B',
-							padding: '16px',
-							color: '#0D3D4B',
-							backgroundColor: '#F2C852',
-						},
-						iconTheme: {
-							primary: '#198754',
-							secondary: '#FFFAEE',
-						},
-					});
+					toaster({ type: 'error', message: data.message });
 				} else {
 					// check does login page need hit any api after login or not
 					// if (sendRequest) {
@@ -118,9 +109,9 @@ const Login = () => {
 							<div className='font-sans text-base '>
 								<input
 									type='checkbox'
-									name='remember'
+									name='rememberMe'
 									onChange={loginForm.handleChange}
-									value={loginForm.values.remember}
+									value={loginForm.values.rememberMe}
 									className='w-4 h-4 text-yellow-400 bg-transparent border-white rounded'
 								/>
 								<label className='text-white pl-2'>Remember me</label>
@@ -133,13 +124,19 @@ const Login = () => {
 						{/* Login */}
 						<div className='flex  gap-2 mt-12'>
 							{/* google login */}
-							<span className='p-[11px] cursor-pointer bg-white rounded-full shrink-0'>
+							<Link
+								to={`${BASE_URL}/login/google`}
+								className='p-[11px] cursor-pointer bg-white rounded-full shrink-0'
+							>
 								<img src={google} alt='' />
-							</span>
+							</Link>
 							{/* facebook login */}
-							<span className='p-[11px] cursor-pointer bg-white rounded-full shrink-0'>
+							<Link
+								to={`${BASE_URL}/login/facebook`}
+								className='p-[11px] cursor-pointer bg-white rounded-full shrink-0'
+							>
 								<img src={facebook} alt='' />
-							</span>
+							</Link>
 							{/* apple login */}
 							<span className='p-[11px] cursor-pointer bg-white rounded-full shrink-0'>
 								<img src={apple} alt='' />
