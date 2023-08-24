@@ -13,11 +13,10 @@ import sort from "../../../assets/icons/cd-arrow-data-transfer-vertical-round.sv
 import { useFormik } from "formik";
 import { subCategorySchema } from "../../../Util/ValidationSchema";
 import {  useEffect, useState } from "react";
-import { getApi, postApi } from "../../../Util/apiCall";
-
+import { terminal } from "../../../contexts/terminal/Terminal";
 const SubCategory = () => {
   const [categories, setCategories] = useState([]);
-  const [selected, setSelected] = useState([]);
+  const[selected,setSelected]= useState(null);
 
   const subCategoryForm = useFormik({
     initialValues: {
@@ -26,19 +25,18 @@ const SubCategory = () => {
     },
     validationSchema: subCategorySchema,
     onSubmit: (values) => {
-      values.id = selected.id;
+      console.log(values);
+      //Register sub category api call here
       
     },
   });
 
-  useEffect(() => {
-    getApi("/category?paginate=true&limit=1000&page=1").then((res) => {
-      if (res.status === 200) {
-        setCategories(res.data.docs);
-        setSelected(res.data.docs[0]);
-      } else console.log("something wents wrong");
-    });
-  }, []);
+  useEffect(()=>{
+    terminal.request({ name: 'allCategory'}).then(res=> res.status===false? toaster({type:'error', message: res.message}):setCategories(res))
+  },[])
+
+ const categoryHandler = (id)=> setSelected(categories.find(item=>item.id===id));
+ 
 
   return (
     <>
@@ -53,12 +51,8 @@ const SubCategory = () => {
               <select
                 className="bg-transparent border-[1px] w-full outline-none px-3 py-2 rounded-lg"
                 name="id"
-                onChange={(e) =>
-                  setSelected(
-                    categories.find((item) => item.id === e.target.value)
-                  )
-                }
-              >
+                onChange={(e) =>categoryHandler( e.target.value)} value={selected?.id || ''}>
+                <option disabled value=''>Select</option>
                 {categories.map((chat, i) => (
                   <option key={i} value={chat.id}>
                     {chat.name}
@@ -110,7 +104,7 @@ const SubCategory = () => {
             <img className="opacity-70" src={sort} alt="" />
           </button>
         </div>
-        <Table type="subcategory" data={selected.subCategory} pageItem={5} />
+        <Table  data={selected?.subcategory || []} pageItem={5} />
       </div>
     </>
   );

@@ -29,10 +29,10 @@ const head = {
 const Table = ({ type, data, reFatch, pageItem }) => {
   const { pathname } = useLocation();
   const location = pathname.split('/')[pathname.split('/').length - 1];
-  console.log(location);
+
 
   const tableHeadData = head[location];
-  console.log(tableHeadData);
+  // console.log(tableHeadData);
 
   // Order page table
   const ordersDataTable = data.map((item, index) => <tr
@@ -216,7 +216,7 @@ const Table = ({ type, data, reFatch, pageItem }) => {
   );
 
   // all category page table
-  const categoryDataTable = data.map((item, index) => <tr
+  const categoryDataTable = data?.map((item, index) => <tr
     key={index}
     className="border-y border-[#0000001c] hover:bg-[#FEF9DC]"
   >
@@ -349,77 +349,8 @@ const Table = ({ type, data, reFatch, pageItem }) => {
       </div>
     );
   }
-  if (type === "categories") {
-    return (
-      <div className="relative overflow-x-auto">
-        <table className="w-full">
-          <thead>
-            <tr className="bg-[#F8FAFC] border-y border-[#0000001c]">
-              <th className="text-left py-[10px] pl-4 w-[10px]">
-                <input type="checkbox" className="accent-yellow-300" />
-              </th>
-              {head[type].map((item, index) => (
-                <th
-                  key={index}
-                  className="text-sm text-[#475569] font-medium text-left py-[10px] px-4"
-                >
-                  {item}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {data.length < 1
-              ? "Loading"
-              : data.docs.map((item, index) => {
-                return (
-                  <tr
-                    key={index}
-                    className="border-y border-[#0000001c] hover:bg-[#FEF9DC]"
-                  >
-                    <td className="text-left py-[10px] pl-4 w-[10px]">
-                      <input type="checkbox" className="accent-yellow-300" />
-                    </td>
 
-                    <td
-                      onClick={() => selectHandler(item.id)}
-                      className="px-4 py-[18px] text-black text-sm cursor-pointer line-clamp-2"
-                    >
-                      {item.name}
-                    </td>
-                    <td className="px-4 py-[18px] text-black text-sm ">
-                      {item.slug}
-                    </td>
-                    <td className="px-4 py-[18px] text-black text-sm ">
-                      {item.post}
-                    </td>
-                  </tr>
-                );
-              })}
-          </tbody>
-        </table>
-        <div className="flex justify-between items-center py-6 px-4">
-          <p className="text-[#475569] text-sm">
-            Showing {data?.docs?.length} of {data.totalDocs} results
-          </p>
-          <div className="flex">
-            <button
-              onClick={() => reFatch(data.page - 1)}
-              className="border p-2"
-            >
-              <img src={arrowLeft} alt="" />
-            </button>
-            <button
-              onClick={() => reFatch(data.page + 1)}
-              className="border p-2"
-            >
-              <img src={arrowRight} alt="" />
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-  }
+
   if (type === "subcategories") {
     return (
       <div className="relative overflow-x-auto">
@@ -552,7 +483,7 @@ const Table = ({ type, data, reFatch, pageItem }) => {
         </table>
         <div className="flex justify-between items-center py-6 px-4">
           <p className="text-[#475569] text-sm">
-            Showing {10} of {100} results
+            Showing {data?.docs?.length} of {data?.totalDocs} results
           </p>
           <div className="flex">
             <button
@@ -602,8 +533,8 @@ const Table = ({ type, data, reFatch, pageItem }) => {
                   location === 'request' && requestDataTable ||
                   location === 'products' && productsDataTable ||
                   location === 'discount' && discountDataTable ||
-                  location === 'customers' && customersDataTable || ''
-                  // location === 'category' && categoryDataTable
+                  location === 'customers' && customersDataTable || 
+                  location === 'category' && categoryDataTable
                 }
               </>
           }
@@ -611,7 +542,7 @@ const Table = ({ type, data, reFatch, pageItem }) => {
       </table>
       <div className="flex justify-between items-center py-6 px-4">
         <p className="text-[#475569] text-sm">
-          Showing {10} of {100} results
+          Showing {data?.docs?.length} of {data?.totalDocs} results
         </p>
         <div className="flex">
           <button

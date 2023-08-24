@@ -12,25 +12,16 @@ import Input from "../UiElements/Input/Input";
 import Table from "../UiElements/Table/Table";
 import { categorySchema } from "../../../Util/ValidationSchema";
 import sort from "../../../assets/icons/cd-arrow-data-transfer-vertical-round.svg";
-import { getApi, postApi } from "../../../Util/apiCall";
 import { useEffect, useState } from "react";
+import { terminal } from "../../../contexts/terminal/Terminal";
+import toaster from "../../../Util/toaster";
 
 const MainCategory = () => {
   const [categories, setCategories] = useState([]);
-  const [refatch, setRefatch] = useState(false)
+  useEffect(()=>{
+    terminal.request({ name: 'allCategory'}).then(res=> res.status===false? toaster({type:'error', message: res.message}):setCategories(res))
 
-  useEffect(() => {
-    getApi("/category?paginate=true&limit=5&page=1").then((res) => {
-      setCategories(res.data);
-    });
-
-  }, [refatch]);
-
-  const reFatch = (page) => {
-    getApi(`/category?paginate=true&limit=5&page=${page}`).then((res) => {
-      setCategories(res.data);
-    });
-  };
+  },[])
 
   const categoryForm = useFormik({
     initialValues: {
@@ -39,6 +30,8 @@ const MainCategory = () => {
     },
     validationSchema: categorySchema,
     onSubmit: (values) => {
+      console.log(values);
+      //Register new Category api call here
 
     },
   });
@@ -95,7 +88,7 @@ const MainCategory = () => {
             <img className="opacity-70" src={sort} alt="" />
           </button>
         </div>
-        <Table reFatch={reFatch} type="category" data={categories} />
+        <Table type="category" data={categories} />
       </div>
     </>
   );
