@@ -59,7 +59,7 @@ export const ProductCard = ({
           <img
             src={`${BASE_URL}/api/${img}`}
             alt='Product Image'
-            className='h-full w-full object-cover duration-500 group-hover:scale-105 bg-slate-600'
+            className='h-full w-[22rem] lg:w-[24rem] object-contain duration-500 group-hover:scale-105'
           />
         </div>
         <div className='w-[60%] lg:w-full lg:mt-7'>

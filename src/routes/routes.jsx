@@ -64,9 +64,7 @@ export const router = createBrowserRouter([
       {
         path: "shop/:productId",
         element: <Product />,
-        loader: async ({ params }) => {
-          return terminal.request({ name: 'singleProduct', params: { id: params.productId } })
-        },
+        loader: async ({ params }) =>  await terminal.request({ name: 'singleProduct', params: { id: params.productId } }),
       },
       {
         path: "/cart",
