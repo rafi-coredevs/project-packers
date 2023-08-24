@@ -38,20 +38,20 @@ const SupportModal = () => {
     },
   });
   useEffect(() => {
+    let support = ''
     isVisible && terminal.request({ name: 'userSupport' }).then(data => {
       if (data.id) {
-        terminal.socket.on('entry', () => {
-          terminal.socket.emit('entry', { "entry": true, "room": data.id })
-        })
+        support = data.id
+        terminal.socket.on('entry')
+        terminal.socket.emit('entry', { "entry": true, "room": support })
         terminal.request({ name: 'getMessage', params: { id: data.id } }).then(data => {
           data.docs?.length > 0 && setChat(data.docs)
         })
       }
     })
     return () => {
-      terminal.socket.on('entry', () => {
-        terminal.socket.emit({ "entry": false, "room": data.id })
-      })
+      terminal.socket.emit('entry', { "entry": false, "room": support })
+      terminal.socket.off('entry')
     }
   }, [isVisible])
   const handleImage = (event) => {

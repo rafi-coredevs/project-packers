@@ -65,10 +65,10 @@ const Badge = ({ text = 'completed' }) => {
 	};
 	return (
 		<div
-			className={`flex items-center gap-2 ${data[text].bg} rounded-full p-[0.125rem_0.5rem] w-fit`}
+			className={`flex items-center gap-2 ${data[text]?.bg} rounded-full p-[0.125rem_0.5rem] w-fit`}
 		>
-			<span className={`w-2 h-2 rounded-full ${data[text].dot}`}></span>
-			<p className='text-black'>{data[text].text || 'No Text'}</p>
+			<span className={`w-2 h-2 rounded-full ${data[text]?.dot}`}></span>
+			<p className='text-black'>{data[text]?.text || 'No Text'}</p>
 		</div>
 	);
 };
