@@ -20,7 +20,7 @@ const RequestModal = ({ url, confirmSubmit }) => {
   const [active, setActive] = useState("link");
   //const navigate = useNavigate();
 
-  const user = true; //Pujon-TODO:remove this variable
+  const user = false; //Pujon-TODO:remove this variable
 
   const itemRequestForm = useFormik({
     initialValues: {

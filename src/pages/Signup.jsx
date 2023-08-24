@@ -18,6 +18,8 @@ const Signup = () => {
 
 	const { SignUp } = useUserCtx();
 
+	const BASE_URL = import.meta.env.VITE_SERVER_URL;
+
 	const signUpForm = useFormik({
 		initialValues: {
 			fullName: '',
@@ -28,16 +30,14 @@ const Signup = () => {
 		validationSchema: signupSchema,
 		onSubmit: (values) => {
 			const data = { ...values, phone: countryCode + values.phone };
-			console.log("baire", data);
 
 			SignUp(data).then((res) => {
 				res.status === false
 					? toaster({ type: 'error', message: res.message })
 					: navigate('/login');
-				console.log("marche", res);
 			});
 
-			// signUpForm.resetForm();
+			signUpForm.resetForm();
 		},
 	});
 
@@ -120,6 +120,7 @@ const Signup = () => {
 									placeholder='Enter Your Phone Number'
 									label='Phone Number'
 								>
+									{/* for country code */}
 									<CountryCodeSelector setCountryCode={setCountryCode} />
 								</Input>
 							</div>
@@ -161,13 +162,13 @@ const Signup = () => {
 							</div>
 							<div className='flex  gap-2 mt-12'>
 								<Link
-									// to={`${BASE_URL}/api/user/google`}
+									to={`${BASE_URL}/login/google`}
 									className='p-[11px] cursor-pointer bg-white rounded-full shrink-0'
 								>
 									<img src={google} alt='' />
 								</Link>
 								<Link
-									// to={`${BASE_URL}/api/user/facebook`}
+									to={`${BASE_URL}/login/facebook`}
 									className='p-[11px] cursor-pointer bg-white rounded-full shrink-0'
 								>
 									<img src={facebook} alt='' />
