@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "../Components/UiElements/Button/Button";
 import Heading from "../Components/UiElements/Heading/Heading";
 import Input from "../Components/UiElements/Input/Input";
@@ -9,16 +9,28 @@ import sort from "../../assets/icons/cd-arrow-data-transfer-vertical-round.svg";
 import search from "../../assets/icons/cd-search2.svg";
 import { discountData } from "../../Store/Data";
 import { useTitle } from "../../Components/Hooks/useTitle";
+import { terminal } from "../../contexts/terminal/Terminal";
 
 const Discount = () => {
   useTitle("Active Discounts");
   const [active, setActive] = useState("all");
-  const [tableData] = useState(discountData);
+  const [tableData, setTabledata] = useState(null);
 
   const navigate = useNavigate();
   const tableButtonHandler = (value) => {
     setActive(value);
     console.log(value);
+  };
+
+  useEffect(() => {
+    fetchData();
+   
+  }, []);
+
+  const fetchData = (page=1) => {
+    terminal.request({name:'allDiscount', queries: {page}}).then((res) => {
+      res.status===false? '': setTabledata(res);
+    });
   };
 
   return (
@@ -84,7 +96,7 @@ const Discount = () => {
                 </button>
               </div>
             </div>
-            <Table type="discount" data={tableData} />
+            <Table paginate={fetchData} data={tableData} />
           </div>
         </div>
       </div>

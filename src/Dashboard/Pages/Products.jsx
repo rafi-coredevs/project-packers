@@ -15,25 +15,20 @@ const Products = () => {
   useTitle("Products");
   const [active, setActive] = useState("all");
   const [tableData, setTabledata] = useState([]);
+  console.log(active);
   useEffect(() => {
-    terminal.request({name:'allProduct', queries: {page: 1}}).then((res) => {
-      console.log(res.docs);
-      res.docs && setTabledata(res.docs)
-    });
+    fetchData();
+   
   }, []);
 
-  const reFatch = (page) => {
-    getApi(`/product?limit=10&paginate=true&page=${page}`).then((res) => {
-      res.docs && setTabledata(res.docs)
+  const fetchData = (page=1) => {
+    terminal.request({name:'allProduct', queries: {page}}).then((res) => {
+      res.status===false? '': setTabledata(res);
     });
   };
 
   const navigate = useNavigate();
-  const tableButtonHandler = (value) => {
-    setActive(value);
-    console.log(value);
-  };
-
+ 
   return (
     <div className="h-full px-5 ">
       <Heading title="Products">
@@ -47,7 +42,7 @@ const Products = () => {
             <div className="flex justify-between">
               <div className="py-2 my-auto">
                 <button
-                  onClick={() => tableButtonHandler("all")}
+                  onClick={() => setActive("all")}
                   className={`py-2 px-3 text-[#475569] text-xs font-semibold ${
                     active === "all" ? "bg-[#CFF6EF] rounded" : "bg-transparent"
                   }`}
@@ -55,7 +50,7 @@ const Products = () => {
                   All
                 </button>
                 <button
-                  onClick={() => tableButtonHandler("active")}
+                  onClick={() => setActive("active")}
                   className={`py-2 px-3 text-[#475569] text-xs font-semibold ${
                     active === "active"
                       ? "bg-[#CFF6EF] rounded"
@@ -65,7 +60,7 @@ const Products = () => {
                   Active
                 </button>
                 <button
-                  onClick={() => tableButtonHandler("draft")}
+                  onClick={() => setActive("draft")}
                   className={`py-2 px-3 text-[#475569] text-xs font-semibold ${
                     active === "draft"
                       ? "bg-[#CFF6EF] rounded"
@@ -75,7 +70,7 @@ const Products = () => {
                   Draft
                 </button>
                 <button
-                  onClick={() => tableButtonHandler("archived")}
+                  onClick={() => setActive("archived")}
                   className={`py-2 px-3 text-[#475569] text-xs font-semibold ${
                     active === "archived"
                       ? "bg-[#CFF6EF] rounded"
@@ -98,7 +93,7 @@ const Products = () => {
               </div>
             </div>
 
-            <Table type="products" data={tableData} reFatch={reFatch} />
+            <Table type="products" data={tableData} paginate={fetchData} />
           </div>
         </div>
       </div>

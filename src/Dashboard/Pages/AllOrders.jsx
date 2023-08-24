@@ -16,31 +16,23 @@ import Overview from "../Components/Overview/Overview";
 const AllOrders = () => {
   useTitle("Order list");
   const [active, setActive] = useState("all");
-  const [tableData, setTableData] = useState(orderTable);
+  const [tableData, setTabledata] = useState(orderTable);
 
   const tableButtonHandler = (value) => {
     setActive(value);
     console.log(value);
   };
 
-  // SideEffects
   useEffect(() => {
-    terminal.request({ name: 'allOrders' })
-      .then(res => setTableData(() => {
-        return res?.docs?.length > 0 && res?.docs?.map(orderResp => {
-          return {
-            id: orderResp.id,
-            name: orderResp.products.length > 0 ? orderResp.products[0].product.name : '',
-            date: new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'long', day: 'numeric' }).format(new Date(orderResp.date)),
-            user: orderResp.user?.fullName || orderResp.user.email,
-            status: orderResp.status,
-            items: orderResp.products.length,
-            total: orderResp.total
-          }
-        });
-      }))
-      .catch(err => console.log(err));
-  });
+    fetchData();
+   
+  }, []);
+
+  const fetchData = (page=1) => {
+    terminal.request({name:'allOrders', queries: {page}}).then((res) => {
+      res.status===false? '': setTabledata(res);
+    });
+  };
 
   return (
     <div className="h-full px-5 ">
@@ -127,7 +119,7 @@ const AllOrders = () => {
               </div>
             </div>
 
-            <Table type="order" data={tableData} />
+            <Table paginate={fetchData} data={tableData} />
           </div >
         </div>
       </div>
