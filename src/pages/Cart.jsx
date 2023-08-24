@@ -1,12 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import toaster from '../../utils/toaster';
-import cross from '../../assets/icons/cd-cancel.svg'
+import cross from '../assets/icons/cd-cancel.svg'
 import Breadcrumb from '../Components/UiElements/Breadcrumb/Breadcrumb';
 import { terminal } from '../contexts/terminal/Terminal';
 import { useCartCtx } from '../contexts/cart/CartContext';
 import CartCard from '../Components/UiElements/CartItem/CartCard';
+import toaster from '../Util/toaster';
 
 const Cart = () => {
   let sellerTakes = 0;
@@ -109,7 +109,7 @@ const Cart = () => {
 
   return (
     <>
-      <Breadcrumb />
+      {/* <Breadcrumb />
       <div
         className={`container flex flex-col xl:flex-row gap-[30px] mt-[96px] min-h-screen mb-20`}
       >
@@ -214,7 +214,7 @@ const Cart = () => {
               </Link>
             </div></>
         }
-      </div>
+      </div> */}
     </>
 
   );
