@@ -204,7 +204,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: "chat",
+        path: "support",
         element: (
           <Secure>
             <Chat />

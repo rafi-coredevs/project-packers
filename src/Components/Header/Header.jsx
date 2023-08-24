@@ -27,28 +27,28 @@ import { useUserCtx } from "../../contexts/user/UserContext";
 import { terminal } from "../../contexts/terminal/Terminal";
 
 const DUMMY_CART = [
-	{
-		id: 1,
-		image: 'https://source.unsplash.com/random/300×300/?Iphone',
-		title:
-			'OTTERBOX COMMUTER SERIES Case for iPhone 12 & iPhone 12 Pro OTTERBOX COMMUTER SERIES Case for iPhone 12 & iPhone 12 Pro',
-		price: '720',
-		qty: '1',
-	},
-	{
-		id: 2,
-		image: 'https://source.unsplash.com/random/301×300/?Iphone',
-		title: 'OTTERBOX COMMUTER SERIES Case for iPhone 12 & iPhone 12 Pro',
-		price: '720',
-		qty: '1',
-	},
-	{
-		id: 3,
-		image: 'https://source.unsplash.com/random/302×300/?Iphone',
-		title: 'OTTERBOX COMMUTER SERIES Case for iPhone 12 & iPhone 12 Pro',
-		price: '720',
-		qty: '1',
-	},
+  {
+    id: 1,
+    image: 'https://source.unsplash.com/random/300×300/?Iphone',
+    title:
+      'OTTERBOX COMMUTER SERIES Case for iPhone 12 & iPhone 12 Pro OTTERBOX COMMUTER SERIES Case for iPhone 12 & iPhone 12 Pro',
+    price: '720',
+    qty: '1',
+  },
+  {
+    id: 2,
+    image: 'https://source.unsplash.com/random/301×300/?Iphone',
+    title: 'OTTERBOX COMMUTER SERIES Case for iPhone 12 & iPhone 12 Pro',
+    price: '720',
+    qty: '1',
+  },
+  {
+    id: 3,
+    image: 'https://source.unsplash.com/random/302×300/?Iphone',
+    title: 'OTTERBOX COMMUTER SERIES Case for iPhone 12 & iPhone 12 Pro',
+    price: '720',
+    qty: '1',
+  },
 ];
 const Header = ({ sideBar, state }) => {
   const [cartState, setCartState] = useState(false);
@@ -63,9 +63,17 @@ const Header = ({ sideBar, state }) => {
   };
 
   useEffect(() => {
-    terminal.request({ name: 'getNotification' }).then(data => data.docs && setNotifications(data.docs))
-  }, [])
+    user?.id && terminal.request({ name: 'getNotification' }).then(data => data.docs && setNotifications(data.docs))
+  }, [user])
 
+  useEffect(() => {
+    terminal.socket.on('notification', (data) => {
+      setNotifications(prev => [data, ...prev])
+    })
+    return () => {
+      terminal.socket.off('notification')
+    }
+  })
 
   return (
     <>
@@ -143,7 +151,7 @@ const Header = ({ sideBar, state }) => {
                   >
                     <Icon type="active" unread={false} icon={profile} />
                     <p className="font-sans text-secondary text-sm font-semibold">
-                      {user.name || "User"}
+                      {user.fullName || "User"}
                     </p>
                   </Link>
                 </div>
