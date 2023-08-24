@@ -21,7 +21,7 @@ const useUser = () => {
 		})
 	};
 
-	useEffect(() => {
+	const fetchUser = () => {
 		terminal.request({ name: 'fetchUser' }).then((data) => {
 			if (data.id) {
 				setUser(data);
@@ -32,6 +32,10 @@ const useUser = () => {
 			}
 			setLoading(false);
 		});
+	}
+
+	useEffect(() => {
+		fetchUser()
 	}, []);
 
 	return {

@@ -2,7 +2,6 @@ import Input from "../Components/UiElements/Input/Input";
 import { useFormik } from "formik";
 import { loginSchema } from "../Util/ValidationSchema";
 import { Link, useNavigate } from "react-router-dom";
-import toast from "react-hot-toast";
 import Button from "../Components/UiElements/Buttons/Button";
 import google from "../assets/icons/google-icon.svg";
 import facebook from "../assets/icons/facebook.svg";
