@@ -5,6 +5,7 @@ import Input from "../Components/UiElements/Input/Input";
 import Modal from "../Components/UiElements/Modal/Modal";
 import icon from "../assets/icons/product-ok.svg";
 import Button from "../Components/UiElements/Buttons/Button";
+import { useFormik } from "formik";
 const cartItems = [
   {
     id: 1,
@@ -33,6 +34,27 @@ const Checkout = () => {
   const submitHandler = () => {
     setModal(true);
   };
+
+  const checkoutForm = useFormik({
+    initialValues: {
+      email: '',
+      phone:'',
+      altPhone:'',
+      firstName: '',
+      lastName: '',
+      address:'',
+      city: '',
+      area:'',
+      zip:'',
+      instruction:'',
+      shipping:'',
+    },
+    validationSchema:'',
+    onSubmit:(values) =>{
+      console.log(values)
+    }
+  })
+
   return (
     <>
       <Breadcrumb />
@@ -48,6 +70,11 @@ const Checkout = () => {
                   styles="primary"
                   type="email"
                   label="Email Address."
+                  name="email"
+                  change={checkoutForm.handleChange}
+                  blur={checkoutForm.handleBlur}
+                  value={checkoutForm.values.email}
+                  error={checkoutForm.touched.email && checkoutForm.errors.email ? checkoutForm.errors.email : null}
                   placeholder="Enter your Email Address."
                   border
                 />
@@ -55,6 +82,11 @@ const Checkout = () => {
                   styles="primary"
                   type="tel"
                   label="Phone Number."
+                  name="phone"
+                  change={checkoutForm.handleChange}
+                  blur={checkoutForm.handleBlur}
+                  value={checkoutForm.values.phone}
+                  error={checkoutForm.touched.phone && checkoutForm.errors.phone ? checkoutForm.errors.phone : null}
                   placeholder="Enter your Phone Number"
                   border
                   required
@@ -63,8 +95,14 @@ const Checkout = () => {
                   styles="primary"
                   type="tel"
                   label="Alternative phone number (Optional)."
+                  name="altPhone"
+                  change={checkoutForm.handleChange}
+                  blur={checkoutForm.handleBlur}
+                  value={checkoutForm.values.altPhone}
+                  error={checkoutForm.touched.altPhone && checkoutForm.errors.altPhone ? checkoutForm.errors.altPhone : null}
                   placeholder="Enter your Phone Number"
                   border
+                  
                 />
               </div>
             </div>
@@ -78,6 +116,11 @@ const Checkout = () => {
                     styles="primary"
                     type="text"
                     label="First Name"
+                    name="firstName"
+                    change={checkoutForm.handleChange}
+                    blur={checkoutForm.handleBlur}
+                    value={checkoutForm.values.firstName}
+                    error={checkoutForm.touched.firstName && checkoutForm.errors.firstName ? checkoutForm.errors.firstName : null}
                     placeholder="Enter your first name."
                     border
                   />
@@ -85,6 +128,11 @@ const Checkout = () => {
                     styles="primary"
                     type="text"
                     label="Last Name"
+                    name="lastName"
+                    change={checkoutForm.handleChange}
+                    blur={checkoutForm.handleBlur}
+                    value={checkoutForm.values.lastName}
+                    error={checkoutForm.touched.lastName && checkoutForm.errors.lastName ? checkoutForm.errors.lastName : null}
                     placeholder="Enter your last name."
                     border
                   />
@@ -93,6 +141,11 @@ const Checkout = () => {
                   styles="primary"
                   type="text"
                   label="Address"
+                  name="address"
+                  change={checkoutForm.handleChange}
+                  blur={checkoutForm.handleBlur}
+                  value={checkoutForm.values.address}
+                  error={checkoutForm.touched.address && checkoutForm.errors.address ? checkoutForm.errors.address : null}
                   placeholder="Enter your Address."
                   border
                 />
@@ -101,6 +154,11 @@ const Checkout = () => {
                     styles="primary"
                     type="text"
                     label="City"
+                    name="city"
+                    change={checkoutForm.handleChange}
+                    blur={checkoutForm.handleBlur}
+                    value={checkoutForm.values.city}
+                    error={checkoutForm.touched.city && checkoutForm.errors.city ? checkoutForm.errors.city : null}
                     placeholder="City"
                     border
                   />
@@ -108,6 +166,11 @@ const Checkout = () => {
                     styles="primary"
                     type="text"
                     label="Area"
+                    name="area"
+                    change={checkoutForm.handleChange}
+                    blur={checkoutForm.handleBlur}
+                    value={checkoutForm.values.area}
+                    error={checkoutForm.touched.area && checkoutForm.errors.area ? checkoutForm.errors.area : null}
                     placeholder="Area"
                     border
                   />
@@ -115,6 +178,11 @@ const Checkout = () => {
                     styles="primary"
                     type="number"
                     label="Zip Code"
+                    name="zip"
+                    change={checkoutForm.handleChange}
+                    blur={checkoutForm.handleBlur}
+                    value={checkoutForm.values.zip}
+                    error={checkoutForm.touched.zip && checkoutForm.errors.zip ? checkoutForm.errors.zip : null}
                     placeholder="Zip Code"
                     border
                   />
@@ -125,6 +193,10 @@ const Checkout = () => {
                   </label>
                   <textarea
                     className="border  w-full text-secondary placeholder:text-secondary p-2"
+                    name="phone"
+                    onChange={checkoutForm.handleChange}
+                    onBlur={checkoutForm.handleBlur}
+                    value={checkoutForm.values.phone}
                     placeholder="Write Here..."
                     rows={8}
                   />
