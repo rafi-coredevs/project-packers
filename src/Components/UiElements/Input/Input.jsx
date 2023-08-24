@@ -17,7 +17,10 @@ const Input = ({
   max,
   styles,
   required,
-  disabled
+  disabled,
+  onKeyUp,
+  tabIndex,
+  className,
 }) => {
   return (
     <div className="relative ">
@@ -51,7 +54,9 @@ const Input = ({
             children ? "rounded-e-full" : "rounded-full"
           } w-full outline-none placeholder-secondary text-secondary border ${
             error ? " border-red-600" : "border-white"
-          }`}
+          }
+          ${className}
+          `}
           value={value}
           name={name}
           placeholder={placeholder}
@@ -63,6 +68,8 @@ const Input = ({
           onBlur={blur}
           required={required}
           disabled={disabled}
+          onKeyUp={onKeyUp}
+          tabIndex={tabIndex && tabIndex}
         />
       </div>
       {error && (

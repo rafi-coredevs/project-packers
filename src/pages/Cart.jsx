@@ -220,10 +220,6 @@ const Cart = () => {
                     totalPrice += (request?.request?.price + request?.request?.tax + request?.request?.fee) * request.requestQuantity
                     return <CartCard
                       key={request?.request?.id}
-<<<<<<< HEAD
-                      updateQuantity={updateQuantity}
-=======
->>>>>>> origin/masumk
                       ProductQuantity={request?.requestQuantity}
                       productImg={request?.request?.images[0]}
                       price={(request?.request?.price + request?.request?.tax + request?.request?.fee) * request.requestQuantity}

@@ -12,7 +12,7 @@ const Recovery = () => {
   const [data, setData] = useState({});
   const navigate = useNavigate();
   const getResponse = (res) => {
-    if (res.status === 200) {
+    if (res.status !== false) {
       {
         if (res.component === "done") {
           toast.success("Password Reset Successful", {
