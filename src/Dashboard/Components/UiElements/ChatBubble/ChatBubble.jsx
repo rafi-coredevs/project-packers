@@ -1,21 +1,21 @@
 /**
  * 
- * @params type => customer || staff 
- * @params name => User Name
- * @params date => date 
- * @params  message => Message
+ * @params {} args.type - defines style for chat bubble depending on whether a chat is from customer-end or staff-end  
+ * @params {string} args.name - name of person involved in a particular chat room
+ * @params {string} args.date - the time a particular message been published by it's sender 
+ * @params  {string} message - message itself
  * 
  * @returns Chat card JSX element
  */
 
 
-const ChatBubble = ({type ,name, date, message}) => {
+const ChatBubble = ({ type, name, date, message }) => {
     function formatDate(inputDate) {
         const currentDate = new Date();
         const date = new Date(inputDate);
         const timeDifference = currentDate - date;
         const secondsDifference = Math.floor(timeDifference / 1000);
-        
+
         if (secondsDifference < 60) {
             return "just now";
         } else if (secondsDifference < 3600) {
@@ -36,8 +36,8 @@ const ChatBubble = ({type ,name, date, message}) => {
             return `${day} ${month} ${year} at ${date.getHours() % 12 === 0 ? 12 : date.getHours() % 12}:${date.getMinutes() < 10 ? '0' : ''}${date.getMinutes()}${date.getHours() >= 12 ? 'pm' : 'am'}`;
         }
     }
-    
-  
+
+
     return (
         <div className={`flex gap-3 h-fit max-w-[400px] ${type !== 'customer' ? "ml-auto flex-row-reverse" : ""}`}>
             <span className="h-10 w-10 flex items-center justify-center shrink-0 rounded-full font-bold text-amber-800 bg-pink-400">XY</span>
