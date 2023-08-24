@@ -9,6 +9,7 @@ import sort from "../../assets/icons/cd-arrow-data-transfer-vertical-round.svg";
 import search from "../../assets/icons/cd-search2.svg";
 import { getApi } from "../../Util/apiCall";
 import { useTitle } from "../../Components/Hooks/useTitle";
+import { terminal } from "../../contexts/terminal/Terminal";
 
 const Products = () => {
   useTitle("Products");

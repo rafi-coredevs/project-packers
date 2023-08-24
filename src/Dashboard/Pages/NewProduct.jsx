@@ -19,6 +19,7 @@ import { useEffect, useState } from "react";
 import removeEmptyFields from "../../Util/removeEmptyFields";
 import { terminal } from "../../contexts/terminal/Terminal";
 import toaster from "../../Util/toaster";
+import { useTitle } from "../../Components/Hooks/useTitle";
 
 const NewProduct = () => {
   useTitle("New Product")
