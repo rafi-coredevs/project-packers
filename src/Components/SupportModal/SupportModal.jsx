@@ -41,7 +41,7 @@ const SupportModal = () => {
     isVisible && terminal.request({ name: 'userSupport' }).then(data => {
       if (data.id) {
         terminal.socket.on('entry', () => {
-          terminal.socket.emit({ "entry": true, "room": data.id })
+          terminal.socket.emit('entry', { "entry": true, "room": data.id })
         })
         terminal.request({ name: 'getMessage', params: { id: data.id } }).then(data => {
           data.docs?.length > 0 && setChat(data.docs)

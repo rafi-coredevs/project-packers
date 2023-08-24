@@ -26,9 +26,6 @@ const head = {
   payment: ["payment ID", "Customer Name", "Payment Date", "Amount", "Payment Status"],
 };
 
-
-
-
 const Table = ({ type, data, reFatch, pageItem }) => {
   const { pathname } = useLocation();
   const location = pathname.split('/')[pathname.split('/').length - 1];

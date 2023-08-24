@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 // import { Link } from "react-router-dom";
 import Heading from "../Components/UiElements/Heading/Heading";
 import filter from "../../assets/icons/cd-filter.svg";
@@ -10,15 +10,37 @@ import search from "../../assets/icons/cd-search2.svg";
 import { orderTable } from "../../Store/Data";
 import { adminCard } from "../../Store/Data";
 import { useTitle } from "../../Components/Hooks/useTitle";
+import { terminal } from "../../contexts/terminal/Terminal";
+import Overview from "../Components/Overview/Overview";
+
 const AllOrders = () => {
   useTitle("Order list");
   const [active, setActive] = useState("all");
-  const [tableData] = useState(orderTable);
+  const [tableData, setTableData] = useState(orderTable);
 
   const tableButtonHandler = (value) => {
     setActive(value);
     console.log(value);
   };
+
+  // SideEffects
+  useEffect(() => {
+    terminal.request({ name: 'allOrders' })
+      .then(res => setTableData(() => {
+        return res.map(orderResp => {
+          return {
+            id: orderResp.id,
+            name: orderResp.products.length > 0 ? orderResp.products[0].product.name : '',
+            date: (new Date(orderResp.date)).toLocaleDateString('en-US', { month: 'short', year: "numeric", date: 'numeric' }),
+            user: orderResp.user?.fullName || orderResp.user.email,
+            status: orderResp.status,
+            items: orderResp.products.length,
+            total: orderResp.total 
+          }
+        });
+      }))
+      .catch(err => console.log(err));
+  });
 
   return (
     <div className="h-full px-5 ">
@@ -49,8 +71,8 @@ const AllOrders = () => {
                 <button
                   onClick={() => tableButtonHandler("pending")}
                   className={`py-2 px-3 text-[#475569] text-xs font-semibold ${active === "pending"
-                      ? "bg-[#CFF6EF] rounded"
-                      : "bg-transparent"
+                    ? "bg-[#CFF6EF] rounded"
+                    : "bg-transparent"
                     }`}
                 >
                   Pending
@@ -58,8 +80,8 @@ const AllOrders = () => {
                 <button
                   onClick={() => tableButtonHandler("processing")}
                   className={`py-2 px-3 text-[#475569] text-xs font-semibold ${active === "processing"
-                      ? "bg-[#CFF6EF] rounded"
-                      : "bg-transparent"
+                    ? "bg-[#CFF6EF] rounded"
+                    : "bg-transparent"
                     }`}
                 >
                   Processing
@@ -67,8 +89,8 @@ const AllOrders = () => {
                 <button
                   onClick={() => tableButtonHandler("shipping")}
                   className={`py-2 px-3 text-[#475569] text-xs font-semibold ${active === "shipping"
-                      ? "bg-[#CFF6EF] rounded"
-                      : "bg-transparent"
+                    ? "bg-[#CFF6EF] rounded"
+                    : "bg-transparent"
                     }`}
                 >
                   Shipping
@@ -76,8 +98,8 @@ const AllOrders = () => {
                 <button
                   onClick={() => tableButtonHandler("cancelled")}
                   className={`py-2 px-3 text-[#475569] text-xs font-semibold ${active === "cancelled"
-                      ? "bg-[#CFF6EF] rounded"
-                      : "bg-transparent"
+                    ? "bg-[#CFF6EF] rounded"
+                    : "bg-transparent"
                     }`}
                 >
                   Cancelled
@@ -85,8 +107,8 @@ const AllOrders = () => {
                 <button
                   onClick={() => tableButtonHandler("completed")}
                   className={`py-2 px-3 text-[#475569] text-xs font-semibold ${active === "completed"
-                      ? "bg-[#CFF6EF] rounded"
-                      : "bg-transparent"
+                    ? "bg-[#CFF6EF] rounded"
+                    : "bg-transparent"
                     }`}
                 >
                   Completed
