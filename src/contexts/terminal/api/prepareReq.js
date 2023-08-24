@@ -25,4 +25,4 @@ export default function prepareReq(serverUrl) {
             throw new Error(err)
         }
     }
-  };
+}
