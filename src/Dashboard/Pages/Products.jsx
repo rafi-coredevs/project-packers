@@ -8,23 +8,21 @@ import filter from "../../assets/icons/cd-filter.svg";
 import sort from "../../assets/icons/cd-arrow-data-transfer-vertical-round.svg";
 import search from "../../assets/icons/cd-search2.svg";
 import { getApi } from "../../Util/apiCall";
+import { terminal } from "../../contexts/terminal/Terminal";
 
 const Products = () => {
   const [active, setActive] = useState("all");
   const [tableData, setTabledata] = useState([]);
   useEffect(() => {
-    getApi("/product?limit=10&paginate=true&page=1").then((res) => {
-      if (res.status === 200) {
-        setTabledata(res.data);
-      }
+    terminal.request({name:'allProduct', queries: {page: 1}}).then((res) => {
+      console.log(res.docs);
+      res.docs && setTabledata(res.docs)
     });
   }, []);
 
   const reFatch = (page) => {
     getApi(`/product?limit=10&paginate=true&page=${page}`).then((res) => {
-      if (res.status === 200) {
-        setTabledata(res.data);
-      }
+      res.docs && setTabledata(res.docs)
     });
   };
 

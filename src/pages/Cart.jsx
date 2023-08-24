@@ -7,108 +7,182 @@ import { terminal } from '../contexts/terminal/Terminal';
 import { useCartCtx } from '../contexts/cart/CartContext';
 import CartCard from '../Components/UiElements/CartItem/CartCard';
 import toaster from '../Util/toaster';
+import CartItem from "../Components/UiElements/CartItem/CartItem";
+import product from "../assets/Image/product1.png";
+import product2 from "../assets/Image/product2.png";
+import Input from "../Components/UiElements/Input/Input";
+import PriceCard from "../Components/PriceCard/PriceCard";
+// import Breadcrumb from "../Components/UiElements/Breadcrumb/Breadcrumb";
+import Button from "../Components/UiElements/Buttons/Button";
+const cartItems = [
+  {
+    id: 1,
+    title: "OTTERBOX COMMUTER SERIES Case for iPhone 12 & iPhone 12 Pro",
+    image: product,
+    price: 699,
+    quantity: 5,
+  },
+  {
+    id: 2,
+    title: "OTTERBOX COMMUTER SERIES Case for iPhone 12 & iPhone 12 Pro",
+    image: product2,
+    price: 699,
+    quantity: 4,
+  },
+  {
+    id: 2,
+    title: "OTTERBOX COMMUTER SERIES Case for iPhone 12 & iPhone 12 Pro",
+    image: product,
+    price: 699,
+    quantity: 6,
+  },
+];
 
 const Cart = () => {
-  let sellerTakes = 0;
-  let tax = 0;
-  let fee = 0;
-  let totalPrice = 0;
-  const [price, setPrice] = useState()
-  const [discount, setDiscount] = useState()
+  // let sellerTakes = 0;
+  // let tax = 0;
+  // let fee = 0;
+  // let totalPrice = 0;
+  // const [price, setPrice] = useState()
+  // const [discount, setDiscount] = useState()
 
-  const { cart, setCart } = useCartCtx()
-  useEffect(() => {
-    if (cart.id) {
-      if (cart.discountApplied) setDiscount(cart.discountApplied);
-    }
-  }, [cart]);
+  // const { cart, setCart } = useCartCtx()
+  // useEffect(() => {
+  //   if (cart.id) {
+  //     if (cart.discountApplied) setDiscount(cart.discountApplied);
+  //   }
+  // }, [cart]);
 
-  const updateQuantity = useCallback((id, quantity) => {
-    setCart(prevCart => {
-      const updatedCart = {
-        ...prevCart,
-        products: prevCart.products.map(item =>
-          item.product.id === id ? { ...item, productQuantity: quantity } : item
-        ),
-        requests: prevCart.requests.map(item =>
-          item.request.id === id ? { ...item, requestQuantity: quantity } : item
-        )
-      };
-      return updatedCart;
-    });
-  }, []);
+  // const updateQuantity = useCallback((id, quantity) => {
+  //   setCart(prevCart => {
+  //     const updatedCart = {
+  //       ...prevCart,
+  //       products: prevCart.products.map(item =>
+  //         item.product.id === id ? { ...item, productQuantity: quantity } : item
+  //       ),
+  //       requests: prevCart.requests.map(item =>
+  //         item.request.id === id ? { ...item, requestQuantity: quantity } : item
+  //       )
+  //     };
+  //     return updatedCart;
+  //   });
+  // }, []);
 
-  useEffect(() => {
-    let discountItemsTotal = 0;
-    let nondiscountItemsTotal = 0;
-    let discountamount = 0;
-    let totalPrice = 0;
+  // useEffect(() => {
+  //   let discountItemsTotal = 0;
+  //   let nondiscountItemsTotal = 0;
+  //   let discountamount = 0;
+  //   let totalPrice = 0;
 
-    if (cart) {
-      cart.products.forEach(product => {
-        const total = (product.product.price + product.product.tax + product.product.fee) * product.productQuantity;
-        if (discount?.code && product.product.category.toString() === discount.category && product.product.subcategory.toString() === discount.subcategory) {
-          discountItemsTotal += total;
-        } else {
-          nondiscountItemsTotal += total;
-        }
-      });
+  //   if (cart) {
+  //     cart.products.forEach(product => {
+  //       const total = (product.product.price + product.product.tax + product.product.fee) * product.productQuantity;
+  //       if (discount?.code && product.product.category.toString() === discount.category && product.product.subcategory.toString() === discount.subcategory) {
+  //         discountItemsTotal += total;
+  //       } else {
+  //         nondiscountItemsTotal += total;
+  //       }
+  //     });
 
-      discountamount = discount?.percentage ? (discountItemsTotal * discount.percentage) / 100 : discount?.amount;
-      totalPrice = discountamount ? totalPrice + nondiscountItemsTotal - discountamount : totalPrice + nondiscountItemsTotal;
-      setPrice(totalPrice);
-    }
-  }, [cart, discount]);
+  //     discountamount = discount?.percentage ? (discountItemsTotal * discount.percentage) / 100 : discount?.amount;
+  //     totalPrice = discountamount ? totalPrice + nondiscountItemsTotal - discountamount : totalPrice + nondiscountItemsTotal;
+  //     setPrice(totalPrice);
+  //   }
+  // }, [cart, discount]);
 
-  const addDiscount = async (e) => {
-    e.preventDefault();
-    if (cart.discountApplied) {
-      toaster({ type: 'error', message: 'Discount already applied' });
-      return;
-    }
+  // const addDiscount = async (e) => {
+  //   e.preventDefault();
+  //   if (cart.discountApplied) {
+  //     toaster({ type: 'error', message: 'Discount already applied' });
+  //     return;
+  //   }
 
-    const response = await terminal.request({ name: 'useDiscount', queries: { code: e.target.code.value.toUpperCase() } });
+  //   const response = await terminal.request({ name: 'useDiscount', queries: { code: e.target.code.value.toUpperCase() } });
 
-    if (response.code) {
-      setDiscount(response);
-      toaster({ type: 'success', message: 'Discount Applied' });
-      const updatedCart = await terminal.request({ name: 'updateCart', body: { discountApplied: response } });
-      if (updatedCart.id) {
-        setCart(updatedCart);
-      }
-    } else {
-      toaster({ type: 'error', message: response.message || 'An error occurred. Please try again later' });
-    }
-  };
+  //   if (response.code) {
+  //     setDiscount(response);
+  //     toaster({ type: 'success', message: 'Discount Applied' });
+  //     const updatedCart = await terminal.request({ name: 'updateCart', body: { discountApplied: response } });
+  //     if (updatedCart.id) {
+  //       setCart(updatedCart);
+  //     }
+  //   } else {
+  //     toaster({ type: 'error', message: response.message || 'An error occurred. Please try again later' });
+  //   }
+  // };
 
-  const removeDiscount = async () => {
-    const data = await terminal.request({ name: 'updateCart', body: { discountApplied: {} } });
-    if (data.id) setCart(data)
-    await terminal.request({ name: 'abandonDiscount', queries: { code: discount.code } }).then(data => {
-      if (data.status) {
-        toaster({ type: 'success', message: data.message })
-        setDiscount()
-      }
-    }
-    )
-  }
+  // const removeDiscount = async () => {
+  //   const data = await terminal.request({ name: 'updateCart', body: { discountApplied: {} } });
+  //   if (data.id) setCart(data)
+  //   await terminal.request({ name: 'abandonDiscount', queries: { code: discount.code } }).then(data => {
+  //     if (data.status) {
+  //       toaster({ type: 'success', message: data.message })
+  //       setDiscount()
+  //     }
+  //   }
+  //   )
+  // }
 
-  const updateCart = async () => {
-    const products = cart.products.map(product => ({
-      product: product.product.id,
-      productQuantity: product.productQuantity
-    }));
+  // const updateCart = async () => {
+  //   const products = cart.products.map(product => ({
+  //     product: product.product.id,
+  //     productQuantity: product.productQuantity
+  //   }));
 
-    const requests = cart.requests.map(request => ({
-      request: request.request.id,
-      requestQuantity: request.requestQuantity
-    }));
-    const data = await terminal.request({ name: 'updateCart', body: { ...(products.length && { products }), ...(requests.length && { requests }) } })
-    if (data.id) setCart(data)
-  };
+  //   const requests = cart.requests.map(request => ({
+  //     request: request.request.id,
+  //     requestQuantity: request.requestQuantity
+  //   }));
+  //   const data = await terminal.request({ name: 'updateCart', body: { ...(products.length && { products }), ...(requests.length && { requests }) } })
+  //   if (data.id) setCart(data)
+  // };
 
   return (
     <>
+       <>
+    <Breadcrumb />
+    <div className="container mx-auto py-12 ">
+      <div className="grid grid-cols-5 gap-8">
+        <div className="col-span-5 sm:col-span-3 px-5 sm:px-0">
+          <table className="w-full">
+            <thead className=" text-secondary text-left border-b border-[#00000023]">
+              <tr>
+                <th className=" w-9/12 font-semibold pb-[14px]">
+                  Product List
+                </th>
+                <th className="w-1/12 font-semibold pb-[14px]">Quantity</th>
+                <th className=" w-2/12 font-semibold pb-[14px] hidden sm:table-cell">
+                  {" "}
+                  Price
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {cartItems.map((item) => (
+                <CartItem key={item.id} data={item} />
+              ))}
+            </tbody>
+          </table>
+          <div className="my-8 flex justify-between flex-wrap gap-2">
+            <div className="flex gap-2 flex-wrap justify-center">
+              <Input  type="text" placeholder="Discount code" border />
+              <Button type="lightGreen">Apply</Button>
+            </div>
+            <Button type="light">Update Cart</Button>
+          </div>
+        </div>
+        <div className="col-span-5 sm:col-span-2">
+          <PriceCard
+            type="cart"
+            sellerTakes={22020}
+            tax={5590}
+            fee={2400}
+            estimated={30010}
+          />
+        </div>
+      </div>
+    </div>
+    </>
       {/* <Breadcrumb />
       <div
         className={`container flex flex-col xl:flex-row gap-[30px] mt-[96px] min-h-screen mb-20`}

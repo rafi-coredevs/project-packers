@@ -116,8 +116,11 @@ const Header = ({ sideBar, state }) => {
                 <div className="relative">
                   <span
                     className="hover:cursor-pointer"
+                    onClick={() => {
+                      setNotifyState(!notifyState);
+                    }}
                   >
-                    <img src={notification} alt="" />
+                    <Icon unread={false} icon={notification} />
                   </span>
                   <Dropdown
                     type="notification"

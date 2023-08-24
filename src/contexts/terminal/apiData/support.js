@@ -2,9 +2,11 @@ export const support = {
     registerSupport: {
         method: "POST",
         uri: "support",
+        formData: true,
         body: {
-            type: undefined,
-            message: undefined
+            data: {
+                message: undefined
+            }
         },
         suggestions: {
             raw: "A raw example of the payload: {message:'This is a sample message', type:'payment'}.",
@@ -28,6 +30,13 @@ export const support = {
         suggestions: {
             raw: "A raw example of the uri: 'support/64d0e49ce38a875d6f3e49ee'.",
             id: "Please provide an id"
+        }
+    },
+    userSupport: {
+        method: "GET",
+        uri: "usersupport",
+        suggestions: {
+            raw: "A raw example of the uri: 'usersupport'.",
         }
     },
     updateSupport: {

@@ -9,6 +9,7 @@ import Input from "../Components/UiElements/Input/Input";
 import search from "../../assets/icons/cd-search2.svg";
 import { orderTable } from "../../Store/Data";
 import { adminCard } from "../../Store/Data";
+import Overview from "../Components/Overview/Overview";
 const AllOrders = () => {
   const [active, setActive] = useState("all");
   const [tableData] = useState(orderTable);
@@ -29,12 +30,8 @@ const AllOrders = () => {
         </div>
       </Heading>
       <div className="grid grid-cols-3 gap-5">
-        <div className="col-span-3  border-b border-[#0000001c] py-5">
-          <div className="grid lg:grid-cols-5 ">
-            {adminCard?.map((item, key) => (
-              <Card key={key} type={item.title} data={item.value} />
-            ))}
-          </div>
+        <div className="col-span-3 border-[#0000001c]">
+          <Overview />
         </div>
 
         <div className="col-span-3 sm:col-span-3">
@@ -43,59 +40,53 @@ const AllOrders = () => {
               <div className="py-2 my-auto">
                 <button
                   onClick={() => tableButtonHandler("all")}
-                  className={`py-2 px-3 text-[#475569] text-xs font-semibold ${
-                    active === "all" ? "bg-[#CFF6EF] rounded" : "bg-transparent"
-                  }`}
+                  className={`py-2 px-3 text-[#475569] text-xs font-semibold ${active === "all" ? "bg-[#CFF6EF] rounded" : "bg-transparent"
+                    }`}
                 >
                   All
                 </button>
                 <button
                   onClick={() => tableButtonHandler("pending")}
-                  className={`py-2 px-3 text-[#475569] text-xs font-semibold ${
-                    active === "pending"
+                  className={`py-2 px-3 text-[#475569] text-xs font-semibold ${active === "pending"
                       ? "bg-[#CFF6EF] rounded"
                       : "bg-transparent"
-                  }`}
+                    }`}
                 >
                   Pending
                 </button>
                 <button
                   onClick={() => tableButtonHandler("processing")}
-                  className={`py-2 px-3 text-[#475569] text-xs font-semibold ${
-                    active === "processing"
+                  className={`py-2 px-3 text-[#475569] text-xs font-semibold ${active === "processing"
                       ? "bg-[#CFF6EF] rounded"
                       : "bg-transparent"
-                  }`}
+                    }`}
                 >
                   Processing
                 </button>
                 <button
                   onClick={() => tableButtonHandler("shipping")}
-                  className={`py-2 px-3 text-[#475569] text-xs font-semibold ${
-                    active === "shipping"
+                  className={`py-2 px-3 text-[#475569] text-xs font-semibold ${active === "shipping"
                       ? "bg-[#CFF6EF] rounded"
                       : "bg-transparent"
-                  }`}
+                    }`}
                 >
                   Shipping
                 </button>
                 <button
                   onClick={() => tableButtonHandler("cancelled")}
-                  className={`py-2 px-3 text-[#475569] text-xs font-semibold ${
-                    active === "cancelled"
+                  className={`py-2 px-3 text-[#475569] text-xs font-semibold ${active === "cancelled"
                       ? "bg-[#CFF6EF] rounded"
                       : "bg-transparent"
-                  }`}
+                    }`}
                 >
                   Cancelled
                 </button>
                 <button
                   onClick={() => tableButtonHandler("completed")}
-                  className={`py-2 px-3 text-[#475569] text-xs font-semibold ${
-                    active === "completed"
+                  className={`py-2 px-3 text-[#475569] text-xs font-semibold ${active === "completed"
                       ? "bg-[#CFF6EF] rounded"
                       : "bg-transparent"
-                  }`}
+                    }`}
                 >
                   Completed
                 </button>

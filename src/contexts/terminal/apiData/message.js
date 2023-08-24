@@ -5,8 +5,11 @@ export const message = {
         params: {
             id: undefined
         },
+        formData: true,
         body: {
-            message: undefined
+            data: {
+                message: undefined
+            }
         },
         suggestions: {
             raw: "A raw example of the uri: 'sendmessage'",
