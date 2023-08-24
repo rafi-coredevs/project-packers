@@ -1,6 +1,6 @@
 import Breadcrumb from "../Components/UiElements/Breadcrumb/Breadcrumb";
 import Input from "../Components/UiElements/Input/Input";
-import order from "../assets/icons/cd-order.svg";
+import ordericon from "../assets/icons/cd-order.svg";
 import profile from "../assets/icons/user-1.svg";
 import logout from "../assets/icons/logout-01.svg";
 import eye from "../assets/icons/eye.svg";
@@ -10,10 +10,13 @@ import Button from "../Components/UiElements/Buttons/Button";
 import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import { profileSchema } from "../Util/ValidationSchema"
+import { useUserCtx } from "../contexts/user/UserContext";
+import { terminal } from "../contexts/terminal/Terminal";
 
 const Orders = () => {
+  const { Logout } = useUserCtx()
   const [active, setActive] = useState("orders");
-
+  const [order, setOrder] = useState([])
   const navigate = useNavigate();
   // useEffect(() => {
   //   const name = user?.name.split(" ");
@@ -65,10 +68,14 @@ const Orders = () => {
     },
   });
 
-  // const logoutHandler = () => {
-  //   dispatch(userSignout());
-  //   navigate("/");
-  // };
+  const logoutHandler = () => {
+    Logout()
+    navigate("/");
+  };
+
+  useEffect(() => {
+    terminal.request({ name: 'userOrder' }).then(data => data.docs && setOrder(data.docs))
+  })
   return (
     <>
       <Breadcrumb />
@@ -82,7 +89,7 @@ const Orders = () => {
                   className={`py-3 px-8 flex  gap-[10px] w-full rounded-full hover:bg-primary ${active === "orders" ? "bg-primary" : "bg-white border"
                     }`}
                 >
-                  <img src={order} />
+                  <img src={ordericon} />
                   <span className="hidden sm:block">Orders</span>
                 </button>
                 <button
@@ -94,7 +101,7 @@ const Orders = () => {
                   <span className="hidden sm:block">User Account</span>
                 </button>
                 <button
-                  // onClick={logoutHandler}
+                  onClick={logoutHandler}
                   className={`py-3 px-8 flex  gap-[10px] w-full rounded-full hover:bg-primary bg-white border`}
                 >
                   <img src={logout} />
@@ -104,131 +111,74 @@ const Orders = () => {
             </div>
             <div className="col-span-5 sm:col-span-4">
               {active === "orders" ? (
-                <div className="w-full overflow-x-auto">
-                  <div className="relative overflow-x-auto">
-                    <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                      <thead className="text-xs text-[#475569]  bg-[#F8FAFC] font-medium border-b">
-                        <tr>
-                          <th scope="col" className="p-3 font-medium">
-                            Order ID
-                          </th>
-                          <th scope="col" className="px-6 py-3 font-medium">
-                            Date
-                          </th>
-                          <th scope="col" className="px-6 py-3 font-medium">
-                            Items
-                          </th>
-                          <th scope="col" className="px-6 py-3 font-medium">
-                            Total
-                          </th>
-                          <th scope="col" className="px-6 py-3 font-medium">
-                            Status
-                          </th>
-                          <th scope="col" className="px-6 py-3 font-medium">
-                            Action
-                          </th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr className="border-b text-sm text-black">
-                          <th scope="row" className="p-3">
-                            #2050
-                          </th>
-                          <td className="px-6 py-4">Today at 6:55am</td>
-                          <td className="px-6 py-4">1 item</td>
-                          <td className="px-6 py-4">$396.84</td>
-                          <td className="px-6 py-4">
-                            <Badge text="completed" />
-                          </td>
-                          <td className="px-6 py-4">
-                            <img
-                              className="cursor-pointer"
-                              onClick={() => console.log("first")}
-                              src={eye}
-                              alt=""
-                            />
-                          </td>
-                        </tr>
-                        <tr className="border-b text-sm text-black">
-                          <th scope="row" className="p-3">
-                            #2050
-                          </th>
-                          <td className="px-6 py-4">Today at 6:55am</td>
-                          <td className="px-6 py-4">1 item</td>
-                          <td className="px-6 py-4">$396.84</td>
-                          <td className="px-6 py-4">
-                            <Badge text="paid" />
-                          </td>
-                          <td className="px-6 py-4">
-                            <img
-                              className="cursor-pointer"
-                              onClick={() => console.log("first")}
-                              src={eye}
-                              alt=""
-                            />
-                          </td>
-                        </tr>
-                        <tr className="border-b text-sm text-black">
-                          <th scope="row" className="p-3">
-                            #2050
-                          </th>
-                          <td className="px-6 py-4">Today at 6:55am</td>
-                          <td className="px-6 py-4">1 item</td>
-                          <td className="px-6 py-4">$396.84</td>
-                          <td className="px-6 py-4">
-                            <Badge text="processing" />
-                          </td>
-                          <td className="px-6 py-4">
-                            <img
-                              className="cursor-pointer"
-                              onClick={() => console.log("first")}
-                              src={eye}
-                              alt=""
-                            />
-                          </td>
-                        </tr>
-                        <tr className="border-b text-sm text-black">
-                          <th scope="row" className="p-3">
-                            #2050
-                          </th>
-                          <td className="px-6 py-4">Today at 6:55am</td>
-                          <td className="px-6 py-4">1 item</td>
-                          <td className="px-6 py-4">$396.84</td>
-                          <td className="px-6 py-4">
-                            <Badge text="shipping" />
-                          </td>
-                          <td className="px-6 py-4">
-                            <img
-                              className="cursor-pointer"
-                              onClick={() => console.log("first")}
-                              src={eye}
-                              alt=""
-                            />
-                          </td>
-                        </tr>
-                        <tr className="border-b text-sm text-black">
-                          <th scope="row" className="p-3">
-                            #2050
-                          </th>
-                          <td className="px-6 py-4">Today at 6:55am</td>
-                          <td className="px-6 py-4">1 item</td>
-                          <td className="px-6 py-4">$396.84</td>
-                          <td className="px-6 py-4">
-                            <Badge text="cancelled" />
-                          </td>
-                          <td className="px-6 py-4">
-                            <img
-                              className="cursor-pointer"
-                              onClick={() => console.log("first")}
-                              src={eye}
-                              alt=""
-                            />
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
+                <>
+                  {
+                    order?.length < 1 ? <div>
+                      <p>No orders available</p>
+                    </div> : <div className="w-full overflow-x-auto">
+                      <div className="relative overflow-x-auto">
+                        <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                          <thead className="text-xs text-[#475569]  bg-[#F8FAFC] font-medium border-b">
+                            <tr>
+                              <th scope="col" className="p-3 font-medium">
+                                Order ID
+                              </th>
+                              <th scope="col" className="px-6 py-3 font-medium">
+                                Date
+                              </th>
+                              <th scope="col" className="px-6 py-3 font-medium">
+                                Items
+                              </th>
+                              <th scope="col" className="px-6 py-3 font-medium">
+                                Total
+                              </th>
+                              <th scope="col" className="px-6 py-3 font-medium">
+                                Status
+                              </th>
+                              <th scope="col" className="px-6 py-3 font-medium">
+                                Action
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {
+                              order?.map(item => {
+                                const formattedDate = new Intl.DateTimeFormat('en-US', {
+                                  year: 'numeric',
+                                  month: 'long',
+                                  day: 'numeric',
+                                  hour: 'numeric',
+                                  minute: 'numeric',
+                                  hour12: true,
+                                }).format(new Date(item.date));
+                                return <tr key={item.id} className="border-b text-sm text-black">
+                                  <th scope="row" className="p-3">
+                                    # {item.id}
+                                  </th>
+                                  <td className="px-6 py-4">{formattedDate}</td>
+                                  <td className="px-6 py-4">{item?.products?.length + item?.requests?.length}</td>
+                                  <td className="px-6 py-4">{item.total} tk</td>
+                                  <td className="px-6 py-4">
+                                    <Badge text={item.status} />
+                                  </td>
+                                  <td className="px-6 py-4">
+                                    <img
+                                      className="cursor-pointer"
+                                      onClick={() => console.log("first")}
+                                      src={eye}
+                                      alt=""
+                                    />
+                                  </td>
+                                </tr>
+                              })
+                            }
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  }
+                </>
+
               ) : (
                 <div className="max-w-[700px]">
                   <form

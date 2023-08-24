@@ -48,29 +48,42 @@ export const subCategorySchema = object({
 });
 
 export const productSchema = object({
-	name: string().required(),
-	desc: string().required(),
-	price: string()
-		.matches(/^\d+(\.\d+)?$/, 'Not valid')
-		.required(),
-	tax: string()
-		.matches(/^\d+(\.\d+)?$/, 'Not valid')
-		.required(),
-	fee: string()
-		.matches(/^\d+(\.\d+)?$/, 'Not valid')
-		.required(),
-	stock: string()
-		.matches(/^\d+(\.\d+)?$/, 'Not valid')
-		.required(),
-	from: string().required(),
-	link: string().required(),
-	tags: string().required(),
-	deliveryTime: object({
-		min: string()
-			.matches(/^\d+(\.\d+)?$/, 'Not valid')
-			.required(),
-		max: string()
-			.matches(/^\d+(\.\d+)?$/, 'Not valid')
-			.required(),
-	}),
+  name: string().required(),
+  desc: string().required(),
+  price: string()
+    .matches(/^\d+(\.\d+)?$/, "Not valid")
+    .required(),
+  tax: string()
+    .matches(/^\d+(\.\d+)?$/, "Not valid")
+    .required(),
+  fee: string()
+    .matches(/^\d+(\.\d+)?$/, "Not valid")
+    .required(),
+  stock: string()
+    .matches(/^\d+(\.\d+)?$/, "Not valid")
+    .required(),
+  from: string().required(),
+  link: string().required(),
+  tags: string().required(),
+  deliveryTime: object({
+    min: string()
+      .matches(/^\d+(\.\d+)?$/, "Not valid")
+      .required(),
+    max: string()
+      .matches(/^\d+(\.\d+)?$/, "Not valid")
+      .required(),
+  }),
+});
+
+export const checkoutSchema = object({
+  email: string().email().required("Please Enter Your Email Address."),
+  phone: string().min(10, "Invalid Phone Number").max(17).required(),
+  altPhone: string().min(10, "Invalid Phone Number").max(17),
+  firstName: string().required("First Name Required"),
+  lastName: string().required("Last Name Required"),
+  address:  string().required(),
+  city:  string().required(),
+  area:  string().required(),
+  zip:  string().required(),
+  instruction:  string(),
 });
