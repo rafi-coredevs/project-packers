@@ -12,7 +12,10 @@ import { useFormik } from "formik";
 import attachment from '../../assets/icons/attachment.svg'
 import toaster from "../../Util/toaster";
 import { terminal } from "../../contexts/terminal/Terminal";
+import { useUserCtx } from "../../contexts/user/UserContext";
+import UserIcon from "../UiElements/UserIcon/UserIcon";
 const SupportModal = () => {
+  const { user } = useUserCtx()
   const [isVisible, setVisible] = useState(false);
   const [chat, setChat] = useState([]);
   const [images, setImages] = useState([])
@@ -34,15 +37,22 @@ const SupportModal = () => {
       })
     },
   });
-
   useEffect(() => {
     isVisible && terminal.request({ name: 'userSupport' }).then(data => {
       if (data.id) {
+        terminal.socket.on('entry', () => {
+          terminal.socket.emit({ "entry": true, "room": data.id })
+        })
         terminal.request({ name: 'getMessage', params: { id: data.id } }).then(data => {
           data.docs?.length > 0 && setChat(data.docs)
         })
       }
     })
+    return () => {
+      terminal.socket.on('entry', () => {
+        terminal.socket.emit({ "entry": false, "room": data.id })
+      })
+    }
   }, [isVisible])
   const handleImage = (event) => {
     const files = event.target.files;
@@ -53,10 +63,14 @@ const SupportModal = () => {
       toaster({ type: 'error', message: 'You can only select up to 5 files.' });
     }
   };
+
   useEffect(() => {
-    terminal.socket.on('error',(data)=>{
-      
+    terminal.socket.on('message', (data) => {
+      setChat(prev => [data, ...prev])
     })
+    return () => {
+      terminal.socket.off('message')
+    }
   }, []);
   return (
     <>
@@ -70,8 +84,6 @@ const SupportModal = () => {
           />
         </div>
       )}
-
-
       <div className={`bg-secondary p-5 border-[#6BCCCB] border rounded-2xl min-w-[23.437rem]  z-50 fixed duration-300 ${isVisible ? 'bottom-0 md:bottom-4 right-0 md:right-4' : '-bottom-[62.5rem] -right-[62.5rem]'}  overflow-y-auto max-h-[90vh]`}>
         <div className="flex justify-between items-center mb-5">
           <span className="text-white font-sans font-bold text-2xl">
@@ -206,18 +218,18 @@ const SupportModal = () => {
               {chat?.map((chat, index) => {
                 return (
                   <div key={index}
-                    className={`flex gap-3 h-fit max-w-[25rem] ${chat?.type !== "customer"
+                    className={`flex gap-3 h-fit max-w-[25rem] ${chat?.user !== user?.id
                       ? "ml-auto flex-row-reverse"
                       : ""
                       }`}
                   >
-                    <span className="h-10 w-10 flex items-center justify-center shrink-0 rounded-full font-bold text-amber-800 bg-pink-400">
-                      XY
+                    <span className="h-10 w-10 flex items-center justify-center shrink-0 rounded-full font-bold">
+                      <UserIcon name={user?.fullName} />
                     </span>
                     <div
-                      className={`p-2 ${chat?.type === "customer"
-                        ? "bg-[#CFF6EF]"
-                        : "bg-[#092F3F]"
+                      className={`p-2 ${chat?.user !== user?.id
+                        ? "bg-[#092F3F]"
+                        : "bg-[#CFF6EF]"
                         } w-full grid gap-2  rounded-md`}
                     >
                       <div className="flex justify-between w-full">
@@ -225,7 +237,7 @@ const SupportModal = () => {
                           {chat?.name}
                         </p>
                         <p className="text-[#64748B] text-xs font-semibold">
-                          {chat?.date}
+                          {chat?.time}
                         </p>
                       </div>
                       <div

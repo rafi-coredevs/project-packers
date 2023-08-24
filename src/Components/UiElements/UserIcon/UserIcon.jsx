@@ -10,7 +10,7 @@ const UserIcon = ({ name = String }) => {
     const lastName = userName[1];
     const initials = lastName ? (firstName[0] + lastName[0]).toUpperCase() : firstName[0].toUpperCase();
     return (
-        <button className='w-10 h-10 bg-secondary font-bold text-primary rounded-full duration-200 active:scale-95'>
+        <button className='w-10 h-10 bg-primary font-bold text-secondary rounded-full duration-200 active:scale-95'>
             <span className='text-lg font-normal'>{initials}</span>
         </button>
     );
