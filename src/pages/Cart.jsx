@@ -39,103 +39,105 @@ const cartItems = [
 ];
 
 const Cart = () => {
-  // let sellerTakes = 0;
-  // let tax = 0;
-  // let fee = 0;
-  // let totalPrice = 0;
-  // const [price, setPrice] = useState()
-  // const [discount, setDiscount] = useState()
+  let sellerTakes = 0;
+  let tax = 0;
+  let fee = 0;
+  let totalPrice = 0;
+  const [price, setPrice] = useState()
+  const [discount, setDiscount] = useState()
+  const { cart, setCart} = useCartCtx()
+  console.log(cart?.products)
+  useEffect(() => {
+    
+    if (cart?.id) {
+      if (cart.discountApplied) setDiscount(cart.discountApplied);
+    }
 
-  // const { cart, setCart } = useCartCtx()
-  // useEffect(() => {
-  //   if (cart.id) {
-  //     if (cart.discountApplied) setDiscount(cart.discountApplied);
-  //   }
-  // }, [cart]);
+  }, [cart]);
 
-  // const updateQuantity = useCallback((id, quantity) => {
-  //   setCart(prevCart => {
-  //     const updatedCart = {
-  //       ...prevCart,
-  //       products: prevCart.products.map(item =>
-  //         item.product.id === id ? { ...item, productQuantity: quantity } : item
-  //       ),
-  //       requests: prevCart.requests.map(item =>
-  //         item.request.id === id ? { ...item, requestQuantity: quantity } : item
-  //       )
-  //     };
-  //     return updatedCart;
-  //   });
-  // }, []);
+  const updateQuantity = useCallback((id, quantity) => {
+    setCart(prevCart => {
+      const updatedCart = {
+        ...prevCart,
+        products: prevCart.products.map(item =>
+          item.product.id === id ? { ...item, productQuantity: quantity } : item
+        ),
+        requests: prevCart.requests.map(item =>
+          item.request.id === id ? { ...item, requestQuantity: quantity } : item
+        )
+      };
+      return updatedCart;
+    });
+  }, []);
 
-  // useEffect(() => {
-  //   let discountItemsTotal = 0;
-  //   let nondiscountItemsTotal = 0;
-  //   let discountamount = 0;
-  //   let totalPrice = 0;
+  useEffect(() => {
+    let discountItemsTotal = 0;
+    let nondiscountItemsTotal = 0;
+    let discountamount = 0;
+    let totalPrice = 0;
 
-  //   if (cart) {
-  //     cart.products.forEach(product => {
-  //       const total = (product.product.price + product.product.tax + product.product.fee) * product.productQuantity;
-  //       if (discount?.code && product.product.category.toString() === discount.category && product.product.subcategory.toString() === discount.subcategory) {
-  //         discountItemsTotal += total;
-  //       } else {
-  //         nondiscountItemsTotal += total;
-  //       }
-  //     });
+    if (cart) {
+      cart.products.forEach(product => {
+        const total = (product.product.price + product.product.tax + product.product.fee) * product.productQuantity;
+        if (discount?.code && product.product.category.toString() === discount.category && product.product.subcategory.toString() === discount.subcategory) {
+          discountItemsTotal += total;
+        } else {
+          nondiscountItemsTotal += total;
+        }
+      });
 
-  //     discountamount = discount?.percentage ? (discountItemsTotal * discount.percentage) / 100 : discount?.amount;
-  //     totalPrice = discountamount ? totalPrice + nondiscountItemsTotal - discountamount : totalPrice + nondiscountItemsTotal;
-  //     setPrice(totalPrice);
-  //   }
-  // }, [cart, discount]);
+      discountamount = discount?.percentage ? (discountItemsTotal * discount.percentage) / 100 : discount?.amount;
+      totalPrice = discountamount ? totalPrice + nondiscountItemsTotal - discountamount : totalPrice + nondiscountItemsTotal;
+      setPrice(totalPrice);
+    }
+  }, [cart, discount]);
 
-  // const addDiscount = async (e) => {
-  //   e.preventDefault();
-  //   if (cart.discountApplied) {
-  //     toaster({ type: 'error', message: 'Discount already applied' });
-  //     return;
-  //   }
+  const addDiscount = async (e) => {
+    e.preventDefault();
+    if (cart.discountApplied) {
+      toaster({ type: 'error', message: 'Discount already applied' });
+      return;
+    }
 
-  //   const response = await terminal.request({ name: 'useDiscount', queries: { code: e.target.code.value.toUpperCase() } });
+    const response = await terminal.request({ name: 'useDiscount', queries: { code: e.target.code.value.toUpperCase() } });
 
-  //   if (response.code) {
-  //     setDiscount(response);
-  //     toaster({ type: 'success', message: 'Discount Applied' });
-  //     const updatedCart = await terminal.request({ name: 'updateCart', body: { discountApplied: response } });
-  //     if (updatedCart.id) {
-  //       setCart(updatedCart);
-  //     }
-  //   } else {
-  //     toaster({ type: 'error', message: response.message || 'An error occurred. Please try again later' });
-  //   }
-  // };
+    if (response.code) {
+      setDiscount(response);
+      toaster({ type: 'success', message: 'Discount Applied' });
+      const updatedCart = await terminal.request({ name: 'updateCart', body: { discountApplied: response } });
+      if (updatedCart.id) {
+        setCart(updatedCart);
+      }
+    } else {
+      toaster({ type: 'error', message: response.message || 'An error occurred. Please try again later' });
+    }
+  };
 
-  // const removeDiscount = async () => {
-  //   const data = await terminal.request({ name: 'updateCart', body: { discountApplied: {} } });
-  //   if (data.id) setCart(data)
-  //   await terminal.request({ name: 'abandonDiscount', queries: { code: discount.code } }).then(data => {
-  //     if (data.status) {
-  //       toaster({ type: 'success', message: data.message })
-  //       setDiscount()
-  //     }
-  //   }
-  //   )
-  // }
+  const removeDiscount = async () => {
+    const data = await terminal.request({ name: 'updateCart', body: { discountApplied: {} } });
+    if (data.id) setCart(data)
+    await terminal.request({ name: 'abandonDiscount', queries: { code: discount.code } }).then(data => {
+      if (data.status) {
+        toaster({ type: 'success', message: data.message })
+        setDiscount()
+      }
+    }
+    )
+  }
 
-  // const updateCart = async () => {
-  //   const products = cart.products.map(product => ({
-  //     product: product.product.id,
-  //     productQuantity: product.productQuantity
-  //   }));
+  const updateCart = async () => {
+    const products = cart.products.map(product => ({
+      product: product.product.id,
+      productQuantity: product.productQuantity
+    }));
 
-  //   const requests = cart.requests.map(request => ({
-  //     request: request.request.id,
-  //     requestQuantity: request.requestQuantity
-  //   }));
-  //   const data = await terminal.request({ name: 'updateCart', body: { ...(products.length && { products }), ...(requests.length && { requests }) } })
-  //   if (data.id) setCart(data)
-  // };
+    const requests = cart.requests.map(request => ({
+      request: request.request.id,
+      requestQuantity: request.requestQuantity
+    }));
+    const data = await terminal.request({ name: 'updateCart', body: { ...(products.length && { products }), ...(requests.length && { requests }) } })
+    if (data.id) setCart(data)
+  };
 
   return (
     <>
@@ -158,8 +160,9 @@ const Cart = () => {
               </tr>
             </thead>
             <tbody>
-              {cartItems.map((item) => (
-                <CartItem key={item.id} data={item} />
+              {cart?.products.map((item) => (
+           
+                <CartItem key={item?.id} data={item?.product} />
               ))}
             </tbody>
           </table>
@@ -220,10 +223,6 @@ const Cart = () => {
                     totalPrice += (request?.request?.price + request?.request?.tax + request?.request?.fee) * request.requestQuantity
                     return <CartCard
                       key={request?.request?.id}
-<<<<<<< HEAD
-                      updateQuantity={updateQuantity}
-=======
->>>>>>> origin/masumk
                       ProductQuantity={request?.requestQuantity}
                       productImg={request?.request?.images[0]}
                       price={(request?.request?.price + request?.request?.tax + request?.request?.fee) * request.requestQuantity}

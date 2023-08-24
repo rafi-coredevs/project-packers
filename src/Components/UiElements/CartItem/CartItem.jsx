@@ -1,28 +1,29 @@
 import { useState } from "react";
-import { BASE_URL } from "../../../Util/apiCall";
 
-const CartItem = ({ data, changeQt }) => {
+
+const CartItem = ({ data, changeQuantity }) => {
   const [quantity, setQuantity] = useState(data?.quantity || 1);
-
+  console.log(data?.price)
   const updateCuantity = (qt) => {
     changeQt(data?.product?.id, data?.quantity + qt);
     setQuantity(quantity + qt);
   };
+  const BASE_URL = import.meta.env.VITE_SERVER_URL
   return (
     <tr className="border-b">
       <td>
         <div className="h-[60px] my-2 pr-2 flex gap-3 items-center">
           <img
-            className="h-full  w-[80px] border-[1px] p-[1px]"
-            src={BASE_URL + "/api/" + data?.product?.thumbnails[0]}
+            className="h-16 w-16 border-[1px] p-[1px]"
+            src={BASE_URL + `/${data.images[0]}`}
             alt=""
           />
           <div className="">
             <p className="sm:text-base text-sm font-normal wrap line-clamp-2 ">
-              {data?.product?.name}
+              {data?.name}
             </p>
             <p className="sm:hidden block text-xs font-semibold">
-              ৳ {data?.product?.price.toFixed(2)} tk{" "}
+              ৳ {data?.price.toFixed(2)} tk{" "}
             </p>
           </div>
         </div>
@@ -48,7 +49,7 @@ const CartItem = ({ data, changeQt }) => {
         </div>
       </td>
       <td className="hidden px-2 sm:table-cell">
-        ৳ {data?.product?.price.toFixed(2)} tk
+        ৳ {data?.price.toFixed(2)} tk
       </td>
     </tr>
   );
