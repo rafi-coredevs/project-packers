@@ -7,13 +7,9 @@ import Button from "../Components/UiElements/Buttons/Button";
 import google from "../assets/icons/google-icon.svg";
 import facebook from "../assets/icons/facebook.svg";
 import apple from "../assets/icons/apple.svg";
-import { postApi } from "../Util/apiCall";
-import { useDispatch } from "react-redux";
-import { userSignin } from "../Store/userSlice";
 
 const Login = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const loginForm = useFormik({
     initialValues: {
       email: "",
@@ -22,39 +18,39 @@ const Login = () => {
     },
     validationSchema: loginSchema,
     onSubmit: (values) => {
-      postApi("/user/login", values).then((res) => {
-        if (res.status === 200) {
+      // postApi("/user/login", values).then((res) => {
+      //   if (res.status === 200) {
          
-          dispatch(userSignin(res.data));
-          loginForm.resetForm();
-          toast.success("Login Successful", {
-            style: {
-              padding: "16px",
-              color: "#0D3D4B",
-              backgroundColor: "#F2C852",
-            },
-            iconTheme: {
-              primary: "#198754",
-              secondary: "#FFFAEE",
-            },
-          });
-          setTimeout(() => {
-            navigate("/");
-          }, 2000);
-        } else {
-          toast.error(res.data, {
-            style: {
-              padding: "16px",
-              color: "#0D3D4B",
-              backgroundColor: "#F2C852",
-            },
-            iconTheme: {
-              primary: "#FF0000",
-              secondary: "#FFFAEE",
-            },
-          });
-        }
-      });
+      //     dispatch(userSignin(res.data));
+      //     loginForm.resetForm();
+      //     toast.success("Login Successful", {
+      //       style: {
+      //         padding: "16px",
+      //         color: "#0D3D4B",
+      //         backgroundColor: "#F2C852",
+      //       },
+      //       iconTheme: {
+      //         primary: "#198754",
+      //         secondary: "#FFFAEE",
+      //       },
+      //     });
+      //     setTimeout(() => {
+      //       navigate("/");
+      //     }, 2000);
+      //   } else {
+      //     toast.error(res.data, {
+      //       style: {
+      //         padding: "16px",
+      //         color: "#0D3D4B",
+      //         backgroundColor: "#F2C852",
+      //       },
+      //       iconTheme: {
+      //         primary: "#FF0000",
+      //         secondary: "#FFFAEE",
+      //       },
+      //     });
+      //   }
+      // });
     },
   });
   return (

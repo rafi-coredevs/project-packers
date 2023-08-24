@@ -1,5 +1,3 @@
-import { useSelector } from "react-redux";
-
 /**
  * @params status => open || close || pending
  * @params type =>  account || payment || refund || order
@@ -14,7 +12,6 @@ const styles = {
   pending: "bg-yellow-400",
 };
 const ChatCard = ({ onClick, status, type, id, message , order }) => {
-  const { activeChat } = useSelector((state) => state.support);
   
   return (
     <div className="relative">
