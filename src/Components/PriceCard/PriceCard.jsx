@@ -1,13 +1,13 @@
 /**
  * Card Component
- * @param {type} type will define card style and parameters -> product | cart | checkout
- * @param {price} price product price
- * @param {origin} origin product origin
- * @param {source} source product source
- * @param {arrival} arrival product delivery time
- * @param {sellerTakes} sellerTakes cart price
- * @param {products} products array of products for checkout type
- * @param {children} children only for checkout type
+ * @param {string} type will define card style and parameters -> product | cart | checkout
+ * @param {number} price product price
+ * @param {string} origin product origin
+ * @param {string} source product source
+ * @param {string} arrival product delivery time
+ * @param {number} sellerTakes cart price
+ * @param {array} products array of products for checkout type
+ * @param {object} children only for checkout type
  *
  * @returns {card} price card
  *
@@ -110,6 +110,9 @@ const PriceCard = ({
               <input
                 className="accent-yellow-700"
                 type="radio"
+                
+                onChange={handleChange}
+                onBlur={handleBlur}
                 name="shipping"
                 id=""
                 checked
@@ -148,7 +151,7 @@ const PriceCard = ({
           </div>
         </>
       )}
-      <Button disabled={disabled} onClick={onSubmit} full type="primary">
+      <Button disabled={disabled} onClick={onSubmit} full buttonType='submit' type="primary">
         {type === "cart"
           ? "Checkout"
           : type === "product"
