@@ -22,7 +22,7 @@ const Home = () => {
     <>
       <Banner />
       <div className="-mt-[13rem]">
-        <Carousel data={carousel} />
+        <Carousel isHome={true} />
       </div>
       <Brands data={brand} />
       <Showcase

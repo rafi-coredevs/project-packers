@@ -8,6 +8,7 @@ import facebook from '../assets/icons/facebook.svg';
 import apple from '../assets/icons/apple.svg';
 import { useUserCtx } from '../contexts/user/UserContext';
 import { toast } from 'react-hot-toast';
+import toaster from '../Util/toaster';
 
 const Login = () => {
 	const navigate = useNavigate();
@@ -33,18 +34,18 @@ const Login = () => {
 				// check is loggedIn successful or not
 				if (data.status === false) {
 					// show toaster
-					toast.error('login unsuccessful', {
-						style: {
-							border: '1px solid #0D3D4B',
-							padding: '16px',
-							color: '#0D3D4B',
-							backgroundColor: '#F2C852',
-						},
-						iconTheme: {
-							primary: '#198754',
-							secondary: '#FFFAEE',
-						},
-					});
+					// toast.error('login unsuccessful', {
+					// 	style: {
+					// 		border: '1px solid #0D3D4B',
+					// 		padding: '16px',
+					// 		color: '#0D3D4B',
+					// 		backgroundColor: '#F2C852',
+					// 	},
+					// 	iconTheme: {
+					// 		primary: '#198754',
+					// 		secondary: '#FFFAEE',
+					// 	},
+					toaster({ type: 'error', message: data.message })
 				} else {
 					// check does login page need hit any api after login or not
 					// if (sendRequest) {

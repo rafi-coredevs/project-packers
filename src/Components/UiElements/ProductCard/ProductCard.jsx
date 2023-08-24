@@ -33,11 +33,12 @@ export const LazyProductCard = ({ isShop = Boolean }) => {
 
 
 /**
- * @param {String} id -takes product id
- * @param {String} img -takes image src
- * @param {String} title -Title of the cart
- * @param {Number} price -Product price
- * @param {Boolean} isShop -Component in shop page true / other page false
+ * @param {Object} arg Params as object
+ * @param {String} arg.id -takes product id
+ * @param {String} arg.img -takes image src
+ * @param {String} arg.title -Title of the cart
+ * @param {Number} arg.price -Product price
+ * @param {Boolean} arg.isShop -Component in shop page true / other page false
  * @returns ProductCard Component
  */
 
@@ -52,19 +53,20 @@ export const ProductCard = ({
   return <>
     {
       <Link to={`/shop/${id}`}
-        className= {`w-full bg-white p-3 cursor-pointer flex justify-center gap-4 group border duration-200 active:scale-95 
+        className={`w-full bg-white p-3 cursor-pointer flex justify-center gap-4 group border duration-200 active:scale-95 
         ${isShop ? 'lg:flex-col' : 'flex-col'}`}
       >
-        <div className={`h-40 lg:h-80 rounded-xl overflow-hidden ${isShop?'w-[40%] lg:w-full' : 'w-full'}`}>
+        <div className={`h-40 lg:h-80 rounded-xl overflow-hidden ${isShop ? 'w-[40%] lg:w-full' : 'w-full'}`}>
           <img
             src={`${BASE_URL}/api/${img}`}
             alt='Product Image'
             className='h-full w-[22rem] lg:w-[24rem] object-contain duration-500 group-hover:scale-105'
           />
         </div>
-        <div className='w-[60%] lg:w-full lg:mt-7'>
-          <h3 className={`lg:text-2xl font-semibold  ${isShop ? 'lg:truncate':'truncate'} `}>{title}</h3>
-          <div className='text-left flex flex-col lg:flex-row lg:justify-between lg:items-center mt-4 text-base'>
+        <div className={isShop ? 'w-[60%] lg:w-full lg:mt-7' : 'w-full'}>
+          <h3 className={`lg:text-2xl font-semibold  ${isShop ? 'lg:truncate' : 'truncate'} `}>{title}</h3>
+          <div className={`text-left flex lg:justify-between lg:items-center mt-4 text-base 
+            ${isShop ? 'flex-col lg:flex-row' : 'flex-row'}`}>
             <p>Retailer price</p>
             <p className='font-semibold'>$ {price}</p>
           </div>
