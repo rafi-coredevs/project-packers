@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import order from '../../assets/icons/ordersuccess.png'
+import order from '../../assets/icons/product-ok.svg'
 import Button from '../../components/Button/Button';
 import { plane } from '../../contexts/terminal/Terminal';
 import { Link } from 'react-router-dom';
