@@ -105,7 +105,7 @@ const Chat = () => {
         </div>
       </div>
       {
-        activeChat?.id && <Messages activeChat={activeChat} />
+        activeChat?.id && <Messages chatCardHandler={chatCardHandler} activeChat={activeChat} />
       }
     </div>
 

@@ -48,6 +48,9 @@ const SupportModal = () => {
         terminal.request({ name: 'getMessage', params: { id: data.id } }).then(data => {
           data.docs?.length > 0 && setChat(data.docs)
         })
+        terminal.socket.on('message', (data) => {
+          data.id && setChat(prev => [data, ...prev])
+        })
       }
     })
     return () => {

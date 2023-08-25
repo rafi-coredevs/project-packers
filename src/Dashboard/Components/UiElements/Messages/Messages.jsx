@@ -4,11 +4,10 @@ import Button from '../Button/Button';
 import { useUserCtx } from '../../../../contexts/user/UserContext';
 import { terminal } from '../../../../contexts/terminal/Terminal';
 
-const Messages = ({ activeChat }) => {
+const Messages = ({ activeChat, chatCardHandler }) => {
     const { user } = useUserCtx()
     const [modal, setModal] = useState(true)
     const [messages, setMessages] = useState()
-    const [accepted, setAccepted] = useState(false)
     useEffect(() => {
         setModal(true)
         setMessages([])
@@ -28,7 +27,7 @@ const Messages = ({ activeChat }) => {
             terminal.socket.off('entry')
             terminal.socket.off('message')
         }
-    }, [activeChat, accepted])
+    }, [activeChat])
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -43,7 +42,7 @@ const Messages = ({ activeChat }) => {
                     <div className="flex gap-2">
                         <Button onClick={() => console.log('object')} style={"secondary"}>Decline</Button>
                         <Button onClick={() => terminal.request({ name: 'acceptSupport', params: { id: activeChat.id } }).then(data => {
-                            if (data.id) setAccepted(true)
+                            if (data.id) { chatCardHandler({ id: data.id, status: data.status, type: data.type }) }
                         })} style={"primary"}>Accept</Button>
                     </div>
                 </div>
