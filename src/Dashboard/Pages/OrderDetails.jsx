@@ -120,7 +120,7 @@ const OrderDetails = () => {
                 <button className="text-emerald-500 underline text-sm">
                   Discount
                 </button>
-                <p className="">৳{'did not get any data about discount from backend'}</p>
+                <p className="">৳{order?.discountApplied?.amount || order?.discountApplied?.percentage? (order?.discountApplied?.percentage + ' %' ) : 0}</p>
               </div>
               <div className="flex justify-between items-center">
                 <button className="text-emerald-500 underline text-sm">
