@@ -28,6 +28,7 @@ const head = {
 };
 
 const Table = ({data, paginate}) => {
+  const navigate = useNavigate();
   const { pathname } = useLocation();
   const location = pathname.split('/')[pathname.split('/').length - 1];
   const tableHeadData = head[location];
@@ -35,6 +36,12 @@ const Table = ({data, paginate}) => {
   const totalPages = Math.ceil(data?.length / 10);
   const startIndex = (currentPage - 1) * 10;
   const endIndex = startIndex + 10;
+
+  const selectHandler = (id)=> {
+
+    console.log(id);
+
+  }
 
   console.log(data);
   return (
@@ -76,7 +83,7 @@ const Table = ({data, paginate}) => {
                      />
                    </td>
                    <td
-                     // onClick={() => selectHandler(item.id)}
+                     onClick={() => navigate(`/admin/products/${item?.id}`)}
                      className="px-4 py-[18px] text-black text-sm cursor-pointer line-clamp-2"
                    >
                      {item?.name}
@@ -107,7 +114,7 @@ const Table = ({data, paginate}) => {
                     #{item?.id}
                   </td>
                   <td
-                   // onClick={() => selectHandler(item.id)}
+                   onClick={() => navigate(`/admin/orders/${item?.id}`)}
                     className="px-4 py-[18px] text-black text-sm cursor-pointer"
                   >
                     { item?.products?.length > 0 ? item?.products[0]?.product?.name : ''}
