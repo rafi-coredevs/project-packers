@@ -38,7 +38,7 @@ const SideCard = ({ types, onClick, title, name, email, phone, address, orders, 
             <p className=" text-emerald-500">{email || "No Details"}</p>
             <button
               onClick={() => {
-                navigator.clipboard.writeText("Hello world");
+                navigator.clipboard.writeText(email || "No email");
               }}
             >
               <img className="opacity-70" src={copy} alt="" />

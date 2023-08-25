@@ -12,11 +12,16 @@ import { adminCard } from "../../Store/Data";
 import { useTitle } from "../../Components/Hooks/useTitle";
 import { terminal } from "../../contexts/terminal/Terminal";
 import Overview from "../Components/Overview/Overview";
+import Modal from "../../Components/UiElements/Modal/Modal";
+import Button from "../../Dashboard/Components/UiElements/Button/Button";
+import toaster from "../../Util/toaster";
 
 const AllOrders = () => {
   useTitle("Order list");
   const [active, setActive] = useState("all");
   const [tableData, setTabledata] = useState(orderTable);
+  const[ isModal, setIsModal]= useState(false);
+  console.log(isModal);
 
   const tableButtonHandler = (value) => {
     setActive(value);
@@ -34,8 +39,17 @@ const AllOrders = () => {
     });
   };
 
+  const modalHandler = (id) => setIsModal(id);
+  const deleteHandler = ()=> terminal.request({name: 'deleteOrder', body:{ id: isModal}}).then(res=> res.status===true? (toaster({type:'success', message: res.message}),setIsModal(false), fetchData()): (toaster({type:'error', message:res.message}),setIsModal(false)))
+    
+    
+
+  
+
   return (
     <div className="h-full px-5 ">
+      <Modal show={isModal} onClose={()=>setIsModal(false)}><div className="text-center text-xl my-10">Are you sure you want to delete this order?
+      <div className="flex gap-2 items-center justify-center mx-auto w-full mt-5"><span onClick={deleteHandler}><Button style='primary'><span className="px-2">Yes</span></Button></span><span onClick={()=>setIsModal(false)}><Button style='outline'><span className="px-2">No</span></Button></span></div></div></Modal>
       <Heading title="All Orders">
         <div className="flex gap-1 items-center">
           <Input type="text" placeholder="Search" styles="secondary">
@@ -119,7 +133,7 @@ const AllOrders = () => {
               </div>
             </div>
 
-            <Table paginate={fetchData} data={tableData} />
+            <Table paginate={fetchData} modalHandler={modalHandler} data={tableData} />
           </div >
         </div>
       </div>
