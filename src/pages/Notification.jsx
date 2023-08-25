@@ -28,6 +28,10 @@ const DUMMY_NOTIFICATION = [
     time: "9 minutes ago",
   },
 ];
+/**
+ * 
+ * @returns JSX for user notifican list view
+ */
 const Notification = () => {
   useTitle("My Notifications");
   const clickHandler = (v) => {

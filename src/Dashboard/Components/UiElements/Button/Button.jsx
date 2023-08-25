@@ -1,5 +1,14 @@
+/**
+ * 
+ * @returns JSX of 'Button' shared component
+ * @param {String} style - key to use style classes from a predefined 'styles' object
+ * @param {function} onClick event handling function 
+ * @param {string} type - set to 'button' as string by default, can be used differently depending on what passed on
+ *  type 
+ *
+ */
 import trash from "../../../../assets/icons/cd-delete.svg";
-const Button = ({ style, children, onClick, type= 'button' }) => {
+const Button = ({ style, children, onClick, type = 'button' }) => {
   const styles = {
     primary: "bg-primary text-secondary",
     secondary: "bg-white hover:bg-primary",

@@ -1,3 +1,20 @@
+/**
+ * @params {string} label - typical label field for input; depends on text passed or not 
+ * @params {string} args.name - input field name
+ * @params {string} args.type - input field type (text,email etc)
+ * @params {string} args.placeholder text 
+ * @params {string} args.value - field value
+ * @params {function} args.change - change event handler 
+ * @params {boolean} args.error - used to determine whether error message to be shown or not
+ * @params {function} args.blur - on blur event handler
+ * @params {number} args.min - defines the must required number of char for a value to be valid
+ * @params {number} args.max  - to sets the limit of field value
+ * @params {numer} args.row - sets the number of row if the input field type is text area,  
+ * @params {string} args.styles - sets the style classes based on passed single string, default- 'primary'
+ * @params {boolean} args.required - set whether a fiels is optional or required
+ * @params {boolean} args.disabled - set whether a fiels should be disabled  at any point
+ * @params {array} args.option - to map the options for select input when the input type is select
+ */
 const style = {
   primary: "bg-[#F8FAFC] py-3",
   secondary: "bg-white border border-[#0000001e] py-2",
@@ -70,7 +87,7 @@ const Input = ({
           </label>
         )}
         <input
-          className={`border ${error  ? "border-red-600" : "border-[#0000001c]"}  w-full outline-none px-3 py-2 rounded-lg`}
+          className={`border ${error ? "border-red-600" : "border-[#0000001c]"}  w-full outline-none px-3 py-2 rounded-lg`}
           type={type}
           id={name}
           name={name}

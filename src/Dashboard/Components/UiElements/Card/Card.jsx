@@ -1,8 +1,6 @@
 /**
- * @params {
- * type => cost | request | order | complete | cancel
- * data => value
- * }
+ * @params {String} type - defines the way card component is to be used  
+ * @params {data} 
  * @returns jsx component
  *
  *

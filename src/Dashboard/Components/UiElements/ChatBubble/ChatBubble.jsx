@@ -1,9 +1,9 @@
 /**
  * 
- * @params type => customer || staff 
- * @params name => User Name
- * @params date => date 
- * @params  message => Message
+ * @params {} args.type - defines style for chat bubble depending on whether a chat is from customer-end or staff-end  
+ * @params {string} args.name - name of person involved in a particular chat room
+ * @params {string} args.date - the time a particular message been published by it's sender 
+ * @params  {string} message - message itself
  * 
  * @returns Chat card JSX element
  */

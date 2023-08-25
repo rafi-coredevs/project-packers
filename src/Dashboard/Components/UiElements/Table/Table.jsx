@@ -1,8 +1,9 @@
 /**
  * 
- * @prams type || data
- * type => order || request || products || customer || customerDetails || Discount
- *
+ * @prams {type} args.type - to determine where the table is to be used 
+ * @params {array} args.data - the data table will hold
+ * @params {function} args.reFatch - handle the request for next or previous page data
+ * @params {} args.pageItem - number of item the table supposed to hold. plays role in pagination
  * @returns table JSX Element.
  */
 
