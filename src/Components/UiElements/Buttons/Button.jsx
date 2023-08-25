@@ -6,6 +6,7 @@
  * @param {string} buttonType - receives button type means for what reason this button will be used for like form submit
  * @param {string} className - receives extra styles for button
  * @param {boolean} disabled - receives true or false for showing button with disabled
+ * @param {function} onClick - receive function for any action that will be done by this button.
  * @param {function} eventHandlers - receive one or more eventHandlers for any action that will be done by this button.
  * @returns
  */
@@ -18,6 +19,7 @@ const Button = ({
 	buttonType,
 	disabled,
 	className,
+	onClick,
 	...eventHandlers
 }) => {
 	// console.log(disabled)
@@ -33,6 +35,7 @@ const Button = ({
 	return (
 		<button
 			{...eventHandlers}
+			onClick={onClick}
 			type={buttonType}
 			disabled={disabled}
 			className={`disabled:cursor-not-allowed

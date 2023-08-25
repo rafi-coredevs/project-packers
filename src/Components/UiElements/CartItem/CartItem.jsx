@@ -1,12 +1,10 @@
 import { useState } from "react";
 
 
-const CartItem = ({ data, changeQuantity }) => {
-  const [quantity, setQuantity] = useState(data?.quantity || 1);
-  console.log(data?.price)
-  const updateCuantity = (qt) => {
-    changeQt(data?.product?.id, data?.quantity + qt);
-    setQuantity(quantity + qt);
+const CartItem = ({ data, onChange, quantity }) => {
+
+  const updateCuantity = (id, updatedquantity) => {
+    onChange(id, quantity + updatedquantity)
   };
   const BASE_URL = import.meta.env.VITE_SERVER_URL
   return (
@@ -31,8 +29,8 @@ const CartItem = ({ data, changeQuantity }) => {
       <td>
         <div className="border-[#0000004d] border rounded-md flex items-center justify-center">
           <button
-            disabled={quantity < 1}
-            onClick={() => updateCuantity(-1)}
+            disabled={quantity <= 0}
+            onClick={() => updateCuantity(data?.id, -1)}
             className="px-2 pb-2 text-[#0000004d] text-3xl"
           >
             -
@@ -41,7 +39,7 @@ const CartItem = ({ data, changeQuantity }) => {
             {quantity}
           </span>
           <button
-            onClick={() => updateCuantity(1)}
+            onClick={() => updateCuantity(data?.id, 1)}
             className="px-2 pb-2 text-[#0000004d] text-3xl h-full"
           >
             +

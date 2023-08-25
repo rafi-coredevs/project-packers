@@ -1502,3 +1502,27 @@ export const suppoortArticles = [
   "	What is Backpack? How do I order items?",
   "	What is Backpack? How do I order items?",
 ];
+
+export const cartItems = [
+  {
+    id: 1,
+    title: "OTTERBOX COMMUTER SERIES Case for iPhone 12 & iPhone 12 Pro",
+    image: 'https://source.unsplash.com/random',
+    price: 699,
+    quantity: 5,
+  },
+  {
+    id: 2,
+    title: "OTTERBOX COMMUTER SERIES Case for iPhone 12 & iPhone 12 Pro",
+    image: 'https://source.unsplash.com/random',
+    price: 699,
+    quantity: 4,
+  },
+  {
+    id: 2,
+    title: "OTTERBOX COMMUTER SERIES Case for iPhone 12 & iPhone 12 Pro",
+    image: 'https://source.unsplash.com/random',
+    price: 699,
+    quantity: 6,
+  },
+];
