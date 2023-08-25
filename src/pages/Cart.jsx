@@ -131,6 +131,7 @@ const Cart = () => {
       request: request.request.id,
       requestQuantity: request.requestQuantity,
     }));
+    console.log(products);
     const data = await terminal.request({
       name: "updateCart",
       body: {
@@ -138,10 +139,13 @@ const Cart = () => {
         ...(requests.length && { requests }),
       },
     });
-    if (data.id) setCart(data);
+    if (data.id) { setCart(data); }
+    else {
+      toaster({ type: 'error', message: data.message })
+    }
   };
 
-  const submitHandler = () =>{
+  const submitHandler = () => {
     navigate('/checkout')
   }
   return (
@@ -165,8 +169,7 @@ const Cart = () => {
               </thead>
               <tbody>
                 {cart?.products.map((product) => {
-                  sellerTakes +=
-                    product?.product?.price * product.productQuantity;
+                  sellerTakes += product?.product?.price * product.productQuantity;
                   tax += product?.product?.tax * product.productQuantity;
                   fee += product?.product?.fee * product.productQuantity;
                   return (

@@ -7,7 +7,6 @@ const useCart = () => {
   const getCart = () => {
     terminal.request({ name: "getCart" }).then((data) => {
       if (data.id) {
-        
         setCart(data);
       }
     });

@@ -60,7 +60,7 @@ const Header = ({ sideBar, state }) => {
   const { user } = useUserCtx()
   const navigate = useNavigate();
   const [cartData, setCartData] = useState([]);
-  const { cart } = useCart();
+  const { cart,getCart } = useCart();
   ScrollTop();
   const clickHandler = () => {
     sideBar();
@@ -89,8 +89,6 @@ const Header = ({ sideBar, state }) => {
       }))
     })
   }, [cart]);
-
-  console.log('cart data', cartData);
   
   return (
     <>

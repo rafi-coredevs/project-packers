@@ -47,7 +47,7 @@ const CartItem = ({ data, onChange, quantity }) => {
         </div>
       </td>
       <td className="hidden px-2 sm:table-cell">
-        ৳ {data?.price.toFixed(2)} tk
+        ৳ {data?.price + data?.tax + data?.fee} tk
       </td>
     </tr>
   );
