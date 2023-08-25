@@ -117,7 +117,7 @@ const MainCategory = () => {
                 onChange={(e) =>categoryHandler( e.target.value)} value={selected?.id || ''}>
                 <option disabled value=''>Select</option>
                 {categories.map((chat, i) => (
-                  <option key={i} value={chat.id}>
+                  <option className="" key={i} value={chat.id}>
                     {chat.name}
                   </option>
                 ))}
