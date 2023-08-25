@@ -8,6 +8,7 @@ const Messages = ({ activeChat }) => {
     const { user } = useUserCtx()
     const [modal, setModal] = useState(true)
     const [messages, setMessages] = useState()
+    const [accepted, setAccepted] = useState(false)
     useEffect(() => {
         setModal(true)
         setMessages([])
@@ -27,7 +28,7 @@ const Messages = ({ activeChat }) => {
             terminal.socket.off('entry')
             terminal.socket.off('message')
         }
-    }, [activeChat])
+    }, [activeChat, accepted])
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -42,7 +43,7 @@ const Messages = ({ activeChat }) => {
                     <div className="flex gap-2">
                         <Button onClick={() => console.log('object')} style={"secondary"}>Decline</Button>
                         <Button onClick={() => terminal.request({ name: 'acceptSupport', params: { id: activeChat.id } }).then(data => {
-                            if (data.id) activeChat = { ...activeChat, status: data.status }
+                            if (data.id) setAccepted(true)
                         })} style={"primary"}>Accept</Button>
                     </div>
                 </div>

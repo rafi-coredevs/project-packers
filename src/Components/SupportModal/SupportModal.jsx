@@ -37,6 +37,7 @@ const SupportModal = () => {
       })
     },
   });
+  console.log(chat);
   useEffect(() => {
     let support = ''
     isVisible && terminal.request({ name: 'userSupport' }).then(data => {
