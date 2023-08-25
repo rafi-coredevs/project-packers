@@ -8,7 +8,7 @@
  */
 
 import Heading from "../Components/UiElements/Heading/Heading";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Input from "../Components/UiElements/Input/Input";
 import ImageUploader from "../../Components/UiElements/ImageUploader/ImageUploader";
 import Button from "../Components/UiElements/Button/Button";
@@ -22,7 +22,7 @@ import toaster from "../../Util/toaster";
 import { useTitle } from "../../Components/Hooks/useTitle";
 
 const NewProduct = () => {
-  useTitle("New Product")
+  useTitle("New Product");
   const { productId } = useParams();
   const [product,setProduct]= useState(null);
   const [btnType,setBtnType]= useState('submit')
@@ -63,7 +63,6 @@ const NewProduct = () => {
       values.subcategory = selectedSubcategeory;
       removeEmptyFields(values);
       const { images, ...rest } = values; 
-      console.log(btnType);
       product?  terminal.request({ name: 'updateProduct', params: { id: product?.id}, body: { data: rest }}).then(res=>res?.status===false?toaster({ type: 'success', message: res.message}):toaster({ type: 'success', message: 'Product successfully Updated'})) : terminal.request({ name: 'registerProduct', body: { data: rest, images}}).then(res=>res?.status===false?toaster({ type: 'success', message: res.message}):toaster({ type: 'success', message: 'Product successfully added'}))
 
     },
