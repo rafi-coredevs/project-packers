@@ -92,7 +92,7 @@ const Dropdown = ({ isOpen, onClick, type, title, data }) => {
                     <div
                       onClick={() => clickHandler(item.id)}
                       key={i}
-                      className="cursor-pointer flex gap-4 py-2 border-t border-[#0000001A]"
+                      className="cursor-pointer flex gap-4 justify-between py-2 border-t border-[#0000001A]"
                     >
                       <div className="h-16 w-16">
                         <img
