@@ -77,7 +77,7 @@ const Orders = () => {
 
   useEffect(() => {
     terminal.request({ name: 'userOrder' }).then(data => data.docs && setOrder(data.docs))
-  })
+  },[])
   return (
     <>
       <Breadcrumb />

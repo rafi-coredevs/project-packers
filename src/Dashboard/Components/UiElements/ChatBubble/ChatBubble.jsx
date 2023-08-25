@@ -41,7 +41,7 @@ const ChatBubble = ({ sender, name, date, message, userId }) => {
 
 
     return (
-        <div className={`flex gap-3 h-fit min-w-[300px] max-w-[400px] ${sender === userId ? "ml-auto flex-row-reverse" : ""}`}>
+        <div className={`flex gap-3 h-fit min-w-[350px] max-w-[400px] ${sender === userId ? "ml-auto flex-row-reverse" : ""}`}>
             <span className="h-10 w-10 flex items-center justify-center shrink-0 rounded-full font-bold text-amber-800 bg-pink-400"><UserIcon name={name} /></span>
             <div className={`p-2 ${sender === userId ? 'bg-[#CFF6EF]' : 'bg-secondary'} w-full grid gap-2  rounded-md`}>
                 <div className="flex justify-between w-full">
