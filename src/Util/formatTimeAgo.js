@@ -1,6 +1,7 @@
 /**
- * @param {*} date
- * @returns the difference between the current time and provided time
+ * formatTimeAgo - returns the difference between the current time and provided time
+ * @param {string} args.date
+ * 
  */
 export default function formatTimeAgo(date) {
     const timeDifference = Date.now() - new Date(date);
