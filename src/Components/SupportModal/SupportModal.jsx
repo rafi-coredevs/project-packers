@@ -87,7 +87,7 @@ const SupportModal = () => {
           />
         </div>
       )}
-      <div className={`bg-secondary p-5 min-w-[23.437rem] border-[#6BCCCB] border rounded-2xl fixed bottom-4 right-4 duration-500 origin-bottom-right ${isVisible ? 'overflow-y-auto scale-100 opacity-100 z-[100]' : 'overflow-hidden scale-x-[.1] scale-y-[.1] opacity-0 z-[10]'}`}>
+      <div className={`bg-secondary p-5 min-w-[23.437rem] border-[#6BCCCB] border rounded-2xl fixed bottom-4 right-4 duration-500 origin-bottom-right ${isVisible ? 'bottom-4 right-4 overflow-y-auto scale-100 z-[100]' : 'bottom-8 right-8 overflow-hidden scale-x-0 scale-y-0 z-[10]'}`}>
         <div className="flex justify-between items-center mb-5">
           <span className="text-white font-sans font-bold text-2xl">
             Contact us
