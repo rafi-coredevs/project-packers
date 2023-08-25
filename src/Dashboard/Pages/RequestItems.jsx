@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Heading from "../Components/UiElements/Heading/Heading";
 import filter from "../../assets/icons/cd-filter.svg";
 import sort from "../../assets/icons/cd-arrow-data-transfer-vertical-round.svg";
@@ -8,13 +8,23 @@ import Input from "../Components/UiElements/Input/Input";
 import { requestTable } from "../../Store/Data";
 import Button from "../Components/UiElements/Button/Button";
 import { useTitle } from "../../Components/Hooks/useTitle";
+import { terminal } from "../../contexts/terminal/Terminal";
 // 
 const RequestItems = () => {
   
   useTitle("Requested Items")
   const [active, setActive] = useState("all");
-  const [tableData] = useState(requestTable);
+  const [tableData, setTabledata] = useState(null);
+  useEffect(() => {
+    fetchData();
+   
+  }, []);
 
+  const fetchData = (page=1) => {
+    terminal.request({name:'allOrders', queries: {page}}).then((res) => {
+      res.status===false? '': setTabledata(res);
+    });
+  };
   const tableButtonHandler = (value) => {
     setActive(value);
     console.log(value);
@@ -96,7 +106,7 @@ const RequestItems = () => {
               </div>
             </div>
 
-            <Table type="request" data={tableData} />
+            <Table paginate={fetchData} data={tableData} />
           </div>
         </div>
       </div>

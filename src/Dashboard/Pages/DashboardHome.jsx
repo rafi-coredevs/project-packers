@@ -10,16 +10,23 @@ import { Link } from "react-router-dom";
 import { getApi } from "../../Util/apiCall";
 import Overview from "../Components/Overview/Overview";
 import { useTitle } from "../../Components/Hooks/useTitle";
+import { terminal } from "../../contexts/terminal/Terminal";
 // 
 const DashboardHome = () => {
   useTitle("Dashboard")
   const [active, setActive] = useState("order");
-  const [tableData] = useState(orderTable);
+  const [tableData,setTabledata] = useState(orderTable);
 
   useEffect(() => {
-    // getApi("/order").then((res) => setTableData(res.docs));
-    getApi("/order").then((res) => console.log(res.docs));
+    fetchData();
+   
   }, []);
+
+  const fetchData = (page=1) => {
+    terminal.request({name:'allOrders', queries: {page}}).then((res) => {
+      res.status===false? '': setTabledata(res);
+    });
+  };
 
   const tableButtonHandler = (value) => {
     setActive(value);
@@ -76,7 +83,7 @@ const DashboardHome = () => {
               </Link>
             </div>
 
-            <Table type="order" data={tableData} />
+            <Table paginate={fetchData} data={tableData} />
           </div>
         </div>
       </div>

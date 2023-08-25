@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "../Components/UiElements/Button/Button";
 import Heading from "../Components/UiElements/Heading/Heading";
 import Input from "../Components/UiElements/Input/Input";
@@ -9,16 +9,27 @@ import sort from "../../assets/icons/cd-arrow-data-transfer-vertical-round.svg";
 import search from "../../assets/icons/cd-search2.svg";
 import { customer } from "../../Store/Data";
 import { useTitle } from "../../Components/Hooks/useTitle";
+import { terminal } from "../../contexts/terminal/Terminal";
 //
 const Customer = () => {
   useTitle("Customers");
   const [active, setActive] = useState("all");
-  const [tableData] = useState(customer);
+  const [tableData, setTabledata] = useState(null);
 
   const navigate = useNavigate();
   const tableButtonHandler = (value) => {
     setActive(value);
     console.log(value);
+  };
+  useEffect(() => {
+    fetchData();
+   
+  }, []);
+
+  const fetchData = (page=1) => {
+    terminal.request({name:'allOrders', queries: {page}}).then((res) => {
+      res.status===false? '': setTabledata(res);
+    });
   };
 
   return (
