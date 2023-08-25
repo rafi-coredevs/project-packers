@@ -19,6 +19,7 @@ const SupportModal = () => {
   const [isVisible, setVisible] = useState(false);
   const [chat, setChat] = useState([]);
   const [images, setImages] = useState([])
+  const [support, setSupport] = useState()
   const supportForm = useFormik({
     initialValues: {
       name: "",
@@ -37,14 +38,14 @@ const SupportModal = () => {
       })
     },
   });
-  console.log(chat);
   useEffect(() => {
-    let support = ''
+    let id = ''
     isVisible && terminal.request({ name: 'userSupport' }).then(data => {
       if (data.id) {
-        support = data.id
+        setSupport(data.id)
+        id = data.id
         terminal.socket.on('entry')
-        terminal.socket.emit('entry', { "entry": true, "room": support })
+        terminal.socket.emit('entry', { "entry": true, "room": data.id })
         terminal.request({ name: 'getMessage', params: { id: data.id } }).then(data => {
           data.docs?.length > 0 && setChat(data.docs)
         })
@@ -54,8 +55,10 @@ const SupportModal = () => {
       }
     })
     return () => {
-      terminal.socket.emit('entry', { "entry": false, "room": support })
+      terminal.socket.emit('entry', { "entry": false, "room": id })
       terminal.socket.off('entry')
+      terminal.socket.off('message')
+
     }
   }, [isVisible])
   const handleImage = (event) => {
@@ -68,14 +71,10 @@ const SupportModal = () => {
     }
   };
 
-  useEffect(() => {
-    terminal.socket.on('message', (data) => {
-      setChat(prev => [data, ...prev])
-    })
-    return () => {
-      terminal.socket.off('message')
-    }
-  }, []);
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    terminal.request({ name: 'sendMessage', params: { id: support }, body: { data: { message: e.target.message.value } } })
+  }
   return (
     <>
       {!isVisible && (
@@ -258,19 +257,20 @@ const SupportModal = () => {
                 )
               })}
             </div>
-            <textarea
-              className="rounded-md outline-none p-2 w-full"
-              name="description"
-              onChange={supportForm.handleChange}
-              onBlur={supportForm.handleBlur}
-              value={supportForm.values.description}
-              id=""
-              rows="3"
-              placeholder="-"
-            ></textarea>
-            <Button type="primary" buttonType="submit" full>
-              Submit
-            </Button>
+            <form onSubmit={handleSubmit} className="">
+              <div className="w-full space-y-2">
+                <textarea
+                  className="outline-none w-full rounded-xl p-3"
+                  type="text"
+                  rows={3}
+                  name='message'
+                  placeholder="Type text message"
+                />
+                <button type='submit' className="text-secondary bg-primary font-bold rounded-xl w-full py-[14px] px-[40px]">
+                  Send
+                </button>
+              </div>
+            </form>
           </div>
         )}
       </div>

@@ -19,6 +19,7 @@ const Messages = ({ activeChat, chatCardHandler }) => {
             terminal.socket.on('entry')
             terminal.socket.emit('entry', { "entry": true, "room": activeChat?.id })
             terminal.socket.on('message', (data) => {
+                console.log(data);
                 data.id && setMessages(prev => [data, ...prev])
             })
         }
