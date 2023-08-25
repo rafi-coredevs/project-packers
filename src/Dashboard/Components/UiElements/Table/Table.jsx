@@ -153,7 +153,7 @@ const Table = ({data, paginate}) => {
                 </tr>)
                 }
 
-                { //Requested Item Data Table
+                { //Requested Items Data Table
                  location === 'request' && data?.docs?.map((item,index)=><tr
                  key={index}
                  className="border-y border-[#0000001c] hover:bg-[#FEF9DC]"
