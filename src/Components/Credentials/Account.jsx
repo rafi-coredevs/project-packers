@@ -37,7 +37,7 @@ const Account = ({ getResponse }) => {
 					if (data.status === false) {
 						toaster({ type: 'error', message: data.message });
 					} else {
-						getResponse({ component: 'otp', data });
+						getResponse({ component: 'otp', token: data.token });
 					}
 				})
 				.finally(() => {
