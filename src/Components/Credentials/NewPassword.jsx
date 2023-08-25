@@ -13,10 +13,11 @@ import Button from '../UiElements/Buttons/Button';
 import image from '../../assets/icons/otp.svg';
 import { postApi } from '../../Util/apiCall';
 import { useState } from 'react';
-import { terminal } from '../../contexts/terminal/Terminal';
 import toaster from '../../Util/toaster';
+import { terminal } from '../../contexts/terminal/Terminal';
 const NewPassword = ({ data, getResponse }) => {
 	const [isSubmit, setIsSubmit] = useState(false);
+	console.log(data);
 
 	const resetForm = useFormik({
 		initialValues: {
@@ -26,26 +27,19 @@ const NewPassword = ({ data, getResponse }) => {
 		validationSchema: changePassword,
 		onSubmit: (values) => {
 			setIsSubmit(true);
-			// resetForm.resetForm();
-			// postApi("/user/resetpass", {
-			//   otp: data.otp,
-			//   email: data.email,
-			//   token: data.data.token,
-			//   password: values.password,
-			// })
-			//   .then((res) => {
-			//     getResponse({ ...res, component: "done" });
-			//   })
-			if (values.newPassword !== values.confirmPassword) {
-				return (error = (
-					<p className='text-red-500 font-semibold'>Password does not match</p>
-				));
-			}
-
+			console.log({
+				newpassword: values.newPassword,
+				token: data.data.token,
+				otp: data.otp,
+			});
 			terminal
 				.request({
 					name: 'resetPassword',
-					body: { newpassword: values.newPassword, data },
+					body: {
+						newpassword: values.newPassword,
+						token: data.data.token,
+						otp: data.otp,
+					},
 				})
 				.then((res) => {
 					if (res.status === false) {
