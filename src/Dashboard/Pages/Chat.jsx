@@ -84,13 +84,13 @@ const Chat = () => {
               <option value="account">Account</option>
               <option value="order">Order</option>
               <option value="payment">Payment</option>
-              <option value="Refund">Refund</option>
+              <option value="refund">Refund</option>
             </select>
           </div>
         </div>
         <div className="">
           <div className="overflow-hidden overflow-y-auto  h-[calc(100vh-140px)]">
-            {supportData.map((chat) => (
+            {supportData.length > 0 && supportData.map((chat) => (
               <ChatCard
                 onClick={chatCardHandler}
                 active={activeChat?.id}

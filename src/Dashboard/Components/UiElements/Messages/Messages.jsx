@@ -79,8 +79,8 @@ const Messages = ({ activeChat }) => {
                             <ChatBubble
                                 key={message.id}
                                 userId={user.id}
-                                sender={message.sender}
-                                name="Floyd Miles"
+                                sender={message.sender.id}
+                                name={message.sender.fullName || message.sender.email}
                                 date={message.createdAt}
                                 message={message.message}
                             />)
