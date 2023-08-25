@@ -4,9 +4,10 @@ import { terminal } from "../../contexts/terminal/Terminal";
 const useCart = () => {
   const [cart, setCart] = useState();
 
-  const getCart = async () => {
-    await terminal.request({ name: "getCart" }).then((data) => {
+  const getCart = () => {
+    terminal.request({ name: "getCart" }).then((data) => {
       if (data.id) {
+        console.log(data);
         setCart(data);
       }
     });

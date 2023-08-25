@@ -14,7 +14,7 @@ import menu from "../../assets/icons/menu-01.svg";
 import cross from "../../assets/icons/cd-cancel.svg";
 import Button from "../UiElements/Buttons/Button";
 import Input from "../UiElements/Input/Input";
-import cartIcon from "../../assets/icons/cd-products.svg";
+import cart from "../../assets/icons/cd-products.svg";
 import notification from "../../assets/icons/cd-notification.svg";
 import profile from "../../assets/icons/user-1.svg";
 import Icon from "../UiElements/Icon/Icon";
@@ -25,7 +25,6 @@ import ScrollTop from "../../Util/ScrollTop";
 import LoginModal from "../MobileModal/LoginModal";
 import { useUserCtx } from "../../contexts/user/UserContext";
 import { terminal } from "../../contexts/terminal/Terminal";
-import useCart from '../Hooks/useCart';
 
 const DUMMY_CART = [
   {
@@ -59,8 +58,6 @@ const Header = ({ sideBar, state }) => {
   const [notifications, setNotifications] = useState()
   const { user } = useUserCtx()
   const navigate = useNavigate();
-  const { cart } = useCart();
-  const [ cartData, setCartData] = useState([]);
   ScrollTop();
   const clickHandler = () => {
     sideBar();
@@ -76,19 +73,6 @@ const Header = ({ sideBar, state }) => {
       terminal.socket.off('notification')
     }
   })
-  useEffect(() => {
-    setCartData(() => {
-      return cart?.products?.map(((product) => {
-        return {
-          id: product.product.id,
-          title: product.product.name || "",
-          price: product.product.price || "",
-          image: product.product.images[0],
-          qty: product.productQuantity,
-        }
-      }));
-    })
-  }, [cart]);
   
   return (
     <>
@@ -150,14 +134,14 @@ const Header = ({ sideBar, state }) => {
                       setCartState(!cartState);
                     }}
                   >
-                    <Icon unread={false} icon={cartIcon} />
+                    <Icon unread={false} icon={cart} />
                   </span>
                   <Dropdown
                     type="cart"
                     isOpen={cartState}
                     onClick={() => setCartState(false)}
                     title="Shopping Bag"
-                    data={cartData}
+                    data={DUMMY_CART}
                   />
                 </div>
                 <div className="relative">
@@ -200,7 +184,7 @@ const Header = ({ sideBar, state }) => {
             </Input>
             {user ? (
               <Link to="/cart">
-                <Icon icon={cartIcon} />
+                <Icon icon={cart} />
               </Link>
             ) : (
               <button
