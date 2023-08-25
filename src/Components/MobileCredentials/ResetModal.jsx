@@ -12,6 +12,8 @@ import { emailSchema } from "../../Util/ValidationSchema";
 import Button from "../UiElements/Buttons/Button";
 import Input from "../UiElements/Input/Input";
 import { postApi } from "../../Util/apiCall";
+import { terminal } from "../../contexts/terminal/Terminal";
+import toaster from "../../Util/toaster";
 
 const ResetModal = ({ getResponse, stateHandler, onClose }) => {
   const [isSubmit, setIsSubmit] = useState(false);
@@ -23,16 +25,16 @@ const ResetModal = ({ getResponse, stateHandler, onClose }) => {
     validationSchema: emailSchema,
     onSubmit: (values) => {
       setIsSubmit(true);
-      postApi("/user/otp", { ...values })
-        .then((res) => {
-          if (res.status !== 200) {
-            emailForm.setFieldError("email", res.data);
-          } else {
-            getResponse({ component: "otp", ...res, ...values });
-            emailForm.resetForm();
-          }
-        })
-        .then((res) => res?.status !== 200 ?  emailForm.setFieldError("email", "not valid") : null)
+      terminal
+      .request({ name: 'sendOTP', body: values })
+      .then((data) => {
+        if (data.status === false) {
+          toaster({ type: 'error', message: data.message });
+        } else {
+          getResponse({ component: 'otp', token: data.token });
+          stateHandler("otp")
+        }
+      })
         .finally(() => {
           setIsSubmit(false);
         });

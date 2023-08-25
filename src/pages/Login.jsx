@@ -1,18 +1,23 @@
 import Input from '../Components/UiElements/Input/Input';
 import { useFormik } from 'formik';
 import { loginSchema } from '../Util/ValidationSchema';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Button from '../Components/UiElements/Buttons/Button';
 import google from '../assets/icons/google-icon.svg';
 import facebook from '../assets/icons/facebook.svg';
 import apple from '../assets/icons/apple.svg';
 import { useUserCtx } from '../contexts/user/UserContext';
 import toaster from '../Util/toaster';
+import { terminal } from '../contexts/terminal/Terminal';
 
 const Login = () => {
 	const navigate = useNavigate();
+	const location = useLocation();
 
-	const BASE_URL = import.meta.env.VITE_SERVER_URL;
+	const requestItemData = location.state?.requestItem;
+	const sendRequest = location.state?.sendRequest;
+
+	 
 
 	const { Login, setUser } = useUserCtx();
 	const loginForm = useFormik({
@@ -29,10 +34,23 @@ const Login = () => {
 				: { email: data.email, password: data.password };
 			Login(data).then((data) => {
 				if (data.status === false) {
-					toaster({ type: 'error', message: data.message })
+					toaster({ type: 'error', message: data.message });
 				} else {
 					setUser(data);
-					navigate('/');
+
+					if (sendRequest) {
+						terminal
+							.request({
+								name: 'registerRequest',
+								body: requestItemData,
+							})
+							.then((d) => {
+								// console.log('item request response from login', d);
+								navigate('/', { state: true });
+							});
+					} else {
+						navigate('/');
+					}
 				}
 			});
 		},
@@ -105,14 +123,14 @@ const Login = () => {
 						<div className='flex  gap-2 mt-12'>
 							{/* google login */}
 							<Link
-								to={`${BASE_URL}/login/google`}
+								to={`${import.meta.env.VITE_SERVER_URL}/login/google`}
 								className='p-[11px] cursor-pointer bg-white rounded-full shrink-0'
 							>
 								<img src={google} alt='' />
 							</Link>
 							{/* facebook login */}
 							<Link
-								to={`${BASE_URL}/login/facebook`}
+								to={`${import.meta.env.VITE_SERVER_URL}/login/facebook`}
 								className='p-[11px] cursor-pointer bg-white rounded-full shrink-0'
 							>
 								<img src={facebook} alt='' />

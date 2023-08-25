@@ -25,12 +25,7 @@ const Account = ({ getResponse }) => {
 		validationSchema: emailSchema,
 		onSubmit: (values) => {
 			setIsSubmit(true);
-			// postApi("/user/otp", { ...values })
-			//   .then((res) => {
-			//     getResponse({ component: "otp", ...res, ...values });
-			//     emailForm.resetForm();
-			//   })
-
+		
 			terminal
 				.request({ name: 'sendOTP', body: values })
 				.then((data) => {

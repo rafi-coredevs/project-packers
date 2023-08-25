@@ -12,7 +12,7 @@ import globe from "../../assets/icons/cd-internet.svg";
 import icon from "../../assets/icons/product-ok.svg";
 import { Link } from "react-router-dom";
 
-const SuccessModal = ({confirmSubmit}) => {
+const SuccessModal = ({confirmSubmit, setUrl}) => {
 
   const submitHandler =  () =>{
     confirmSubmit("request")
@@ -39,6 +39,7 @@ const SuccessModal = ({confirmSubmit}) => {
           styles="primary"
           label="Request or search another item"
           placeholder="Product URL"
+          change={(e)=>setUrl(e.target.value)}
           border
         >
           <img src={globe} alt="" />
