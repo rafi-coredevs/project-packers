@@ -14,6 +14,8 @@ import toaster from "../../Util/toaster";
 import { terminal } from "../../contexts/terminal/Terminal";
 import { useUserCtx } from "../../contexts/user/UserContext";
 import UserIcon from "../UiElements/UserIcon/UserIcon";
+import cancel from '../../assets/icons/cd-cancel-w.svg';
+
 const SupportModal = () => {
   const { user } = useUserCtx()
   const [isVisible, setVisible] = useState(false);
@@ -87,7 +89,7 @@ const SupportModal = () => {
           />
         </div>
       )}
-      <div className={`bg-secondary p-5 border-[#6BCCCB] border rounded-2xl min-w-[23.437rem]  z-50 fixed duration-300 ${isVisible ? 'bottom-0 md:bottom-4 right-0 md:right-4' : '-bottom-[62.5rem] -right-[62.5rem]'}  overflow-y-auto max-h-[90vh]`}>
+      <div className={`bg-secondary p-5 min-w-[23.437rem] border-[#6BCCCB] border rounded-2xl fixed bottom-4 right-4 duration-500 origin-bottom-right ${isVisible ? 'bottom-4 right-4 overflow-y-auto scale-100 z-[100]' : 'bottom-8 right-8 overflow-hidden scale-x-0 scale-y-0 z-[10]'}`}>
         <div className="flex justify-between items-center mb-5">
           <span className="text-white font-sans font-bold text-2xl">
             Contact us
@@ -97,29 +99,7 @@ const SupportModal = () => {
             onClick={() => setVisible(false)}
             type="button"
           >
-            {/* <img src={cancel} alt="" /> */}
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M19 5L5 19"
-                stroke="#FFFFFFA6"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <path
-                d="M5 5L19 19"
-                stroke="#FFFFFFA6"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
+            <img src={cancel} className="h-6 w-6" />
           </button>
         </div>
         {chat?.length < 1 ? (
