@@ -1,9 +1,10 @@
 /**
- * @params status => open || close || pending
- * @params type =>  account || payment || refund || order
- * @params id => chat id
- * @params message => message
- *
+ * @params {function} args.onClick - click event handler
+ * @params {string} args.type - card type: account || payment || refund || order
+ * @params {string} args.status - whether a chat is closed or open (still not resolved by support team)
+ * @params {} args.id - chat id
+ * @params {string} args.message - message
+ * @params {order} args.order - the identifier of a particular order, on which the chat is about
  * @returns Chat Card JSX Component
  */
 const styles = {
@@ -11,11 +12,11 @@ const styles = {
   close: "bg-red-400",
   pending: "bg-yellow-400",
 };
-const ChatCard = ({ onClick, status, type, id, message , order }) => {
-  
+const ChatCard = ({ onClick, status, type, id, message, order }) => {
+
   return (
     <div className="relative">
-    <div className={`border-l-2     ${activeChat.id === id  ? 'border-primary' : 'border-white'}   absolute h-full left-0`}></div>
+      <div className={`border-l-2     ${activeChat.id === id ? 'border-primary' : 'border-white'}   absolute h-full left-0`}></div>
       <div
         onClick={() => onClick(id)}
         className={`p-3 border-[#0000001c] border-b cursor-pointer hover:bg-[#3b3b3b10]`}

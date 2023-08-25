@@ -1,8 +1,7 @@
 /**
- * @params {String} type - defines the way card component is to be used  
- * @params {data} 
+ * @params {String} args.type - defines the way card component is to be used  
+ * @params {array} args.data - 
  * @returns jsx component
- *
  *
  */
 const Card = ({ type, data }) => {
