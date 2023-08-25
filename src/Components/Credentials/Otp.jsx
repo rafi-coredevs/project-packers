@@ -38,13 +38,13 @@ const Otp = ({ data, getResponse }) => {
 			// 		});
 			// 	})
 
-      terminal
-				.request({ name: 'verifyOTP', body: { otp, data} })
+			terminal
+				.request({ name: 'verifyOTP', body: { otp, data } })
 				.then((res) => {
 					if (res.status === false) {
 						toaster({ type: 'error', message: res.message });
 					} else {
-						getResponse({ component: 'newPass', data });
+						getResponse({ component: 'newPass', data, otp: otp });
 					}
 				})
 				.finally(() => {
