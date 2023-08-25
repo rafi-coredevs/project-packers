@@ -37,6 +37,7 @@ const SupportModal = () => {
       })
     },
   });
+  console.log(chat);
   useEffect(() => {
     let support = ''
     isVisible && terminal.request({ name: 'userSupport' }).then(data => {
@@ -218,18 +219,18 @@ const SupportModal = () => {
               {chat?.map((chat, index) => {
                 return (
                   <div key={index}
-                    className={`flex gap-3 h-fit max-w-[25rem] ${chat?.user !== user?.id
+                    className={`flex gap-3 h-fit max-w-[25rem] ${chat.sender?.id === user?.id
                       ? "ml-auto flex-row-reverse"
                       : ""
                       }`}
                   >
                     <span className="h-10 w-10 flex items-center justify-center shrink-0 rounded-full font-bold">
-                      <UserIcon name={user?.fullName} />
+                      <UserIcon name={chat.sender?.fullName} />
                     </span>
                     <div
-                      className={`p-2 ${chat?.user !== user?.id
-                        ? "bg-[#092F3F]"
-                        : "bg-[#CFF6EF]"
+                      className={`p-2 ${chat.sender?.id === user?.id
+                        ? " bg-[#CFF6EF]"
+                        : "bg-[#092F3F]"
                         } w-full grid gap-2  rounded-md`}
                     >
                       <div className="flex justify-between w-full">
@@ -242,7 +243,7 @@ const SupportModal = () => {
                       </div>
                       <div
                         className={
-                          chat?.type !== "customer"
+                          chat?.type === "customer"
                             ? "text-[#a7a7a7]"
                             : "text-[#000316CC] "
                         }
