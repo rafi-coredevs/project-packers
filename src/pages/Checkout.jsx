@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { terminal } from "../contexts/terminal/Terminal";
 import toaster from "../Util/toaster";
 import icon from "../assets/icons/product-ok.svg";
 import { useFormik } from "formik";
@@ -8,6 +7,8 @@ import Modal from '../Components/UiElements/Modal/Modal'
 import Input from "../Components/UiElements/Input/Input";
 import Button from "../Components/UiElements/Buttons/Button";
 import { checkoutSchema } from "../Util/ValidationSchema";
+import OrderSuccessModal from "../Components/OrderSuccessModal/OrderSuccessModal";
+import { terminal } from "../contexts/terminal/Terminal";
 const Checkout = () => {
   let totalPrice = 0;
   const [cart, setCart] = useState();
@@ -81,28 +82,26 @@ const Checkout = () => {
       const body = {
         email: data.email,
         phone: data.phone,
-        alternativephone: data.altPhone,
-        insideDhaka: data.insideDhaka,
-        instructions: data.instruction,
+        alternativephone: data.altPhone? data.altPhone : null,
+        insideDhaka: inside,
+        instructions: data.instruction? data.instruction:null,
         shippingaddress: {
           name: data.firstName + " " + data.lastName,
           address: data.address,
           city: data.city,
           area: data.area,
-          zip: data.zipCode,
-          insideDhaka: inside,
+          zip: data.zip,
         },
       };
-      // terminal.request({ name: "registerOrder", body }).then((data) => {
-      //   if (data.url) {
-      //     window.location.replace(data.url);
-      //     checkoutForm.resetForm();
-      //   } else {
-      //     toaster({ type: "error", message: data.message });
-      //   }
-      // });
-      setOrderModal(true)
-      console.log(body);
+      console.log(body)
+      terminal.request({ name: "registerOrder", body }).then((data) => {
+        if (data.url) {
+          window.location.replace(data.url);
+          checkoutForm.resetForm();
+        } else {
+          toaster({ type: "error", message: data.message });
+        }
+      })
     },
   });
 
@@ -379,6 +378,7 @@ const Checkout = () => {
                   setInside(true);
                 }}
                 name="inSideDhaka"
+                className="accent-orange-600"
                 // {...register('insideDhaka')}
               />
               <label
@@ -398,6 +398,7 @@ const Checkout = () => {
                 checked={!inside}
                 value={false}
                 name="insideDhaka"
+                className="accent-orange-600"
                 onClick={() => {
                   setInside(false);
                 }}
@@ -424,45 +425,7 @@ const Checkout = () => {
         </div>
       </form>
       <Modal show={orderModal} onClose={()=> setOrderModal(false)}>
-        <div className="flex flex-col gap-5">
-          <div className="p-8 flex w-full items-start flex-col gap-10">
-            <img className="w-fit h-auto" src={icon} alt="" />
-            <div className="text-start grid gap-3">
-              <h5 className="text-xl font-semibold text-secondary mb-2">
-                Thanks your for your order.
-              </h5>
-              <p className="text-sm font-normal max-w-[360px] text-[#00000386]">
-                we sent an order confirmation to:
-                <span className="text-secondary font-semibold block">
-                  johnsmith@gmail.com
-                </span>
-              </p>
-              <p className="text-sm font-normal max-w-[360px] text-[#00000386]">
-                Your order number is:
-                <span className="text-secondary font-semibold block">
-                  #343895
-                </span>
-              </p>
-              <p className="text-sm font-normal max-w-[360px] text-[#00000386]">
-                Your order will deliver on:
-                <span className="text-secondary font-semibold block">
-                  Thursday, Nov 23 - Saturday, Nov 29
-                </span>
-              </p>
-
-              <p className="text-sm font-normal max-w-[360px] text-[#00000386]">
-                to the address:
-                <span className="text-secondary font-semibold block">
-                  3829 Main St.<br /> Los Angeles. CA 90210
-                </span>
-              </p>
-            </div>
-          </div>
-
-          <Button onClick={()=>setOrderModal(false)} type="primary" full>
-            Keep Shopping
-          </Button>
-        </div>
+        <OrderSuccessModal id={orderid?.split("=")[1]}  setOrderModal={setOrderModal}/>
       </Modal>
     </div>
   );

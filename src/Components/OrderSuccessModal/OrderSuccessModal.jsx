@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
-import order from '../../assets/icons/product-ok.svg'
-import Button from '../../components/Button/Button';
-import { plane } from '../../contexts/terminal/Terminal';
+import icon from '../../assets/icons/product-ok.svg'
 import { Link } from 'react-router-dom';
+import { terminal } from '../../contexts/terminal/Terminal';
+import Button from '../UiElements/Buttons/Button';
 
-const OrderSuccessModal = ({ setShowModal, id }) => {
+const OrderSuccessModal = ({ setOrderModal, id }) => {
     const [orderdata, setOrderdata] = useState()
     useEffect(() => {
-        plane.request({ name: 'singleOrder', params: { id: id } }).then(data => data.id && setOrderdata(data))
+        terminal.request({ name: 'singleOrder', params: { id: id } }).then(data => data.id && setOrderdata(data))
     }, [id])
     const orderDate = new Date(orderdata?.date);
     const oneWeekLater = new Date(orderDate);
@@ -18,36 +18,52 @@ const OrderSuccessModal = ({ setShowModal, id }) => {
         year: 'numeric',
         month: 'long',
         day: 'numeric',
-        hour: 'numeric',
-        minute: 'numeric',
-        hour12: true,
     };
 
     return (
-        <div className='px-4 py-6'>
-            <img src={order} alt="" />
-            <h1 className='text-primary text-xl font-semibold mt-5'>Thank you for your order.</h1>
-            <p>We sent an order confirmation to:</p>
-            <p className='text-primary font-semibold'>{orderdata?.user?.email}</p>
-            <p>Your order number is:</p>
-            <p className='text-primary font-semibold'># {orderdata?.user?.id}</p>
-            <p> Your order will deliver on:</p>
-            <p className='text-primary font-semibold'> {oneWeekLater.toLocaleString('en-US', options)} - {twoWeeksLater.toLocaleString('en-US', options)}</p>
-            <p> to the address:</p>
-            <p className='text-primary font-semibold'>{
+<div className="flex flex-col gap-5">
+          <div className="p-8 flex w-full items-start flex-col gap-10">
+            <img className="w-fit h-auto" src={icon} alt="" />
+            <div className="text-start grid gap-3">
+              <h5 className="text-xl font-semibold text-secondary mb-2">
+                Thanks your for your order.
+              </h5>
+              <p className="text-sm font-normal max-w-[360px] text-[#00000386]">
+                we sent an order confirmation to:
+                <span className="text-secondary font-semibold block">
+                  {orderdata?.email}
+                </span>
+              </p>
+              <p className="text-sm font-normal max-w-[360px] text-[#00000386]">
+                Your order number is:
+                <span className="text-secondary font-semibold block">
+                  # {orderdata?.id}
+                </span>
+              </p>
+              <p className="text-sm font-normal max-w-[360px] text-[#00000386]">
+                Your order will deliver on:
+                <span className="text-secondary font-semibold block">
+                {oneWeekLater.toLocaleString('en-US', options)} - {twoWeeksLater.toLocaleString('en-US', options)}
+                </span>
+              </p>
+
+              <p className="text-sm font-normal max-w-[360px] text-[#00000386]">
+                to the address:
+                <span className="text-secondary font-semibold block">
+                {
                 orderdata?.shippingaddress?.address + ', ' +
                 orderdata?.shippingaddress?.city + ', ' +
                 orderdata?.shippingaddress?.area
-            }</p>
-            <Link to={'/home'}>
-                <Button
-                    onClick={() => { setShowModal(false) }}
-                    buttonType='secondaryButton'
-                    name='Continue Shopping'
-                    className='w-full py-3 mt-8 px-[10px] '
-                />
-            </Link>
-
+            }
+                </span>
+              </p>
+            </div>
+          </div>
+        <Link to={'/'}>
+          <Button onClick={()=>setOrderModal(false)} type="primary" full>
+            Keep Shopping
+          </Button>
+        </Link>
         </div>
     );
 };
