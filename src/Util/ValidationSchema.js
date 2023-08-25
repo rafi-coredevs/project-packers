@@ -21,20 +21,6 @@ export const changePassword = object({
 		.required('Password Can not be Empty'),
 });
 
-// export const changePassword = object({
-// 	newPassword: string()
-// 		.min(8, 'Password must be at least 8 characters')
-// 		.max(16, 'Password can be at most 16 characters')
-// 		.matches(
-// 			/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$%^&+=!]).*$/,
-// 			'Password must contain at least one lowercase letter, one uppercase letter, one digit, and one special character',
-// 		)
-// 		.required('Password cannot be empty'),
-
-// 	confirmPassword: string()
-// 		.oneOf([ref('password'), null], 'Passwords must match')
-// 		.required('Confirm Password cannot be empty'),
-// });
 
 export const signupSchema = object({
 	fullName: string().required(),
