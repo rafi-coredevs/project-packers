@@ -21,6 +21,7 @@ import { terminal } from "../../contexts/terminal/Terminal";
 import toaster from "../../Util/toaster";
 import { useTitle } from "../../Components/Hooks/useTitle";
 
+
 const NewProduct = () => {
   useTitle("New Product");
   const { productId } = useParams();
@@ -160,6 +161,7 @@ const NewProduct = () => {
             <h2 className="text-base text-secondary font-semibold">Category</h2>
             <div className="border border-[#0000001c] rounded-lg p-3 grid gap-3">
             <label className="text-[#475569] text-sm">Parent Category</label>
+        
               <select
                 className={`bg-transparent border-[1px] w-full outline-none px-3 py-2 rounded-lg ${
                   categoryError.category ? "border-[red]" : ""

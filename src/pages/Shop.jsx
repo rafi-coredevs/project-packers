@@ -88,8 +88,10 @@ const Shop = () => {
               )}
               <div className="w-full flex justify-center">
                 <Paginate
-                  totalPage={data?.totalPages}
-                  onPageChange={handlePagination}
+                  // totalPage={data?.totalPages}
+                  // onPageChange={handlePagination}
+                  totalPage={20 }
+                  onPageChange={(v)=> console.log(v)}
                 />
               </div>
             </div>

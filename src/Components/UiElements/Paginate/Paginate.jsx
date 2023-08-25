@@ -11,13 +11,13 @@ const Paginate = ({ totalPage, onPageChange }) => {
 
   useEffect(() => {
 
-    if (activePage >= 3 && activePage <= totalPage - 2) {
-      setStartPage(activePage - 3);
-    } else if (activePage > totalPage - 2) {
-      setStartPage(totalPage - 5);
-    } else {
-      setStartPage(0);
-    }
+    if (activePage % 5 == 0 ) {
+      setStartPage(activePage - 1);
+    } else if(startPage >= activePage){
+      console.log("fired")
+      setStartPage(activePage - (activePage%5))
+    } 
+     
   }, [activePage, totalPage]);
 
   const clickHandler = (pageNumber) => {
@@ -32,10 +32,15 @@ const Paginate = ({ totalPage, onPageChange }) => {
       onPageChange(pageNumber);
     }
   };
+  const jumpHandler = () =>{
+    setStartPage(startPage + 5)
+    setActivePage(startPage + 5)
+    clickHandler(startPage + 5)
+  }
   return (
     <div className="flex gap-2">
       <button
-        onClick={() => clickHandler(activePage - 5)}
+        onClick={() => clickHandler(activePage - 1)}
         className="h-[40px] w-[40px] bg-primary  flex items-center justify-center rounded-full"
       >
         <svg
@@ -53,7 +58,7 @@ const Paginate = ({ totalPage, onPageChange }) => {
           />
         </svg>
       </button>
-      {pageNumbers.slice(startPage, startPage + 4).map((page) => {
+      {pageNumbers.slice(startPage, startPage + 5).map((page) => {
         return (
           <button
             key={page}
@@ -66,21 +71,14 @@ const Paginate = ({ totalPage, onPageChange }) => {
           </button>
         );
       })}
-      <button
+      {totalPage > 5 && <><button onClick={jumpHandler}
         className={`h-[40px] w-[40px] bg-[#CFF6EF]  flex items-center justify-center rounded-full`}
       >
         ...
       </button>
+      </>}
       <button
-        onClick={() => clickHandler(pageNumbers.slice(-1)[0])}
-        className={`h-[40px] w-[40px] ${
-            activePage === totalPage ? "bg-primary" : "bg-[#CFF6EF]"
-          } flex items-center justify-center rounded-full`}
-      >
-        {pageNumbers.slice(-1)}
-      </button>
-      <button
-        onClick={() => clickHandler(activePage + 5)}
+        onClick={() => clickHandler(activePage + 1)}
         className="h-[40px] w-[40px] bg-primary  flex items-center justify-center rounded-full"
       >
         <svg
