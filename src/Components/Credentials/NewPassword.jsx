@@ -1,11 +1,12 @@
 /**
  * NewPassword() returns JSX Element
- * @param {object} getResponse validation from server
- * @param {function} getResponse validation from server
- *
+ * @param {object} args.data 
+ * @param {function} args.getResponse validation from server
  *
  * @returns JSX element
  */
+
+
 import { useFormik } from "formik";
 import Input from "../UiElements/Input/Input";
 import { changePassword } from "../../Util/ValidationSchema";
@@ -75,7 +76,7 @@ const NewPassword = ({ data, getResponse }) => {
               value={resetForm.values.confirmPassword}
               error={
                 resetForm.errors.confirmPassword &&
-                resetForm.touched.confirmPassword
+                  resetForm.touched.confirmPassword
                   ? resetForm.errors.confirmPassword
                   : null
               }

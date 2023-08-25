@@ -1,10 +1,10 @@
 /**
- * Account() returns JSX Element
- * Email Validation form for Password recovery page
- * @param {function} getResponse initialized fetching data from server
- * 
- * @returns JSX Element
- */
+* Account() returns JSX Element
+* Email Validation form for Password recovery page
+* @param {function} args.getResponse initialized fetching data from server
+*
+* @returns JSX Element
+*/
 
 import { useFormik } from "formik";
 import Input from "../UiElements/Input/Input";
