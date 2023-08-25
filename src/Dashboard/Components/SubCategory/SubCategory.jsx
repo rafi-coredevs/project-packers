@@ -1,7 +1,6 @@
 /**
  * SubCategory() return JSX Element
- * Adding sub category or delete sub category from here
- *
+ * view of catregories, addition and deletion of a sub category handled here
  * @returns JSX Element
  *
  */
@@ -12,7 +11,7 @@ import Table from "../UiElements/Table/Table";
 import sort from "../../../assets/icons/cd-arrow-data-transfer-vertical-round.svg";
 import { useFormik } from "formik";
 import { subCategorySchema } from "../../../Util/ValidationSchema";
-import {  useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { getApi, postApi } from "../../../Util/apiCall";
 
 const SubCategory = () => {
@@ -27,7 +26,7 @@ const SubCategory = () => {
     validationSchema: subCategorySchema,
     onSubmit: (values) => {
       values.id = selected.id;
-      
+
     },
   });
 
