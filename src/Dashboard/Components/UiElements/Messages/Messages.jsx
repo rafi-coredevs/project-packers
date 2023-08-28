@@ -12,7 +12,7 @@ const Messages = ({ activeChat, chatCardHandler }) => {
     useEffect(() => {
         setModal(true)
         setMessages([])
-        terminal.request({ name: 'getMessage', params: { id: activeChat?.id }, queries: { page: 1 } }).then(data => {
+        terminal.request({ name: 'getMessage', params: { id: activeChat?.id }, queries: { page: 1, limit: 20 } }).then(data => {
             data.docs?.length > 0 && setMessages(data.docs)
         })
         if (activeChat && activeChat.status !== 'pending') {
