@@ -22,15 +22,9 @@ const StaffCard = ({ onClick }) => {
           <p className="text-[#6D7175] text-sm">Super Admin</p>
         </div>
       </div>
-      <Input
-        styles="select"
-        option={[
-          { name: "Admin", value: "admin" },
-          { name: "Super Admin", value: "super-admin" },
-          { name: "Staff", value: "staff" },
-          { name: "User", value: "user" },
-        ]}
-      />
+      <div className="border-[1px] border-[#64748B] p-3 rounded">
+        <p>Super Admin</p>
+      </div>
     </div>
 
   );

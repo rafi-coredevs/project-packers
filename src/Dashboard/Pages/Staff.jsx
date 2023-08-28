@@ -1,15 +1,20 @@
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import StaffCard from "../Components/StaffCard/StaffCard";
 import Button from "../Components/UiElements/Button/Button";
 import Heading from "../Components/UiElements/Heading/Heading";
 import Input from "../Components/UiElements/Input/Input";
 import Modal from "../../Components/UiElements/Modal/Modal";
 import { useTitle } from "../../Components/Hooks/useTitle";
+import { terminal } from "../../contexts/terminal/Terminal";
 
 const Staff = () => {
   useTitle("Staff");
   const [modal, setModal] = useState(false);
+  const [loading, setLoading] = useState(false);
+  useEffect(() => {
+    terminal.request({ name: 'allUser' })
+  }, [])
   const submitHandler = () => {
     console.log("update clicked");
   };
