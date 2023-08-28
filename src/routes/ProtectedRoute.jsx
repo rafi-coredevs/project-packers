@@ -11,11 +11,12 @@ export default function ProtectedRoute({ accessTo, children }) {
     // 
     const accessByRole = {
         //  to be checked; super-admin doesn't 
-        "super-admin": ["order", "support", "product", "request", "dashboard", "staff", "customer", "category", "payment"],
-        "admin": ["order", "support", "product", "request", "dashboard", "customer", "category"],
-        "staff": ["order", "support", "request", "customer"],
+        "super-admin": ["order", "support", "product", "discount", "request", "dashboard", "staff", "customer", "category", "payment"],
+        "admin": ["order", "support", "product", "request", "dashboard", "customer", "category",],
+        "staff": ["order", "support", "request", "customer","product"],
         "user": [],
     }
+    useEffect(() => console.log(":::   " + accessTo, user.role), [])
     // 
     if (loading) {
         return <Loading />
