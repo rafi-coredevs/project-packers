@@ -36,8 +36,6 @@ const Signup = () => {
 					? toaster({ type: 'error', message: res.message })
 					: navigate('/login');
 			});
-
-			signUpForm.resetForm();
 		},
 	});
 
