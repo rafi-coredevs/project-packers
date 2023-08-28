@@ -41,7 +41,7 @@ const OrderDetails = () => {
       </Heading>
       <div className="grid grid-cols-3 gap-5">
         <div className="col-span-3 sm:col-span-2 grid gap-5">
-          <div className="grid gap-5 rounded p-5">
+          <div className="grid gap-5 p-5 border rounded-lg">
             <div className="flex justify-between">
               <h3 className="text-base font-semibold">Products</h3>
               <button className="text-emerald-500">Add custom item</button>
@@ -109,7 +109,7 @@ const OrderDetails = () => {
               </table>
             </div>
           </div>
-          <div className="grid gap-5 border border-[#0000001c] rounded p-5">
+          <div className="grid gap-5 border border-[#0000001c] rounded-lg p-5">
             <p className="text-base font-semibold">Payment</p>
             <div className="grid gap-3">
               <div className="flex justify-between items-center">

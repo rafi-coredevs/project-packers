@@ -11,7 +11,7 @@ const NewCustomer = () => {
   return (
     <div className="px-5 h-full">
       <Heading type="navigate" title={`New Customer`} />
-      <div className="grid grid-cols-2 gap-5 py-5 border-t border-[#0000001c]">
+      <div className="grid grid-cols-2 gap-5">
         <div className="col-span-2 sm:col-span-1 grid">
           <div className="space-y-3">
             <h2 className="text-secondary text-base font-semibold">

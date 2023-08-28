@@ -88,258 +88,258 @@ const Table = ({ data, paginate }) => {
           </tr>
         </thead>
         <tbody>
-          {  
-         ( data?.docs==null || data?.docs?.length===0)?(
-            [1,2,3,4,5,6,7,8,9,10].map((arr, i) => <tr key={i} className=' hover:bg-[#FEF9DC]'>
-              <td className='py-8 border-b bg-[length:400%] bg-gradient-to-r from-gray-200 via-white to-gray-200 animate-loading' />
-              {
-                tableHeadData?.map((item, index) => (
-                  <td
-                    key={index}
-                    className='py-8 border-b bg-[length:400%] bg-gradient-to-r from-gray-200 via-white to-gray-200 animate-loading'
-                  />))
-              }
-            </tr>)
-          ) : (
-            <>
-              {
-                //Products  Data Table
-                location === 'products' &&
-                data?.docs?.map((item, index) => (
-                  <tr
-                    key={index}
-                    className='border-y border-[#0000001c] hover:bg-[#FEF9DC]'
-                  >
-                    <td className='text-left py-[10px] pl-4 w-[10px]'>
-                      <input type='checkbox' className='accent-yellow-300' />
-                    </td>
-                    <td className='px-4 py-[18px] text-black text-sm '>
-                      <img
-                        className='w-10 h-10 rounded border border-[#0000001c]'
-                        src={BASE_URL + '/api/' + item?.images[0]}
-                        alt=''
-                      />
-                    </td>
+          {
+            (data?.docs == null || data?.docs?.length === 0) ? (
+              [...Array(10)].map((arr, i) => <tr key={i} className=' hover:bg-[#FEF9DC]'>
+                <td className='py-8 border-b bg-[length:400%] bg-gradient-to-r from-gray-200 via-white to-gray-200 animate-loading' />
+                {
+                  tableHeadData?.map((item, index) => (
                     <td
-                      onClick={() => navigate(`/admin/products/${item?.id}`)}
-                      className='px-4 py-[18px] text-black text-sm cursor-pointer line-clamp-2'
+                      key={index}
+                      className='py-8 border-b bg-[length:400%] bg-gradient-to-r from-gray-200 via-white to-gray-200 animate-loading'
+                    />))
+                }
+              </tr>)
+            ) : (
+              <>
+                {
+                  //Products  Data Table
+                  location === 'products' &&
+                  data?.docs?.map((item, index) => (
+                    <tr
+                      key={index}
+                      className='border-y border-[#0000001c] hover:bg-[#FEF9DC]'
                     >
-                      {item?.name}
-                    </td>
-                    <td className='px-4 py-[18px] text-black text-sm '>
-                      {item?.quantity} in Stock
-                    </td>
-                    <td className='px-4 py-[18px] text-black text-sm '>
-                      ${item?.price}
-                    </td>
-                    <td className='px-4 py-[18px] text-black text-sm '>
-                      {item?.category?.name}
-                    </td>
-                    <td className='px-4 py-[18px] text-black text-sm '>
-                      {new Intl.DateTimeFormat('en-US', {
-                        year: 'numeric',
-                        month: 'long',
-                        day: 'numeric',
-                      }).format(new Date(item?.createdAt)) || 'Not available'}
-                    </td>
-                  </tr>
-                ))
-              }
-              {
-                //All Orders Data Table
-                (location === 'orders' || location === 'admin') &&
-                data?.docs?.map((item, index) => (
-                  <tr
-                    key={index}
-                    className='border-y border-[#0000001c] hover:bg-[#FEF9DC]'
-                  >
-                    <td className='text-left py-[10px] pl-4 w-[10px]'>
-                      <input type='checkbox' className='accent-yellow-300' />
-                    </td>
-                    <td className='px-4 py-[18px] text-black text-sm '>
-                      #{item?.id}
-                    </td>
-                    <td
-                      onClick={() => navigate(`/admin/orders/${item?.id}`)}
-                      className='px-4 py-[18px] text-black text-sm cursor-pointer'
-                    >
-                      {item?.products?.length > 0
-                        ? item?.products[0]?.product?.name
-                        : ''}
-                    </td>
-                    <td className='px-4 py-[18px] text-black text-sm '>
-                      {new Intl.DateTimeFormat('en-US', {
-                        year: 'numeric',
-                        month: 'long',
-                        day: 'numeric',
-                      }).format(new Date(item?.date))}
-                    </td>
-                    <td className='px-4 py-[18px] text-black text-sm '>
-                      {item.user?.fullName || item.user.email}
-                    </td>
-                    <td className='px-4 py-[18px] text-black text-sm '>
-                      <Badge text={item?.status} styles='' />{' '}
-                    </td>
-                    <td className='px-4 py-[18px] text-black text-sm '>
-                      {item?.products.length}
-                    </td>
-                    <td className='px-4 py-[18px] text-black text-sm '>
-                      {item?.total} Tk
-                    </td>
-                    <td className=''>
-                      <div className='flex gap-2'>
+                      <td className='text-left py-[10px] pl-4 w-[10px]'>
+                        <input type='checkbox' className='accent-yellow-300' />
+                      </td>
+                      <td className='px-4 py-[18px] text-black text-sm '>
                         <img
-                          className='cursor-pointer opacity-70'
-                          onClick={() => console.log('Edit row')}
-                          src={edit}
+                          className='w-10 h-10 rounded border border-[#0000001c]'
+                          src={BASE_URL + '/api/' + item?.images[0]}
                           alt=''
                         />
-                        <img
-                          className='cursor-pointer opacity-70'
-                          onClick={() => console.log('Delete row')}
-                          src={dlt}
-                          alt=''
-                        />
-                      </div>
-                    </td>
-                  </tr>
-                ))
-              }
-
-              {
-                //Requested Item Data Table
-                location === 'request' &&
-                data?.docs?.map((item, index) => (
-                  <tr
-                    key={index}
-                    className='border-y border-[#0000001c] hover:bg-[#FEF9DC]'
-                  >
-                    <td className='text-left py-[10px] pl-4 w-[10px]'>
-                      <input type='checkbox' className='accent-yellow-300' />
-                    </td>
-                    <td className='px-4 py-[18px] text-black text-sm '>
-                      #{item?.id}
-                    </td>
-                    <td
-                      onClick={() => navigate(`/admin/request/${item?.id}`)}
-                      className='px-4 py-[18px] text-black text-sm cursor-pointer'
+                      </td>
+                      <td
+                        onClick={() => navigate(`/admin/products/${item?.id}`)}
+                        className='px-4 py-[18px] text-black text-sm cursor-pointer line-clamp-2'
+                      >
+                        {item?.name}
+                      </td>
+                      <td className='px-4 py-[18px] text-black text-sm '>
+                        {item?.quantity} in Stock
+                      </td>
+                      <td className='px-4 py-[18px] text-black text-sm '>
+                        ${item?.price}
+                      </td>
+                      <td className='px-4 py-[18px] text-black text-sm '>
+                        {item?.category?.name}
+                      </td>
+                      <td className='px-4 py-[18px] text-black text-sm '>
+                        {new Intl.DateTimeFormat('en-US', {
+                          year: 'numeric',
+                          month: 'long',
+                          day: 'numeric',
+                        }).format(new Date(item?.createdAt)) || 'Not available'}
+                      </td>
+                    </tr>
+                  ))
+                }
+                {
+                  //All Orders Data Table
+                  (location === 'orders' || location === 'admin') &&
+                  data?.docs?.map((item, index) => (
+                    <tr
+                      key={index}
+                      className='border-y border-[#0000001c] hover:bg-[#FEF9DC]'
                     >
-                      {item?.products[0]?.product?.name}
-                    </td>
-                    <td className='px-4 py-[18px] text-black text-sm '>
-                      {new URL(
-                        item?.products[0]?.product?.link,
-                      ).hostname.replace('www.', '')}
-                    </td>
-                    <td className='px-4 py-[18px] text-black text-sm '>
-                      {new Intl.DateTimeFormat('en-US', {
-                        year: 'numeric',
-                        month: 'long',
-                        day: 'numeric',
-                      }).format(new Date(item?.date)) || 'Not available'}
-                    </td>
-                    <td className='px-4 py-[18px] text-black text-sm '>
-                      {item?.user?.fullName || item?.user?.email || ''}
-                    </td>
-                    <td className='px-4 py-[18px] text-black text-sm '>
-                      <Badge text={item?.status} styles='' />{' '}
-                    </td>
-                  </tr>
-                ))
-              }
-              {
-                //Category and Subcategory Data Table
-                location === 'category' &&
-                data?.docs?.slice(startIndex, endIndex).map((item, index) => (
-                  <tr
-                    key={index}
-                    className='border-y border-[#0000001c] hover:bg-[#FEF9DC]'
-                  >
-                    <td className='text-left py-[10px] pl-4 w-[10px]'>
-                      <input type='checkbox' className='accent-yellow-300' />
-                    </td>
+                      <td className='text-left py-[10px] pl-4 w-[10px]'>
+                        <input type='checkbox' className='accent-yellow-300' />
+                      </td>
+                      <td className='px-4 py-[18px] text-black text-sm '>
+                        #{item?.id}
+                      </td>
+                      <td
+                        onClick={() => navigate(`/admin/orders/${item?.id}`)}
+                        className='px-4 py-[18px] text-black text-sm cursor-pointer'
+                      >
+                        {item?.products?.length > 0
+                          ? item?.products[0]?.product?.name
+                          : ''}
+                      </td>
+                      <td className='px-4 py-[18px] text-black text-sm '>
+                        {new Intl.DateTimeFormat('en-US', {
+                          year: 'numeric',
+                          month: 'long',
+                          day: 'numeric',
+                        }).format(new Date(item?.date))}
+                      </td>
+                      <td className='px-4 py-[18px] text-black text-sm '>
+                        {item.user?.fullName || item.user.email}
+                      </td>
+                      <td className='px-4 py-[18px] text-black text-sm '>
+                        <Badge text={item?.status} styles='' />{' '}
+                      </td>
+                      <td className='px-4 py-[18px] text-black text-sm '>
+                        {item?.products.length}
+                      </td>
+                      <td className='px-4 py-[18px] text-black text-sm '>
+                        {item?.total} Tk
+                      </td>
+                      <td className=''>
+                        <div className='flex gap-2'>
+                          <img
+                            className='cursor-pointer opacity-70'
+                            onClick={() => console.log('Edit row')}
+                            src={edit}
+                            alt=''
+                          />
+                          <img
+                            className='cursor-pointer opacity-70'
+                            onClick={() => console.log('Delete row')}
+                            src={dlt}
+                            alt=''
+                          />
+                        </div>
+                      </td>
+                    </tr>
+                  ))
+                }
 
-                    <td
-                      onClick={() => selectHandler(item.id)}
-                      className='px-4 py-[18px] text-black text-sm cursor-pointer line-clamp-2'
+                {
+                  //Requested Item Data Table
+                  location === 'request' &&
+                  data?.docs?.map((item, index) => (
+                    <tr
+                      key={index}
+                      className='border-y border-[#0000001c] hover:bg-[#FEF9DC]'
                     >
-                      {item.name}
-                    </td>
-                    <td className='px-4 py-[18px] text-black text-sm '>
-                      {item.slug}
-                    </td>
-                    <td className='px-4 py-[18px] text-black text-sm '>
-                      {item.post}
-                    </td>
-                  </tr>
-                ))
-              }
-              {location === 'customers' &&
-                data?.docs?.map((item, index) => (
-                  <tr
-                    key={index}
-                    className='border-y border-[#0000001c] hover:bg-[#FEF9DC]'
-                  >
-                    <td className='text-left py-[10px] pl-4 w-[10px]'>
-                      <input type='checkbox' className='accent-yellow-300' />
-                    </td>
-
-                    <td
-                      onClick={() => selectHandler(item.id)}
-                      className='px-4 py-[18px] text-black text-sm cursor-pointer line-clamp-2'
+                      <td className='text-left py-[10px] pl-4 w-[10px]'>
+                        <input type='checkbox' className='accent-yellow-300' />
+                      </td>
+                      <td className='px-4 py-[18px] text-black text-sm '>
+                        #{item?.id}
+                      </td>
+                      <td
+                        onClick={() => navigate(`/admin/request/${item?.id}`)}
+                        className='px-4 py-[18px] text-black text-sm cursor-pointer'
+                      >
+                        {item?.products[0]?.product?.name}
+                      </td>
+                      <td className='px-4 py-[18px] text-black text-sm '>
+                        {new URL(
+                          item?.products[0]?.product?.link,
+                        ).hostname.replace('www.', '')}
+                      </td>
+                      <td className='px-4 py-[18px] text-black text-sm '>
+                        {new Intl.DateTimeFormat('en-US', {
+                          year: 'numeric',
+                          month: 'long',
+                          day: 'numeric',
+                        }).format(new Date(item?.date)) || 'Not available'}
+                      </td>
+                      <td className='px-4 py-[18px] text-black text-sm '>
+                        {item?.user?.fullName || item?.user?.email || ''}
+                      </td>
+                      <td className='px-4 py-[18px] text-black text-sm '>
+                        <Badge text={item?.status} styles='' />{' '}
+                      </td>
+                    </tr>
+                  ))
+                }
+                {
+                  //Category and Subcategory Data Table
+                  location === 'category' &&
+                  data?.docs?.slice(startIndex, endIndex).map((item, index) => (
+                    <tr
+                      key={index}
+                      className='border-y border-[#0000001c] hover:bg-[#FEF9DC]'
                     >
-                      {item?.name}
-                    </td>
-                    <td className='px-4 py-[18px] text-black text-sm '>
-                      {item?.phone}
-                    </td>
-                    <td className='px-4 py-[18px] text-black text-sm '>
-                      {item?.location}
-                    </td>
-                    <td className='px-4 py-[18px] text-black text-sm '>
-                      {item?.orders} items
-                    </td>
-                    <td className='px-4 py-[18px] text-black text-sm'>
-                      ${item?.spent}
-                    </td>
-                  </tr>
-                ))}
+                      <td className='text-left py-[10px] pl-4 w-[10px]'>
+                        <input type='checkbox' className='accent-yellow-300' />
+                      </td>
 
-              {location === 'discount' &&
-                data?.docs?.map((item, index) => (
-                  <tr
-                    key={index}
-                    className='border-y border-[#0000001c] hover:bg-[#FEF9DC]'
-                  >
-                    <td className='text-left py-[10px] pl-4 w-[10px]'>
-                      <input type='checkbox' className='accent-yellow-300' />
-                    </td>
-
-                    <td
-                      onClick={() => selectHandler(item.id)}
-                      className='px-4 py-[18px] text-black text-sm cursor-pointer line-clamp-2'
+                      <td
+                        onClick={() => selectHandler(item.id)}
+                        className='px-4 py-[18px] text-black text-sm cursor-pointer line-clamp-2'
+                      >
+                        {item.name}
+                      </td>
+                      <td className='px-4 py-[18px] text-black text-sm '>
+                        {item.slug}
+                      </td>
+                      <td className='px-4 py-[18px] text-black text-sm '>
+                        {item.post}
+                      </td>
+                    </tr>
+                  ))
+                }
+                {location === 'customers' &&
+                  data?.docs?.map((item, index) => (
+                    <tr
+                      key={index}
+                      className='border-y border-[#0000001c] hover:bg-[#FEF9DC]'
                     >
-                      {item.code}
-                    </td>
-                    <td className='px-4 py-[18px] text-black text-sm '>
-                      {item.type}
-                    </td>
-                    <td className='px-4 py-[18px] text-black text-sm '>
-                      ${item.amount}
-                    </td>
-                    <td className='px-4 py-[18px] text-black text-sm '>
-                      {item.description}
-                    </td>
-                    <td className='px-4 py-[18px] text-black text-sm '>
-                      {item.usage}
-                    </td>
-                    <td className='px-4 py-[18px] text-black text-sm '>
-                      {item.expiry}
-                    </td>
-                  </tr>
-                ))}
-            </>
-          )}
+                      <td className='text-left py-[10px] pl-4 w-[10px]'>
+                        <input type='checkbox' className='accent-yellow-300' />
+                      </td>
+
+                      <td
+                        onClick={() => selectHandler(item.id)}
+                        className='px-4 py-[18px] text-black text-sm cursor-pointer line-clamp-2'
+                      >
+                        {item?.name}
+                      </td>
+                      <td className='px-4 py-[18px] text-black text-sm '>
+                        {item?.phone}
+                      </td>
+                      <td className='px-4 py-[18px] text-black text-sm '>
+                        {item?.location}
+                      </td>
+                      <td className='px-4 py-[18px] text-black text-sm '>
+                        {item?.orders} items
+                      </td>
+                      <td className='px-4 py-[18px] text-black text-sm'>
+                        ${item?.spent}
+                      </td>
+                    </tr>
+                  ))}
+
+                {location === 'discount' &&
+                  data?.docs?.map((item, index) => (
+                    <tr
+                      key={index}
+                      className='border-y border-[#0000001c] hover:bg-[#FEF9DC]'
+                    >
+                      <td className='text-left py-[10px] pl-4 w-[10px]'>
+                        <input type='checkbox' className='accent-yellow-300' />
+                      </td>
+
+                      <td
+                        onClick={() => selectHandler(item.id)}
+                        className='px-4 py-[18px] text-black text-sm cursor-pointer line-clamp-2'
+                      >
+                        {item.code}
+                      </td>
+                      <td className='px-4 py-[18px] text-black text-sm '>
+                        {item.type}
+                      </td>
+                      <td className='px-4 py-[18px] text-black text-sm '>
+                        ${item.amount}
+                      </td>
+                      <td className='px-4 py-[18px] text-black text-sm '>
+                        {item.description}
+                      </td>
+                      <td className='px-4 py-[18px] text-black text-sm '>
+                        {item.usage}
+                      </td>
+                      <td className='px-4 py-[18px] text-black text-sm '>
+                        {item.expiry}
+                      </td>
+                    </tr>
+                  ))}
+              </>
+            )}
         </tbody>
       </table>
       {

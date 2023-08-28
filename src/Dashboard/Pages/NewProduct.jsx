@@ -120,7 +120,7 @@ const NewProduct = () => {
     <div className="h-full px-5">
       <Heading type="navigate" title="Add New Product" back="Products" />
       <form onSubmit={productForm.handleSubmit} action="">
-        <div className="grid grid-cols-1 items-start sm:grid-cols-2 gap-3 border-t border-[#0000001c] py-5">
+        <div className="grid grid-cols-1 items-start sm:grid-cols-2 gap-3">
           <div className="grid gap-3">
             <h2 className="text-base text-secondary font-semibold">
               Description

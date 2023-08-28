@@ -14,7 +14,7 @@ const Heading = ({ type, title, children, back }) => {
   };
   if (type === "navigate") {
     return (
-      <div className="flex justify-between items-center">
+      <div className="flex justify-between items-center border-b mb-4">
         <div className="py-4 flex gap-2">
           <button onClick={navigateHandler}>
             <img
@@ -33,7 +33,7 @@ const Heading = ({ type, title, children, back }) => {
     );
   }
   return (
-    <div className="py-4 border-b border-[#0000001c] ">
+    <div className="py-4 border-b border-[#0000001c]">
       <div className="flex justify-between items-center">
         <div className="">
           {type === "navigate" ? "" : ""}
