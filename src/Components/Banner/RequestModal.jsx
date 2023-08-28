@@ -1,11 +1,11 @@
 /**
-* RequestModal() returns JSX Element
-* Component for request item modal
-*
-* @param {function} args.confirmSubmit callback function.
-* @param {string} args.url - required product url to begin with the request process
-* @returns JSX Modal Element
-*/ 
+ * RequestModal() returns JSX Element
+ * Component for request item modal
+ *
+ * @param {function} args.confirmSubmit callback function.
+ * @param {string} args.url - required product url to begin with the request process
+ * @returns JSX Modal Element
+ */
 
 import Button from '../UiElements/Buttons/Button';
 import Input from '../UiElements/Input/Input';
@@ -19,7 +19,7 @@ import { useUserCtx } from '../../contexts/user/UserContext';
 import { terminal } from '../../contexts/terminal/Terminal';
 import { useNavigate } from 'react-router-dom';
 
-const RequestModal = ({ url, confirmSubmit }) => {
+const RequestModal = ({ url, confirmSubmit, setIsOpen }) => {
 	const [active, setActive] = useState('link');
 	const navigate = useNavigate();
 
@@ -37,7 +37,10 @@ const RequestModal = ({ url, confirmSubmit }) => {
 			removeEmptyFields(values);
 
 			const { images, ...rest } = values;
+			console.log(user)
 
+			console.log(values)
+			
 			if (user) {
 				terminal
 					.request({
@@ -51,6 +54,7 @@ const RequestModal = ({ url, confirmSubmit }) => {
 						}
 					});
 			} else {
+				setIsOpen(false);
 				navigate('/login', {
 					state: {
 						requestItem: { data: rest, images: images },
