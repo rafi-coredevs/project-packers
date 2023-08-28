@@ -19,7 +19,7 @@ import Support from "../pages/Support";
 // Dashboard
 import DashboardLayout from "../Dashboard/Layouts/DashboardLayout";
 import DashboardHome from "../Dashboard/Pages/DashboardHome";
-import Secure from "../Dashboard/Components/Secure/Secure";
+import ProtectedRoute from "./ProtectedRoute";
 import AllOrders from "../Dashboard/Pages/AllOrders";
 import RequestItems from "../Dashboard/Pages/RequestItems";
 import RequestDetails from "../Dashboard/Pages/RequestDetails";
@@ -64,7 +64,7 @@ export const router = createBrowserRouter([
       {
         path: "shop/:productId",
         element: <Product />,
-        loader: async ({ params }) =>  await terminal.request({ name: 'singleProduct', params: { id: params.productId } }),
+        loader: async ({ params }) => await terminal.request({ name: 'singleProduct', params: { id: params.productId } }),
       },
       {
         path: "/cart",
@@ -115,138 +115,138 @@ export const router = createBrowserRouter([
       {
         path: "",
         element: (
-          <Secure>
+          <ProtectedRoute accessTo={"dashboard"}>
             <DashboardHome />
-          </Secure>
+          </ProtectedRoute>
         ),
       },
       {
         path: "orders",
         element: (
-          <Secure>
+          <ProtectedRoute accessTo={"order"}>
             <AllOrders />
-          </Secure>
+          </ProtectedRoute>
         ),
       },
       {
         path: "orders/:orderId",
         element: (
-          <Secure>
+          <ProtectedRoute accessTo={"order"}>
             <OrderDetails />
-          </Secure>
+          </ProtectedRoute>
         ),
       },
       {
         path: "request",
         element: (
-          <Secure>
+          <ProtectedRoute accessTo={"request"}>
             <RequestItems />
-          </Secure>
+          </ProtectedRoute>
         ),
       },
       {
         path: "request/:requestId",
         element: (
-          <Secure>
+          <ProtectedRoute accessTo={"request"}>
             <RequestDetails />
-          </Secure>
+          </ProtectedRoute>
         ),
       },
       {
         path: "products",
         element: (
-          <Secure>
+          <ProtectedRoute accessTo={"product"}>
             <Products />
-          </Secure>
+          </ProtectedRoute>
         ),
 
       },
       {
         path: "products/new-product",
         element: (
-          <Secure>
+          <ProtectedRoute accessTo={"product"}>
             <NewProduct />
-          </Secure>
+          </ProtectedRoute>
         ),
       },
       {
         path: "products/:productId",
         element: (
-          <Secure>
+          <ProtectedRoute accessTo={"product"}>
             <NewProduct />
-          </Secure>
+          </ProtectedRoute>
         ),
       },
       {
         path: "discount",
         element: (
-          <Secure>
+          <ProtectedRoute accessTo={"discount"}>
             <Discount />
-          </Secure>
+          </ProtectedRoute>
         ),
       },
       {
         path: "discount/new-discount",
         element: (
-          <Secure>
+          <ProtectedRoute accessTo={"discount"}>
             <NewDiscount />
-          </Secure>
+          </ProtectedRoute>
         ),
       },
       {
         path: "category",
         element: (
-          <Secure>
+          <ProtectedRoute accessTo={"category"}>
             <Category />
-          </Secure>
+          </ProtectedRoute>
         ),
       },
       {
         path: "support",
         element: (
-          <Secure>
+          <ProtectedRoute accessTo={"support"}>
             <Chat />
-          </Secure>
+          </ProtectedRoute>
         ),
       },
       {
         path: "customers",
         element: (
-          <Secure>
+          <ProtectedRoute accessTo={"customer"}>
             <Customer />
-          </Secure>
+          </ProtectedRoute>
         ),
       },
       {
         path: "customers/new-customer",
         element: (
-          <Secure>
+          <ProtectedRoute accessTo={"customer"}>
             <NewCustomer />
-          </Secure>
+          </ProtectedRoute>
         ),
       },
       {
         path: "customers/:customerId",
         element: (
-          <Secure>
+          <ProtectedRoute accessTo={"customer"}>
             <CustomerDetails />
-          </Secure>
+          </ProtectedRoute>
         ),
       },
       {
         path: "staff",
         element: (
-          <Secure>
+          <ProtectedRoute accessTo={"staff"}>
             <Staff />
-          </Secure>
+          </ProtectedRoute>
         ),
       },
       {
         path: "payment",
         element: (
-          <Secure>
+          <ProtectedRoute accessTo={"payment"}>
             <Payment />
-          </Secure>
+          </ProtectedRoute>
         ),
       },
     ],
