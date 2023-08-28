@@ -82,9 +82,9 @@ const Checkout = () => {
       const body = {
         email: data.email,
         phone: data.phone,
-        alternativephone: data.altPhone? data.altPhone : null,
+        alternativephone: data.altPhone ? data.altPhone : null,
         insideDhaka: inside,
-        instructions: data.instruction? data.instruction:null,
+        instructions: data.instruction ? data.instruction : null,
         shippingaddress: {
           name: data.firstName + " " + data.lastName,
           address: data.address,
@@ -93,7 +93,6 @@ const Checkout = () => {
           zip: data.zip,
         },
       };
-      console.log(body)
       terminal.request({ name: "registerOrder", body }).then((data) => {
         if (data.url) {
           window.location.replace(data.url);
@@ -186,7 +185,7 @@ const Checkout = () => {
                 value={checkoutForm.values.firstName}
                 error={
                   checkoutForm.touched.firstName &&
-                  checkoutForm.errors.firstName
+                    checkoutForm.errors.firstName
                     ? checkoutForm.errors.firstName
                     : null
                 }
@@ -315,11 +314,7 @@ const Checkout = () => {
                 >
                   <p className="text-start">{product.product.name}</p>
                   <p className="text-end">
-                    ৳{" "}
-                    {(product?.product?.price +
-                      product?.product?.tax +
-                      product?.product?.fee) *
-                      product.productQuantity}{" "}
+                    ৳ {(product?.product?.price + product?.product?.tax + product?.product?.fee) * product.productQuantity}
                   </p>
                 </div>
               ))}
@@ -379,7 +374,7 @@ const Checkout = () => {
                 }}
                 name="inSideDhaka"
                 className="accent-orange-600"
-                // {...register('insideDhaka')}
+              // {...register('insideDhaka')}
               />
               <label
                 htmlFor="shippingDhaka"
@@ -424,8 +419,8 @@ const Checkout = () => {
           </Button>
         </div>
       </form>
-      <Modal show={orderModal} onClose={()=> setOrderModal(false)}>
-        <OrderSuccessModal id={orderid?.split("=")[1]}  setOrderModal={setOrderModal}/>
+      <Modal show={orderModal} onClose={() => setOrderModal(false)}>
+        <OrderSuccessModal id={orderid?.split("=")[1]} setOrderModal={setOrderModal} />
       </Modal>
     </div>
   );
