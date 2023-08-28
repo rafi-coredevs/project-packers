@@ -35,7 +35,9 @@ const Messages = ({ activeChat, chatCardHandler }) => {
         e.preventDefault()
         if (activeChat && activeChat.status !== 'pending') {
             terminal.request({ name: 'sendMessage', params: { id: activeChat.id }, body: { data: { message: e.target.message.value } } })
+            e.target.message.value ="";
         }
+
     }
     return (
         <>
@@ -95,6 +97,7 @@ const Messages = ({ activeChat, chatCardHandler }) => {
                             type="text"
                             name='message'
                             placeholder="Type text message"
+                            
                         />
                         <button type='submit'>
                             <img
