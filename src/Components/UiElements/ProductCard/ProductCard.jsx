@@ -68,7 +68,7 @@ export const ProductCard = ({
           <div className={`text-left flex lg:justify-between lg:items-center mt-4 text-base 
             ${isShop ? 'flex-col lg:flex-row' : 'flex-row'}`}>
             <p>Retailer price</p>
-            <p className='font-semibold'>$ {price}</p>
+            <p className='font-semibold'>{price} TK</p>
           </div>
         </div>
       </Link>
