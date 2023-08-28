@@ -1,9 +1,9 @@
 /**
- * Modal View Component for request item modal
- * onSubmit function for form submission
- * 
- * @returns JSX Modal Element
- */
+* Modal View Component for request item modal
+* @param {function} args.confirmSubmit - form submission handler
+* 
+* @returns JSX Modal Element
+*/
 
 
 import Button from "../UiElements/Buttons/Button";
@@ -14,7 +14,7 @@ import { Link } from "react-router-dom";
 
 const SuccessModal = ({confirmSubmit, setUrl}) => {
 
-  const submitHandler =  () =>{
+  const submitHandler = () => {
     confirmSubmit("request")
   }
   return (

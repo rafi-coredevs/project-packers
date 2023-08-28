@@ -1,3 +1,7 @@
+/**
+ * AreaChart - returns area chart as statistical view, based on data it gets
+ * @params {array} args.data - 
+ */
 import ReactApexChart from "react-apexcharts";
 const MONTH = [
   "Jan",
@@ -14,9 +18,9 @@ const MONTH = [
   "Dec",
 ];
 const AreaChart = ({ data }) => {
-    const onChangeHandler = (event) =>{
-        console.log(event.target.value)
-    }
+  const onChangeHandler = (event) => {
+    console.log(event.target.value)
+  }
   const options = {
     chart: {
       id: "area-chart",
@@ -33,7 +37,7 @@ const AreaChart = ({ data }) => {
     yaxis: {
       labels: {
         formatter: function (value) {
-          return value; 
+          return value;
         },
       },
     },

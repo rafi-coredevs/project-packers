@@ -4,10 +4,10 @@
  * collapsible and non collapsible
  * 
  * @param {string} args.type defines the custom type of element; whether collapsible or not
- * @param {string} args.icon icon url
- * @param {string} title navlink title
+ * @param {string} args.icon icon url for the left side icon
+ * @param {string} args.title navlink title
  * @param {string} args.url - sets the route a particular navlink should follow
- * @param {object} children only work for collapsible items
+ * @param {object} args.children only work for collapsible items
  * @param {boolean} args.end - styling of navlink depends on whether it's an end route or an extendable 
  * 
  * @returns JSX Element  

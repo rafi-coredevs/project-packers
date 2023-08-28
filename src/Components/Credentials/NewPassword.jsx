@@ -1,8 +1,7 @@
 /**
  * NewPassword() returns JSX Element
- * @param {object} getResponse validation from server
- * @param {function} getResponse validation from server
- *
+ * @param {object} args.data 
+ * @param {function} args.getResponse validation from server
  *
  * @returns JSX element
  */

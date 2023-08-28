@@ -1,11 +1,11 @@
 /**
- * RequestModal() returns JSX Element
- * Component for request item modal
- *
- * @param {string} confirmSubmit callback function.
- *
- * @returns JSX Modal Element
- */
+* RequestModal() returns JSX Element
+* Component for request item modal
+*
+* @param {function} args.confirmSubmit callback function.
+* @param {string} args.url - required product url to begin with the request process
+* @returns JSX Modal Element
+*/ 
 
 import Button from '../UiElements/Buttons/Button';
 import Input from '../UiElements/Input/Input';

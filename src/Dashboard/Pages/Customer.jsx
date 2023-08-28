@@ -51,37 +51,33 @@ const Customer = () => {
               <div className="py-2 my-auto">
                 <button
                   onClick={() => tableButtonHandler("all")}
-                  className={`py-2 px-3 text-[#475569] text-xs font-semibold ${
-                    active === "all" ? "bg-[#CFF6EF] rounded" : "bg-transparent"
-                  }`}
+                  className={`py-2 px-3 text-[#475569] text-xs font-semibold ${active === "all" ? "bg-[#CFF6EF] rounded" : "bg-transparent"
+                    }`}
                 >
                   All
                 </button>
                 <button
                   onClick={() => tableButtonHandler("new")}
-                  className={`py-2 px-3 text-[#475569] text-xs font-semibold ${
-                    active === "new" ? "bg-[#CFF6EF] rounded" : "bg-transparent"
-                  }`}
+                  className={`py-2 px-3 text-[#475569] text-xs font-semibold ${active === "new" ? "bg-[#CFF6EF] rounded" : "bg-transparent"
+                    }`}
                 >
                   New
                 </button>
                 <button
                   onClick={() => tableButtonHandler("returning")}
-                  className={`py-2 px-3 text-[#475569] text-xs font-semibold ${
-                    active === "returning"
-                      ? "bg-[#CFF6EF] rounded"
-                      : "bg-transparent"
-                  }`}
+                  className={`py-2 px-3 text-[#475569] text-xs font-semibold ${active === "returning"
+                    ? "bg-[#CFF6EF] rounded"
+                    : "bg-transparent"
+                    }`}
                 >
                   Returning
                 </button>
                 <button
                   onClick={() => tableButtonHandler("abandoned")}
-                  className={`py-2 px-3 text-[#475569] text-xs font-semibold ${
-                    active === "abandoned"
-                      ? "bg-[#CFF6EF] rounded"
-                      : "bg-transparent"
-                  }`}
+                  className={`py-2 px-3 text-[#475569] text-xs font-semibold ${active === "abandoned"
+                    ? "bg-[#CFF6EF] rounded"
+                    : "bg-transparent"
+                    }`}
                 >
                   Abandoned Checkouts
                 </button>
