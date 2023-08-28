@@ -121,7 +121,7 @@ const Staff = () => {
           <h3 className="font-semibold ">User Access</h3>
         </div>
         <div className="shadow-sm">
-          <StaffCard />
+          {/* <StaffCard /> */}
         </div>
         <div className="p-5 grid gap-4 items-start">
           <div className="space-x-2">
