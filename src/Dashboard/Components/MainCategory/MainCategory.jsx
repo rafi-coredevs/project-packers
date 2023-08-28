@@ -172,7 +172,7 @@ const MainCategory = () => {
           </div>
         </div>
         {
-          isActive?<Table  data={categories} />:<Table   data={selected?.subcategory || []}/>
+          isActive?<Table  data={{docs: categories}} />:<Table   data={{docs:selected?.subcategory }|| []}/>
         }
         
       </div>
