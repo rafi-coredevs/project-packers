@@ -29,27 +29,27 @@ const DDNav = ({ userRole }) => {
             to: '/admin',
             end: true,
             isDropdown: null,
-            access: ["admin", "super-admin", "staff"]
+            access: ['admin', 'super-admin', 'staff']
         },
         {
             id: 2,
             title: 'Order',
             icon: order,
-            access: ["admin", "super-admin"],
+            access: ['admin', 'super-admin', 'staff'],
             isDropdown: [
                 {
                     id: 1,
                     title: 'Item request',
                     to: '/admin/request',
                     end: false,
-                    access: ["admin", "super-admin", "staff"],
+                    access: ['admin', 'super-admin', 'staff'],
                 },
                 {
                     id: 2,
                     title: 'All Orders',
                     to: '/admin/orders',
                     end: false,
-                    access: ["admin", "super-admin", "staff"],
+                    access: ['admin', 'super-admin', 'staff'],
                 }
             ]
         },
@@ -57,28 +57,28 @@ const DDNav = ({ userRole }) => {
             id: 3,
             title: 'Products',
             icon: products,
-            access: ["admin", "super-admin", "staff"],
+            access: ['admin', 'super-admin', 'staff'],
             isDropdown: [
                 {
                     id: 1,
                     title: 'All Products',
                     to: '/admin/products',
                     end: false,
-                    access: ["admin", "super-admin", "staff"],
+                    access: ['admin', 'super-admin', 'staff'],
                 },
                 {
                     id: 2,
                     title: 'Discount',
                     to: '/admin/discount',
                     end: false,
-                    access: ["admin", "super-admin"],
+                    access: ['admin', 'super-admin', 'staff'],
                 },
                 {
                     id: 3,
                     title: 'Category',
                     to: '/admin/category',
                     end: false,
-                    access: ["admin", "super-admin"],
+                    access: ['admin', 'super-admin', 'staff'],
                 }
             ]
         },
@@ -90,7 +90,7 @@ const DDNav = ({ userRole }) => {
             to: '/admin/customers',
             end: false,
             isDropdown: null,
-            access: ["admin", "super-admin", "staff"]
+            access: ['admin', 'super-admin', 'staff']
         },
         {
             id: 5,
@@ -100,7 +100,7 @@ const DDNav = ({ userRole }) => {
             to: '/admin/support',
             end: false,
             isDropdown: null,
-            access: ["admin", "super-admin", "staff"]
+            access: ['admin', 'super-admin', 'staff']
         },
         {
             id: 6,
@@ -110,7 +110,7 @@ const DDNav = ({ userRole }) => {
             to: '/admin/staff',
             end: false,
             isDropdown: null,
-            access: ["super-admin"]
+            access: ['super-admin']
         }
     ]
 

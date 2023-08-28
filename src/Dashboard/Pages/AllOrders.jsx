@@ -20,7 +20,7 @@ const AllOrders = () => {
   useTitle("Order list");
   const [active, setActive] = useState("all");
   const [tableData, setTabledata] = useState(orderTable);
-  const[ isModal, setIsModal]= useState(false);
+  const [isModal, setIsModal] = useState(false);
   console.log(isModal);
 
   const tableButtonHandler = (value) => {
@@ -30,26 +30,44 @@ const AllOrders = () => {
 
   useEffect(() => {
     fetchData();
-   
+
   }, []);
 
-  const fetchData = (page=1) => {
-    terminal.request({name:'allOrders', queries: {page}}).then((res) => {
-      res.status===false? '': setTabledata(res);
+  const fetchData = (page = 1) => {
+    terminal.request({ name: 'allOrders', queries: { page } }).then((res) => {
+      res.status === false ? '' : setTabledata(res);
     });
   };
 
   const modalHandler = (id) => setIsModal(id);
-  const deleteHandler = ()=> terminal.request({name: 'deleteOrder', body:{ id: isModal}}).then(res=> res.status===true? (toaster({type:'success', message: res.message}),setIsModal(false), fetchData()): (toaster({type:'error', message:res.message}),setIsModal(false)))
-    
-    
+  const deleteHandler = () => terminal.request({ name: 'deleteOrder', body: { id: isModal } }).then(res => res.status === true ? (toaster({ type: 'success', message: res.message }), setIsModal(false), fetchData()) : (toaster({ type: 'error', message: res.message }), setIsModal(false)))
 
-  
-
+  const orderOverview = [
+    {
+      title: 'Total Cost',
+      total: 10440.00
+    },
+    {
+      title: 'Total Revenue',
+      total: 294.00
+    },
+    {
+      title: 'Total Order',
+      total: 125.00
+    },
+    {
+      title: 'Completed',
+      total: 100.00
+    },
+    {
+      title: 'Canceled',
+      total: 25.00
+    }
+  ]
   return (
     <div className="h-full px-5 ">
-      <Modal show={isModal} onClose={()=>setIsModal(false)}><div className="text-center text-xl my-10">Are you sure you want to delete this order?
-      <div className="flex gap-2 items-center justify-center mx-auto w-full mt-5"><span onClick={deleteHandler}><Button style='primary'><span className="px-2">Yes</span></Button></span><span onClick={()=>setIsModal(false)}><Button style='outline'><span className="px-2">No</span></Button></span></div></div></Modal>
+      <Modal show={isModal} onClose={() => setIsModal(false)}><div className="text-center text-xl my-10">Are you sure you want to delete this order?
+        <div className="flex gap-2 items-center justify-center mx-auto w-full mt-5"><span onClick={deleteHandler}><Button style='primary'><span className="px-2">Yes</span></Button></span><span onClick={() => setIsModal(false)}><Button style='outline'><span className="px-2">No</span></Button></span></div></div></Modal>
       <Heading title="All Orders">
         <div className="flex gap-1 items-center">
           <Input type="text" placeholder="Search" styles="secondary">
@@ -60,7 +78,7 @@ const AllOrders = () => {
       </Heading>
       <div className="grid grid-cols-3 gap-5">
         <div className="col-span-3 border-[#0000001c]">
-          <Overview />
+          <Overview data={orderOverview} />
         </div>
 
         <div className="col-span-3 sm:col-span-3">
@@ -134,10 +152,10 @@ const AllOrders = () => {
             </div>
           </div>
 
-            <Table paginate={fetchData} modalHandler={modalHandler} data={tableData} />
-          </div >
-        </div>
+          <Table paginate={fetchData} modalHandler={modalHandler} data={tableData} />
+        </div >
       </div>
+    </div>
   );
 };
 

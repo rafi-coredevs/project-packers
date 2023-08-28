@@ -1,34 +1,13 @@
 
 
-const Overview = () => {
-    const orderData = [
-        {
-            title: 'Total Cost',
-            total: 10440.00
-        },
-        {
-            title: 'Total Request',
-            total: 294.00
-        },
-        {
-            title: 'Total Order',
-            total: 125.00
-        },
-        {
-            title: 'Completed',
-            total: 100.00
-        },
-        {
-            title: 'Canceled',
-            total: 25.00
-        }
-    ]
+const Overview = ({ data }) => {
+
 
     return (
         <section>
             <div className='mt-6 pb-5 flex justify-between items-center border-b divide-x'>
                 {
-                    orderData.map((data, i) => (
+                    data.map((data, i) => (
                         <div
                             key={i}
                             className={`${data.title !== 'Total Cost' && 'lg:pl-16'}`}
