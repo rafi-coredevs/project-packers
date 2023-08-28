@@ -15,14 +15,14 @@ import { BASE_URL } from "../../Util/apiCall";
 const OrderDetails = () => {
   useTitle("Order Details");
   const { orderId } = useParams();
-  const [order,setOrder]=useState(null);
+  const [order, setOrder] = useState(null);
   console.log(order);
-  useEffect(()=>{
+  useEffect(() => {
     fetchData();
 
-  },[]);
- 
-  const fetchData= () => terminal.request({name: 'singleOrder', params: { id: orderId}}).then(res=>res.status===false? toaster({type: 'error', message: res.message}): setOrder(res))
+  }, []);
+
+  const fetchData = () => terminal.request({ name: 'singleOrder', params: { id: orderId } }).then(res => res.status === false ? toaster({ type: 'error', message: res.message }) : setOrder(res))
   const updateHandler = () => {
     console.log("update clicked");
   };
@@ -69,42 +69,73 @@ const OrderDetails = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {order?.products.map((product) => {
-                    return (
-                      <tr
-                        key={product?.id}
-                        className="border-t border-[#0000001c]"
-                      >
-                        <td className="py-2">
-                          <div className="flex gap-2 items-center">
-                            <img
-                              className="w-8 h-8 rounded border-b border-[#0000001c]"
-                              src={BASE_URL+'/api/'+product?.product?.images[0]}
-                              alt=""
-                            />
-                            <div className="">
-                              <p className="line-clamp-1">{product?.product?.name}</p>
-                              <p className="text-[#475569] ">
-                                ৳{product?.product?.price?.toFixed(2)}
-                              </p>
-                            </div>
+                  {
+                    order === null ? <tr
+                      className="border-t border-[#0000001c]"
+                    >
+                      <td className="py-2">
+                        <div className="flex gap-2 items-center">
+                          <div
+                            className="w-10 h-10 rounded bg-[length:400%] bg-gradient-to-r from-gray-200 via-white to-gray-200 animate-loading"
+                          />
+                          <div>
+                            <p className="line-clamp-1 bg-[length:400%] bg-gradient-to-r from-gray-200 via-white to-gray-200 animate-loading"><span className="invisible">product?.product?.name</span></p>
+                            <p className="text-[#475569] bg-[length:400%] bg-gradient-to-r from-gray-200 via-white to-gray-200 animate-loading">
+                              <span className="invisible">price</span>
+                            </p>
                           </div>
-                        </td>
-                        <td className="py-2">
-                          <Input styles="quantity" value={product?.productQuantity} />
-                        </td>
-                        <td className="py-2"> ৳{(product?.product?.price?.toFixed(2)*(product?.productQuantity))}</td>
-                        <td className="py-2 text-right">
-                          <button
-                            className="pe-3"
-                            onClick={() => console.log("first")}
+                        </div>
+                      </td>
+                      <td className="py-2">
+                        <input type="text" className='h-9 w-28 bg-[length:400%] bg-gradient-to-r from-gray-200 via-white to-gray-200 animate-loading' />
+                      </td>
+                      <td><span className="py-2 px-8 bg-[length:400%] bg-gradient-to-r from-gray-200 via-white to-gray-200 animate-loading"></span></td>
+                      <td className="py-2 text-right">
+                        <button
+                          className="pe-3"
+                          onClick={() => console.log("first")}
+                        >
+                          <div className="h-4 w-4 bg-[length:400%] bg-gradient-to-r from-gray-200 via-white to-gray-200 animate-loading" />
+                        </button>
+                      </td>
+                    </tr> :
+                      order?.products.map((product) => {
+                        return (
+                          <tr
+                            key={product?.id}
+                            className="border-t border-[#0000001c]"
                           >
-                            <img className="h-4 w-4" src={remove} alt="" />
-                          </button>
-                        </td>
-                      </tr>
-                    );
-                  })}
+                            <td className="py-2">
+                              <div className="flex gap-2 items-center">
+                                <img
+                                  className="w-8 h-8 rounded border-b border-[#0000001c]"
+                                  src={BASE_URL + '/api/' + product?.product?.images[0]}
+                                  alt=""
+                                />
+                                <div className="">
+                                  <p className="line-clamp-1">{product?.product?.name}</p>
+                                  <p className="text-[#475569] ">
+                                    ৳{product?.product?.price?.toFixed(2)}
+                                  </p>
+                                </div>
+                              </div>
+                            </td>
+                            <td className="py-2">
+                              <Input styles="quantity" value={product?.productQuantity} />
+                            </td>
+                            <td className="py-2"> ৳{(product?.product?.price?.toFixed(2) * (product?.productQuantity))}</td>
+                            <td className="py-2 text-right">
+                              <button
+                                className="pe-3"
+                                onClick={() => console.log("first")}
+                              >
+                                <img className="h-4 w-4" src={remove} alt="" />
+                              </button>
+                            </td>
+                          </tr>
+                        );
+                      })
+                  }
                 </tbody>
               </table>
             </div>
@@ -114,35 +145,35 @@ const OrderDetails = () => {
             <div className="grid gap-3">
               <div className="flex justify-between items-center">
                 <button className=" text-sm">Subtotal</button>
-                <p className="">৳{order?.products?.reduce((accumulator=0,product)=> accumulator+((product?.productQuantity)*(product?.product?.price)),0)}</p>
+                <p className="">৳{order?.products?.reduce((accumulator = 0, product) => accumulator + ((product?.productQuantity) * (product?.product?.price)), 0)}</p>
               </div>
               <div className="flex justify-between items-center">
                 <button className="text-emerald-500 underline text-sm">
                   Discount
                 </button>
-                <p className="">৳{order?.discountApplied?.amount || order?.discountApplied?.percentage? (order?.discountApplied?.percentage + ' %' ) : 0}</p>
+                <p className="">৳{order?.discountApplied?.amount || order?.discountApplied?.percentage ? (order?.discountApplied?.percentage + ' %') : 0}</p>
               </div>
               <div className="flex justify-between items-center">
                 <button className="text-emerald-500 underline text-sm">
                   Shipping
                 </button>
                 <p className="">{""}</p>
-                <p className="">৳{order?.insideDhaka?99:199}</p>
+                <p className="">৳{order?.insideDhaka ? 99 : 199}</p>
               </div>
               <div className="flex justify-between items-center">
                 <button className="text-emerald-500 underline text-sm">
                   Packers Fee
                 </button>
                 <p className="">{""}</p>
-                <p className="">৳{order?.products?.reduce((accumulator=0,product)=> accumulator+((product?.productQuantity)*(product?.product?.fee)),0)}</p>
+                <p className="">৳{order?.products?.reduce((accumulator = 0, product) => accumulator + ((product?.productQuantity) * (product?.product?.fee)), 0)}</p>
               </div>
               <div className="flex justify-between items-center">
                 <button className="text-emerald-500 underline text-sm">
                   Estimated Tax
                 </button>
 
-                
-                <p className="">৳{order?.products?.reduce((accumulator=0,product)=> accumulator+((product?.productQuantity)*(product?.product?.tax)),0)}</p>
+
+                <p className="">৳{order?.products?.reduce((accumulator = 0, product) => accumulator + ((product?.productQuantity) * (product?.product?.tax)), 0)}</p>
               </div>
               <div className="flex justify-between items-center">
                 <p className="text-base font-semibold">Total</p>
@@ -173,17 +204,17 @@ const OrderDetails = () => {
             <SideCard
               types="address"
               title="Shipping Address"
-              address={order?.shippingaddress?.address +', '+order?.shippingaddress?.area +', '+order?.shippingaddress?.city +', '+order?.shippingaddress?.zip }
+              address={order?.shippingaddress?.address + ', ' + order?.shippingaddress?.area + ', ' + order?.shippingaddress?.city + ', ' + order?.shippingaddress?.zip}
             />
             <SideCard
               types="address"
               title="Billing Address"
-              address={order?.shippingaddress?.address +', '+order?.shippingaddress?.area +', '+order?.shippingaddress?.city +', '+order?.shippingaddress?.zip }
+              address={order?.shippingaddress?.address + ', ' + order?.shippingaddress?.area + ', ' + order?.shippingaddress?.city + ', ' + order?.shippingaddress?.zip}
             />
           </div>
           <div className=" border border-[#0000001c] divide-y  rounded-lg ">
             <SideCard types="note" message={order?.instructions || "Not Available"} />
-            
+
           </div>
         </div>
       </div>

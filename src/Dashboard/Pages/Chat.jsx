@@ -3,6 +3,7 @@ import { ChatCard, LazyChatCard } from "../Components/UiElements/ChatCard/ChatCa
 import { terminal } from "../../contexts/terminal/Terminal";
 import Messages from "../Components/UiElements/Messages/Messages";
 import EmptyMassage from "../Components/UiElements/Messages/EmptyMassage";
+import { useTitle } from "../../Components/Hooks/useTitle";
 
 
 const buttonStyle = {
@@ -10,6 +11,7 @@ const buttonStyle = {
   deactive: "bg-white text-black",
 };
 const Chat = () => {
+  useTitle('Support');
   const [activeStatusButton, setActiveStatusButton] = useState("all");
   const [supportType, setSupportType] = useState("all");
   const [supportData, setSupportData] = useState([]);
@@ -35,7 +37,7 @@ const Chat = () => {
   const actionButtonHandler = (value) => {
     setActiveStatusButton(value);
   };
-  
+
   return (
     <div className="grid grid-cols-12">
       <div className="col-span-3 shrink-0 hidden sm:grid gap-2 pt-5 px-5">
