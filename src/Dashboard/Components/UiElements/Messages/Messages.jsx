@@ -37,7 +37,7 @@ const Messages = ({ activeChat, chatCardHandler }) => {
         }
     }
     return (
-        <div className="col-span-12 sm:col-span-9 relative bg-[#E2E8F0]">
+        <>
             {modal && <div className="absolute top-0 bottom-0 left-0 right-0 bg-[#0000004b] z-10">
                 <div className="h-full w-full flex items-center justify-center">
                     <div className="flex gap-2">
@@ -49,7 +49,7 @@ const Messages = ({ activeChat, chatCardHandler }) => {
                 </div>
             </div>}
             <div className="flex justify-between items-center px-8 py-3 shadow-sm">
-                <div className="">
+                <div>
                     <div className="flex gap-2 items-center">
                         <span className={`h-2 w-2 rounded-full bg-green-600`}></span>
                         <p className="text-[#475569] font-medium first-letter:uppercase">
@@ -58,7 +58,7 @@ const Messages = ({ activeChat, chatCardHandler }) => {
                     </div>
                     <p className="text-sm font-medium">{activeChat.id}</p>
                 </div>
-                <div className="">
+                <div>
                     <select
                         className="bg-transparent outline-none cursor-pointer"
                         name=""
@@ -101,7 +101,7 @@ const Messages = ({ activeChat, chatCardHandler }) => {
                     </div>
                 </form>
             </div>
-        </div>
+        </>
     );
 };
 
