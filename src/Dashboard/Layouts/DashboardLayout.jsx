@@ -28,8 +28,7 @@ const DashboardLayout = () => {
           <Header />
         </div>
         <div className="col-span-2 h-[calc(100vh-68px)] hidden sm:block">
-
-          <DDNav />
+          <DDNav userRole={user.role} />
         </div>
         <div className="col-span-12 sm:col-span-10  shadow-md overflow-y-auto h-full sm:h-[calc(100vh-68px)]">
           <Outlet />

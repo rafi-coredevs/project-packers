@@ -15,7 +15,11 @@ import NavNoDropdown from './NavNoDropdown';
  * collapsible and non-collapsible
  * nav list hold the structure for the admin sidebar 
  */
-const DDNav = () => {
+const DDNav = ({ userRole }) => {
+
+
+
+
     const navList = [
         {
             id: 1,
@@ -24,24 +28,28 @@ const DDNav = () => {
             iconWhite: dashboardWhite,
             to: '/admin',
             end: true,
-            isDropdown: null
+            isDropdown: null,
+            access: ["admin", "super-admin", "staff"]
         },
         {
             id: 2,
             title: 'Order',
             icon: order,
+            access: ["admin", "super-admin"],
             isDropdown: [
                 {
                     id: 1,
                     title: 'Item request',
                     to: '/admin/request',
                     end: false,
+                    access: ["admin", "super-admin", "staff"],
                 },
                 {
                     id: 2,
                     title: 'All Orders',
                     to: '/admin/orders',
                     end: false,
+                    access: ["admin", "super-admin", "staff"],
                 }
             ]
         },
@@ -49,24 +57,28 @@ const DDNav = () => {
             id: 3,
             title: 'Products',
             icon: products,
+            access: ["admin", "super-admin", "staff"],
             isDropdown: [
                 {
                     id: 1,
                     title: 'All Products',
                     to: '/admin/products',
                     end: false,
+                    access: ["admin", "super-admin", "staff"],
                 },
                 {
                     id: 2,
                     title: 'Discount',
                     to: '/admin/discount',
                     end: false,
+                    access: ["admin", "super-admin"],
                 },
                 {
                     id: 3,
                     title: 'Category',
                     to: '/admin/category',
                     end: false,
+                    access: ["admin", "super-admin"],
                 }
             ]
         },
@@ -77,7 +89,8 @@ const DDNav = () => {
             iconWhite: userListWhite,
             to: '/admin/customers',
             end: false,
-            isDropdown: null
+            isDropdown: null,
+            access: ["admin", "super-admin", "staff"]
         },
         {
             id: 5,
@@ -86,7 +99,8 @@ const DDNav = () => {
             iconWhite: chatWhite,
             to: '/admin/support',
             end: false,
-            isDropdown: null
+            isDropdown: null,
+            access: ["admin", "super-admin", "staff"]
         },
         {
             id: 6,
@@ -95,7 +109,8 @@ const DDNav = () => {
             iconWhite: orderWhite,
             to: '/admin/staff',
             end: false,
-            isDropdown: null
+            isDropdown: null,
+            access: ["super-admin"]
         }
     ]
 
@@ -104,15 +119,12 @@ const DDNav = () => {
             <div className='w-full pr-2'>
                 <ul>
                     {
-                        navList.map(list => (
-                            <li
-                                key={list.id}
-                            >
+                        navList.filter(navItem => navItem.access.includes(userRole)).map((navRoute) => {
+                            return <li key={navRoute.id} >
                                 {
-                                    list.isDropdown ? <NavDropdown list={list} /> : <NavNoDropdown list={list} />
-                                }
-                            </li>
-                        ))
+                                    navRoute.isDropdown ? <NavDropdown list={navRoute} userRole={userRole} /> : <NavNoDropdown list={navRoute} />
+                                } </li>
+                        })
                     }
                 </ul>
             </div>
