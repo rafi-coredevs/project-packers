@@ -224,19 +224,20 @@ const Table = ({ data, paginate, loading }) => {
                         onClick={() => navigate(`/admin/request/${item?.id}`)}
                         className='px-4 py-[18px] text-black text-sm cursor-pointer'
                       >
-                        {item?.products[0]?.product?.name}
+                        {item?.name}
                       </td>
                       <td className='px-4 py-[18px] text-black text-sm '>
-                        {new URL(
+                        {/* {new URL(
                           item?.products[0]?.product?.link,
-                        ).hostname.replace('www.', '')}
+                        ).hostname.replace('www.', '')} */}
+                        {item?.link}
                       </td>
                       <td className='px-4 py-[18px] text-black text-sm '>
-                        {new Intl.DateTimeFormat('en-US', {
+                        {item?.createdAt && new Intl.DateTimeFormat('en-US', {
                           year: 'numeric',
                           month: 'long',
                           day: 'numeric',
-                        }).format(new Date(item?.date)) || 'Not available'}
+                        }).format(new Date(item?.createdAt)) || 'Not available'}
                       </td>
                       <td className='px-4 py-[18px] text-black text-sm '>
                         {item?.user?.fullName || item?.user?.email || ''}
