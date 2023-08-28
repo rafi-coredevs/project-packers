@@ -39,7 +39,7 @@ const DUMMY_NOTIFICATION = [
 
 const Header = () => {
   const [notifyState, setNotifyState] = useState(false);
-  const { user } = useUserCtx()
+  const { user, Logout } = useUserCtx()
   const [notifications, setNotifications] = useState()
   useEffect(() => {
     user?.id && terminal.request({ name: 'getNotification' }).then(data => data.docs && setNotifications(data.docs))
