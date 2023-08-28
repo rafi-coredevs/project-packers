@@ -55,7 +55,7 @@ const head = {
   ],
 };
 
-const Table = ({ data, paginate }) => {
+const Table = ({ data, paginate, loading }) => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const location = pathname.split('/')[pathname.split('/').length - 1];
@@ -88,8 +88,8 @@ const Table = ({ data, paginate }) => {
           </tr>
         </thead>
         <tbody>
-          {
-            (data?.docs == null || data?.docs?.length === 0) ? (
+        {
+           loading? (
               [...Array(10)].map((arr, i) => <tr key={i} className=' hover:bg-[#FEF9DC]'>
                 <td className='py-8 border-b bg-[length:400%] bg-gradient-to-r from-gray-200 via-white to-gray-200 animate-loading' />
                 {
@@ -100,7 +100,7 @@ const Table = ({ data, paginate }) => {
                     />))
                 }
               </tr>)
-            ) : (
+            ) : (data?.docs == null || data?.docs?.length === 0) ? <tr><td className='w-full'>No data found</td></tr>: (
               <>
                 {
                   //Products  Data Table
@@ -136,7 +136,7 @@ const Table = ({ data, paginate }) => {
                         {item?.category?.name}
                       </td>
                       <td className='px-4 py-[18px] text-black text-sm '>
-                        {new Intl.DateTimeFormat('en-US', {
+                        {item?.createdAt && new Intl.DateTimeFormat('en-US', {
                           year: 'numeric',
                           month: 'long',
                           day: 'numeric',

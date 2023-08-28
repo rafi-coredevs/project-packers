@@ -15,15 +15,17 @@ const Products = () => {
   useTitle("Products");
   const [active, setActive] = useState("all");
   const [tableData, setTabledata] = useState([]);
-  console.log(active);
+  const [sortBy,setSortBy]=useState('createdAt:asc');
+  const [loading,setLoading]= useState(true);
   useEffect(() => {
     fetchData();
    
-  }, []);
+  }, [sortBy,active]);
 
   const fetchData = (page=1) => {
-    terminal.request({name:'allProduct', queries: {page}}).then((res) => {
-      res.status===false? '': setTabledata(res);
+    setLoading(true);
+    terminal.request({name:'allProduct', queries: {page, sortBy, status:active}}).then((res) => {
+      res.status===false? '': setTabledata(res), setLoading(false);
     });
   };
 
@@ -87,13 +89,13 @@ const Products = () => {
                 <button className="border border-[#0000001f] p-2  ">
                   <img className="opacity-70" src={filter} alt="" />
                 </button>
-                <button className="border border-[#0000001f] p-2  ">
+                <button onClick={()=>setSortBy(sortBy==='createdAt:desc'?'createdAt:asc':'createdAt:desc')} className="border border-[#0000001f] p-2  ">
                   <img className="opacity-70" src={sort} alt="" />
                 </button>
               </div>
             </div>
 
-            <Table type="products" data={tableData} paginate={fetchData} />
+            <Table type="products" data={tableData} paginate={fetchData} loading={loading}/>
           </div>
         </div>
       </div>
