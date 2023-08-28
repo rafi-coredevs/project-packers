@@ -11,14 +11,6 @@ const RequestDetails = () => {
   useTitle("Request Detail");
   const { requestId } = useParams();
 
-
-
-
-  
-
-
-
-
   const updateHandler = () => {
     console.log("update clicked");
   };

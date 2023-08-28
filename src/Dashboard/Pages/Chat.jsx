@@ -15,8 +15,10 @@ const Chat = () => {
   const [supportType, setSupportType] = useState("all");
   const [supportData, setSupportData] = useState([]);
   const [activeChat, setActiveChat] = useState();
+  const [loading, setLoading] = useState(false)
   useEffect(() => {
     terminal.request({ name: 'allSupport', queries: { status: activeStatusButton, type: supportType } }).then(data => {
+      console.log(data)
       setSupportData(() => {
         return data.length > 0 && data?.map(support => {
           return {
@@ -80,12 +82,10 @@ const Chat = () => {
           <div className="py-2 px-1 font-medium w-full ">
             <select
               onChange={(e) => setSupportType(e.target.value)}
-              className=" bg-white outline-none " defaultValue="all"
+              className=" bg-white outline-none w-full " defaultValue="all"
             >
-              <option selected>
-                Support Type
-              </option>
-              <option value="all">All</option>
+             
+              <option selected value="all">All</option>
               <option value="account">Account</option>
               <option value="order">Order</option>
               <option value="payment">Payment</option>
