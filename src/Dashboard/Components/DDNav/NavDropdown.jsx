@@ -23,7 +23,7 @@ const NavDropdown = ({ list = Object, userRole }) => {
           <img src={list.icon} alt={list.icon} />
           <p>{list.title}</p>
         </div>
-        <img src={arrow} alt="arrow" className={`duration-150 ${open ? '-rotate-90' : 'rotate-90'}`} />
+        <img src={arrow} alt="arrow" className={`duration-150 ${open ? 'rotate-90' : 'rotate-0'}`} />
       </div>
       {
         open && <ul className='flex flex-col'>
