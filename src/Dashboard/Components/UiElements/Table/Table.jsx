@@ -61,7 +61,7 @@ const Table = ({ data, paginate }) => {
   const location = pathname.split('/')[pathname.split('/').length - 1];
   const tableHeadData = head[location];
   const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = Math.ceil(data?.length / 10);
+  const totalPages = Math.ceil(data?.docs?.length / 10);
   const startIndex = (currentPage - 1) * 10;
   const endIndex = startIndex + 10;
 
@@ -89,8 +89,9 @@ const Table = ({ data, paginate }) => {
           </tr>
         </thead>
         <tbody>
-          {data?.length === 0 || data?.docs?.length === 0 ? (
-            [...Array(10)].map((arr, i) => <tr key={i} className=' hover:bg-[#FEF9DC]'>
+          {  
+         ( data?.docs==null || data?.docs?.length===0)?(
+            [1,2,3,4,5,6,7,8,9,10].map((arr, i) => <tr key={i} className=' hover:bg-[#FEF9DC]'>
               <td className='py-8 border-b bg-[length:400%] bg-gradient-to-r from-gray-200 via-white to-gray-200 animate-loading' />
               {
                 tableHeadData?.map((item, index) => (
@@ -250,7 +251,7 @@ const Table = ({ data, paginate }) => {
               {
                 //Category and Subcategory Data Table
                 location === 'category' &&
-                data?.slice(startIndex, endIndex).map((item, index) => (
+                data?.docs?.slice(startIndex, endIndex).map((item, index) => (
                   <tr
                     key={index}
                     className='border-y border-[#0000001c] hover:bg-[#FEF9DC]'
@@ -347,8 +348,8 @@ const Table = ({ data, paginate }) => {
         location === 'category' && (
           <div className='flex justify-between items-center py-6 px-4'>
             <p className='text-[#475569] text-sm'>
-              Showing {data?.slice(startIndex, endIndex).length} of{' '}
-              {data?.length} results
+              Showing {data?.docs?.slice(startIndex, endIndex).length} of{' '}
+              {data?.docs?.length} results
             </p>
             <div className='flex'>
               <button
