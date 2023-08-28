@@ -4,6 +4,7 @@ import { terminal } from "../../contexts/terminal/Terminal";
 import Messages from "../Components/UiElements/Messages/Messages";
 import EmptyMassage from "../Components/UiElements/Messages/EmptyMassage";
 
+const SUPPORT_TYPE = [{name:'all',value:"all"},{name:'Account', value:'account'}, {name:'Order', value:'order'}, {name:'Payment', value:'payment'}, {name:'Refund', value:'refund'}]
 
 const buttonStyle = {
   active: "bg-secondary text-white",
@@ -76,10 +77,10 @@ const Chat = () => {
               <p className="">Close</p>
             </div>
           </button>
-          <div className="py-2 px-1 font-medium">
+          <div className="py-2 px-1 font-medium w-full ">
             <select
               onChange={(e) => setSupportType(e.target.value)}
-              className=" bg-white outline-none" defaultValue="all"
+              className=" bg-white outline-none " defaultValue="all"
             >
               <option selected>
                 Support Type
@@ -97,7 +98,7 @@ const Chat = () => {
             {
               supportData.length === 0 ? supportData.map((chat, i) => (
                 <LazyChatCard key={i} />
-              )) : supportData.map((chat) => (
+              )) : supportData?.map((chat) => (
                 <ChatCard
                   onClick={chatCardHandler}
                   active={activeChat?.id}

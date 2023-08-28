@@ -14,6 +14,9 @@ const CustomSelect = ({ options, value, onChange }) => {
 
   const [isOpen, setIsOpen] = useState(false);
 
+  // window.addEventListener('click', ()=>{
+  //   setIsOpen(false)
+  // })
   const toggleDropdown = () => {
     
     setIsOpen(!isOpen);
@@ -27,16 +30,16 @@ const CustomSelect = ({ options, value, onChange }) => {
 
 
   return (
-    <div className="relative inline-block">
+    <div className="relative inline-block w-full">
       <div
-        className="py-2 px-4 bg-white border border-[#ededed] rounded-md  cursor-pointer flex justify-between "
+        className="py-2 px-4 bg-white border border-[#ededed] rounded-md  cursor-pointer flex justify-between"
         onClick={toggleDropdown}
       >
         {value === null ? 'Select' : value}
         <img src={downArrow} alt="" />
       </div>
       {isOpen  ? (
-        <ul className="absolute top-full left-0 w-full bg-white border rounded-t-none shadow">
+        <ul className="absolute top-full left-0 w-full bg-white border rounded-t-none shadow max-h-40 overflow-y-auto scrollbar">
           {options.map((option, index) => (
             <li
               key={index}
