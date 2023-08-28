@@ -3,9 +3,11 @@
  */
 
 
+import UserIcon from "../../../Components/UiElements/UserIcon/UserIcon";
 import Input from "../UiElements/Input/Input";
 
-const StaffCard = ({ onClick }) => {
+const StaffCard = ({ onClick, user }) => {
+  const totalaccess = ['support', 'product', 'order', 'request']
 
   return (
 
@@ -15,15 +17,15 @@ const StaffCard = ({ onClick }) => {
     >
       <div className=" flex gap-4">
         <div className="h-10 w-10 rounded-full flex items-center justify-center bg-primary">
-          <p className="">RF</p>
+          <p className=""><UserIcon name={user.fullName} /></p>
         </div>
         <div className="space-y-2">
-          <p className="text-[#202223] text-sm font-semibold">Robert Fox</p>
-          <p className="text-[#6D7175] text-sm">Super Admin</p>
+          <p className="text-[#202223] text-sm font-semibold">   {user.fullName}</p>
+          <p className="text-[#6D7175] text-sm">{user.access.length === totalaccess.length ? 'Full access' : user.access.length === 1 ? user.access : 'Limited access'}</p>
         </div>
       </div>
-      <div className="border-[1px] border-[#64748B] p-3 rounded">
-        <p>Super Admin</p>
+      <div className="border-[1px] border-[#64748B] p-3 rounded flex justify-center items-center min-w-[5rem]">
+        <p>{user.role}</p>
       </div>
     </div>
 

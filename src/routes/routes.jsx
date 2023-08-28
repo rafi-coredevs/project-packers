@@ -95,6 +95,10 @@ export const router = createBrowserRouter([
         element: <FaqPage />,
       },
       {
+        path: "/account",
+        element: <Orders />,
+      },
+      {
         path: "account/orders",
         element: <Orders />,
       },

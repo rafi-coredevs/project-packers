@@ -38,7 +38,8 @@ export default {
 
       },
       content: {
-        'arrowLeft': 'url(./src/assets/icons/cd-arrow-right-2.svg)'
+        'arrowLeft': 'url(./src/assets/icons/cd-arrow-right-2.svg)',
+        
       },
 
       animation: {

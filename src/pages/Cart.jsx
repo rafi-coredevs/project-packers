@@ -168,7 +168,7 @@ const Cart = () => {
                 </tr>
               </thead>
               <tbody>
-                {cart?.products.length > 0 && cart?.products.map((product) => {
+                {cart?.products?.length > 0 && cart?.products.map((product) => {
                   sellerTakes += product?.product?.price * product.productQuantity;
                   tax += product?.product?.tax * product.productQuantity;
                   fee += product?.product?.fee * product.productQuantity;
@@ -181,7 +181,7 @@ const Cart = () => {
                     />
                   );
                 })}
-                {cart.requests.length > 0 && cart?.requests.map((request) => {
+                {cart?.requests?.length > 0 && cart?.requests.map((request) => {
                   sellerTakes += request?.request?.price * request.requestQuantity;
                   tax += request?.request?.tax * request.requestQuantity;
                   fee += request?.request?.fee * request.requestQuantity;

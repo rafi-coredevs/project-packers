@@ -7,14 +7,23 @@ import Input from "../Components/UiElements/Input/Input";
 import Modal from "../../Components/UiElements/Modal/Modal";
 import { useTitle } from "../../Components/Hooks/useTitle";
 import { terminal } from "../../contexts/terminal/Terminal";
+import StaffModal from "../Components/StaffCard/StaffModal";
+import UserIcon from "../../Components/UiElements/UserIcon/UserIcon";
+import toaster from "../../Util/toaster";
 
 const Staff = () => {
   useTitle("Staff");
   const [modal, setModal] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [users, setUsers] = useState([])
   useEffect(() => {
-    terminal.request({ name: 'allUser' })
+    terminal.request({ name: 'allUser', queries: { role: JSON.stringify(['admin', 'staff', 'super-admin']) } }).then(data => data?.docs?.length && setUsers(data.docs))
   }, [])
+
+  const handleLogout = () => {
+    terminal.request({ name: 'logOutStaff' }).then(data => data.status && toaster({ type: 'success', message: data.message }))
+  }
+  
   const submitHandler = () => {
     console.log("update clicked");
   };
@@ -41,32 +50,32 @@ const Staff = () => {
             <h3 className="font-semibold text-base p-5 shadow-sm">
               Account Owner
             </h3>
-            <div className="p-5 flex gap-4">
-              <div className="h-10 w-10 rounded-full flex items-center justify-center bg-primary">
-                <p className="">RF</p>
-              </div>
-              <div className="space-y-2">
-                <p className="text-[#202223] text-sm font-semibold">
-                  Robert Fox
-                </p>
-                <p className="text-[#6D7175] text-sm">Super Admin</p>
-              </div>
-            </div>
+            {
+              users.length > 0 && users?.filter(user => user.role === 'super-admin')?.map(user => <div className="p-5 flex gap-4">
+                <div className="h-10 w-10 rounded-full flex items-center justify-center bg-primary">
+                  <p className=""><UserIcon name={user.fullName} /></p>
+                </div>
+                <div className="space-y-2">
+                  <p className="text-[#202223] text-sm font-semibold">
+                    {user.fullName}
+                  </p>
+                  <p className="text-[#6D7175] text-sm">{user.role}</p>
+                </div>
+              </div>)
+            }
           </div>
           <div className="rounded-lg border border-[#0000001c] ">
             <div className="flex justify-between p-5 shadow-sm">
               <h3 className="font-semibold text-base  ">Staff Accounts</h3>
-              <button className="text-sm text-[#3E949A] font-normal">
+              <button onClick={handleLogout} className="text-sm text-[#3E949A] font-normal">
                 Log out all staff account
               </button>
             </div>
             <div className="grid divide-y max-h-[45vh] px-5 overflow-y-auto">
-              <StaffCard onClick={() => setModal(true)} />
-              <StaffCard onClick={() => setModal(true)} />
-              <StaffCard onClick={() => setModal(true)} />
-              <StaffCard onClick={() => setModal(true)} />
-              <StaffCard onClick={() => setModal(true)} />
-              <StaffCard onClick={() => setModal(true)} />
+              {
+                users.length > 0 && users?.filter(user => user.role !== 'super-admin')?.map(user =>
+                  <StaffCard user={user} onClick={() => setModal(true)} />)
+              }
             </div>
           </div>
         </div>
@@ -117,61 +126,7 @@ const Staff = () => {
         </div>
       </div>
       <Modal show={modal} onClose={() => setModal(false)}>
-        <div className="shadow-sm pb-5">
-          <h3 className="font-semibold ">User Access</h3>
-        </div>
-        <div className="shadow-sm">
-          {/* <StaffCard /> */}
-        </div>
-        <div className="p-5 grid gap-4 items-start">
-          <div className="space-x-2">
-            <input
-              className="accent-yellow-500"
-              type="checkbox"
-              name=""
-              id=""
-            />
-            <label htmlFor="" className="text-[#4F4F4F] font-normal">
-              Support ticket / life chat
-            </label>
-          </div>
-          <div className="space-x-2">
-            <input
-              className="accent-yellow-500"
-              type="checkbox"
-              name=""
-              id=""
-            />
-            <label htmlFor="" className="text-[#4F4F4F] font-normal">
-              Product upload and edit
-            </label>
-          </div>
-          <div className="space-x-2">
-            <input
-              className="accent-yellow-500"
-              type="checkbox"
-              name=""
-              id=""
-            />
-            <label htmlFor="" className="text-[#4F4F4F] font-normal">
-              Order management
-            </label>
-          </div>
-          <div className="space-x-2">
-            <input
-              className="accent-yellow-500"
-              type="checkbox"
-              name=""
-              id=""
-            />
-            <label htmlFor="" className="text-[#4F4F4F] font-normal">
-              Request management
-            </label>
-          </div>
-          <div className="text-end">
-            <Button style="green">Save & Exit</Button>
-          </div>
-        </div>
+        <StaffModal setModal={setModal} />
       </Modal>
     </div>
   );

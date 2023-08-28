@@ -164,5 +164,12 @@ export const user = {
             raw: "A raw example of payload: {newpassword:123456}",
             newpassword: "Please provide newpassword"
         }
-    }
+    },
+    logOutStaff: {
+        method: "GET",
+        uri: "user/logoutall",
+        suggestions: {
+            raw: "A raw example of payload: {user/logoutall}",
+        }
+    },
 }

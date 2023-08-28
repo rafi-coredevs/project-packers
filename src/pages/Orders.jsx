@@ -80,7 +80,7 @@ const Orders = () => {
   },[])
   return (
     <>
-      <Breadcrumb />
+      <Breadcrumb title={active} />
       <main>
         <div className="container mx-auto p-5 sm:p-0 overflow-hidden">
           <div className="grid grid-cols-5 sm:mt-[60px] sm:mb-[160px] mb-5 gap-[30px]">
@@ -95,7 +95,7 @@ const Orders = () => {
                   <span className="hidden sm:block">Orders</span>
                 </button>
                 <button
-                  onClick={() => setActive("account")}
+                  onClick={() => setActive("profile")}
                   className={`py-3 px-8 flex  gap-[10px] w-full rounded-full hover:bg-primary ${active === "account" ? "bg-primary" : "bg-white border"
                     }`}
                 >

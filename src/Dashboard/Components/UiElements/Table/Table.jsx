@@ -69,7 +69,6 @@ const Table = ({ data, paginate }) => {
     console.log(id);
   };
 
-  console.log(data);
   return (
     <div className='relative overflow-x-auto'>
       <table className='w-full'>

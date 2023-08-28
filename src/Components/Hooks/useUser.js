@@ -29,6 +29,9 @@ const useUser = () => {
 	const fetchUser = () => {
 		terminal.request({ name: 'fetchUser' }).then((data) => {
 			if (data.id) {
+				if (data.role === 'staff' || data.role === 'admin') {
+					!data.loggedin && Logout()
+				}
 				setUser(data);
 				terminal.socket.connect();
 			} else {

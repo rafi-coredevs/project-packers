@@ -2,10 +2,9 @@ import { useEffect, useState } from "react";
 import Breadcrumb from "../Components/UiElements/Breadcrumb/Breadcrumb";
 import { LazyProductCard, ProductCard } from "../Components/UiElements/ProductCard/ProductCard";
 import Category from "../Components/UiElements/Category/Category";
-import Paginate from "../Components/UiElements/Paginate/Paginate";
 import { terminal } from "../contexts/terminal/Terminal";
 import { useTitle } from "../Components/Hooks/useTitle";
-import ProtectedRoute from "../routes/ProtectedRoute";
+import Pagination from "../Components/UiElements/Paginate/Pagination";
 
 const Shop = () => {
   useTitle("Trending Items");
@@ -13,6 +12,7 @@ const Shop = () => {
   const [categories, setCategories] = useState(null)
   const [loading, setLoading] = useState(true);
   const [query, setQuery] = useState(null);
+  const [page, setPage] = useState(1);
 
 
   useEffect(() => {
@@ -26,7 +26,10 @@ const Shop = () => {
         setCategories(res)
       })
   }, []);
-
+useEffect(()=>{
+  setLoading(true);
+  fetchdata(page)
+},[page])
   const fetchdata = (page = 1) => {
     terminal.request({ name: 'allProduct', queries: { page: page, limit: 9, ...query } })
       .then(res => {
@@ -36,11 +39,6 @@ const Shop = () => {
       })
 
   }
-  const handlePagination = (page) => {
-    if (page !== data.page) {
-      fetchdata(page);
-    }
-  };
 
   const refatch = (data) => {
     setQuery(data);
@@ -87,13 +85,8 @@ const Shop = () => {
                   </div>
                 </div>
               )}
-              <div className="w-full flex justify-center">
-                <Paginate
-                  // totalPage={data?.totalPages}
-                  // onPageChange={handlePagination}
-                  totalPage={20 }
-                  onPageChange={(v)=> console.log(v)}
-                />
+               <div className={`w-full  justify-center ${data?.totalPages > 1 ? "flex" : "hidden"}`}>
+                <Pagination pageLimit={data?.totalPages} page={page} setPage={setPage} />
               </div>
             </div>
           </div>

@@ -16,11 +16,13 @@ import sort from "../../../assets/icons/cd-arrow-data-transfer-vertical-round.sv
 import { useEffect, useState } from "react";
 import { terminal } from "../../../contexts/terminal/Terminal";
 import toaster from "../../../Util/toaster";
+import CustomSelect from "../../../Components/UiElements/Input/CustomSelect";
 
 const MainCategory = () => {
   const [categories, setCategories] = useState([]);
   const[selected,setSelected]= useState(null);
-  const [isActive, setIsActive]= useState(true)
+  const [isActive, setIsActive]= useState(true);
+  const [dropdown, setDropdown] = useState({name:'Select', value:''})
   useEffect(()=>{
     fetchdata();
 
@@ -111,17 +113,9 @@ const MainCategory = () => {
             </h2>
             <div className="border border-[#0000001c] rounded-lg p-3 grid gap-3">
               <label className="text-[#475569] text-sm">Parent Category</label>
-              <select
-                className="bg-transparent border-[1px] w-full outline-none px-3 py-2 rounded-lg"
-                name="id"
-                onChange={(e) =>categoryHandler( e.target.value)} value={selected?.id || ''}>
-                <option disabled value=''>Select</option>
-                {categories.map((chat, i) => (
-                  <option className="" key={i} value={chat.id}>
-                    {chat.name}
-                  </option>
-                ))}
-              </select>
+          
+
+              <CustomSelect value={selected?.name} options={categories} onChange={categoryHandler} />
 
               <Input
                 styles="basic"
