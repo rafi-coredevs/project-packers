@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import Breadcrumb from "../Components/UiElements/Breadcrumb/Breadcrumb";
 import { LazyProductCard, ProductCard } from "../Components/UiElements/ProductCard/ProductCard";
 import Category from "../Components/UiElements/Category/Category";
-import Paginate from "../Components/UiElements/Paginate/Paginate";
 import { terminal } from "../contexts/terminal/Terminal";
 import { useTitle } from "../Components/Hooks/useTitle";
 import Pagination from "../Components/UiElements/Paginate/Pagination";
