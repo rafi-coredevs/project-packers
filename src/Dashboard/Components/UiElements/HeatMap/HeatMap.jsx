@@ -19,7 +19,8 @@ const HeatMap = () => {
     },
     plotOptions: {
       heatmap: {
-        radius: 12,
+        radius: 10,
+        
       },
     },
     colors: ["#3E949A"],
@@ -32,12 +33,13 @@ const HeatMap = () => {
       labels: {
         show: true,
       },
+    
     },
     grid: {
       show: true,
       borderColor: "#ffffff",
       strokeDashArray: 0,
-      position: "back",
+      position:"back",
       xaxis: {
         lines: {
           show: true,
@@ -60,7 +62,7 @@ const HeatMap = () => {
         top: 0,
         right: 0,
         bottom: 0,
-        left: 0,
+        left: 15,
       },
     },
   };
@@ -77,7 +79,7 @@ const HeatMap = () => {
         series={heatMap}
         type="heatmap"
         height={400}
-        width={325}
+        width={350}
       />
     </div>
   );

@@ -49,8 +49,8 @@ const Blog = () => {
             </>
           )}
         </div>
-        <div className="flex justify-center my-12">
-          <Pagination page={1} pageLimit={20} setPage={setPage} />
+        <div className={ `justify-center my-12 ${5 > 1 ? "flex" : "hidden"}`}>
+          <Pagination page={page} pageLimit={20} setPage={setPage} />
         </div>
       </div>
     </>

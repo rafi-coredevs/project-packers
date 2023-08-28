@@ -85,7 +85,7 @@ useEffect(()=>{
                   </div>
                 </div>
               )}
-              <div className="w-full flex justify-center">
+               <div className={`w-full  justify-center ${data?.totalPages > 1 ? "flex" : "hidden"}`}>
                 <Pagination pageLimit={data?.totalPages} page={page} setPage={setPage} />
               </div>
             </div>
