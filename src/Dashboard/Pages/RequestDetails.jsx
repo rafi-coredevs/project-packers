@@ -10,6 +10,15 @@ import { useTitle } from "../../Components/Hooks/useTitle";
 const RequestDetails = () => {
   useTitle("Request Detail");
   const { requestId } = useParams();
+
+
+
+
+  
+
+
+
+
   const updateHandler = () => {
     console.log("update clicked");
   };
@@ -46,7 +55,7 @@ const RequestDetails = () => {
               <Input styles="quantity" type="number" />
             </div>
             <div className="">
-              <ImageUploader />
+              {/* <ImageUploader /> */}
             </div>
             <div className="grid gap-3">
               <div className="flex justify-between items-center">
