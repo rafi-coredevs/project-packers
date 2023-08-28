@@ -74,7 +74,7 @@ const Messages = ({ activeChat, chatCardHandler }) => {
                 </div>
             </div>
             <div className="px-8 py-2 relative h-[calc(100vh-215px)]  w-full">
-                <div className="h-full overflow-y-auto flex  flex-col-reverse gap-12 pb-2">
+                <div className="h-full overflow-y-auto flex  flex-col-reverse gap-12 pb-2 scrollbar">
                     {
                         messages?.length > 0 && messages.map((message) =>
                             <ChatBubble

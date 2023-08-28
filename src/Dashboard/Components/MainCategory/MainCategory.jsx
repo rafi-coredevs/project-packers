@@ -20,9 +20,8 @@ import CustomSelect from "../../../Components/UiElements/Input/CustomSelect";
 
 const MainCategory = () => {
   const [categories, setCategories] = useState([]);
-  const[selected,setSelected]= useState(null);
+  const[selected,setSelected]= useState({name:'Select', value:''});
   const [isActive, setIsActive]= useState(true);
-  const [dropdown, setDropdown] = useState({name:'Select', value:''})
   useEffect(()=>{
     fetchdata();
 
