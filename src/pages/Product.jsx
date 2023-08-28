@@ -6,11 +6,13 @@ import GalleryCard from "../Components/UiElements/GalleryCard/GalleryCard";
 import { useEffect, useState } from "react";
 import { terminal } from "../contexts/terminal/Terminal";
 import { useTitle } from "../Components/Hooks/useTitle";
+import toaster from "../Util/toaster";
+import { useCartCtx } from "../contexts/cart/CartContext";
 
 const Product = () => {
   useTitle("Products");
   const product = useLoaderData();
-
+  const { getCart } = useCartCtx()
   const [relatedProduct, setrelatedProduct] = useState([]);
   useEffect(() => {
     terminal
@@ -25,8 +27,10 @@ const Product = () => {
         setrelatedProduct(res.docs.filter((item) => item.id !== product.id));
       });
   }, [product]);
-  console.log(relatedProduct);
-  const requsetItemHandler = () => {};
+  const requsetItemHandler = () => {
+    terminal.request({ name: 'registerCart', body: { products: [{ product: product.id, productQuantity: 1 }] } }).then(data => data.id ? toaster({ type: 'success', message: 'Added to cart' }) : toaster({ type: 'error', message: data.message || 'An error occured. Please try again later' }))
+    getCart()
+  };
 
   return (
     <>

@@ -1,24 +1,27 @@
 
 import dashboard from '../../../assets/icons/cd-dashboard.svg';
+import dashboardWhite from '../../../assets/icons/Group-w.svg';
 import order from '../../../assets/icons/cd-order.svg';
+import orderWhite from '../../../assets/icons/cd-order-w.svg';
 import products from '../../../assets/icons/cd-products.svg';
 import userList from '../../../assets/icons/cd-user-list.svg';
+import userListWhite from '../../../assets/icons/cd-user-list-w.svg';
 import chat from '../../../assets/icons/cd-chat.svg';
+import chatWhite from '../../../assets/icons/cd-chat-w.svg';
 import NavDropdown from './NavDropdown';
 import NavNoDropdown from './NavNoDropdown';
 /**
  * returns JSX for admin sidebar
  * collapsible and non-collapsible
- * navlist hold the structure for the admin sidebar 
+ * nav list hold the structure for the admin sidebar 
  */
 const DDNav = () => {
-
-
     const navList = [
         {
             id: 1,
             title: 'Dashboard',
             icon: dashboard,
+            iconWhite: dashboardWhite,
             to: '/admin',
             end: true,
             isDropdown: null
@@ -71,6 +74,7 @@ const DDNav = () => {
             id: 4,
             title: 'Customers',
             icon: userList,
+            iconWhite: userListWhite,
             to: '/admin/customers',
             end: false,
             isDropdown: null
@@ -79,6 +83,7 @@ const DDNav = () => {
             id: 5,
             title: 'Support',
             icon: chat,
+            iconWhite: chatWhite,
             to: '/admin/support',
             end: false,
             isDropdown: null
@@ -87,6 +92,7 @@ const DDNav = () => {
             id: 6,
             title: 'Staff',
             icon: order,
+            iconWhite: orderWhite,
             to: '/admin/staff',
             end: false,
             isDropdown: null

@@ -21,7 +21,20 @@ const NavNoDropdown = ({ list }) => {
         className={({ isActive }) => isActive ? 'bg-secondary text-white w-full rounded-lg px-2' : 'w-full px-2'}
       >
         <div className='flex items-center gap-2 py-2'>
-          <img src={list.icon} alt={list.icon} />
+          <NavLink
+            to={list.to}
+            end={list.end && true}
+            className={({ isActive }) => isActive ? 'hidden' : 'block'}
+          >
+            <img src={list.icon} alt={list.icon} />
+          </NavLink>
+          <NavLink
+            to={list.to}
+            end={list.end && true}
+            className={({ isActive }) => isActive ? 'block' : 'hidden'}
+          >
+            <img src={list.iconWhite} alt={list.iconWhite} />
+          </NavLink>
           <p>{list.title}</p>
         </div>
       </NavLink>

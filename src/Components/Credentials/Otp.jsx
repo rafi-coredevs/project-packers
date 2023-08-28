@@ -28,23 +28,13 @@ const Otp = ({ data, getResponse }) => {
 		onSubmit: (values) => {
 			setIsSubmit(true);
 			const otp = Object.values(values).join('');
-			// postApi('/user/otp-verify', { token: data?.data?.token, otp })
-			// 	.then((res) => {
-			// 		getResponse({
-			// 			component: 'newPass',
-			// 			...res,
-			// 			otp,
-			// 			email: data?.email,
-			// 		});
-			// 	})
-
-      terminal
-				.request({ name: 'verifyOTP', body: { otp, data} })
+			terminal
+				.request({ name: 'verifyOTP', body: { otp, token:data.token } })
 				.then((res) => {
 					if (res.status === false) {
 						toaster({ type: 'error', message: res.message });
 					} else {
-						getResponse({ component: 'newPass', data });
+						getResponse({ component: 'newPass', data, otp: otp });
 					}
 				})
 				.finally(() => {

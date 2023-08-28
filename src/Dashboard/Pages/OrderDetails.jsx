@@ -7,10 +7,22 @@ import search from "../../assets/icons/cd-search2.svg";
 import remove from "../../assets/icons/cd-cancel.svg";
 import { products } from "../../Store/Data";
 import { useTitle } from "../../Components/Hooks/useTitle";
+import { terminal } from "../../contexts/terminal/Terminal";
+import { useEffect, useState } from "react";
+import toaster from "../../Util/toaster";
+import { BASE_URL } from "../../Util/apiCall";
 // 
 const OrderDetails = () => {
   useTitle("Order Details");
   const { orderId } = useParams();
+  const [order,setOrder]=useState(null);
+  console.log(order);
+  useEffect(()=>{
+    fetchData();
+
+  },[]);
+ 
+  const fetchData= () => terminal.request({name: 'singleOrder', params: { id: orderId}}).then(res=>res.status===false? toaster({type: 'error', message: res.message}): setOrder(res))
   const updateHandler = () => {
     console.log("update clicked");
   };
@@ -57,31 +69,31 @@ const OrderDetails = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {products?.slice(0, 9).map((product) => {
+                  {order?.products.map((product) => {
                     return (
                       <tr
-                        key={product.id}
+                        key={product?.id}
                         className="border-t border-[#0000001c]"
                       >
                         <td className="py-2">
                           <div className="flex gap-2 items-center">
                             <img
                               className="w-8 h-8 rounded border-b border-[#0000001c]"
-                              src={product.thumbnail}
+                              src={BASE_URL+'/api/'+product?.product?.images[0]}
                               alt=""
                             />
                             <div className="">
-                              <p className="line-clamp-1">{product.title}</p>
+                              <p className="line-clamp-1">{product?.product?.name}</p>
                               <p className="text-[#475569] ">
-                                ৳{product.price.toFixed(2)}
+                                ৳{product?.product?.price?.toFixed(2)}
                               </p>
                             </div>
                           </div>
                         </td>
                         <td className="py-2">
-                          <Input styles="quantity" value={product.stock} />
+                          <Input styles="quantity" value={product?.productQuantity} />
                         </td>
-                        <td className="py-2"> ৳{product.price.toFixed(2)}</td>
+                        <td className="py-2"> ৳{(product?.product?.price?.toFixed(2)*(product?.productQuantity))}</td>
                         <td className="py-2 text-right">
                           <button
                             className="pe-3"
@@ -102,32 +114,39 @@ const OrderDetails = () => {
             <div className="grid gap-3">
               <div className="flex justify-between items-center">
                 <button className=" text-sm">Subtotal</button>
-                <p className="">৳{11}</p>
+                <p className="">৳{order?.products?.reduce((accumulator=0,product)=> accumulator+((product?.productQuantity)*(product?.product?.price)),0)}</p>
               </div>
               <div className="flex justify-between items-center">
                 <button className="text-emerald-500 underline text-sm">
-                  Add Discount
+                  Discount
                 </button>
-                <p className="">৳{11}</p>
+                <p className="">৳{order?.discountApplied?.amount || order?.discountApplied?.percentage? (order?.discountApplied?.percentage + ' %' ) : 0}</p>
               </div>
               <div className="flex justify-between items-center">
                 <button className="text-emerald-500 underline text-sm">
-                  Add Shipping
+                  Shipping
                 </button>
-                <p className="">{"-"}</p>
-                <p className="">৳{11}</p>
+                <p className="">{""}</p>
+                <p className="">৳{order?.insideDhaka?99:199}</p>
+              </div>
+              <div className="flex justify-between items-center">
+                <button className="text-emerald-500 underline text-sm">
+                  Packers Fee
+                </button>
+                <p className="">{""}</p>
+                <p className="">৳{order?.products?.reduce((accumulator=0,product)=> accumulator+((product?.productQuantity)*(product?.product?.fee)),0)}</p>
               </div>
               <div className="flex justify-between items-center">
                 <button className="text-emerald-500 underline text-sm">
                   Estimated Tax
                 </button>
 
-                <p className="text-">VAT{15}%</p>
-                <p className="">৳{11}</p>
+                
+                <p className="">৳{order?.products?.reduce((accumulator=0,product)=> accumulator+((product?.productQuantity)*(product?.product?.tax)),0)}</p>
               </div>
               <div className="flex justify-between items-center">
                 <p className="text-base font-semibold">Total</p>
-                <p className="text-lg font-semibold">৳ 16</p>
+                <p className="text-lg font-semibold">৳ {order?.total}</p>
               </div>
               <div className="py-5 flex gap-2 justify-end border-t border-[#0000001c] ">
                 <select
@@ -149,21 +168,21 @@ const OrderDetails = () => {
         </div>
         <div className="col-span-3 sm:col-span-1 h-fit grid gap-5 pb-3">
           <div className=" border border-[#0000001c] divide-y  rounded-lg ">
-            <SideCard types="customer" name="Ramjan Ali Anik" />
-            <SideCard types="contact" email="example@gamil.com" />
+            <SideCard types="customer" name={order?.user?.fullName || 'No Name'} />
+            <SideCard types="contact" email={order?.user?.email || 'No email'} phone={order?.user?.phone || 'No Phone'} />
             <SideCard
               types="address"
               title="Shipping Address"
-              address="No Address"
+              address={order?.shippingaddress?.address +', '+order?.shippingaddress?.area +', '+order?.shippingaddress?.city +', '+order?.shippingaddress?.zip }
             />
             <SideCard
               types="address"
               title="Billing Address"
-              address="No Address"
+              address={order?.shippingaddress?.address +', '+order?.shippingaddress?.area +', '+order?.shippingaddress?.city +', '+order?.shippingaddress?.zip }
             />
           </div>
           <div className=" border border-[#0000001c] divide-y  rounded-lg ">
-            <SideCard types="note" message="Hello world" />
+            <SideCard types="note" message={order?.instructions || "Not Available"} />
             
           </div>
         </div>
