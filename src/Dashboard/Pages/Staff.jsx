@@ -16,6 +16,7 @@ const Staff = () => {
   const [modal, setModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const [users, setUsers] = useState([])
+  const [user, setUser] = useState();
   useEffect(() => {
     terminal.request({ name: 'allUser', queries: { role: JSON.stringify(['admin', 'staff', 'super-admin']) } }).then(data => data?.docs?.length && setUsers(data.docs))
   }, [])
@@ -23,7 +24,7 @@ const Staff = () => {
   const handleLogout = () => {
     terminal.request({ name: 'logOutStaff' }).then(data => data.status && toaster({ type: 'success', message: data.message }))
   }
-  
+
   const submitHandler = () => {
     console.log("update clicked");
   };
@@ -74,7 +75,7 @@ const Staff = () => {
             <div className="grid divide-y max-h-[45vh] px-5 overflow-y-auto">
               {
                 users.length > 0 && users?.filter(user => user.role !== 'super-admin')?.map(user =>
-                  <StaffCard user={user} onClick={() => setModal(true)} />)
+                  <StaffCard user={user} setUser={setUser} onClick={() => setModal(true)} />)
               }
             </div>
           </div>
@@ -126,7 +127,7 @@ const Staff = () => {
         </div>
       </div>
       <Modal show={modal} onClose={() => setModal(false)}>
-        <StaffModal setModal={setModal} />
+        <StaffModal user={user} setModal={setModal} />
       </Modal>
     </div>
   );

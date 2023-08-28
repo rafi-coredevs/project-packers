@@ -6,13 +6,15 @@
 import UserIcon from "../../../Components/UiElements/UserIcon/UserIcon";
 import Input from "../UiElements/Input/Input";
 
-const StaffCard = ({ onClick, user }) => {
+const StaffCard = ({ onClick, user, setUser }) => {
   const totalaccess = ['support', 'product', 'order', 'request']
-
   return (
 
     <div
-      onClick={onClick}
+      onClick={() => {
+        onClick();
+        setUser(user)
+      }}
       className="py-5 flex justify-between items-center cursor-pointer"
     >
       <div className=" flex gap-4">

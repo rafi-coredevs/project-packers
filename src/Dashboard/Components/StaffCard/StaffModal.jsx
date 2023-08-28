@@ -1,8 +1,10 @@
 import React from 'react';
 import Input from '../UiElements/Input/Input';
 import Button from '../UiElements/Button/Button';
+import UserIcon from '../../../Components/UiElements/UserIcon/UserIcon';
 
-const StaffModal = ({ setModal }) => {
+const StaffModal = ({ setModal, user }) => {
+    const totalaccess = ['support', 'product', 'order', 'request']
     return (
         <>
             <div className="shadow-sm pb-5">
@@ -11,11 +13,11 @@ const StaffModal = ({ setModal }) => {
             <div className="shadow-sm py-5 flex justify-between items-center">
                 <div className=" flex gap-4">
                     <div className="h-10 w-10 rounded-full flex items-center justify-center bg-primary">
-                        <p className="">RF</p>
+                        <p className=""><UserIcon name={user.fullName} /></p>
                     </div>
                     <div className="space-y-2">
-                        <p className="text-[#202223] text-sm font-semibold">Robert Fox</p>
-                        <p className="text-[#6D7175] text-sm">Super Admin</p>
+                        <p className="text-[#202223] text-sm font-semibold">{user.fullName}</p>
+                        <p className="text-[#6D7175] text-sm">{user.access.length === totalaccess.length ? 'Full access' : user.access.length === 1 ? user.access : 'Limited access'}</p>
                     </div>
                 </div>
                 <Input
@@ -31,6 +33,7 @@ const StaffModal = ({ setModal }) => {
             <div className="p-5 grid gap-4 items-start">
                 <div className="space-x-2">
                     <input
+                        checked={user.access.includes('support')}
                         className="accent-yellow-500"
                         type="checkbox"
                         name=""
@@ -42,6 +45,7 @@ const StaffModal = ({ setModal }) => {
                 </div>
                 <div className="space-x-2">
                     <input
+                        checked={user.access.includes('product')}
                         className="accent-yellow-500"
                         type="checkbox"
                         name=""
@@ -53,6 +57,7 @@ const StaffModal = ({ setModal }) => {
                 </div>
                 <div className="space-x-2">
                     <input
+                        checked={user.access.includes('order')}
                         className="accent-yellow-500"
                         type="checkbox"
                         name=""
@@ -64,6 +69,7 @@ const StaffModal = ({ setModal }) => {
                 </div>
                 <div className="space-x-2">
                     <input
+                        checked={user.access.includes('request')}
                         className="accent-yellow-500"
                         type="checkbox"
                         name=""
