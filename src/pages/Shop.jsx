@@ -5,6 +5,7 @@ import Category from "../Components/UiElements/Category/Category";
 import Paginate from "../Components/UiElements/Paginate/Paginate";
 import { terminal } from "../contexts/terminal/Terminal";
 import { useTitle } from "../Components/Hooks/useTitle";
+import ProtectedRoute from "../routes/ProtectedRoute";
 
 const Shop = () => {
   useTitle("Trending Items");

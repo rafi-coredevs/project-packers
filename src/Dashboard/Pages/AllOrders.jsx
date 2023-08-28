@@ -132,12 +132,12 @@ const AllOrders = () => {
                 </button>
               </div>
             </div>
+          </div>
 
             <Table paginate={fetchData} modalHandler={modalHandler} data={tableData} />
           </div >
         </div>
       </div>
-    </div>
   );
 };
 
