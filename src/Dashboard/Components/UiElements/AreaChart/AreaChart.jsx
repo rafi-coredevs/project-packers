@@ -46,7 +46,8 @@ const AreaChart = ({ data }) => {
     },
     legend: {
       show: true,
-      position: "top",
+      position: 'top',
+      horizontalAlign: 'right',
     },
     stroke: {
       colors: ["#3E949A", "#F2C852"],
@@ -101,11 +102,11 @@ const AreaChart = ({ data }) => {
   ];
   return (
     <div>
-      <div className="flex justify-between relative">
-        <h4 className="text-base font-semibold text-secondary mb-5">
+      <div className="">
+        <h4 className="text-base font-semibold text-secondary pt-5">
           Request vs Order
         </h4>
-        <div className="bg-[#CFF6EF] px-2 py-1 absolute right-0 top-0  rounded">
+        {/* <div className="bg-[#CFF6EF] px-2 py-1 absolute right-0 top-0  rounded">
           <div className="">
             <span className=""></span>
           </div>
@@ -118,7 +119,7 @@ const AreaChart = ({ data }) => {
             <option value="monthly">Monthly</option>
             <option value="weekly">Weekly</option>
           </select>
-        </div>
+        </div> */}
       </div>
       <ReactApexChart
         options={options}

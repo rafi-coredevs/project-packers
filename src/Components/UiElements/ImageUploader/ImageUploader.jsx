@@ -51,7 +51,7 @@ const ImageUploader = ({ formikProps, className }) => {
 
   return (
     <>
-      <div className="p-3 rounded-lg ">
+      <div className="p-2 rounded-lg h-full">
         <div className="flex items-center gap-3">
           <div className="flex max-w-[140px] md:max-w-[400px]  overflow-x-scroll overscroll-y-none">
             {/* Preview Images */}
