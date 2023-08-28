@@ -10,11 +10,16 @@
 export default function prepareData(api, type = 'params') {
     const keys = Object.keys(api[type] || {});
     if (keys.length) {
-        keys.some(k => {
-            if (api[type][k] === '' || api[type][k] === undefined) throw new Error(`${api.suggestions[k] || ''}\n${api.suggestions.raw || ''}`)
-        });
-    };
 
+        keys.some(k => {
+            if (
+                !['null', 'boolean', 'string', 'number'].includes(typeof api[type][k]) ||
+                (typeof api[type][k] === 'string' && api[type][k].length === 0)
+            ) {
+                throw new Error(`${api.suggestions[k] || ''}\n${api.suggestions.raw || ''}`);
+            }
+        });
+    }
 
     switch (type) {
         case 'params': {
