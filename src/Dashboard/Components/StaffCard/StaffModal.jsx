@@ -1,10 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Input from '../UiElements/Input/Input';
 import Button from '../UiElements/Button/Button';
 import UserIcon from '../../../Components/UiElements/UserIcon/UserIcon';
 
 const StaffModal = ({ setModal, user }) => {
     const totalaccess = ['support', 'product', 'order', 'request']
+    const [access, setAccess] = useState(user?.access)
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log(e.target);
+    }
     return (
         <>
             <div className="shadow-sm pb-5">
@@ -22,6 +27,7 @@ const StaffModal = ({ setModal, user }) => {
                 </div>
                 <Input
                     styles="select"
+                    change={(e) => console.log(e.target.value)}
                     option={[
                         { name: "Admin", value: "admin" },
                         { name: "Super Admin", value: "super-admin" },
@@ -30,10 +36,18 @@ const StaffModal = ({ setModal, user }) => {
                     ]}
                 />
             </div>
-            <div className="p-5 grid gap-4 items-start">
+            <form onSubmit={handleSubmit} className="p-5 grid gap-4 items-start">
                 <div className="space-x-2">
                     <input
-                        checked={user.access.includes('support')}
+                        defaultChecked={access.includes('support')}
+                        onChange={(e) => {
+                            if (e.target.checked) {
+                                setAccess(prev => [...prev, 'support'])
+                            }
+                            else {
+                                setAccess(prev => prev.map(prev => prev !== 'support'))
+                            }
+                        }}
                         className="accent-yellow-500"
                         type="checkbox"
                         name=""
@@ -45,10 +59,10 @@ const StaffModal = ({ setModal, user }) => {
                 </div>
                 <div className="space-x-2">
                     <input
-                        checked={user.access.includes('product')}
+                        defaultChecked={access.includes('product')}
                         className="accent-yellow-500"
                         type="checkbox"
-                        name=""
+                        name="product"
                         id=""
                     />
                     <label htmlFor="" className="text-[#4F4F4F] font-normal">
@@ -57,7 +71,7 @@ const StaffModal = ({ setModal, user }) => {
                 </div>
                 <div className="space-x-2">
                     <input
-                        checked={user.access.includes('order')}
+                        defaultChecked={access.includes('order')}
                         className="accent-yellow-500"
                         type="checkbox"
                         name=""
@@ -69,7 +83,7 @@ const StaffModal = ({ setModal, user }) => {
                 </div>
                 <div className="space-x-2">
                     <input
-                        checked={user.access.includes('request')}
+                        defaultChecked={access.includes('request')}
                         className="accent-yellow-500"
                         type="checkbox"
                         name=""
@@ -80,9 +94,11 @@ const StaffModal = ({ setModal, user }) => {
                     </label>
                 </div>
                 <div className="text-end">
-                    <Button onClick={() => { setModal(false) }} style="green">Save & Exit</Button>
+                    <Button type='submit'
+                        // onClick={() => { setModal(false) }}
+                        style="green">Save & Exit</Button>
                 </div>
-            </div>
+            </form>
         </>
     );
 };
