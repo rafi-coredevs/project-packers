@@ -21,12 +21,18 @@ export const changePassword = object({
 		.required('Password Can not be Empty'),
 });
 
-
 export const signupSchema = object({
 	fullName: string().required(),
 	email: string().email().required('Please Enter Your Email Address.'),
 	phone: string().min(6, 'Invalid Phone Number').max(20).required(),
-	password: string().min(6).required('Password Can not be Empty'),
+	password: string()
+		.min(8)
+		.max(16)
+		.matches(
+			/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$%^&+=!])(?=.{8,16}).*$/,
+			'required A-Z, a-z, 0-9, special character',
+		)
+		.required('Password Can not be Empty'),
 });
 
 export const profileSchema = object({
