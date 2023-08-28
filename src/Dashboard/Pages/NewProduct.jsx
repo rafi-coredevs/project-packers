@@ -161,7 +161,7 @@ const NewProduct = () => {
             <h2 className="text-base text-secondary font-semibold">Category</h2>
             <div className="border border-[#0000001c] rounded-lg p-3 grid gap-3">
               <label className="text-[#475569] text-sm">Parent Category</label>
-        
+
               <select
                 className={`bg-transparent border-[1px] w-full outline-none px-3 py-2 rounded-lg appearance-none ${categoryError.category ? "border-[red]" : ""
                   } `}
@@ -217,7 +217,7 @@ const NewProduct = () => {
             <h2 className="text-base text-secondary font-semibold">
               Product Images
             </h2>
-            <div className="border border-[#0000001c] rounded-lg p-3">
+            <div className="border border-[#0000001c] rounded-lg p-3 min-h-[12rem]">
               <ImageUploader formikProps={productForm} />
             </div>
             <h2 className="text-base text-secondary font-semibold">Pricing</h2>
