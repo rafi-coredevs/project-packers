@@ -95,7 +95,7 @@ export const router = createBrowserRouter([
         element: <FaqPage />,
       },
       {
-        path: "account",
+        path: "/account",
         element: <Orders />,
       },
       {

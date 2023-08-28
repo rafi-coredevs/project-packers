@@ -43,7 +43,6 @@ const Table = ({data, paginate, modalHandler}) => {
 
   }
 
-  console.log(data);
   return (
     <div className="relative overflow-x-auto">
       <table className='w-full'>
