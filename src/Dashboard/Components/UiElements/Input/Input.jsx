@@ -39,6 +39,7 @@ const Input = ({
   required,
   disabled,
   option = [],
+  className
 }) => {
   const clickHandler = (value) => {
     console.log(value);
@@ -168,7 +169,7 @@ const Input = ({
       >
         <div className="">{children}</div>
         <input
-          className="bg-transparent outline-none h-full w-full"
+          className={`bg-transparent outline-none h-full w-full ${className}`}
           type={type}
           id={name}
           name={name}

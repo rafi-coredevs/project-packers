@@ -69,10 +69,11 @@ const Header = () => {
             Packers
           </div>
         </Link>
-        <div className="w-full max-w-[650px]">
+        <div className="w-full max-w-[650px] rounded">
           <Input
             type="text"
             placeholder="Search"
+            className={'placeholder:text-black'}
           >
             <img src={search} alt="" />
           </Input>
