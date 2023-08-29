@@ -204,9 +204,11 @@ const Header = ({ sideBar, state }) => {
 						/>
 					</div>
 					<div className='flex gap-2 items-center '>
-						<Input border placeholder='Paste URL here...'>
-							<img src={search} alt='' />
-						</Input>
+						<form onSubmit={submitHandler}>
+							<Input border placeholder='Paste URL here...'>
+								<img src={search} alt='' />
+							</Input>
+						</form>
 						{user ? (
 							<Link to='/cart'>
 								<Icon icon={cartIcon} />
@@ -225,7 +227,11 @@ const Header = ({ sideBar, state }) => {
 			<LoginModal show={loginModal} onClose={() => setLoginModal(false)} />
 			<Modal show={isOpen} onClose={handleOnClose}>
 				{modalState === 'request' && (
-					<RequestModal setIsOpen={setIsOpen} url={url} confirmSubmit={modalSbmitHandler} />
+					<RequestModal
+						setIsOpen={setIsOpen}
+						url={url}
+						confirmSubmit={modalSbmitHandler}
+					/>
 				)}
 				{modalState === 'success' && (
 					<SuccessModal setUrl={setUrl} confirmSubmit={modalSbmitHandler} />
