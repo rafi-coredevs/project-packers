@@ -74,9 +74,6 @@ const Orders = () => {
   };
 
   useEffect(() => {
-    console.log(profileForm.errors);
-  }, [profileForm])
-  useEffect(() => {
     terminal.request({ name: 'userOrder', queries: { sortBy: 'date:desc' } }).then(data => data.docs && setOrder(data.docs))
   }, [])
   return (
@@ -97,7 +94,7 @@ const Orders = () => {
                 </button>
                 <button
                   onClick={() => setActive("profile")}
-                  className={`py-3 px-8 flex  gap-[10px] w-full rounded-full hover:bg-primary ${active === "account" ? "bg-primary" : "bg-white border"
+                  className={`py-3 px-8 flex  gap-[10px] w-full rounded-full hover:bg-primary ${active === "profile" ? "bg-primary" : "bg-white border"
                     }`}
                 >
                   <img src={profile} />

@@ -130,7 +130,7 @@ const SupportModal = () => {
                 Type of support request
               </label>
               <select
-                defaultValue=""
+                
                 className="bg-white outline-none px-5 py-2 rounded-full select"
                 name="type"
                 value={supportForm.values.type}
@@ -138,7 +138,7 @@ const SupportModal = () => {
                 onBlur={supportForm.handleBlur}
                 id=""
               >
-                <option value="">-</option>
+                <option >-</option>
                 <option value="account" className="hover:bg-red-500">
                   Account
                 </option>

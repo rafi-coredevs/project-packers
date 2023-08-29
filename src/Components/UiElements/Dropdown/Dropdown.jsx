@@ -2,11 +2,13 @@ import icon from "../../../assets/icons/cd-arrow-right.svg";
 import acc from "../../../assets/icons/Avatar.svg";
 import prod from '../../../assets/icons/cd-products.svg'
 import minor from "../../../assets/icons/cd-select_minor.svg";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useRef } from "react";
 import formatTimeAgo from "../../../Util/formatTimeAgo";
 
 const Dropdown = ({ isOpen, onClick, type, title, data }) => {
+  
+  const navidate = useNavigate()
   const ref = useRef(null);
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -23,20 +25,22 @@ const Dropdown = ({ isOpen, onClick, type, title, data }) => {
   }, [onClick]);
 
   const clickHandler = (v) => {
-    console.log(v);
+    type === "notification" ? navidate('/notification') : navidate('/cart')
+    onClick(false)
   };
 
   if (type === "notification") {
     return (
       <div ref={ref}>
         {isOpen && (
-          <div className="bg-white p-5 rounded-xl w-[340px] absolute top-[70px] right-0">
+          <div className="bg-white p-5 rounded-xl w-[21.25rem] absolute top-[70px] right-0">
             <div className="flex justify-between pb-3">
               <p className="font-sans text-sm font-semibold text-secondary">
                 {title || "Loading..."}
               </p>
-
+              <Link to="/notification">
               <img src={icon} alt="" />
+              </Link>
             </div>
             <div className="overflow-y-auto scrollbar max-h-[352px]">
               {data ? (
