@@ -27,7 +27,7 @@ const Orders = () => {
   }, [user]);
   const profileForm = useFormik({
     initialValues: {
-      fullName:  '',
+      fullName: '',
       email: '',
       phone: '',
       currentPassword: "",
@@ -76,8 +76,8 @@ const Orders = () => {
   };
 
   useEffect(() => {
-    terminal.request({ name: 'userOrder' }).then(data => data.docs && setOrder(data.docs))
-  },[])
+    terminal.request({ name: 'userOrder', queries: { sortBy: 'date:desc' } }).then(data => data.docs && setOrder(data.docs))
+  }, [])
   return (
     <>
       <Breadcrumb title={active} />
