@@ -75,3 +75,6 @@ select option:focus {
 select option:hover {
 	background-color: yellow;
 }
+textarea{
+	resize: none !important;
+}

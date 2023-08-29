@@ -38,7 +38,7 @@ const Header = ({ sideBar, state }) => {
 	const { user,Logout } = useUserCtx();
 	const navigate = useNavigate();
 	const [cartData, setCartData] = useState([]);
-	const { cart, getCart } = useCart();
+	const { cart } = useCart();
 
 	const [isOpen, setIsOpen] = useState(false);
 	const [modalState, setModalState] = useState('request');

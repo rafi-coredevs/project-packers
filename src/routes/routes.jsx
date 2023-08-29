@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router-dom";
+import { createBrowserRouter, redirect } from "react-router-dom";
 import Main from "../Layout/Main";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
@@ -96,7 +96,8 @@ export const router = createBrowserRouter([
       },
       {
         path: "/account",
-        element: <Orders />,
+        loader:  () => redirect('/account/orders')
+        
       },
       {
         path: "account/orders",
