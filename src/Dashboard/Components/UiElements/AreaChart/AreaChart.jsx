@@ -3,6 +3,9 @@
  * @params {array} args.data - 
  */
 import ReactApexChart from "react-apexcharts";
+import cd_information from '../../../../assets/icons/cd-information-circle.svg'
+
+
 const MONTH = [
   "Jan",
   "Feb",
@@ -47,7 +50,8 @@ const AreaChart = ({ data }) => {
     legend: {
       show: true,
       position: 'top',
-      horizontalAlign: 'right',
+      horizontalAlign: 'center',
+
     },
     stroke: {
       colors: ["#3E949A", "#F2C852"],
@@ -101,25 +105,28 @@ const AreaChart = ({ data }) => {
     },
   ];
   return (
-    <div>
-      <div className="">
-        <h4 className="text-base font-semibold text-secondary pt-5">
-          Request vs Order
+    <div className="relative">
+      <div className='w-full absolute flex justify-between'>
+        <h4 className="text-base font-semibold text-secondary flex items-center gap-2">
+          <span>Request vs Order</span>
+          <img src={cd_information} alt="cd_information" />
         </h4>
-        {/* <div className="bg-[#CFF6EF] px-2 py-1 absolute right-0 top-0  rounded">
-          <div className="">
-            <span className=""></span>
+        <div>
+          <div className="bg-[#CFF6EF] px-2 py-1 absolute right-0 top-0  rounded">
+            <div className="">
+              <span className=""></span>
+            </div>
+            <select
+              className="text-xs text-secondary border-none bg-[#CFF6EF] outline-none rounded-md py-0 px-0"
+              onChange={onChangeHandler}
+              name="category"
+              id="category"
+            >
+              <option value="monthly">Monthly</option>
+              <option value="weekly">Weekly</option>
+            </select>
           </div>
-          <select
-            className="text-xs text-secondary border-none bg-[#CFF6EF] outline-none rounded-md py-0 px-0"
-            onChange={onChangeHandler}
-            name="category"
-            id="category"
-          >
-            <option value="monthly">Monthly</option>
-            <option value="weekly">Weekly</option>
-          </select>
-        </div> */}
+        </div>
       </div>
       <ReactApexChart
         options={options}
