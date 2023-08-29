@@ -9,7 +9,8 @@ import CartItem from "../Components/UiElements/CartItem/CartItem";
 import Input from "../Components/UiElements/Input/Input";
 import PriceCard from "../Components/PriceCard/PriceCard";
 import Button from "../Components/UiElements/Buttons/Button";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import emptyCart from "../assets/empty-cart.png"
 
 const Cart = () => {
   const navigate = useNavigate();
@@ -19,13 +20,13 @@ const Cart = () => {
   let totalPrice = 0;
   const [price, setPrice] = useState();
   const [discount, setDiscount] = useState();
-  const { cart, setCart } = useCartCtx();
-
+  const { cart, setCart, getCart } = useCartCtx();
   useEffect(() => {
+    getCart()
     if (cart?.id) {
       if (cart.discountApplied) setDiscount(cart.discountApplied);
     }
-  }, [cart]);
+  }, []);
 
   const updateQuantity = useCallback((id, quantity) => {
     setCart((prevCart) => {
@@ -138,7 +139,7 @@ const Cart = () => {
         ...(requests.length && { requests }),
       },
     });
-    if (data.id) { setCart(data); toaster({ type: 'success', message: 'Cart updated' }) }
+    if (data.id) { setCart(data); toaster({ type: 'success', message: 'Cart updated' }); getCart() }
     else {
       toaster({ type: 'error', message: data.message })
     }
@@ -150,10 +151,16 @@ const Cart = () => {
   return (
     <>
       <Breadcrumb />
-      <div className="container mx-auto py-12 ">
+      <div className="container mx-auto py-12 px-2 md:px-0">
         {
-          cart?.products?.length < 1 && cart?.requests?.length < 1 ? <div className="min-h-[50vh] flex justify-center items-center border-[1px] rounded ">
-            <p className="text-2xl font-bold">Current there are no items in your cart</p>
+          cart?.products?.length < 1 && cart?.requests?.length < 1 ? <div className="min-h-[50vh] flex flex-col space-y-4 justify-center items-center border-[1px] rounded p-4">
+            <img className="h-40 md:h-72" src={emptyCart} />
+            <p className="text-center sm:text-2xl font-bold">Currently there are no items in your cart</p>
+            <Link to={'/shop'}>
+              <Button type="primary" full className='px-20'>
+                Keep Shopping
+              </Button>
+            </Link>
           </div> :
             <div className="grid grid-cols-5 gap-8">
               <div className="col-span-5 sm:col-span-3 px-5 sm:px-0">

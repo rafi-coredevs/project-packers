@@ -409,7 +409,7 @@ const NewProduct = () => {
 									onClick={() => {
 										handleCheck(), setBtnType('active');
 									}}
-									style='primary'
+								style='primary'
 									type='submit'
 								>
 									Publish

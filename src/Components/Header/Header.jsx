@@ -29,6 +29,7 @@ import useCart from '../Hooks/useCart';
 import Modal from '../UiElements/Modal/Modal';
 import RequestModal from '../Banner/RequestModal';
 import SuccessModal from '../Banner/SuccessModal';
+import { useCartCtx } from '../../contexts/cart/CartContext';
 
 const Header = ({ sideBar, state }) => {
 	const [cartState, setCartState] = useState(false);
@@ -38,7 +39,7 @@ const Header = ({ sideBar, state }) => {
 	const { user, Logout } = useUserCtx();
 	const navigate = useNavigate();
 	const [cartData, setCartData] = useState([]);
-	const { cart } = useCart();
+	const { cart } = useCartCtx()
 
 	const [isOpen, setIsOpen] = useState(false);
 	const [modalState, setModalState] = useState('request');
@@ -78,36 +79,36 @@ const Header = ({ sideBar, state }) => {
 			terminal.socket.off('notification');
 		};
 	});
-	
-	useEffect( () => {
-		const cartData = [];
-		
-    if(cart && cart?.products?.length > 0) {
-      cart?.products?.forEach((product) => {
-        cartData.push({
-          id: product.product.id,
-          title: product.product.name,
-          price: product.product.price,
-          image: product.product.images[0],
-          qty: product.productQuantity
-        })
-      })
-    }
 
-    if(cart && cart?.requests?.length > 0) {
-      cart?.requests?.forEach(request => {
-        cartData.push({
-          id: request.request.id,
-          title: request.request.name,
-          price: request.request?.price || "",
-          image: request.request.images[0] || "",
-          qty: request.requestQuantity
-        })
-      })
-    }
-    
-    setCartData(cartData)
-  }, [cart]);
+	useEffect(() => {
+		const cartData = [];
+
+		if (cart && cart?.products?.length > 0) {
+			cart?.products?.forEach((product) => {
+				cartData.push({
+					id: product.product.id,
+					title: product.product.name,
+					price: product.product.price,
+					image: product.product.images[0],
+					qty: product.productQuantity
+				})
+			})
+		}
+
+		if (cart && cart?.requests?.length > 0) {
+			cart?.requests?.forEach(request => {
+				cartData.push({
+					id: request.request.id,
+					title: request.request.name,
+					price: request.request?.price || "",
+					image: request.request.images[0] || "",
+					qty: request.requestQuantity
+				})
+			})
+		}
+
+		setCartData(cartData)
+	}, [cart]);
 
 	return (
 		<>
