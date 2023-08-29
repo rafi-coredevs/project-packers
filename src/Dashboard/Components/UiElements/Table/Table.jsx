@@ -90,12 +90,12 @@ console.log(data);
         {
            loading? (
               [...Array(10)].map((arr, i) => <tr key={i} className=' hover:bg-[#FEF9DC]'>
-                <td className='py-8 border-b bg-[length:400%] bg-gradient-to-r from-gray-200 via-white to-gray-200 animate-loading' />
+                <td className='py-8 border-b lazy-loading' />
                 {
                   tableHeadData?.map((item, index) => (
                     <td
                       key={index}
-                      className='py-8 border-b bg-[length:400%] bg-gradient-to-r from-gray-200 via-white to-gray-200 animate-loading'
+                      className='py-8 border-b lazy-loading'
                     />))
                 }
               </tr>)

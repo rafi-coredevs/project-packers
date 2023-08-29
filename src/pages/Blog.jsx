@@ -22,12 +22,12 @@ const Blog = () => {
             <>
                 {[...Array(20)].map((array, i) => (
                   <div className="bg-white w-full rounded-md shadow-sm shadow-[#00000026] ">
-                    <div className="rounded-t-md w-full h-60 bg-[length:400%] bg-gradient-to-r from-gray-200 via-white to-gray-200 animate-loading" ></div>
+                    <div className="rounded-t-md w-full h-60 lazy-loading" ></div>
                     <div className="p-5 flex flex-col justify-between gap-2">
-                      <h4 className="font-semibold text-base line-clamp-2 w-full h-3 bg-[length:400%] bg-gradient-to-r from-gray-200 via-white to-gray-200 animate-loading"></h4>
-                      <h4 className="font-semibold text-base line-clamp-2 w-1/2 h-3 bg-[length:400%] bg-gradient-to-r from-gray-200 via-white to-gray-200 animate-loading"></h4>
+                      <h4 className="font-semibold text-base line-clamp-2 w-full h-3 lazy-loading"></h4>
+                      <h4 className="font-semibold text-base line-clamp-2 w-1/2 h-3 lazy-loading"></h4>
                       <p className="text-[#475569] text-justify line-clamp-3"></p>
-                      <div className="text-secondary text-sm font-medium w-20 h-8  rounded p-2 mt-2 border bg-[length:400%] bg-gradient-to-r from-gray-200 via-white to-gray-200 animate-loading"></div>
+                      <div className="text-secondary text-sm font-medium w-20 h-8  rounded p-2 mt-2 border lazy-loading"></div>
                     </div>
                   </div>
                 ))}
