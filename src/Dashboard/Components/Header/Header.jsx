@@ -56,7 +56,7 @@ const Header = () => {
     }
   })
   return (
-    <div className="sticky top-0 mt-0 pt-0  bg-white z-50 border-b border-gray-300 shadow-md">
+    <div className="sticky top-0 mt-0 pt-0  bg-white z-50 border-b border-gray-300">
       <div className="mx-6 hidden  sm:flex navbar gap-4 py-[10px] items-center justify-between">
         <Link
           to="/admin"
