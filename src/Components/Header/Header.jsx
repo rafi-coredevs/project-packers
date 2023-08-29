@@ -35,7 +35,7 @@ const Header = ({ sideBar, state }) => {
 	const [notifyState, setNotifyState] = useState(false);
 	const [loginModal, setLoginModal] = useState(false);
 	const [notifications, setNotifications] = useState();
-	const { user,Logout } = useUserCtx();
+	const { user, Logout } = useUserCtx();
 	const navigate = useNavigate();
 	const [cartData, setCartData] = useState([]);
 	const { cart, getCart } = useCart();
@@ -70,7 +70,7 @@ const Header = ({ sideBar, state }) => {
 	}, [user]);
 	useEffect(() => {
 		terminal.socket.on('notification', (data) => {
-			if(data.logout) return Logout()
+			if (data.logout) return Logout()
 			setNotifications((prev) => [data, ...prev]);
 		});
 		return () => {
@@ -122,7 +122,7 @@ const Header = ({ sideBar, state }) => {
 					<div className='flex gap-10 items-center'>
 						<Link
 							className='align-center font-sans font-normal text-secondary h-fit'
-							to='...'
+							to='/support'
 						>
 							Support
 						</Link>

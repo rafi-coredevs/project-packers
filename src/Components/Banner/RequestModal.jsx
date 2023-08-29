@@ -40,7 +40,7 @@ const RequestModal = ({ url, confirmSubmit, setIsOpen }) => {
 			console.log(user)
 
 			console.log(values)
-			
+
 			if (user) {
 				terminal
 					.request({
@@ -142,9 +142,9 @@ const RequestModal = ({ url, confirmSubmit, setIsOpen }) => {
 							onClick={() =>
 								itemRequestForm.values.quantity > 1
 									? itemRequestForm.setFieldValue(
-											'quantity',
-											itemRequestForm.values.quantity - 1,
-									  )
+										'quantity',
+										itemRequestForm.values.quantity - 1,
+									)
 									: null
 							}
 						>
