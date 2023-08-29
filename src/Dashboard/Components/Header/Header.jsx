@@ -47,8 +47,9 @@ const Header = () => {
 
   useEffect(() => {
     terminal.socket.on('notification', (data) => {
-      if (data.logout) return Logout()
-      setNotifications(prev => [data, ...prev])
+      if (data.logout) { Logout(); navigate("/"); }
+      else
+        setNotifications((prev) => [data, ...prev]);
     })
     return () => {
       terminal.socket.off('notification')

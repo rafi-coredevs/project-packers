@@ -38,7 +38,7 @@ const Header = ({ sideBar, state }) => {
 	const { user, Logout } = useUserCtx();
 	const navigate = useNavigate();
 	const [cartData, setCartData] = useState([]);
-	const { cart, getCart } = useCart();
+	const { cart } = useCart();
 
 	const [isOpen, setIsOpen] = useState(false);
 	const [modalState, setModalState] = useState('request');
@@ -70,8 +70,9 @@ const Header = ({ sideBar, state }) => {
 	}, [user]);
 	useEffect(() => {
 		terminal.socket.on('notification', (data) => {
-			if (data.logout) return Logout()
-			setNotifications((prev) => [data, ...prev]);
+			if (data.logout) { Logout(); navigate("/"); }
+			else
+				setNotifications((prev) => [data, ...prev]);
 		});
 		return () => {
 			terminal.socket.off('notification');
