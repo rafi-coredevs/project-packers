@@ -67,7 +67,7 @@ const Staff = () => {
               Account Owner
             </h3>
             {
-              users.length > 0 && users?.filter(user => user.role === 'super-admin')?.map(user => <div className="p-5 flex gap-4">
+              users.length > 0 && users?.filter(user => user.role === 'super-admin')?.map((user, i) => <div key={i} className="p-5 flex gap-4">
                 <div className="h-10 w-10 rounded-full flex items-center justify-center bg-primary">
                   <p className=""><UserIcon name={user?.fullName} /></p>
                 </div>
@@ -89,8 +89,8 @@ const Staff = () => {
             </div>
             <div className="grid divide-y max-h-[45vh] px-5 overflow-y-auto">
               {
-                users.length > 0 && users?.filter(user => user.role !== 'super-admin')?.map(user =>
-                  <StaffCard user={user} setUser={setUser} onClick={() => setModal(true)} />)
+                users.length > 0 && users?.filter(user => user.role !== 'super-admin')?.map((user, i) =>
+                  <StaffCard key={i} user={user} setUser={setUser} onClick={() => setModal(true)} />)
               }
             </div>
           </div>
