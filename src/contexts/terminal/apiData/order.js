@@ -104,5 +104,12 @@ export const order = {
         suggestions: {
             raw: "A raw example of the uri: 'discount'.",
         }
+    },
+    chartData: {
+        method: "GET",
+        uri: "chart",
+        suggestions: {
+            raw: "A raw example of the uri: 'discount'.",
+        }
     }
 }
