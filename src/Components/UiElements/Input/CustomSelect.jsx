@@ -4,13 +4,13 @@
  * @param {Array} arg.option select options
  * @param {string} arg.value initial value
  * @param {function} arg.onChange callback function.
- * 
+ * @param {string} styles custom styles 
  * @returns JSX Element 
  */
 
 import React, { useState, useEffect } from "react";
 import downArrow from '../../../assets/icons/caret-down_minor.svg'
-const CustomSelect = ({ options, value, onChange }) => {
+const CustomSelect = ({ options, value, onChange, styles }) => {
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -26,20 +26,20 @@ const CustomSelect = ({ options, value, onChange }) => {
     onChange(selectedValue);
     setIsOpen(false);
   };
-
+  console.log(value)
 
 
   return (
     <div className="relative inline-block w-full">
       <div
-        className="py-2 px-4 bg-white border border-[#ededed] rounded-md  cursor-pointer flex justify-between"
+        className={`py-2 px-4  rounded-md  cursor-pointer flex justify-between ${styles}`}
         onClick={toggleDropdown}
       >
-        {value === null ? 'Select' : value}
+        {value === undefined ? 'Select' : value}
         <img src={downArrow} alt="" />
       </div>
       {isOpen  ? (
-        <ul className="absolute top-full left-0 w-full bg-white border rounded-t-none shadow max-h-40 overflow-y-auto scrollbar">
+        <ul className="absolute top-full left-0 w-full  border rounded-t-none shadow max-h-40 overflow-y-auto scrollbar">
           {options.map((option, index) => (
             <li
               key={index}

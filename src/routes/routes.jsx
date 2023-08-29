@@ -96,7 +96,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/account",
-        element: <ProtectedRoute accessTo={"general"}><Orders /></ProtectedRoute>,
+        loader:  () => redirect('/account/orders')
       },
       {
         path: "account/orders",

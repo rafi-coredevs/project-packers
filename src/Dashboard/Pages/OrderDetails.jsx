@@ -11,24 +11,62 @@ import { terminal } from "../../contexts/terminal/Terminal";
 import { useEffect, useState } from "react";
 import toaster from "../../Util/toaster";
 import { BASE_URL } from "../../Util/apiCall";
+import { useFormik } from "formik";
+import CustomSelect from "../../Components/UiElements/Input/CustomSelect";
 // 
+const DROP_DOWN = [
+  {
+    id: 1,
+    name: 'Completed',
+    value: 'completed'
+  },
+  {
+    id: 2,
+    name: 'Pending',
+    value: 'pending'
+  },
+  {
+    id: 3,
+    name: 'Processing',
+    value: 'processing'
+  },
+  {
+    id: 4,
+    name: 'Shipping',
+    value: 'shipping'
+  },
+  {
+    id: 5,
+    name: 'Cancelled',
+    value: 'cancelled'
+  },
+]
 const OrderDetails = () => {
   useTitle("Order Details");
   const { orderId } = useParams();
   const [order, setOrder] = useState(null);
-  console.log(order);
+const [selected, setSelected] = useState(DROP_DOWN[0])
   useEffect(() => {
     fetchData();
 
   }, []);
 
+  const odrerForm = useFormik({
+    initialValues:{
+
+    }
+  })
   const fetchData = () => terminal.request({ name: 'singleOrder', params: { id: orderId } }).then(res => res.status === false ? toaster({ type: 'error', message: res.message }) : setOrder(res))
+  const statusHandler = (value) => {
+    console.log(value)
+    setSelected(DROP_DOWN.find((item)=> item.id === value))
+  }
   const updateHandler = () => {
     console.log("update clicked");
   };
   return (
     <div className="px-5 h-full">
-      <Heading type="navigate" title={`#${orderId}`}>
+      <Heading type="navigate" title={`#${orderId}`} back={'All Order'}>
         <div className="flex items-center gap-1">
           <Button>Download Invoice</Button>
           <Button style="delete" onClick={updateHandler}>
@@ -180,19 +218,11 @@ const OrderDetails = () => {
                 <p className="text-lg font-semibold">৳ {order?.total}</p>
               </div>
               <div className="py-5 flex gap-2 justify-end border-t border-[#0000001c] ">
-                <select
-                  className="bg-[#3E949A] border-none outline-none py-2 px-3 text-white rounded"
-                  name=""
-                  id=""
-                >
-                  <option value="completed" selected>
-                    Completed
-                  </option>
-                  <option value="pending">Pending</option>
-                  <option value="processing">Processing</option>
-                  <option value="shipping">Shipping</option>
-                  <option value="cancel">Cancel</option>
-                </select>
+                <div className="w-40">
+
+                <CustomSelect options={DROP_DOWN} styles={'bg-[#3E949A] text-white'} value={selected.name} onChange={statusHandler} />
+                </div>
+               
               </div>
             </div>
           </div>
