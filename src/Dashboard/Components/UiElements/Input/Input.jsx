@@ -1,19 +1,19 @@
 /**
- * @params {string} label - typical label field for input; depends on text passed or not 
- * @params {string} args.name - input field name
- * @params {string} args.type - input field type (text,email etc)
- * @params {string} args.placeholder text 
- * @params {string} args.value - field value
- * @params {function} args.change - change event handler 
- * @params {boolean} args.error - used to determine whether error message to be shown or not
- * @params {function} args.blur - on blur event handler
- * @params {number} args.min - defines the must required number of char for a value to be valid
- * @params {number} args.max  - to sets the limit of field value
- * @params {numer} args.row - sets the number of row if the input field type is text area,  
- * @params {string} args.styles - sets the style classes based on passed single string, default- 'primary'
- * @params {boolean} args.required - set whether a fiels is optional or required
- * @params {boolean} args.disabled - set whether a fiels should be disabled  at any point
- * @params {array} args.option - to map the options for select input when the input type is select
+ * @param {string} label - typical label field for input; depends on text passed or not 
+ * @param {string} args.name - input field name
+ * @param {string} args.type - input field type (text,email etc)
+ * @param {string} args.placeholder text 
+ * @param {string} args.value - field value
+ * @param {function} args.change - change event handler 
+ * @param {boolean} args.error - used to determine whether error message to be shown or not
+ * @param {function} args.blur - on blur event handler
+ * @param {number} args.min - defines the must required number of char for a value to be valid
+ * @param {number} args.max  - to sets the limit of field value
+ * @param {number} args.row - sets the number of row if the input field type is text area,  
+ * @param {string} args.styles - sets the style classes based on passed single string, default- 'primary'
+ * @param {boolean} args.required - set whether a fiels is optional or required
+ * @param {boolean} args.disabled - set whether a fiels should be disabled  at any point
+ * @param {array} args.option - to map the options for select input when the input type is select
  */
 const style = {
   primary: "bg-[#F8FAFC] py-3",
@@ -35,13 +35,18 @@ const Input = ({
   min,
   max,
   rows,
+  onClick,
   styles = "primary",
   required,
   disabled,
   option = [],
 }) => {
   const clickHandler = (value) => {
-    console.log(value);
+    if(value === 'increment') {
+      onClick(Number(document.getElementById(name).value) + 1)
+    }else{
+      if(Number(document.getElementById(name).value) > 0) onClick(Number(document.getElementById(name).value) - 1)
+    }
   };
   if (styles === "quantity") {
     return (
@@ -51,7 +56,7 @@ const Input = ({
         >
           <button
             onClick={() => clickHandler("decrement")}
-            className="text-[#00000085] font-semibold text-xl"
+            className="text-[#00000085] font-semibold text-xl" type="button"
           >
             -
           </button>
@@ -67,10 +72,11 @@ const Input = ({
             disabled={disabled}
             minLength={min}
             maxLength={max}
+            min={0}
           />
           <button
             onClick={() => clickHandler("increment")}
-            className="text-[#00000085] font-semibold text-xl"
+            className="text-[#00000085] font-semibold text-xl" type="button"
           >
             +
           </button>
@@ -98,7 +104,7 @@ const Input = ({
           disabled={disabled}
           minLength={min}
           maxLength={max}
-          min={0}
+          min='0'
           required={required}
         />
       </div>
@@ -164,7 +170,7 @@ const Input = ({
       )}
 
       <div
-        className={`flex items-center rounded gap-2 ${style[styles]} px-2 h-full`}
+        className={`flex items-center rounded gap-2 ${style[styles]} ${error ? "border-red-600" : "border-[#0000001c]"} px-2 h-full`}
       >
         <div className="">{children}</div>
         <input

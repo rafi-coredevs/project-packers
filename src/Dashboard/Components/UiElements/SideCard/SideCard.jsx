@@ -6,7 +6,7 @@
 import canceled from "../../../../assets/icons/cd-cancel.svg";
 import CopyButton from "../CopyButton/CopyButton";
 
-const SideCard = ({ types, onClick, title, name, email, phone, address, orders, message }) => {
+const SideCard = ({ types, onClick, title, name, email, phone, address, orders, message, onChange, value}) => {
   if (types === "customer") {
     return (
       <div className="grid gap-5 p-5 ">
@@ -18,7 +18,7 @@ const SideCard = ({ types, onClick, title, name, email, phone, address, orders, 
           </button>
         </div>
         <div className="grid gap-2">
-          <p className="underline text-emerald-500">{name}</p>
+          <p className="underline text-emerald-500">{value}</p>
           <p className="text-[#475569]">{orders || "No Orders"}</p>
         </div>
       </div>
@@ -35,7 +35,8 @@ const SideCard = ({ types, onClick, title, name, email, phone, address, orders, 
         </div>
         <div className="grid gap-2">
           <div className="flex justify-between items-center">
-            <p className=" text-emerald-500">{email || "No Details"}</p>
+            <input type="text" name={name} className=" text-emerald-500" onChange={onChange} value={email || "No Details"} disabled={false} />
+            {/* <p className=" text-emerald-500">{email || "No Details"}</p> */}
             {email && <CopyButton textToCopy={email} />}
           </div>
           <p className="text-[#475569]">{phone || "No Phone Number"}</p>

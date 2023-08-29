@@ -1,4 +1,4 @@
-import { boolean, object, string, ref } from 'yup';
+import { boolean, object, string, ref, number } from 'yup';
 export const loginSchema = object({
 	email: string().email().required('Please Enter Your Email Address.'),
 	password: string().min(6).required('Password Can not be Empty'),
@@ -90,3 +90,20 @@ export const checkoutSchema = object({
 	zip: string().required(),
 	instruction: string(),
 });
+
+
+// Request Items
+
+export const requestItems = object({
+	name: string(),
+	quantity: number(),
+	email: string().email().required('Please Enter Your Email Address.'),
+	phone:'',
+	link: string().required(),
+	note: string(),
+	sellerTakes: number().required(),
+	tax: number().required(),
+	fee: number().required(),
+	shippingaddress:string(),
+	billingaddress: string(),
+})
