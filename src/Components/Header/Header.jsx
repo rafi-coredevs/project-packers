@@ -78,19 +78,36 @@ const Header = ({ sideBar, state }) => {
 			terminal.socket.off('notification');
 		};
 	});
-	useEffect(() => {
-		setCartData(() => {
-			return cart?.products?.map((product) => {
-				return {
-					id: product.product.id,
-					title: product.product.name,
-					price: product.product.price,
-					image: product.product.images[0],
-					qty: product.productQuantity,
-				};
-			});
-		});
-	}, [cart]);
+	
+	useEffect( () => {
+		const cartData = [];
+		
+    if(cart && cart?.products?.length > 0) {
+      cart?.products?.forEach((product) => {
+        cartData.push({
+          id: product.product.id,
+          title: product.product.name,
+          price: product.product.price,
+          image: product.product.images[0],
+          qty: product.productQuantity
+        })
+      })
+    }
+
+    if(cart && cart?.requests?.length > 0) {
+      cart?.requests?.forEach(request => {
+        cartData.push({
+          id: request.request.id,
+          title: request.request.name,
+          price: request.request?.price || "",
+          image: request.request.images[0] || "",
+          qty: request.requestQuantity
+        })
+      })
+    }
+    
+    setCartData(cartData)
+  }, [cart]);
 
 	return (
 		<>
