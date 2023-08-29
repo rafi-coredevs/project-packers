@@ -9,6 +9,7 @@ import apple from '../assets/icons/apple.svg';
 import { useUserCtx } from '../contexts/user/UserContext';
 import toaster from '../Util/toaster';
 import { terminal } from '../contexts/terminal/Terminal';
+import PasswordSymbol from '../Components/UiElements/PasswordSymbol/PasswordSymbol';
 
 const Login = () => {
 	const navigate = useNavigate();
@@ -100,8 +101,8 @@ const Login = () => {
 								placeholder='Enter your Password'
 								label='Password'
 							/>
+							{/* <PasswordSymbol width='full' py='3' placeholder='Enter Your Password' /> */}
 						</div>
-
 						{/* remember me */}
 						<div className='flex justify-between mt-[10px]'>
 							<div className='font-sans text-base '>
