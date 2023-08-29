@@ -106,7 +106,7 @@ const AreaChart = ({ data }) => {
         <h4 className="text-base font-semibold text-secondary pt-5">
           Request vs Order
         </h4>
-        {/* <div className="bg-[#CFF6EF] px-2 py-1 absolute right-0 top-0  rounded">
+        <div className="bg-[#CFF6EF] px-2 py-1 absolute right-0 top-0  rounded">
           <div className="">
             <span className=""></span>
           </div>
@@ -119,7 +119,7 @@ const AreaChart = ({ data }) => {
             <option value="monthly">Monthly</option>
             <option value="weekly">Weekly</option>
           </select>
-        </div> */}
+        </div>
       </div>
       <ReactApexChart
         options={options}
