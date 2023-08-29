@@ -55,20 +55,19 @@ const head = {
   ],
 };
 
-const Table = ({ data, paginate, loading }) => {
+const Table = ({ data, paginate, loading, dashboardToogle }) => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const location = pathname.split('/')[pathname.split('/').length - 1];
-  const tableHeadData = head[location];
+  const tableHeadData = head[dashboardToogle|| location];
   const [currentPage, setCurrentPage] = useState(1);
   const totalPages = Math.ceil(data?.docs?.length / 10);
   const startIndex = (currentPage - 1) * 10;
   const endIndex = startIndex + 10;
-
   const selectHandler = (id) => {
     console.log(id);
   };
-
+console.log(data);
   return (
     <div className='relative overflow-x-auto'>
       <table className='w-full'>
@@ -147,7 +146,7 @@ const Table = ({ data, paginate, loading }) => {
                 }
                 {
                   //All Orders Data Table
-                  (location === 'orders' || location === 'admin') &&
+                  (location === 'orders' || (location === 'admin' && dashboardToogle==='orders')) &&
                   data?.docs?.map((item, index) => (
                     <tr
                       key={index}
@@ -168,7 +167,7 @@ const Table = ({ data, paginate, loading }) => {
                           : ''}
                       </td>
                       <td className='px-4 py-[18px] text-black text-sm '>
-                        {new Intl.DateTimeFormat('en-US', {
+                        {item?.date && new Intl.DateTimeFormat('en-US', {
                           year: 'numeric',
                           month: 'long',
                           day: 'numeric',
@@ -181,7 +180,7 @@ const Table = ({ data, paginate, loading }) => {
                         <Badge text={item?.status} styles='' />{' '}
                       </td>
                       <td className='px-4 py-[18px] text-black text-sm '>
-                        {item?.products.length}
+                        {item?.products?.length}
                       </td>
                       <td className='px-4 py-[18px] text-black text-sm '>
                         {item?.total} Tk
@@ -208,7 +207,7 @@ const Table = ({ data, paginate, loading }) => {
 
                 {
                   //Requested Item Data Table
-                  location === 'request' &&
+                  (location === 'request' || dashboardToogle==='request') &&
                   data?.docs?.map((item, index) => (
                     <tr
                       key={index}
@@ -370,10 +369,10 @@ const Table = ({ data, paginate, loading }) => {
           </div>
         )
       }
-      {location !== 'category' && (
+      {(location !== 'category' && loading===false) && (
         <div className='flex justify-between items-center py-6 px-4'>
           <p className='text-[#475569] text-sm'>
-            Showing {data?.docs?.length} of {data?.totalDocs} results
+            Showing {data?.page===1? 0 :((data?.page-1 )* 10)} - {data?.page===1? data?.docs?.length:((data?.page-1 )* 10)+data?.docs?.length} of {data?.totalDocs} results
           </p>
           <div className='flex'>
             <button
