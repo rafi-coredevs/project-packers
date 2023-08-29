@@ -1,5 +1,4 @@
-
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 
 /**
  * Nav without dropdown
@@ -8,6 +7,9 @@ import { NavLink } from 'react-router-dom';
  */
 
 const NavNoDropdown = ({ list }) => {
+  const location = useLocation();
+
+
   return (
     <div className='w-full flex items-center gap-2'>
       <NavLink
@@ -20,23 +22,10 @@ const NavNoDropdown = ({ list }) => {
         end={list.end && true}
         className={({ isActive }) => isActive ? 'bg-secondary text-white w-full rounded-lg px-2' : 'w-full px-2'}
       >
-        <div className='flex items-center gap-2 py-2'>
-          <NavLink
-            to={list.to}
-            end={list.end && true}
-            className={({ isActive }) => isActive ? 'hidden' : 'block'}
-          >
-            <img src={list.icon} alt={list.icon} />
-          </NavLink>
-          <NavLink
-            to={list.to}
-            end={list.end && true}
-            className={({ isActive }) => isActive ? 'block' : 'hidden'}
-          >
-            <img src={list.iconWhite} alt={list.iconWhite} />
-          </NavLink>
+        <span className='flex items-center gap-2 py-2'>
+          <img src={location.pathname === list.to ? list.iconWhite : list.icon} alt={list.icon} />
           <p>{list.title}</p>
-        </div>
+        </span>
       </NavLink>
     </div>
   );
