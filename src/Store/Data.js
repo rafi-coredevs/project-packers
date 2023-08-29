@@ -878,33 +878,33 @@ export const adminCard = [
 export const areaChart = [
   {
     month: 1,
-    order: 7,
-    request: 2,
+    order: 0,
+    request: 0,
   },
   {
     month: 2,
-    order: 12,
-    request: 32,
+    order: 0,
+    request: 0,
   },
   {
     month: 3,
-    order: 7,
-    request: 10,
+    order: 0,
+    request: 0,
   },
   {
     month: 4,
-    order: 4,
-    request: 2,
+    order: 0,
+    request: 0,
   },
   {
     month: 5,
-    order: 7,
-    request: 2,
+    order: 0,
+    request: 0,
   },
 ];
 export const heatMap = [
   {
-    name: "6 am",
+    name: "3 am",
     data: [
       {
         x: "Mon",
@@ -970,7 +970,7 @@ export const heatMap = [
     ],
   },
   {
-    name: "6 am",
+    name: "9 am",
     data: [
       {
         x: "Mon",
@@ -1003,7 +1003,7 @@ export const heatMap = [
     ],
   },
   {
-    name: "6 am",
+    name: "12 am",
     data: [
       {
         x: "Mon",
@@ -1036,7 +1036,7 @@ export const heatMap = [
     ],
   },
   {
-    name: "6 am",
+    name: "3 pm",
     data: [
       {
         x: "Mon",
@@ -1069,7 +1069,7 @@ export const heatMap = [
     ],
   },
   {
-    name: "6 am",
+    name: "6 pm",
     data: [
       {
         x: "Mon",
@@ -1102,7 +1102,7 @@ export const heatMap = [
     ],
   },
   {
-    name: "6 am",
+    name: "9 pm",
     data: [
       {
         x: "Mon",
@@ -1135,7 +1135,7 @@ export const heatMap = [
     ],
   },
   {
-    name: "6 am",
+    name: "12 pm",
     data: [
       {
         x: "Mon",
@@ -1526,3 +1526,5 @@ export const cartItems = [
     quantity: 6,
   },
 ];
+
+const

@@ -10,12 +10,14 @@ import { Link, useNavigate } from "react-router-dom";
 import Overview from "../Components/Overview/Overview";
 import { useTitle } from "../../Components/Hooks/useTitle";
 import { terminal } from "../../contexts/terminal/Terminal";
+import toaster from "../../Util/toaster";
 // 
 const DashboardHome = () => {
   useTitle("Dashboard")
   const [active, setActive] = useState("orders");
   const [tableData, setTabledata] = useState(orderTable);
   const [loading,setLoading]= useState(false);
+  const [areaChartData,setAreaChartData]=useState(areaChart)
   const[overView,setOverView]= useState([
     {
       title: 'Total Cost',
@@ -64,10 +66,10 @@ const DashboardHome = () => {
         title: 'Canceled',
         total: res?.cancelledOrder
       }
-    ]))
+    ]));
+    terminal.request({name: 'chartData'}).then(res=> res?.status===false? toaster({tyoe:'error',message:res?.message}): setAreaChartData(res?.areaChart));
 
   },[])
- console.log(overView);
   const fetchOrder = (page = 1) => {
     terminal.request({ name: 'allOrders', queries: { page } }).then((res) => {
       res.status === false ? '' : setTabledata(res),setLoading(false);
@@ -81,7 +83,6 @@ const DashboardHome = () => {
 
   const tableButtonHandler = (value) => {
     setActive(value);
-    console.log(value);
   };
 
   
@@ -96,7 +97,7 @@ const DashboardHome = () => {
         <div className="col-span-3 grid gap-5 grid-cols-7">
           <div className="col-span-7 sm:col-span-5">
             <div className="w-full bg-white p-5 border border-[#0000001f] rounded-md">
-              <AreaChart data={areaChart} />
+              <AreaChart data={areaChartData} />
             </div>
           </div>
           <div className="col-span-7 sm:col-span-2">
