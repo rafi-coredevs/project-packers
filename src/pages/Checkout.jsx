@@ -14,6 +14,7 @@ const Checkout = () => {
   const [cart, setCart] = useState();
   const [discount, setDiscount] = useState();
   const [price, setPrice] = useState();
+  const [subtotal, setSubTotal] = useState();
   const [inside, setInside] = useState(true);
   const [orderModal, setOrderModal] = useState(false);
   const [searchParams] = useSearchParams();
@@ -59,6 +60,7 @@ const Checkout = () => {
       totalPrice = discountamount
         ? totalPrice + nondiscountItemsTotal - discountamount
         : totalPrice + nondiscountItemsTotal;
+      setSubTotal(totalPrice)
       totalPrice = inside ? totalPrice + 99 : totalPrice + 150;
       setPrice(totalPrice);
     }
@@ -103,8 +105,6 @@ const Checkout = () => {
       })
     },
   });
-
-  // console.log(inside)
 
   return (
     <div className="container mx-auto py-12">
@@ -325,6 +325,10 @@ const Checkout = () => {
                     request?.request?.tax +
                     request?.request?.fee) *
                   request.requestQuantity;
+                setSubTotal(prev => prev += (request?.request?.price +
+                  request?.request?.tax +
+                  request?.request?.fee) *
+                  request.requestQuantity)
                 return (
                   <div
                     key={request.request.id}
@@ -354,7 +358,7 @@ const Checkout = () => {
             {/* Subtotal */}
             <div className="flex items-center justify-between border-b py-4 text-base text-slate-600 font-medium">
               <p className="text-start">Subtotal</p>
-              <p className="text-end text-black">৳ {price + totalPrice}tk </p>
+              <p className="text-end text-black">৳ {subtotal}tk </p>
             </div>
           </div>
           <h4 className="flex items-center justify-between pt-4 text-base text-slate-600 font-medium">
@@ -374,7 +378,6 @@ const Checkout = () => {
                 }}
                 name="inSideDhaka"
                 className="accent-orange-600"
-              // {...register('insideDhaka')}
               />
               <label
                 htmlFor="shippingDhaka"

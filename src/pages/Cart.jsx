@@ -131,7 +131,6 @@ const Cart = () => {
       request: request.request.id,
       requestQuantity: request.requestQuantity,
     }));
-    console.log(products);
     const data = await terminal.request({
       name: "updateCart",
       body: {
@@ -139,7 +138,7 @@ const Cart = () => {
         ...(requests.length && { requests }),
       },
     });
-    if (data.id) { setCart(data); }
+    if (data.id) { setCart(data); toaster({ type: 'success', message: 'Cart updated' }) }
     else {
       toaster({ type: 'error', message: data.message })
     }
@@ -152,92 +151,98 @@ const Cart = () => {
     <>
       <Breadcrumb />
       <div className="container mx-auto py-12 ">
-        <div className="grid grid-cols-5 gap-8">
-          <div className="col-span-5 sm:col-span-3 px-5 sm:px-0">
-            <table className="w-full">
-              <thead className=" text-secondary text-left border-b border-[#00000023]">
-                <tr>
-                  <th className=" w-9/12 font-semibold pb-[14px]">
-                    Product List
-                  </th>
-                  <th className="w-1/12 font-semibold pb-[14px]">Quantity</th>
-                  <th className=" w-2/12 font-semibold pb-[14px] hidden sm:table-cell">
-                    {" "}
-                    Price
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {cart?.products?.length > 0 && cart?.products.map((product) => {
-                  sellerTakes += product?.product?.price * product.productQuantity;
-                  tax += product?.product?.tax * product.productQuantity;
-                  fee += product?.product?.fee * product.productQuantity;
-                  return (
-                    <CartItem
-                      key={product?.id}
-                      data={product?.product}
-                      quantity={product.productQuantity}
-                      onChange={updateQuantity}
-                    />
-                  );
-                })}
-                {cart?.requests?.length > 0 && cart?.requests.map((request) => {
-                  sellerTakes += request?.request?.price * request.requestQuantity;
-                  tax += request?.request?.tax * request.requestQuantity;
-                  fee += request?.request?.fee * request.requestQuantity;
-                  totalPrice += (request?.request?.price + request?.request?.tax + request?.request?.fee) * request.requestQuantity
-                  return (
-                    <CartItem
-                      key={request?.id}
-                      data={request?.request}
-                      quantity={request.requestQuantity}
-                      onChange={updateQuantity}
-                    />
-                  );
-                })}
-              </tbody>
-            </table>
-            <div className="my-8 flex justify-between flex-wrap gap-2">
-              {!discount?.code ? (
-                <form
-                  onSubmit={addDiscount}
-                  className="flex gap-2 flex-wrap justify-center"
-                >
-                  <Input
-                    name="code"
-                    type="text"
-                    placeholder="Discount code"
-                    border
-                  />
-                  <Button type="lightGreen" buttonType="submit">
-                    Apply
-                  </Button>
-                </form>
-              ) : (
-                <div className="bg-slate-50 py-3 px-8 rounded-50 flex justify-between gap-3 rounded-full">
-                  <p>{discount.code}</p>
-                  <button onClick={removeDiscount}>
-                    <img src={cross} className="w-5 h-5" alt="" />
-                  </button>
-                </div>
-              )}
+        {
+          cart?.products?.length < 1 && cart?.requests?.length < 1 ? <div className="min-h-[50vh] flex justify-center items-center border-[1px] rounded ">
+            <p className="text-2xl font-bold">Current there are no items in your cart</p>
+          </div> :
+            <div className="grid grid-cols-5 gap-8">
+              <div className="col-span-5 sm:col-span-3 px-5 sm:px-0">
+                <table className="w-full">
+                  <thead className=" text-secondary text-left border-b border-[#00000023]">
+                    <tr>
+                      <th className=" w-9/12 font-semibold pb-[14px]">
+                        Product List
+                      </th>
+                      <th className="w-1/12 font-semibold pb-[14px]">Quantity</th>
+                      <th className=" w-2/12 font-semibold pb-[14px] hidden sm:table-cell">
+                        {" "}
+                        Price
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {cart?.products?.length > 0 && cart?.products.map((product) => {
+                      sellerTakes += product?.product?.price * product.productQuantity;
+                      tax += product?.product?.tax * product.productQuantity;
+                      fee += product?.product?.fee * product.productQuantity;
+                      return (
+                        <CartItem
+                          key={product?.id}
+                          data={product?.product}
+                          quantity={product.productQuantity}
+                          onChange={updateQuantity}
+                        />
+                      );
+                    })}
+                    {cart?.requests?.length > 0 && cart?.requests.map((request) => {
+                      sellerTakes += request?.request?.price * request.requestQuantity;
+                      tax += request?.request?.tax * request.requestQuantity;
+                      fee += request?.request?.fee * request.requestQuantity;
+                      totalPrice += (request?.request?.price + request?.request?.tax + request?.request?.fee) * request.requestQuantity
+                      return (
+                        <CartItem
+                          key={request?.id}
+                          data={request?.request}
+                          quantity={request.requestQuantity}
+                          onChange={updateQuantity}
+                        />
+                      );
+                    })}
+                  </tbody>
+                </table>
+                <div className="my-8 flex justify-between flex-wrap gap-2">
+                  {!discount?.code ? (
+                    <form
+                      onSubmit={addDiscount}
+                      className="flex gap-2 flex-wrap justify-center"
+                    >
+                      <Input
+                        name="code"
+                        type="text"
+                        placeholder="Discount code"
+                        border
+                      />
+                      <Button type="lightGreen" buttonType="submit">
+                        Apply
+                      </Button>
+                    </form>
+                  ) : (
+                    <div className="bg-slate-50 py-3 px-8 rounded-50 flex justify-between gap-3 rounded-full">
+                      <p>{discount.code}</p>
+                      <button onClick={removeDiscount}>
+                        <img src={cross} className="w-5 h-5" alt="" />
+                      </button>
+                    </div>
+                  )}
 
-              <Button onClick={updateCart} type="light" on>
-                Update Cart
-              </Button>
+                  <Button onClick={updateCart} type="light" on>
+                    Update Cart
+                  </Button>
+                </div>
+              </div>
+              <div className="col-span-5 sm:col-span-2">
+                <PriceCard
+                  type="cart"
+                  sellerTakes={sellerTakes}
+                  tax={tax}
+                  fee={fee}
+                  estimated={price + totalPrice}
+                  onSubmit={submitHandler}
+                />
+              </div>
             </div>
-          </div>
-          <div className="col-span-5 sm:col-span-2">
-            <PriceCard
-              type="cart"
-              sellerTakes={sellerTakes}
-              tax={tax}
-              fee={fee}
-              estimated={price + totalPrice}
-              onSubmit={submitHandler}
-            />
-          </div>
-        </div>
+        }
+
       </div>
     </>
   );

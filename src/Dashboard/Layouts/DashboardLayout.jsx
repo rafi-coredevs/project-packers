@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import Header from "../Components/Header/Header";
 import { UserProvider, useUserCtx } from '../../contexts/user/UserContext'
 import { useNavigate } from 'react-router-dom';
@@ -12,15 +12,15 @@ const DashboardLayout = () => {
 
   const { user, loading } = useUserCtx();
   const navigate = useNavigate();
+  const location = useLocation();
   const accessByRole = { "admin": true, "staff": true, "super-admin": true }
-
 
   if (loading) {
     return <Loading />
   }
   else {
     if (!user) {
-      navigate("/login");
+      navigate('/login', { state: { afterLogin: location.pathname } });
     }
     else if (accessByRole[user.role]) {
       return <div className="grid grid-cols-12 font-inter">
