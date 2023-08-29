@@ -160,7 +160,7 @@ const Login = () => {
 						<div className=''>
 							<span className='text-[#ffffffb3] font-sans text-base font-normal'>
 								Don’t have an account yet?
-								<Link className='text-primary underline' to='/signup'>
+								<Link className='text-primary underline ms-2' to='/signup'>
 									Sign up
 								</Link>
 							</span>
