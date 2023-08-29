@@ -36,7 +36,6 @@ const Orders = () => {
     },
     validationSchema: profileSchema,
     onSubmit: (values) => {
-      removeEmptyFields(values)
       delete values.email
       if (values.currentPassword !== "" && values.newPassword === "") {
         profileForm.setFieldError("newPassword", "New Password Required");
@@ -54,18 +53,17 @@ const Orders = () => {
           phone: values.phone,
           fullName: values.fullName,
         };
-        if (values.newPassword !== "")
-          data.password = {
-            new: values.newPassword,
-            old: values.currentPassword,
+        if (values.newPassword)
+          data.passwordChange = {
+            newPass: values.newPassword,
+            oldPass: values.currentPassword,
           };
-        console.log(data);
-        // terminal.request({ name: 'updateOwnProfile', body: { data } }).then(data => {
-        //   if (data.id) {
-        //     setUser(data)
-        //     toaster({ type: 'success', message: 'Profile Updated Successfully!!' })
-        //   }
-        // })
+        terminal.request({ name: 'updateOwnProfile', body: { data } }).then(data => {
+          if (data.id) {
+            setUser(data)
+            toaster({ type: 'success', message: 'Profile Updated Successfully!!' })
+          }
+        })
       }
     },
   });
@@ -75,6 +73,9 @@ const Orders = () => {
     navigate("/");
   };
 
+  useEffect(() => {
+    console.log(profileForm.errors);
+  }, [profileForm])
   useEffect(() => {
     terminal.request({ name: 'userOrder', queries: { sortBy: 'date:desc' } }).then(data => data.docs && setOrder(data.docs))
   }, [])
