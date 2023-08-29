@@ -13,6 +13,17 @@ const NavDropdown = ({ list = Object, userRole }) => {
   const [open, setOpen] = useState(false);
   // console.log(list);
 
+  // Check if any child link is active
+  const anyChildActive = list.isDropdown
+    .filter((dropDownItem) => dropDownItem.access.includes(userRole))
+    .some((dropDownLink) =>
+      window.location.pathname.startsWith(dropDownLink.to)
+    );
+
+  // Set the dropdown open state based on active child links
+  const dropdownOpen = open || anyChildActive;
+
+
   return (
     <>
       <div
@@ -23,10 +34,10 @@ const NavDropdown = ({ list = Object, userRole }) => {
           <img src={list.icon} alt={list.icon} />
           <p>{list.title}</p>
         </div>
-        <img src={arrow} alt="arrow" className={`duration-150 ${open ? '-rotate-90' : 'rotate-90'}`} />
+        <img src={arrow} alt="arrow" className={`duration-150 ${dropdownOpen ? 'rotate-90' : 'rotate-0'}`} />
       </div>
       {
-        open && <ul className='flex flex-col'>
+        dropdownOpen && <ul className='flex flex-col'>
           {
             list.isDropdown.filter((dropDownItem) => dropDownItem.access.includes(userRole)).map(dropDownLink => <li
               key={dropDownLink.id}

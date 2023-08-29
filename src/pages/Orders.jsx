@@ -27,7 +27,7 @@ const Orders = () => {
   }, [user]);
   const profileForm = useFormik({
     initialValues: {
-      fullName:  '',
+      fullName: '',
       email: '',
       phone: '',
       currentPassword: "",
@@ -36,7 +36,6 @@ const Orders = () => {
     },
     validationSchema: profileSchema,
     onSubmit: (values) => {
-      removeEmptyFields(values)
       delete values.email
       if (values.currentPassword !== "" && values.newPassword === "") {
         profileForm.setFieldError("newPassword", "New Password Required");
@@ -54,18 +53,17 @@ const Orders = () => {
           phone: values.phone,
           fullName: values.fullName,
         };
-        if (values.newPassword !== "")
-          data.password = {
-            new: values.newPassword,
-            old: values.currentPassword,
+        if (values.newPassword)
+          data.passwordChange = {
+            newPass: values.newPassword,
+            oldPass: values.currentPassword,
           };
-        console.log(data);
-        // terminal.request({ name: 'updateOwnProfile', body: { data } }).then(data => {
-        //   if (data.id) {
-        //     setUser(data)
-        //     toaster({ type: 'success', message: 'Profile Updated Successfully!!' })
-        //   }
-        // })
+        terminal.request({ name: 'updateOwnProfile', body: { data } }).then(data => {
+          if (data.id) {
+            setUser(data)
+            toaster({ type: 'success', message: 'Profile Updated Successfully!!' })
+          }
+        })
       }
     },
   });
@@ -76,8 +74,8 @@ const Orders = () => {
   };
 
   useEffect(() => {
-    terminal.request({ name: 'userOrder' }).then(data => data.docs && setOrder(data.docs))
-  },[])
+    terminal.request({ name: 'userOrder', queries: { sortBy: 'date:desc' } }).then(data => data.docs && setOrder(data.docs))
+  }, [])
   return (
     <>
       <Breadcrumb title={active} />
@@ -96,7 +94,7 @@ const Orders = () => {
                 </button>
                 <button
                   onClick={() => setActive("profile")}
-                  className={`py-3 px-8 flex  gap-[10px] w-full rounded-full hover:bg-primary ${active === "account" ? "bg-primary" : "bg-white border"
+                  className={`py-3 px-8 flex  gap-[10px] w-full rounded-full hover:bg-primary ${active === "profile" ? "bg-primary" : "bg-white border"
                     }`}
                 >
                   <img src={profile} />

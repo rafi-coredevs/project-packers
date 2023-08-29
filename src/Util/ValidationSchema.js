@@ -36,10 +36,6 @@ export const signupSchema = object({
 });
 
 export const profileSchema = object({
-	firstName: string().required(),
-	lastName: string().required(),
-	email: string().email().required('Please Enter Your Email Address.'),
-	phone: string().min(10, 'Invalid Phone Number').max(17).required(),
 	currentPassword: string().min(6),
 	newPassword: string().min(6),
 	confirmPassword: string().oneOf(

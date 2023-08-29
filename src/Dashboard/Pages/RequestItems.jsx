@@ -15,15 +15,19 @@ const RequestItems = () => {
   useTitle("Requested Items")
   const [active, setActive] = useState("all");
   const [tableData, setTabledata] = useState(null);
+  const [loading,setLoading]=useState(true);
+  const [sortBy,setSortBy]=useState('createdAt:asc');
   useEffect(() => {
     fetchData();
    
-  }, []);
+  }, [sortBy, active]);
+  console.log(tableData);
 
   const fetchData = (page=1) => {
-    terminal.request({name:'allOrders', queries: {page}}).then((res) => {
-      res.status===false? '': setTabledata(res);
-    });
+    setLoading(true);
+    terminal.request({name:'allRequest', queries: { page, sortBy, status: active } }).then((res) => {
+      res.status===false? '': setTabledata(res),  setLoading(false);
+    })
   };
   const tableButtonHandler = (value) => {
     setActive(value);
@@ -100,13 +104,13 @@ const RequestItems = () => {
                 <button className="border border-[#0000001f] p-2  ">
                   <img className="opacity-70" src={filter} alt="" />
                 </button>
-                <button className="border border-[#0000001f] p-2  ">
+                <button onClick={()=>setSortBy(sortBy==='createdAt:desc'?'createdAt:asc':'createdAt:desc')}  className="border border-[#0000001f] p-2  ">
                   <img className="opacity-70" src={sort} alt="" />
                 </button>
               </div>
             </div>
 
-            <Table paginate={fetchData} data={tableData} />
+            <Table paginate={fetchData} data={tableData} loading={loading} />
           </div>
         </div>
       </div>

@@ -16,6 +16,7 @@ const Staff = () => {
   const [modal, setModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const [users, setUsers] = useState([])
+  const [user, setUser] = useState();
   useEffect(() => {
     terminal.request({ name: 'allUser', queries: { role: JSON.stringify(['admin', 'staff', 'super-admin']) } }).then(data => data?.docs?.length && setUsers(data.docs))
   }, [])
@@ -23,9 +24,24 @@ const Staff = () => {
   const handleLogout = () => {
     terminal.request({ name: 'logOutStaff' }).then(data => data.status && toaster({ type: 'success', message: data.message }))
   }
-  
-  const submitHandler = () => {
-    console.log("update clicked");
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    const [firstName, lastName, email, phone, role] = ['firstName', 'lastName', 'email', 'phone', 'role'].map((k) =>
+      e.target.elements[k].value
+    );
+    terminal.request({ name: 'registerStaff', body: { fullName: `${firstName} ${lastName}`, email, phone, role } }).then(data => {
+      if (data.id) {
+        setUsers(prev => [...prev, { id: data.id, fullName: data.fullName, role: data.role, access: data.access }])
+        ['firstName', 'lastName', 'email', 'phone'].map((k) =>
+          e.target.elements[k].value = ''
+        );
+        toaster({ type: 'success', message: 'Staff created successfully' })
+      }
+      else {
+        toaster({ type: 'error', message: 'Error creating staff' })
+      }
+    })
   };
   return (
     <div className="px-5 h-full">
@@ -53,13 +69,13 @@ const Staff = () => {
             {
               users.length > 0 && users?.filter(user => user.role === 'super-admin')?.map(user => <div className="p-5 flex gap-4">
                 <div className="h-10 w-10 rounded-full flex items-center justify-center bg-primary">
-                  <p className=""><UserIcon name={user.fullName} /></p>
+                  <p className=""><UserIcon name={user?.fullName} /></p>
                 </div>
                 <div className="space-y-2">
                   <p className="text-[#202223] text-sm font-semibold">
-                    {user.fullName}
+                    {user?.fullName}
                   </p>
-                  <p className="text-[#6D7175] text-sm">{user.role}</p>
+                  <p className="text-[#6D7175] text-sm">{user?.role}</p>
                 </div>
               </div>)
             }
@@ -74,7 +90,7 @@ const Staff = () => {
             <div className="grid divide-y max-h-[45vh] px-5 overflow-y-auto">
               {
                 users.length > 0 && users?.filter(user => user.role !== 'super-admin')?.map(user =>
-                  <StaffCard user={user} onClick={() => setModal(true)} />)
+                  <StaffCard user={user} setUser={setUser} onClick={() => setModal(true)} />)
               }
             </div>
           </div>
@@ -90,26 +106,31 @@ const Staff = () => {
                   styles="basic"
                   label="First Name"
                   placeholder="First Name"
+                  name='firstName'
                 />
                 <Input
                   styles="basic"
                   label="Last Name"
                   placeholder="Last Name"
+                  name='lastName'
                 />
               </div>
               <Input
                 styles="basic"
                 label="Email"
                 placeholder="example@domain.com"
+                name='email'
               />
               <Input
                 styles="basic"
                 label="Phone Number"
                 placeholder="01700000000"
+                name='phone'
               />
               <Input
                 styles="select"
                 label="Role"
+                name='role'
                 option={[
                   { name: "Admin", value: "admin" },
                   { name: "Super Admin", value: "super-admin" },
@@ -120,13 +141,13 @@ const Staff = () => {
             </div>
 
             <div className="flex justify-end">
-              <Button style="green">Add user</Button>
+              <Button type="submit" style="green">Add user</Button>
             </div>
           </form>
         </div>
       </div>
       <Modal show={modal} onClose={() => setModal(false)}>
-        <StaffModal setModal={setModal} />
+        <StaffModal user={user} setModal={setModal} />
       </Modal>
     </div>
   );

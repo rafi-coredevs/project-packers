@@ -6,13 +6,15 @@
 import UserIcon from "../../../Components/UiElements/UserIcon/UserIcon";
 import Input from "../UiElements/Input/Input";
 
-const StaffCard = ({ onClick, user }) => {
+const StaffCard = ({ onClick, user, setUser }) => {
   const totalaccess = ['support', 'product', 'order', 'request']
-
   return (
 
     <div
-      onClick={onClick}
+      onClick={() => {
+        onClick();
+        setUser(user)
+      }}
       className="py-5 flex justify-between items-center cursor-pointer"
     >
       <div className=" flex gap-4">
@@ -20,8 +22,8 @@ const StaffCard = ({ onClick, user }) => {
           <p className=""><UserIcon name={user.fullName} /></p>
         </div>
         <div className="space-y-2">
-          <p className="text-[#202223] text-sm font-semibold">   {user.fullName}</p>
-          <p className="text-[#6D7175] text-sm">{user.access.length === totalaccess.length ? 'Full access' : user.access.length === 1 ? user.access : 'Limited access'}</p>
+          <p className="text-[#202223] text-sm font-semibold">{user.fullName}</p>
+          <p className="text-[#6D7175] text-sm">{user.access.length === totalaccess.length ? 'Full access' : user.access.length === 1 ? user.access : user.access.length < 1 ? 'No access' : 'Limited access'}</p>
         </div>
       </div>
       <div className="border-[1px] border-[#64748B] p-3 rounded flex justify-center items-center min-w-[5rem]">

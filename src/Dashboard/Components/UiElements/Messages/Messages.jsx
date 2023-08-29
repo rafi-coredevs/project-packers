@@ -3,6 +3,7 @@ import ChatBubble from '../ChatBubble/ChatBubble';
 import Button from '../Button/Button';
 import { useUserCtx } from '../../../../contexts/user/UserContext';
 import { terminal } from '../../../../contexts/terminal/Terminal';
+import send from '../../../../assets/icons/send.png';
 
 const Messages = ({ activeChat, chatCardHandler }) => {
     const { user } = useUserCtx()
@@ -11,7 +12,7 @@ const Messages = ({ activeChat, chatCardHandler }) => {
     useEffect(() => {
         setModal(true)
         setMessages([])
-        terminal.request({ name: 'getMessage', params: { id: activeChat?.id }, queries: { page: 1 } }).then(data => {
+        terminal.request({ name: 'getMessage', params: { id: activeChat?.id }, queries: { page: 1, limit: 20 } }).then(data => {
             data.docs?.length > 0 && setMessages(data.docs)
         })
         if (activeChat && activeChat.status !== 'pending') {
@@ -89,17 +90,22 @@ const Messages = ({ activeChat, chatCardHandler }) => {
                             />)
                     }
                 </div>
-                <form onSubmit={handleSubmit} className="p-3 border border-[#0000002a] rounded bg-white">
-                    <div className="w-full flex ">
+                <form onSubmit={handleSubmit} className="p-2 border border-[#0000002a] rounded bg-white">
+                    <div className="w-full flex overflow-hidden">
                         <input
                             className="outline-none w-full"
                             type="text"
                             name='message'
                             placeholder="Type text message"
+                            required
                             
                         />
-                        <button type='submit' className="text-secondary bg-primary font-bold rounded-full py-[14px] px-[40px]">
-                            Send
+                        <button type='submit'>
+                            <img
+                                src={send}
+                                alt='send'
+                                className='w-24 py-3 pl-10 pr-4 flex-1 text-lg cursor-pointer active:animate-send'
+                            />
                         </button>
                     </div>
                 </form>

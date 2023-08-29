@@ -6,25 +6,29 @@ import { areaChart } from "../../Store/Data";
 import HeatMap from "../Components/UiElements/HeatMap/HeatMap";
 import Table from "../Components/UiElements/Table/Table";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { getApi } from "../../Util/apiCall";
+import { Link, useNavigate } from "react-router-dom";
 import Overview from "../Components/Overview/Overview";
 import { useTitle } from "../../Components/Hooks/useTitle";
 import { terminal } from "../../contexts/terminal/Terminal";
 // 
 const DashboardHome = () => {
   useTitle("Dashboard")
-  const [active, setActive] = useState("order");
+  const [active, setActive] = useState("orders");
   const [tableData, setTabledata] = useState(orderTable);
-
+  const [loading,setLoading]= useState(false);
   useEffect(() => {
-    fetchData();
+    setLoading(true);
+    active==='orders'?fetchOrder():fetchRequest();
+  }, [active]);
 
-  }, []);
-
-  const fetchData = (page = 1) => {
+  const fetchOrder = (page = 1) => {
     terminal.request({ name: 'allOrders', queries: { page } }).then((res) => {
-      res.status === false ? '' : setTabledata(res);
+      res.status === false ? '' : setTabledata(res),setLoading(false);
+    });
+  };
+  const fetchRequest = (page = 1) => {
+    terminal.request({ name: 'allRequest', queries: { page } }).then((res) => {
+      res.status === false ? '' : setTabledata(res), setLoading(false);
     });
   };
 
@@ -87,8 +91,8 @@ const DashboardHome = () => {
                   Request
                 </button>
                 <button
-                  onClick={() => tableButtonHandler("order")}
-                  className={`py-2 px-3 text-[#475569] text-xs font-semibold ${active === "order" ? "bg-[#CFF6EF]" : "bg-transparent"
+                  onClick={() => tableButtonHandler("orders")}
+                  className={`py-2 px-3 text-[#475569] text-xs font-semibold ${active === "orders" ? "bg-[#CFF6EF]" : "bg-transparent"
                     }`}
                 >
                   Orders
@@ -96,16 +100,16 @@ const DashboardHome = () => {
               </div>
               <Link
                 className="py-2 px-3 text-[#475569] text-xs font-semibold"
-                to="orders"
+                to={active}
               >
-                <div className="flex gap-2 items-center">
+                <div  className="flex gap-2 items-center">
                   <span>View All</span>
                   <img src={arrowRight} alt="" />
                 </div>
               </Link>
             </div>
 
-            <Table paginate={fetchData} data={tableData} />
+            <Table paginate={ active==='orders'?fetchOrder:fetchRequest} data={tableData} dashboardToogle={active} loading={loading} />
           </div>
         </div>
       </div>

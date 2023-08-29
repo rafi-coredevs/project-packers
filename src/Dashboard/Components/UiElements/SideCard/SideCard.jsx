@@ -4,8 +4,8 @@
  *
  */
 import canceled from "../../../../assets/icons/cd-cancel.svg";
-import copy from "../../../../assets/icons/cd-copy.svg";
-// 
+import CopyButton from "../CopyButton/CopyButton";
+
 const SideCard = ({ types, onClick, title, name, email, phone, address, orders, message }) => {
   if (types === "customer") {
     return (
@@ -36,13 +36,7 @@ const SideCard = ({ types, onClick, title, name, email, phone, address, orders, 
         <div className="grid gap-2">
           <div className="flex justify-between items-center">
             <p className=" text-emerald-500">{email || "No Details"}</p>
-            <button
-              onClick={() => {
-                navigator.clipboard.writeText(email || "No email");
-              }}
-            >
-              <img className="opacity-70" src={copy} alt="" />
-            </button>
+            {email && <CopyButton textToCopy={email} />}
           </div>
           <p className="text-[#475569]">{phone || "No Phone Number"}</p>
         </div>
@@ -59,7 +53,10 @@ const SideCard = ({ types, onClick, title, name, email, phone, address, orders, 
           <button className="text-emerald-500">Edit</button>
         </div>
         <div className="grid gap-2">
-          <p className="text-[#475569]">{address}</p>
+          <div className="flex justify-between items-center">
+            <p className="text-[#475569]">{address || "No Address"}</p>
+            {address !== "No Address" && <CopyButton textToCopy={address} />}
+          </div>
         </div>
       </div>
     )

@@ -35,7 +35,7 @@ const Header = ({ sideBar, state }) => {
 	const [notifyState, setNotifyState] = useState(false);
 	const [loginModal, setLoginModal] = useState(false);
 	const [notifications, setNotifications] = useState();
-	const { user,Logout } = useUserCtx();
+	const { user, Logout } = useUserCtx();
 	const navigate = useNavigate();
 	const [cartData, setCartData] = useState([]);
 	const { cart } = useCart();
@@ -70,26 +70,44 @@ const Header = ({ sideBar, state }) => {
 	}, [user]);
 	useEffect(() => {
 		terminal.socket.on('notification', (data) => {
-			if(data.logout) return Logout()
-			setNotifications((prev) => [data, ...prev]);
+			if (data.logout) { Logout(); navigate("/"); }
+			else
+				setNotifications((prev) => [data, ...prev]);
 		});
 		return () => {
 			terminal.socket.off('notification');
 		};
 	});
-	useEffect(() => {
-		setCartData(() => {
-			return cart?.products?.map((product) => {
-				return {
-					id: product.product.id,
-					title: product.product.name,
-					price: product.product.price,
-					image: product.product.images[0],
-					qty: product.productQuantity,
-				};
-			});
-		});
-	}, [cart]);
+	
+	useEffect( () => {
+		const cartData = [];
+		
+    if(cart && cart?.products?.length > 0) {
+      cart?.products?.forEach((product) => {
+        cartData.push({
+          id: product.product.id,
+          title: product.product.name,
+          price: product.product.price,
+          image: product.product.images[0],
+          qty: product.productQuantity
+        })
+      })
+    }
+
+    if(cart && cart?.requests?.length > 0) {
+      cart?.requests?.forEach(request => {
+        cartData.push({
+          id: request.request.id,
+          title: request.request.name,
+          price: request.request?.price || "",
+          image: request.request.images[0] || "",
+          qty: request.requestQuantity
+        })
+      })
+    }
+    
+    setCartData(cartData)
+  }, [cart]);
 
 	return (
 		<>
@@ -122,7 +140,7 @@ const Header = ({ sideBar, state }) => {
 					<div className='flex gap-10 items-center'>
 						<Link
 							className='align-center font-sans font-normal text-secondary h-fit'
-							to='...'
+							to='support'
 						>
 							Support
 						</Link>
@@ -203,9 +221,11 @@ const Header = ({ sideBar, state }) => {
 						/>
 					</div>
 					<div className='flex gap-2 items-center '>
-						<Input border placeholder='Paste URL here...'>
-							<img src={search} alt='' />
-						</Input>
+						<form onSubmit={submitHandler}>
+							<Input border placeholder='Paste URL here...'>
+								<img src={search} alt='' />
+							</Input>
+						</form>
 						{user ? (
 							<Link to='/cart'>
 								<Icon icon={cartIcon} />
@@ -224,7 +244,11 @@ const Header = ({ sideBar, state }) => {
 			<LoginModal show={loginModal} onClose={() => setLoginModal(false)} />
 			<Modal show={isOpen} onClose={handleOnClose}>
 				{modalState === 'request' && (
-					<RequestModal setIsOpen={setIsOpen} url={url} confirmSubmit={modalSbmitHandler} />
+					<RequestModal
+						setIsOpen={setIsOpen}
+						url={url}
+						confirmSubmit={modalSbmitHandler}
+					/>
 				)}
 				{modalState === 'success' && (
 					<SuccessModal setUrl={setUrl} confirmSubmit={modalSbmitHandler} />

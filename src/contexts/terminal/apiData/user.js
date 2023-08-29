@@ -21,7 +21,6 @@ export const user = {
         body: {
             fullName: undefined,
             email: undefined,
-            password: undefined,
             role: undefined,
             phone: undefined
         },

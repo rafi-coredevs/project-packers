@@ -20,15 +20,16 @@ const Header = () => {
 
   useEffect(() => {
     terminal.socket.on('notification', (data) => {
-      if (data.logout) return Logout()
-      setNotifications(prev => [data, ...prev])
+      if (data.logout) { Logout(); navigate("/"); }
+      else
+        setNotifications((prev) => [data, ...prev]);
     })
     return () => {
       terminal.socket.off('notification')
     }
   })
   return (
-    <div className="sticky top-0 mt-0 pt-0  bg-white z-50 shadow-sm ">
+    <div className="sticky top-0 mt-0 pt-0  bg-white z-50 border-b border-gray-300 shadow-md">
       <div className="mx-6 hidden  sm:flex navbar gap-4 py-[10px] items-center justify-between">
         <Link
           to="/admin"
