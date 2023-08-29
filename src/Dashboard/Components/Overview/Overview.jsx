@@ -15,7 +15,7 @@ const Overview = ({ data }) => {
                             <h4>{data.title}</h4>
                             {
                                 data.title === 'Total Cost' ?
-                                    <p className='text-xl font-semibold'>$ {data.total}</p> :
+                                    <p className='text-xl font-semibold'>৳ {data.total}</p> :
                                     <div className='flex items-center gap-2'>
                                         <p className='text-xl font-semibold'>
                                             {data.total}

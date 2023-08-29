@@ -3,12 +3,10 @@ import { useEffect, useState } from "react";
 import Heading from "../Components/UiElements/Heading/Heading";
 import filter from "../../assets/icons/cd-filter.svg";
 import sort from "../../assets/icons/cd-arrow-data-transfer-vertical-round.svg";
-import Card from "../Components/UiElements/Card/Card";
 import Table from "../Components/UiElements/Table/Table";
 import Input from "../Components/UiElements/Input/Input";
 import search from "../../assets/icons/cd-search2.svg";
 import { orderTable } from "../../Store/Data";
-import { adminCard } from "../../Store/Data";
 import { useTitle } from "../../Components/Hooks/useTitle";
 import { terminal } from "../../contexts/terminal/Terminal";
 import Overview from "../Components/Overview/Overview";
@@ -23,6 +21,28 @@ const AllOrders = () => {
   const [isModal, setIsModal] = useState(false);
   const [loading,setLoading]=useState(true);
   const [sortBy,setSortBy]=useState('date:asc');
+  const[overView,setOverView]= useState([
+    {
+      title: 'Total Cost',
+      total: 0
+    },
+    {
+      title: 'Total Revenue',
+      total: 0
+    },
+    {
+      title: 'Total Order',
+      total: 0
+    },
+    {
+      title: 'Completed',
+      total: 0
+    },
+    {
+      title: 'Canceled',
+      total: 0
+    }
+  ]);
 
   const tableButtonHandler = (value) => {
     setActive(value);
@@ -32,6 +52,31 @@ const AllOrders = () => {
     fetchData();
 
   }, [sortBy, active]);
+  useEffect(()=>{
+    terminal.request({name: 'overviewData'}).then(res=> setOverView(res?.status===false? []: [
+      {
+        title: 'Total Cost',
+        total: res?.totalCost
+      },
+      {
+        title: 'Total Revenue',
+        total: res?.totalRevenue
+      },
+      {
+        title: 'Total Order',
+        total: res?.totalOrder
+      },
+      {
+        title: 'Completed',
+        total: res?.completedOrder
+      },
+      {
+        title: 'Canceled',
+        total: res?.cancelledOrder
+      }
+    ]))
+
+  },[])
 
   const fetchData = (page = 1) => {
     setLoading(true);
@@ -43,28 +88,7 @@ const AllOrders = () => {
   const modalHandler = (id) => setIsModal(id);
   const deleteHandler = () => terminal.request({ name: 'deleteOrder', body: { id: isModal } }).then(res => res.status === true ? (toaster({ type: 'success', message: res.message }), setIsModal(false), fetchData()) : (toaster({ type: 'error', message: res.message }), setIsModal(false)))
 
-  const orderOverview = [
-    {
-      title: 'Total Cost',
-      total: 10440.00
-    },
-    {
-      title: 'Total Revenue',
-      total: 294.00
-    },
-    {
-      title: 'Total Order',
-      total: 125.00
-    },
-    {
-      title: 'Completed',
-      total: 100.00
-    },
-    {
-      title: 'Canceled',
-      total: 25.00
-    }
-  ]
+ 
   return (
     <div className="h-full px-5 ">
       <Modal show={isModal} onClose={() => setIsModal(false)}><div className="text-center text-xl my-10">Are you sure you want to delete this order?
@@ -79,7 +103,7 @@ const AllOrders = () => {
       </Heading>
       <div className="grid grid-cols-3 gap-5">
         <div className="col-span-3 border-[#0000001c]">
-          <Overview data={orderOverview} />
+          <Overview data={overView} />
         </div>
 
         <div className="col-span-3 sm:col-span-3">

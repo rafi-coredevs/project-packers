@@ -16,11 +16,58 @@ const DashboardHome = () => {
   const [active, setActive] = useState("orders");
   const [tableData, setTabledata] = useState(orderTable);
   const [loading,setLoading]= useState(false);
+  const[overView,setOverView]= useState([
+    {
+      title: 'Total Cost',
+      total: 0
+    },
+    {
+      title: 'Total Request',
+      total: 0
+    },
+    {
+      title: 'Total Order',
+      total: 0
+    },
+    {
+      title: 'Completed',
+      total: 0
+    },
+    {
+      title: 'Canceled',
+      total: 0
+    }
+  ]);
   useEffect(() => {
     setLoading(true);
     active==='orders'?fetchOrder():fetchRequest();
   }, [active]);
+  useEffect(()=>{
+    terminal.request({name: 'overviewData'}).then(res=> setOverView(res?.status===false? []: [
+      {
+        title: 'Total Cost',
+        total: res?.totalCost
+      },
+      {
+        title: 'Total Request',
+        total: res?.totalRequest
+      },
+      {
+        title: 'Total Order',
+        total: res?.totalOrder
+      },
+      {
+        title: 'Completed',
+        total: res?.completedOrder
+      },
+      {
+        title: 'Canceled',
+        total: res?.cancelledOrder
+      }
+    ]))
 
+  },[])
+ console.log(overView);
   const fetchOrder = (page = 1) => {
     terminal.request({ name: 'allOrders', queries: { page } }).then((res) => {
       res.status === false ? '' : setTabledata(res),setLoading(false);
@@ -37,35 +84,14 @@ const DashboardHome = () => {
     console.log(value);
   };
 
-  const DashboardOverview = [
-    {
-      title: 'Total Cost',
-      total: 10440.00
-    },
-    {
-      title: 'Total Request',
-      total: 294.00
-    },
-    {
-      title: 'Total Order',
-      total: 125.00
-    },
-    {
-      title: 'Completed',
-      total: 100.00
-    },
-    {
-      title: 'Canceled',
-      total: 25.00
-    }
-  ]
+  
 
   return (
     <div className="h-full px-5 ">
       <Heading title="Overview" />
       <div className="grid grid-cols-3 gap-5">
         <div className="col-span-3">
-          <Overview data={DashboardOverview} />
+          <Overview data={overView} />
         </div>
         <div className="col-span-3 grid gap-5 grid-cols-7">
           <div className="col-span-7 sm:col-span-5">
