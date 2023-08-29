@@ -17,24 +17,6 @@ const DUMMY_NOTIFICATION = [
     description: "(Fitbit Versa...). You can now take it to checkout!",
     time: "9 minutes ago",
   },
-  {
-    id: 2,
-    title: "We've reviewed item #3163652",
-    description: "(Fitbit Versa...). You can now take it to checkout!",
-    time: "9 minutes ago",
-  },
-  {
-    id: 3,
-    title: "We've reviewed item #3163652",
-    description: "(Fitbit Versa...). You can now take it to checkout!",
-    time: "9 minutes ago",
-  },
-  {
-    id: 4,
-    title: "We've reviewed item #3163652",
-    description: "(Fitbit Versa...). You can now take it to checkout!",
-    time: "9 minutes ago",
-  },
 ];
 
 const Header = () => {
