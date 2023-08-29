@@ -50,7 +50,7 @@ const Signup = () => {
 						<div className=''>
 							<span className='text-[#ffffffb3] font-sans text-base font-normal'>
 								Already have an account yet?
-								<Link className='text-primary underline' to='/login'>
+								<Link className='text-primary underline ms-2' to='/login'>
 									Login
 								</Link>
 							</span>
@@ -147,7 +147,7 @@ const Signup = () => {
 									<input
 										type='checkbox'
 										onChange={() => setAccept(false)}
-										className='w-4 h-4 text-yellow-400 bg-transparent border-white rounded'
+										className='w-4 h-4 accent-primary border-white rounded'
 									/>
 									<label className='text-[#ffffffb3] pl-2'>
 										I agree to Project Packers Terms of Service and Privacy

@@ -17,7 +17,7 @@ const Login = () => {
 	const requestItemData = location.state?.requestItem;
 	const sendRequest = location.state?.sendRequest;
 
-	 
+
 
 	const { Login, setUser } = useUserCtx();
 	const loginForm = useFormik({
@@ -110,7 +110,7 @@ const Login = () => {
 									name='rememberMe'
 									onChange={loginForm.handleChange}
 									value={loginForm.values.rememberMe}
-									className='w-4 h-4 text-yellow-400 bg-transparent border-white rounded'
+									className='w-4 h-4 accent-primary border-white rounded'
 								/>
 								<label className='text-white pl-2'>Remember me</label>
 							</div>
@@ -160,7 +160,7 @@ const Login = () => {
 						<div className=''>
 							<span className='text-[#ffffffb3] font-sans text-base font-normal'>
 								Don’t have an account yet?
-								<Link className='text-primary underline' to='/signup'>
+								<Link className='text-primary underline ms-2' to='/signup'>
 									Sign up
 								</Link>
 							</span>
