@@ -85,7 +85,7 @@ const AllOrders = () => {
     });
   };
 
-  const modalHandler = (id) => setIsModal(id);
+  const modalHandler = (id) => setIsModal([id]);
   const deleteHandler = () => terminal.request({ name: 'deleteOrder', body: { id: isModal } }).then(res => res.status === true ? (toaster({ type: 'success', message: res.message }), setIsModal(false), fetchData()) : (toaster({ type: 'error', message: res.message }), setIsModal(false)))
 
  

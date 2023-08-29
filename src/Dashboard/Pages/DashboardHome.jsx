@@ -11,13 +11,16 @@ import Overview from "../Components/Overview/Overview";
 import { useTitle } from "../../Components/Hooks/useTitle";
 import { terminal } from "../../contexts/terminal/Terminal";
 import toaster from "../../Util/toaster";
+import Modal from "../../Components/UiElements/Modal/Modal";
+import Button from "../Components/UiElements/Button/Button";
 // 
 const DashboardHome = () => {
   useTitle("Dashboard")
   const [active, setActive] = useState("orders");
   const [tableData, setTabledata] = useState(orderTable);
   const [loading,setLoading]= useState(false);
-  const [areaChartData,setAreaChartData]=useState(areaChart)
+  const [areaChartData,setAreaChartData]=useState(areaChart);
+  const [isModal, setIsModal] = useState(false);
   const[overView,setOverView]= useState([
     {
       title: 'Total Cost',
@@ -84,11 +87,16 @@ const DashboardHome = () => {
   const tableButtonHandler = (value) => {
     setActive(value);
   };
+  const modalHandler = (id) => setIsModal([id]);
+  const deleteHandler = () => terminal.request({ name: 'deleteOrder', body: { id: isModal } }).then(res => res.status === true ? (toaster({ type: 'success', message: res.message }), setIsModal(false), fetchData()) : (toaster({ type: 'error', message: res.message }), setIsModal(false)))
+
 
   
 
   return (
     <div className="h-full px-5 ">
+       <Modal show={isModal} onClose={() => setIsModal(false)}><div className="text-center text-xl my-10">Are you sure you want to delete this order?
+        <div className="flex gap-2 items-center justify-center mx-auto w-full mt-5"><span onClick={deleteHandler}><Button style='primary'><span className="px-2">Yes</span></Button></span><span onClick={() => setIsModal(false)}><Button style='outline'><span className="px-2">No</span></Button></span></div></div></Modal>
       <Heading title="Overview" />
       <div className="grid grid-cols-3 gap-5">
         <div className="col-span-3">
@@ -136,7 +144,7 @@ const DashboardHome = () => {
               </Link>
             </div>
 
-            <Table paginate={ active==='orders'?fetchOrder:fetchRequest} data={tableData} dashboardToogle={active} loading={loading} />
+            <Table paginate={ active==='orders'?fetchOrder:fetchRequest} data={tableData} dashboardToogle={active} loading={loading} modalHandler={modalHandler} />
           </div>
         </div>
       </div>
