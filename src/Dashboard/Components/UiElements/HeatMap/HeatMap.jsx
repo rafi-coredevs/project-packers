@@ -4,7 +4,7 @@
  */
 import ReactApexChart from "react-apexcharts";
 import { heatMap } from "../../../../Store/Data";
-// 
+
 const HeatMap = () => {
   const options = {
     chart: {
