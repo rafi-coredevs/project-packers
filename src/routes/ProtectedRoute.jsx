@@ -28,7 +28,7 @@ export default function ProtectedRoute({ accessTo, children }) {
                 return <>{children}</>
             }
             else {
-                navigate('/login', { state: { afterLogin:location.pathname } }); 
+                navigate('/login', { state: { afterLogin: location.pathname } });
             }
         }
         else {

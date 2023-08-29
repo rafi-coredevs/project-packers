@@ -51,7 +51,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/reset",
-        element: <Recovery />,
+        element: <ProtectedRoute accessTo="general"><Recovery /></ProtectedRoute>,
       },
       {
         path: "/signup",
@@ -76,7 +76,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/checkout",
-        element: <Checkout />,
+        element: <ProtectedRoute accessTo="general"><Checkout /></ProtectedRoute>,
       },
       {
         path: "/blog",
@@ -96,7 +96,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/account",
-        element: <Orders />,
+        element: <ProtectedRoute accessTo={"general"}><Orders /></ProtectedRoute>,
       },
       {
         path: "account/orders",
@@ -104,7 +104,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/notification",
-        element: <Notification />,
+        element: <ProtectedRoute accessTo={"general"}><Notification /></ProtectedRoute>,
       },
       {
         path: "/support",
