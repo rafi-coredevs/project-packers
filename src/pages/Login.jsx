@@ -17,7 +17,7 @@ const Login = () => {
 	const requestItemData = location.state?.requestItem;
 	const sendRequest = location.state?.sendRequest;
 
-
+	const destinedTo = location.state?.afterLogin;
 
 	const { Login, setUser } = useUserCtx();
 	const loginForm = useFormik({
@@ -49,7 +49,7 @@ const Login = () => {
 								navigate('/', { state: true });
 							});
 					} else {
-						navigate('/');
+						destinedTo ? navigate(destinedTo) : navigate('/');
 					}
 				}
 			});
