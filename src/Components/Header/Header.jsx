@@ -122,7 +122,7 @@ const Header = ({ sideBar, state }) => {
 					<div className='flex gap-10 items-center'>
 						<Link
 							className='align-center font-sans font-normal text-secondary h-fit'
-							to='...'
+							to='support'
 						>
 							Support
 						</Link>

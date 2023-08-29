@@ -5,7 +5,7 @@ import Messages from "../Components/UiElements/Messages/Messages";
 import EmptyMassage from "../Components/UiElements/Messages/EmptyMassage";
 import { useTitle } from "../../Components/Hooks/useTitle";
 
-const SUPPORT_TYPE = [{name:'all',value:"all"},{name:'Account', value:'account'}, {name:'Order', value:'order'}, {name:'Payment', value:'payment'}, {name:'Refund', value:'refund'}]
+const SUPPORT_TYPE = [{ name: 'all', value: "all" }, { name: 'Account', value: 'account' }, { name: 'Order', value: 'order' }, { name: 'Payment', value: 'payment' }, { name: 'Refund', value: 'refund' }]
 
 const buttonStyle = {
   active: "bg-secondary text-white",
@@ -86,7 +86,7 @@ const Chat = () => {
               onChange={(e) => setSupportType(e.target.value)}
               className=" bg-white outline-none w-full " defaultValue="all"
             >
-             
+
               <option selected value="all">All</option>
               <option value="account">Account</option>
               <option value="order">Order</option>
@@ -100,7 +100,7 @@ const Chat = () => {
             {
               supportData.length === 0 ? supportData.map((chat, i) => (
                 <LazyChatCard key={i} />
-              )) : supportData?.map((chat) => (
+              )) : supportData.length > 0 && supportData?.map((chat) => (
                 <ChatCard
                   onClick={chatCardHandler}
                   active={activeChat?.id}

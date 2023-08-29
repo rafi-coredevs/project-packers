@@ -97,6 +97,7 @@ const Messages = ({ activeChat, chatCardHandler }) => {
                             type="text"
                             name='message'
                             placeholder="Type text message"
+                            required
                             
                         />
                         <button type='submit'>

@@ -13,7 +13,6 @@ const StaffModal = ({ setModal, user }) => {
         terminal.request({ name: 'updateUser', params: { id: user.id }, body: { data: { role, access } } }).then(data => {
             if (data.id) {
                 setModal(false)
-                setUsers(prev => [...prev, { id: data.id, fullName: data.fullName, role: data.role, access: data.access }])
                 toaster({ type: 'success', message: 'Staff updated' })
             }
             else {

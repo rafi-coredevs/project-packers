@@ -15,16 +15,14 @@ import notification from "../../assets/icons/cd-notification.svg";
 import support from "../../assets/icons/cd-customer-support.svg";
 import logout from "../../assets/icons/logout-01.svg";
 import { Link, useNavigate } from "react-router-dom";
-const Sidebar = ({state, onChange}) => {
-
-  // const dispatch = useDispatch();
+import { useUserCtx } from "../../contexts/user/UserContext";
+const Sidebar = ({ state, onChange }) => {
   const navigate = useNavigate();
-
-  // const logoutHandler = () =>{
-  //   dispatch(userSignout());
-  //   navigate('/');
-  //   onChange();
-  // }
+  const { Logout } = useUserCtx()
+  const logoutHandler = () => {
+    Logout()
+    navigate("/");
+  };
   if (state) {
     return (
       <div className=" absolute sm:hidden top-0 bottom-0 right-20 left-0 bg-white z-[101] p-5">
@@ -35,7 +33,7 @@ const Sidebar = ({state, onChange}) => {
         <div className="flex flex-col gap-3">
           <div className="flex gap-3 items-center">
             <Icon type="active" icon={profile} />
-            <Link onClick={()=> onChange()}
+            <Link onClick={() => onChange()}
               to="account/orders"
               className="font-sans text-base font-normal text-secondary"
             >
@@ -44,7 +42,7 @@ const Sidebar = ({state, onChange}) => {
           </div>
           <div className="flex gap-3 items-center">
             <Icon type="actual" icon={notification} />
-            <Link onClick={()=> onChange()}
+            <Link onClick={() => onChange()}
               to="/notification"
               className="font-sans text-base font-normal text-secondary"
             >
@@ -53,7 +51,7 @@ const Sidebar = ({state, onChange}) => {
           </div>
           <div className="flex gap-3 items-center">
             <Icon type="actual" icon={support} />
-            <Link onClick={()=> onChange()}
+            <Link onClick={() => onChange()}
               to="/support"
               className="font-sans text-base font-normal text-secondary"
             >
@@ -63,7 +61,7 @@ const Sidebar = ({state, onChange}) => {
           <div className="flex gap-3 items-center">
             <Icon type="actual" icon={logout} />
             <button
-              // onClick={logoutHandler}
+              onClick={logoutHandler}
               className="font-sans text-base font-normal text-secondary"
             >
               Log Out
