@@ -97,5 +97,12 @@ export const order = {
             raw: "A raw example of the uri: 'transactionstatus'.",
             id: "Please provide the order id.",
         }
+    },
+    overviewData: {
+        method: "GET",
+        uri: "overview",
+        suggestions: {
+            raw: "A raw example of the uri: 'discount'.",
+        }
     }
 }
