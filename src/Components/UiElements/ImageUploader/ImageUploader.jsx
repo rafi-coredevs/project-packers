@@ -2,9 +2,17 @@ import React, { useEffect, useState } from 'react';
 import cancel from '../../../assets/icons/cd-cancel.svg';
 import ImageUpload from '../../../assets/icons/cd-camera.svg';
 
-const ImageUploader = ({ formikProps, className }) => {
+const ImageUploader = ({
+	formikProps,
+	className,
+	uploadButtonIcon,
+	placeholder,
+	preLoadedImages,
+}) => {
 	const [previewImages, setPreviewImages] = useState([]);
 	const [allImages, setAllImages] = useState([]);
+
+	const baseURL = import.meta.env.VITE_SERVER_URL;
 
 	/**
 	 *
@@ -12,12 +20,30 @@ const ImageUploader = ({ formikProps, className }) => {
 	 */
 	const handleFileChange = (event) => {
 		const file = event.target.files[0];
-		setAllImages((prev) => [...prev, file]);
+		if (event.target.files.length > 0) {
+			setAllImages((prev) => [...prev, file]);
+		}
 	};
 
 	/**
 	 * @description - for showing images in display and register images in formink
 	 */
+	// useEffect(() => {
+	// 	const preLoadedPreviewImages = preLoadedImages.map(
+	// 		(url) => baseURL + '/' + url,
+	// 	);
+	// 	const uploadedPreviewImages = allImages.map((file) =>
+	// 		URL.createObjectURL(file),
+	// 	);
+	// 	setPreviewImages([...preLoadedPreviewImages, ...uploadedPreviewImages]);
+
+	// 	formikProps.setFieldValue('images', allImages);
+
+	// 	return () => {
+	// 		uploadedPreviewImages.forEach((image) => URL.revokeObjectURL(image));
+	// 	};
+	// }, [allImages, preLoadedImages]);
+
 	useEffect(() => {
 		const newPreviewImages = allImages.map((file) => URL.createObjectURL(file));
 		setPreviewImages(newPreviewImages);
@@ -50,8 +76,8 @@ const ImageUploader = ({ formikProps, className }) => {
 	return (
 		<>
 			<div className='p-3 rounded-lg '>
-				<div className='flex items-center gap-3'>
-					<div className='flex max-w-[140px] md:max-w-[400px] scrollbar  overflow-x-scroll overflow-y-hidden'>
+				<div className={`flex items-center gap-3 ${className}`}>
+					<div className='flex  md:max-w-[400px] scrollbar  overflow-x-auto overflow-y-hidden'>
 						{previewImages.map((image, index) => (
 							<div
 								key={index}
@@ -81,8 +107,13 @@ const ImageUploader = ({ formikProps, className }) => {
 							onDragOver={(e) => e.preventDefault()}
 							className={`cursor-pointer w-[134px] h-[133px] border rounded-lg flex flex-col items-center justify-center`}
 						>
-							<img src={ImageUpload} alt='' />
-							<span>Upload Image</span>
+							<img
+								src={uploadButtonIcon ? uploadButtonIcon : ImageUpload}
+								alt=''
+							/>
+							<span className='text-center px-2'>
+								{placeholder ? placeholder : 'Upload Image'}
+							</span>
 						</label>
 						<input
 							type='file'

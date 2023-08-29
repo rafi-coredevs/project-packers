@@ -1,11 +1,10 @@
 /* custom font Jakarta pro plus and sora */
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@300;400;600;800&family=Sora:wght@300;500;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@300;400;600;800&family=Sora:wght@300;500;700&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
-
 	input[type='number']::-webkit-inner-spin-button,
 	input[type='number']::-webkit-outer-spin-button {
 		-webkit-appearance: none;
@@ -36,10 +35,16 @@
 }
 
 .scrollbar::-webkit-scrollbar {
-	width: 1px;
+	width: 0px;
 	height: 0;
-	border-radius: 5px;
-	background-color: #f5f5f5;
+	border-radius: 0px;
+	background-color: transparent;
+}
+
+
+/* for firefox */
+.scrollbar {
+	scrollbar-width: none;
 }
 
 .scrollbar::-webkit-scrollbar-thumb {
@@ -69,7 +74,7 @@ select option:checked {
 }
 
 select option:focus {
-	background-color: #F2C852 !important;
+	background-color: #f2c852 !important;
 }
 
 select option:hover {
