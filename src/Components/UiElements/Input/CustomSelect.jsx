@@ -32,14 +32,14 @@ const CustomSelect = ({ options, value, onChange, styles }) => {
   return (
     <div className="relative inline-block w-full">
       <div
-        className={`py-2 px-4 bg-white  rounded-md  cursor-pointer flex justify-between ${styles}`}
+        className={`py-2 px-4  rounded-md  cursor-pointer flex justify-between ${styles}`}
         onClick={toggleDropdown}
       >
         {value === undefined ? 'Select' : value}
         <img src={downArrow} alt="" />
       </div>
       {isOpen  ? (
-        <ul className="absolute top-full left-0 w-full bg-white border rounded-t-none shadow max-h-40 overflow-y-auto scrollbar">
+        <ul className="absolute top-full left-0 w-full  border rounded-t-none shadow max-h-40 overflow-y-auto scrollbar">
           {options.map((option, index) => (
             <li
               key={index}
