@@ -147,7 +147,7 @@ const Signup = () => {
 									<input
 										type='checkbox'
 										onChange={() => setAccept(false)}
-										className='w-4 h-4 text-yellow-400 bg-transparent border-white rounded'
+										className='w-4 h-4 accent-primary border-white rounded'
 									/>
 									<label className='text-[#ffffffb3] pl-2'>
 										I agree to Project Packers Terms of Service and Privacy
