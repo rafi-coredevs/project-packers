@@ -69,7 +69,7 @@ const Header = () => {
             Packers
           </div>
         </Link>
-        <div className="w-full max-w-[650px] rounded">
+        <div className="w-full max-w-[650px] border rounded-md">
           <Input
             type="text"
             placeholder="Search"

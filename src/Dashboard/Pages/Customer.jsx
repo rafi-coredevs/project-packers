@@ -15,7 +15,7 @@ const Customer = () => {
   useTitle("Customers");
   const [active, setActive] = useState("all");
   const [tableData, setTabledata] = useState(null);
-
+  const [loading,setLoading]=useState(true);
   const navigate = useNavigate();
   const tableButtonHandler = (value) => {
     setActive(value);
@@ -28,7 +28,7 @@ const Customer = () => {
 
   const fetchData = (page=1) => {
     terminal.request({name:'allOrders', queries: {page}}).then((res) => {
-      res.status===false? '': setTabledata(res);
+      res.status===false? '': setTabledata(res), setLoading(false);
     });
   };
 
@@ -95,7 +95,7 @@ const Customer = () => {
               </div>
             </div>
 
-            <Table type="customer" data={tableData} />
+            <Table type="customer" data={tableData} loading={loading} />
           </div>
         </div>
       </div>
