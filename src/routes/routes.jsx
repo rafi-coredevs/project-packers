@@ -97,7 +97,6 @@ export const router = createBrowserRouter([
       {
         path: "/account",
         loader:  () => redirect('/account/orders')
-        
       },
       {
         path: "account/orders",

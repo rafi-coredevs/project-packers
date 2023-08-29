@@ -10,33 +10,6 @@ import profile from "../../../assets/icons/user-1.svg";
 import { useUserCtx } from "../../../contexts/user/UserContext";
 import { terminal } from "../../../contexts/terminal/Terminal";
 
-const DUMMY_NOTIFICATION = [
-  {
-    id: 1,
-    title: "We've reviewed item #3163652",
-    description: "(Fitbit Versa...). You can now take it to checkout!",
-    time: "9 minutes ago",
-  },
-  {
-    id: 2,
-    title: "We've reviewed item #3163652",
-    description: "(Fitbit Versa...). You can now take it to checkout!",
-    time: "9 minutes ago",
-  },
-  {
-    id: 3,
-    title: "We've reviewed item #3163652",
-    description: "(Fitbit Versa...). You can now take it to checkout!",
-    time: "9 minutes ago",
-  },
-  {
-    id: 4,
-    title: "We've reviewed item #3163652",
-    description: "(Fitbit Versa...). You can now take it to checkout!",
-    time: "9 minutes ago",
-  },
-];
-
 const Header = () => {
   const [notifyState, setNotifyState] = useState(false);
   const { user, Logout } = useUserCtx()
