@@ -189,7 +189,7 @@ const Table = ({ data, paginate, loading, dashboardToogle, modalHandler }) => {
                         <div className='flex gap-2'>
                           <img
                             className='cursor-pointer opacity-70'
-                            onClick={() => console.log('Edit row')}
+                            onClick={() => navigate(`/admin/orders/${item?.id}`)}
                             src={edit}
                             alt=''
                           />
