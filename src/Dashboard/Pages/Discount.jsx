@@ -7,7 +7,6 @@ import Table from "../Components/UiElements/Table/Table";
 import filter from "../../assets/icons/cd-filter.svg";
 import sort from "../../assets/icons/cd-arrow-data-transfer-vertical-round.svg";
 import search from "../../assets/icons/cd-search2.svg";
-import { discountData } from "../../Store/Data";
 import { useTitle } from "../../Components/Hooks/useTitle";
 import { terminal } from "../../contexts/terminal/Terminal";
 
@@ -15,6 +14,7 @@ const Discount = () => {
   useTitle("Active Discounts");
   const [active, setActive] = useState("all");
   const [tableData, setTabledata] = useState(null);
+  const [loading,setLoading]= useState(false);
 
   const navigate = useNavigate();
   const tableButtonHandler = (value) => {
@@ -23,13 +23,14 @@ const Discount = () => {
   };
 
   useEffect(() => {
+    setLoading(true);
     fetchData();
    
   }, []);
 
   const fetchData = (page=1) => {
     terminal.request({name:'allDiscount', queries: {page}}).then((res) => {
-      res.status===false? '': setTabledata(res);
+      res.status===false? '': setTabledata(res), setLoading(false);
     });
   };
 
@@ -96,7 +97,7 @@ const Discount = () => {
                 </button>
               </div>
             </div>
-            <Table paginate={fetchData} data={tableData} />
+            <Table paginate={fetchData} data={tableData} loading={loading} />
           </div>
         </div>
       </div>
