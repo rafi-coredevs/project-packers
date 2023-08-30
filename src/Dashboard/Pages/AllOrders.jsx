@@ -13,6 +13,8 @@ import Overview from "../Components/Overview/Overview";
 import Modal from "../../Components/UiElements/Modal/Modal";
 import Button from "../../Dashboard/Components/UiElements/Button/Button";
 import toaster from "../../Util/toaster";
+import DateRangeSelector from "../Components/UiElements/DateSelector/DateRangesSelector";
+
 
 const AllOrders = () => {
   useTitle("Order list");
@@ -43,7 +45,7 @@ const AllOrders = () => {
       total: 0
     }
   ]);
-
+  const [filterDate, setFilterDate] = useState(null)
   const tableButtonHandler = (value) => {
     setActive(value);
   };
@@ -98,7 +100,9 @@ const AllOrders = () => {
           <Input type="text" placeholder="Search" styles="secondary">
             <img src={search} alt="" />
           </Input>
-          <Input type="date" styles="secondary" />
+          {/* <Input type="date" styles="secondary" /> */}
+          
+          <DateRangeSelector onSubmit={setFilterDate}  />
         </div>
       </Heading>
       <div className="grid grid-cols-3 gap-5">
@@ -166,7 +170,7 @@ const AllOrders = () => {
               <div className="py-2 flex gap-1">
                 <Input type="text" placeholder="Search" styles="secondary">
                   <img src={search} alt="" />
-                </Input>
+                </Input>  
                 <button className="border border-[#0000001f] p-2  ">
                   <img className="opacity-70" src={filter} alt="" />
                 </button>
