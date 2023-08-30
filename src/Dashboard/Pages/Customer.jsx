@@ -7,10 +7,9 @@ import Table from "../Components/UiElements/Table/Table";
 import filter from "../../assets/icons/cd-filter.svg";
 import sort from "../../assets/icons/cd-arrow-data-transfer-vertical-round.svg";
 import search from "../../assets/icons/cd-search2.svg";
-import { customer } from "../../Store/Data";
 import { useTitle } from "../../Components/Hooks/useTitle";
 import { terminal } from "../../contexts/terminal/Terminal";
-//
+
 const Customer = () => {
   useTitle("Customers");
   const [active, setActive] = useState("all");

@@ -8,7 +8,7 @@
  * @returns JSX Element 
  */
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import downArrow from '../../../assets/icons/caret-down_minor.svg'
 const CustomSelect = ({ options, value, onChange, styles }) => {
 
