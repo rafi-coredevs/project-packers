@@ -55,7 +55,7 @@ const head = {
   ],
 };
 
-const Table = ({ data, paginate, loading, dashboardToogle }) => {
+const Table = ({ data, paginate, loading, dashboardToogle, modalHandler }) => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const location = pathname.split('/')[pathname.split('/').length - 1];
@@ -67,7 +67,7 @@ const Table = ({ data, paginate, loading, dashboardToogle }) => {
   const selectHandler = (id) => {
     console.log(id);
   };
-console.log(data);
+ console.log(data);
   return (
     <div className='relative overflow-x-auto'>
       <table className='w-full'>
@@ -87,8 +87,8 @@ console.log(data);
           </tr>
         </thead>
         <tbody>
-        {
-           loading? (
+          {
+            loading ? (
               [...Array(10)].map((arr, i) => <tr key={i} className=' hover:bg-[#FEF9DC]'>
                 <td className='py-8 border-b lazy-loading' />
                 {
@@ -99,7 +99,7 @@ console.log(data);
                     />))
                 }
               </tr>)
-            ) : (data?.docs == null || data?.docs?.length === 0) ? <tr><td className='w-full'>No data found</td></tr>: (
+            ) : (data?.docs == null || data?.docs?.length === 0) ? <tr><td className='w-full'>No data found</td></tr> : (
               <>
                 {
                   //Products  Data Table
@@ -189,13 +189,13 @@ console.log(data);
                         <div className='flex gap-2'>
                           <img
                             className='cursor-pointer opacity-70'
-                            onClick={() => console.log('Edit row')}
+                            onClick={() => navigate(`/admin/orders/${item?.id}`)}
                             src={edit}
                             alt=''
                           />
                           <img
                             className='cursor-pointer opacity-70'
-                            onClick={() => console.log('Delete row')}
+                            onClick={() =>  modalHandler(item?.id)}
                             src={dlt}
                             alt=''
                           />
@@ -316,25 +316,29 @@ console.log(data);
                       </td>
 
                       <td
-                        onClick={() => selectHandler(item.id)}
+                        onClick={() => selectHandler(item?.id)}
                         className='px-4 py-[18px] text-black text-sm cursor-pointer line-clamp-2'
                       >
-                        {item.code}
+                        {item?.code}
                       </td>
                       <td className='px-4 py-[18px] text-black text-sm '>
-                        {item.type}
+                        {item?.amount? 'Fixed': 'Percentage'}
                       </td>
                       <td className='px-4 py-[18px] text-black text-sm '>
-                        ${item.amount}
+                        {item?.amount? '৳  '+ item?.amount : item?.percentage + '  %'}
                       </td>
                       <td className='px-4 py-[18px] text-black text-sm '>
-                        {item.description}
+                        {item?.description || 'N/A'} 
                       </td>
                       <td className='px-4 py-[18px] text-black text-sm '>
-                        {item.usage}
+                        {item?.limit}
                       </td>
                       <td className='px-4 py-[18px] text-black text-sm '>
-                        {item.expiry}
+                        {item?.expiry_date? new Intl.DateTimeFormat('en-US', {
+                          year: 'numeric',
+                          month: 'long',
+                          day: 'numeric',
+                        }).format(new Date(item?.expiry_date)) :'Not Available'}
                       </td>
                     </tr>
                   ))}

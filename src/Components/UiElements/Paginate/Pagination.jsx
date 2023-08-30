@@ -64,7 +64,7 @@ const Pagination = ({
       </button>
 
       {buttonsToShow.map((num, i) => (
-        <div className={`h-12 w-12 flex items-center justify-center  text-xs lg:text-sm rounded-full ${
+        <div key={i} className={`h-12 w-12 flex items-center justify-center  text-xs lg:text-sm rounded-full ${
             page === num ? "bg-primary" : "bg-[#CFF6EF]"
           }`}>
           <button

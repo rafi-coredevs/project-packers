@@ -45,7 +45,7 @@ const OrderDetails = () => {
   useTitle("Order Details");
   const { orderId } = useParams();
   const [order, setOrder] = useState(null);
-const [selected, setSelected] = useState(DROP_DOWN[0])
+  const [selected, setSelected] = useState(DROP_DOWN[0])
   useEffect(() => {
     fetchData();
 
@@ -59,7 +59,7 @@ const [selected, setSelected] = useState(DROP_DOWN[0])
   const fetchData = () => terminal.request({ name: 'singleOrder', params: { id: orderId } }).then(res => res.status === false ? toaster({ type: 'error', message: res.message }) : setOrder(res))
   const statusHandler = (value) => {
     console.log(value)
-    setSelected(DROP_DOWN.find((item)=> item.id === value))
+    setSelected(DROP_DOWN.find((item) => item.id === value))
   }
   const updateHandler = () => {
     console.log("update clicked");
@@ -137,42 +137,84 @@ const [selected, setSelected] = useState(DROP_DOWN[0])
                         </button>
                       </td>
                     </tr> :
-                      order?.products.map((product) => {
-                        return (
-                          <tr
-                            key={product?.id}
-                            className="border-t border-[#0000001c]"
-                          >
-                            <td className="py-2">
-                              <div className="flex gap-2 items-center">
-                                <img
-                                  className="w-8 h-8 rounded border-b border-[#0000001c]"
-                                  src={BASE_URL + '/api/' + product?.product?.images[0]}
-                                  alt=""
-                                />
-                                <div className="">
-                                  <p className="line-clamp-1">{product?.product?.name}</p>
-                                  <p className="text-[#475569] ">
-                                    ৳{product?.product?.price?.toFixed(2)}
-                                  </p>
+                      <>
+                        {order.products.length > 0 && order?.products.map((product) => {
+                          return (
+                            <tr
+                              key={product?.id}
+                              className="border-t border-[#0000001c]"
+                            >
+                              <td className="py-2">
+                                <div className="flex gap-2 items-center">
+                                  <img
+                                    className="w-8 h-8 rounded border-b border-[#0000001c]"
+                                    src={BASE_URL + '/api/' + product?.product?.images[0]}
+                                    alt=""
+                                  />
+                                  <div className="">
+                                    <p className="line-clamp-1">{product?.product?.name}</p>
+                                    <p className="text-[#475569] ">
+                                      ৳{product?.product?.price?.toFixed(2)}
+                                    </p>
+                                  </div>
                                 </div>
-                              </div>
-                            </td>
-                            <td className="py-2">
-                              <Input styles="quantity" value={product?.productQuantity} />
-                            </td>
-                            <td className="py-2"> ৳{(product?.product?.price?.toFixed(2) * (product?.productQuantity))}</td>
-                            <td className="py-2 text-right">
-                              <button
-                                className="pe-3"
-                                onClick={() => console.log("first")}
-                              >
-                                <img className="h-4 w-4" src={remove} alt="" />
-                              </button>
-                            </td>
-                          </tr>
-                        );
-                      })
+                              </td>
+                              <td className="py-2">
+                                <Input styles="quantity" value={product?.productQuantity} />
+                              </td>
+                              <td className="py-2"> ৳{(product?.product?.price?.toFixed(2) * (product?.productQuantity))}</td>
+                              <td className="py-2 text-right">
+                                <button
+                                  className="pe-3"
+                                  onClick={() => console.log("first")}
+                                >
+                                  <img className="h-4 w-4" src={remove} alt="" />
+                                </button>
+                              </td>
+                            </tr>
+                          );
+                        }
+                        )
+                        }
+                        {order?.requests.length > 0 && order?.requests.map((request) => {
+                          return (
+                            <tr
+                              key={request?.id}
+                              className="border-t border-[#0000001c]"
+                            >
+                              <td className="py-2">
+                                <div className="flex gap-2 items-center">
+                                  <img
+                                    className="w-8 h-8 rounded border-b border-[#0000001c]"
+                                    src={BASE_URL + '/api/' + request?.request?.images[0]}
+                                    alt=""
+                                  />
+                                  <div className="">
+                                    <p className="line-clamp-1">{request?.request?.name}</p>
+                                    <p className="text-[#475569] ">
+                                      ৳{request?.request?.price?.toFixed(2)}
+                                    </p>
+                                  </div>
+                                </div>
+                              </td>
+                              <td className="py-2">
+                                <Input styles="quantity" value={request?.requestQuantity} />
+                              </td>
+                              <td className="py-2"> ৳{(request?.request?.price?.toFixed(2) * (request?.requestQuantity))}</td>
+                              <td className="py-2 text-right">
+                                <button
+                                  className="pe-3"
+                                  onClick={() => console.log("first")}
+                                >
+                                  <img className="h-4 w-4" src={remove} alt="" />
+                                </button>
+                              </td>
+                            </tr>
+                          );
+                        }
+                        )
+                        }
+                      </>
                   }
                 </tbody>
               </table>
@@ -183,7 +225,7 @@ const [selected, setSelected] = useState(DROP_DOWN[0])
             <div className="grid gap-3">
               <div className="flex justify-between items-center">
                 <button className=" text-sm">Subtotal</button>
-                <p className="">৳{order?.products?.reduce((accumulator = 0, product) => accumulator + ((product?.productQuantity) * (product?.product?.price)), 0)}</p>
+                <p className="">৳{order?.products?.reduce((accumulator = 0, product) => accumulator + ((product?.productQuantity) * (product?.product?.price)), 0) + order?.requests?.reduce((accumulator = 0, request) => accumulator + ((request?.requestQuantity) * (request?.request?.price)), 0)}</p>
               </div>
               <div className="flex justify-between items-center">
                 <button className="text-emerald-500 underline text-sm">
@@ -203,15 +245,13 @@ const [selected, setSelected] = useState(DROP_DOWN[0])
                   Packers Fee
                 </button>
                 <p className="">{""}</p>
-                <p className="">৳{order?.products?.reduce((accumulator = 0, product) => accumulator + ((product?.productQuantity) * (product?.product?.fee)), 0)}</p>
+                <p className="">৳{order?.products?.reduce((accumulator = 0, product) => accumulator + ((product?.productQuantity) * (product?.product?.fee)), 0) + order?.requests?.reduce((accumulator = 0, request) => accumulator + ((request?.requestQuantity) * (request?.request?.fee)), 0)}</p>
               </div>
               <div className="flex justify-between items-center">
                 <button className="text-emerald-500 underline text-sm">
                   Estimated Tax
                 </button>
-
-
-                <p className="">৳{order?.products?.reduce((accumulator = 0, product) => accumulator + ((product?.productQuantity) * (product?.product?.tax)), 0)}</p>
+                <p className="">৳{order?.products?.reduce((accumulator = 0, product) => accumulator + ((product?.productQuantity) * (product?.product?.tax)), 0) + order?.requests?.reduce((accumulator = 0, request) => accumulator + ((request?.requestQuantity) * (request?.request?.tax)), 0)}</p>
               </div>
               <div className="flex justify-between items-center">
                 <p className="text-base font-semibold">Total</p>
@@ -220,9 +260,9 @@ const [selected, setSelected] = useState(DROP_DOWN[0])
               <div className="py-5 flex gap-2 justify-end border-t border-[#0000001c] ">
                 <div className="w-40">
 
-                <CustomSelect options={DROP_DOWN} styles={'bg-[#3E949A] text-white'} value={selected.name} onChange={statusHandler} />
+                  <CustomSelect options={DROP_DOWN} styles={'bg-[#3E949A] text-white'} value={selected.name} onChange={statusHandler} />
                 </div>
-               
+
               </div>
             </div>
           </div>

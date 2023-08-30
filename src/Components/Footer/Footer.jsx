@@ -66,14 +66,9 @@ const Footer = () => {
                   Support@projectpackers.com
                 </Link>
               </div>
-              <div className="flex gap-2">
+              <div className="flex gap-2 text-white font-sans text-base font-normal">
                 <img src={IconLoaction} alt="" />
-                <Link
-                  className="text-white font-sans text-base font-normal"
-                  to="/"
-                >
-                  2118 Thornridge Cir. Syracuse, Connecticut 35624
-                </Link>
+                2118 Thornridge Cir. Syracuse, Connecticut 35624
               </div>
             </div>
           </div>
@@ -82,12 +77,12 @@ const Footer = () => {
               Quick Navigation
             </p>
             <div className="flex flex-col gap-5 text-white text-base font-sans font-normal">
-              <Link to="/">Home</Link>
-              <Link to="/about">About Us</Link>
-              <Link to="account/orders">My Request</Link>
-              <Link to="/">Contact Us</Link>
-              <Link to="/blog">Blog</Link>
-              <Link to="/">Careers</Link>
+              <div><Link to="/">Home</Link></div>
+              <div><Link to="/about">About Us</Link></div>
+              <div><Link to="account/orders">My Request</Link></div>
+              <div><Link to="/comingsoon">Contact Us</Link></div>
+              <div><Link to="/blog">Blog</Link></div>
+              <div><Link to="/comingsoon">Careers</Link></div>
             </div>
           </div>
           <div className="flex flex-col gap-8">
@@ -95,12 +90,12 @@ const Footer = () => {
               Help
             </p>
             <div className="flex flex-col gap-5 text-white text-base font-sans font-normal">
-              <Link to="/support">Support</Link>
-              <Link to="/">How Project Packers Works</Link>
-              <Link to="/">Shipping & Delivery</Link>
-              <Link to="/">Cancellation & Refund</Link>
-              <Link to="/faq">FAQs</Link>
-              <Link to="/">Live Chat Support</Link>
+              <div><Link to="/support">Support</Link></div>
+              <div><Link to="/comingsoon">How Project Packers Works</Link></div>
+              <div><Link to="/comingsoon">Shipping & Delivery</Link></div>
+              <div><Link to="/comingsoon">Cancellation & Refund</Link></div>
+              <div><Link to="/faq">FAQs</Link></div>
+              <div><Link to="/comingsoon">Live Chat Support</Link></div>
             </div>
           </div>
           <div className="flex flex-col gap-8">

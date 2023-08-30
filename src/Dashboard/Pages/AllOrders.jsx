@@ -82,12 +82,12 @@ const AllOrders = () => {
 
   const fetchData = (page = 1) => {
     setLoading(true);
-    terminal.request({ name: 'allOrders', queries: { page, sortBy, status: active }  }).then((res) => {
-      res.status === false ? '' : setTabledata(res),  setLoading(false);
+    terminal.request({ name: 'allOrders', queries: { page, sortBy, status: active } }).then((res) => {
+      res.status === false ? '' : setTabledata(res), setLoading(false);
     });
   };
 
-  const modalHandler = (id) => setIsModal(id);
+  const modalHandler = (id) => setIsModal([id]);
   const deleteHandler = () => terminal.request({ name: 'deleteOrder', body: { id: isModal } }).then(res => res.status === true ? (toaster({ type: 'success', message: res.message }), setIsModal(false), fetchData()) : (toaster({ type: 'error', message: res.message }), setIsModal(false)))
 
  
@@ -174,14 +174,14 @@ const AllOrders = () => {
                 <button className="border border-[#0000001f] p-2  ">
                   <img className="opacity-70" src={filter} alt="" />
                 </button>
-                <button onClick={()=>setSortBy(sortBy==='date:desc'?'date:asc':'date:desc')}  className="border border-[#0000001f] p-2  ">
+                <button onClick={() => setSortBy(sortBy === 'date:desc' ? 'date:asc' : 'date:desc')} className="border border-[#0000001f] p-2  ">
                   <img className="opacity-70" src={sort} alt="" />
                 </button>
               </div>
             </div>
           </div>
 
-          <Table paginate={fetchData} modalHandler={modalHandler} data={tableData} loading={loading}  />
+          <Table paginate={fetchData} modalHandler={modalHandler} data={tableData} loading={loading} />
         </div >
       </div>
     </div>

@@ -2,12 +2,12 @@ import icon from "../../../assets/icons/cd-arrow-right.svg";
 import acc from "../../../assets/icons/Avatar.svg";
 import prod from '../../../assets/icons/cd-products.svg'
 import minor from "../../../assets/icons/cd-select_minor.svg";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useRef } from "react";
 import formatTimeAgo from "../../../Util/formatTimeAgo";
 
 const Dropdown = ({ isOpen, onClick, type, title, data }) => {
-  
+
   const navidate = useNavigate()
   const ref = useRef(null);
   useEffect(() => {
@@ -39,7 +39,7 @@ const Dropdown = ({ isOpen, onClick, type, title, data }) => {
                 {title || "Loading..."}
               </p>
               <Link to="/notification">
-              <img src={icon} alt="" />
+                <img src={icon} alt="" />
               </Link>
             </div>
             <div className="overflow-y-auto scrollbar max-h-[352px]">
@@ -90,7 +90,7 @@ const Dropdown = ({ isOpen, onClick, type, title, data }) => {
               </Link>
             </div>
             <div className="overflow-y-auto scrollbar max-h-[352px]">
-              {data ? (
+              {data?.length > 0 ? (
                 data.map((item, i) => {
                   return (
                     <div
@@ -123,7 +123,7 @@ const Dropdown = ({ isOpen, onClick, type, title, data }) => {
                   );
                 })
               ) : (
-                <p>No Data</p>
+                <p>No items in cart</p>
               )}
             </div>
           </div>
