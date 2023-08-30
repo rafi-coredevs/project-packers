@@ -20,17 +20,14 @@ import CustomSelect from "../../../Components/UiElements/Input/CustomSelect";
 
 const MainCategory = () => {
   const [categories, setCategories] = useState([]);
-  const[selected,setSelected]= useState({name:'Select', value:''});
-  const [isActive, setIsActive]= useState(true);
-  useEffect(()=>{
+  const [selected, setSelected] = useState({ name: 'Select', value: null, id: 0 });
+  const [isActive, setIsActive] = useState(true);
+  useEffect(() => {
     fetchdata();
 
-  },[]);
-  useEffect(()=>{
-    setSelected(categories.find(item=>item.id===selected?.id))
-
-  },[categories])
-  const fetchdata = ()=> terminal.request({ name: 'allCategory'}).then(res=> res.status===false? toaster({type:'error', message: res.message}):setCategories(res));
+  }, []);
+ 
+  const fetchdata = () => terminal.request({ name: 'allCategory' }).then(res => res.status === false ? toaster({ type: 'error', message: res.message }) : setCategories(res));
 
   const categoryForm = useFormik({
     initialValues: {
@@ -39,7 +36,7 @@ const MainCategory = () => {
     },
     validationSchema: categorySchema,
     onSubmit: (values) => {
-      terminal.request({ name: 'registerCategory', body: { categoryname: values?.name, categoryslug: values?.slug}}).then(res=>res.status===false? toaster({type:'error', message:res?.message}):fetchdata())
+      terminal.request({ name: 'registerCategory', body: { categoryname: values?.name, categoryslug: values?.slug } }).then(res => res.status === false ? toaster({ type: 'error', message: res?.message }) : fetchdata())
 
     },
   });
@@ -52,13 +49,13 @@ const MainCategory = () => {
     onSubmit: (values) => {
       console.log(values);
       console.log(selected);
-      terminal.request({ name: 'registerCategory', body: { categoryname: selected?.name, categoryslug: selected?.slug, subcategoryname: values?.name, subcategoryslug: values?.slug}}).then(res=>res.status===false? toaster({type:'error', message:res?.message}):fetchdata());
-      
-      
+      terminal.request({ name: 'registerCategory', body: { categoryname: selected?.name, categoryslug: selected?.slug, subcategoryname: values?.name, subcategoryslug: values?.slug } }).then(res => res.status === false ? toaster({ type: 'error', message: res?.message }) : fetchdata());
+
+
     },
   });
-  
-  const categoryHandler = (id)=> setSelected(categories.find(item=>item.id===id));
+
+  const categoryHandler = (id) => setSelected(categories.find(item => item.id === id));
 
   return (
     <>
@@ -112,9 +109,8 @@ const MainCategory = () => {
             </h2>
             <div className="border border-[#0000001c] rounded-lg p-3 grid gap-3">
               <label className="text-[#475569] text-sm">Parent Category</label>
-          
 
-              <CustomSelect styles="border border-[#ededed]" value={selected?.name} options={categories} onChange={categoryHandler} />
+              <CustomSelect value={selected.name} options={categories} onChange={categoryHandler} />
 
               <Input
                 styles="basic"
@@ -157,17 +153,17 @@ const MainCategory = () => {
         <div className="flex justify-between pb-2">
           <Button style="delete">delete</Button>
           <div className="flex gap-2 items-center">
-          <Button onClick={()=>setIsActive(!isActive)} style={isActive?'primary':'outline'}>Category Table</Button>
-          <Button onClick={()=>setIsActive(!isActive)}   style={!isActive?'primary':'outline'}>Sub Category Table</Button>
-          <button className="border border-[#0000001f] p-2  ">
-            <img className="opacity-70" src={sort} alt="" />
-          </button>
+            <Button onClick={() => setIsActive(true)} style={isActive ? 'primary' : 'outline'}>Category Table</Button>
+            <Button onClick={() => setIsActive(false)} style={!isActive ? 'primary' : 'outline'}>Sub Category Table</Button>
+            <button className="border border-[#0000001f] p-2  ">
+              <img className="opacity-70" src={sort} alt="" />
+            </button>
           </div>
         </div>
         {
-          isActive?<Table  data={{docs: categories}} />:<Table   data={{docs:selected?.subcategory }|| []}/>
+          isActive ? <Table data={{ docs: categories }} /> : <Table data={{ docs: selected?.subcategory } || []} />
         }
-        
+
       </div>
     </>
   );

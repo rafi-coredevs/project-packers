@@ -40,6 +40,7 @@ import ComingSoon from "../pages/ComingSoon";
 import ErrorPage from "../pages/ErrorPage";
 
 
+import UserOrderDetails from "../pages/UserOrderDetails";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -106,6 +107,11 @@ export const router = createBrowserRouter([
       {
         path: "account/orders",
         element: <ProtectedRoute accessTo={"general"}><Orders /></ProtectedRoute>,
+      },
+      {
+        path: "account/orders/:orderId",
+        element: <UserOrderDetails />,
+        loader: async ({ params }) => await terminal.request({ name: 'singleOrder', params: { id: params.orderId } }),
       },
       {
         path: "/notification",

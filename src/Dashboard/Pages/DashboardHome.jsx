@@ -2,7 +2,7 @@ import arrowRight from "../../assets/icons/cd-arrow-right-2.svg";
 import Heading from "../Components/UiElements/Heading/Heading";
 import { orderTable } from "../../Store/Data";
 import AreaChart from "../Components/UiElements/AreaChart/AreaChart";
-import { areaChart } from "../../Store/Data";
+import { areaChart, heatMap } from "../../Store/Data";
 import HeatMap from "../Components/UiElements/HeatMap/HeatMap";
 import Table from "../Components/UiElements/Table/Table";
 import { useEffect, useState } from "react";
@@ -13,13 +13,15 @@ import { terminal } from "../../contexts/terminal/Terminal";
 import toaster from "../../Util/toaster";
 import Modal from "../../Components/UiElements/Modal/Modal";
 import Button from "../Components/UiElements/Button/Button";
+
 // 
 const DashboardHome = () => {
   useTitle("Dashboard")
   const [active, setActive] = useState("orders");
   const [tableData, setTabledata] = useState(orderTable);
   const [loading,setLoading]= useState(false);
-  const [areaChartData,setAreaChartData]=useState(areaChart);
+  const [areaChartData,setAreaChartData]=useState(areaChart);;
+  const [heatmapData,setHeatmapData]=useState(heatMap);
   const [isModal, setIsModal] = useState(false);
   const[overView,setOverView]= useState([
     {
@@ -70,7 +72,9 @@ const DashboardHome = () => {
         total: res?.cancelledOrder
       }
     ]));
-    terminal.request({name: 'chartData'}).then(res=> res?.status===false? toaster({tyoe:'error',message:res?.message}): setAreaChartData(res?.areaChart));
+    terminal.request({name: 'chartData'}).then(res=> {
+      res?.status===false? toaster({tyoe:'error',message:res?.message}): (setAreaChartData(res?.areaChart), formateHeatmapData(res?.heatmapData));
+    });
 
   },[])
   const fetchOrder = (page = 1) => {
@@ -89,7 +93,32 @@ const DashboardHome = () => {
   };
   const modalHandler = (id) => setIsModal([id]);
   const deleteHandler = () => terminal.request({ name: 'deleteOrder', body: { id: isModal } }).then(res => res.status === true ? (toaster({ type: 'success', message: res.message }), setIsModal(false), fetchData()) : (toaster({ type: 'error', message: res.message }), setIsModal(false)))
-
+  const formateHeatmapData =(input=[])=>{
+    const timePeriods = [
+      "3am", "6am", "9am", "12am", "3pm", "6pm", "9pm", "12pm"
+    ];
+    
+    const daysOfWeek = [
+      "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"
+    ];
+    
+    const result = [];
+    
+    for (const period of timePeriods) {
+      const dataForPeriod = [];
+      
+      for (const dayEntry of input) {
+        const dayOfWeek = daysOfWeek[dayEntry.day - 1];
+        dataForPeriod.push({ x: dayOfWeek, y: dayEntry[period] });
+      }
+      
+      result.push({
+        name: period,
+        data: dataForPeriod,
+      });
+    }
+    setHeatmapData(result);
+  }
 
   
 
@@ -110,7 +139,7 @@ const DashboardHome = () => {
           </div>
           <div className="col-span-7 sm:col-span-2">
             <div className="w-full bg-white p-5 border border-[#0000001f] rounded-md">
-              <HeatMap />
+              <HeatMap data={heatmapData} />
             </div>
           </div>
         </div>
