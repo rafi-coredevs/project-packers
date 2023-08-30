@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from 'react';
-// import uuid from 'uuid';
-import cancel from '../../../../assets/icons/cd-cancel.svg';
 import ImageUpload from '../../../../assets/icons/cd-camera.svg';
 
 const ProductImageUpload = ({
@@ -10,12 +8,8 @@ const ProductImageUpload = ({
 	placeholder,
 	preLoadedImages,
 }) => {
-	const [previewImages, setPreviewImages] = useState([]);
 	const [allImages, setAllImages] = useState([]);
 	const [removeImages, setRemoveImages] = useState([]);
-	const [mouseEnterIndex, setMouseEnterIndex] = useState(false);
-
-	const baseURL = import.meta.env.VITE_SERVER_URL;
 
 	/**
 	 *
@@ -28,44 +22,31 @@ const ProductImageUpload = ({
 		}
 	};
 
-	// allImages.map((image) => {
-	// 	console.log(image instanceof File);
-	// });
-
 	/**
-	 * @description - for showing images in display and register images in formink
+	 * @description - for showing preLoaded images if theres any
 	 */
-	// useEffect(() => {
-	// 	const preLoadedPreviewImages = preLoadedImages.map(
-	// 		(url) => baseURL + '/' + url,
-	// 	);
-	// 	const uploadedPreviewImages = allImages.map((file) =>
-	// 		URL.createObjectURL(file),
-	// 	);
-	// 	setPreviewImages([...preLoadedPreviewImages, ...uploadedPreviewImages]);
-
-	// 	formikProps.setFieldValue('images', allImages);
-
-	// 	return () => {
-	// 		uploadedPreviewImages.forEach((image) => URL.revokeObjectURL(image));
-	// 	};
-	// }, [allImages, preLoadedImages]);
-
 	useEffect(() => {
 		if (preLoadedImages.length > 0 || !preLoadedImages) {
 			setAllImages(preLoadedImages);
 		}
 	}, [preLoadedImages]);
 
+	/**
+	 * @description - for register uploaded images, replaced images and deleted images
+	 */
 	useEffect(() => {
-		formikProps.setFieldValue('images', allImages);
+		const imageFile = allImages.filter((image) => image instanceof File);
+		formikProps.setFieldValue('images', imageFile);
+
+		const imageURL = removeImages.filter((image) => !(image instanceof File));
+		formikProps.setFieldValue('removeImages', imageURL);
 
 		return () => {
 			allImages.forEach(
 				(image) => image instanceof File && URL.revokeObjectURL(image),
 			);
 		};
-	}, [allImages]);
+	}, [allImages, removeImages]);
 
 	/**
 	 * @description - for handling image deletion
@@ -94,24 +75,16 @@ const ProductImageUpload = ({
 		setAllImages((prev) => [...prev, file]);
 	};
 
-	// console.log(allImages);
-
+	/**
+	 * @description - for handling image replace
+	 */
 	const handleReplace = (e, index) => {
-		// console.log('Image Upload!');
-
 		const file = e.target.files[0];
-		// console.log(file);
+		const replacedImage = allImages[index];
+		setRemoveImages((prev) => [...prev, replacedImage]);
+		console.log(allImages[index]);
 		allImages[index] = file;
-
-		// console.log('after replace', replaceed);
-
-		// console.log(replaceed)
-
-		// setAllImages(replaceed);
-		setMouseEnterIndex(null);
 	};
-
-	console.log('before replace', allImages);
 
 	return (
 		<>
@@ -122,22 +95,20 @@ const ProductImageUpload = ({
 							<div
 								key={index}
 								className={`w-[134px] h-[133px] border rounded-lg flex items-center justify-center relative p-3`}
-								onMouseEnter={() => setMouseEnterIndex(index)}
-								// onMouseOutCapture={() => setMouseEnterIndex(null)}
 							>
 								<img
 									src={
 										image instanceof File
 											? URL.createObjectURL(image)
-											: `${baseURL}/${image}`
+											: `${import.meta.env.VITE_SERVER_URL}/${image}`
 									}
 									alt=''
 									className='max-w-[123px] min-w-[123px] h-[123px]'
 								/>
 								{/* hover effect  */}
-								{mouseEnterIndex === index && (
+								{
 									<div
-										className={`bg-black/60 rounded-lg absolute z-50 w-[134px] h-[133px] flex-col flex items-center gap-2 justify-center`}
+										className={`bg-black/60 rounded-lg absolute z-50 w-[134px] h-[133px] flex-col flex items-center gap-2 justify-center opacity-0 hover:opacity-100`}
 									>
 										<div>
 											<label
@@ -170,7 +141,7 @@ const ProductImageUpload = ({
 											Remove
 										</button>
 									</div>
-								)}
+								}
 							</div>
 						))}
 					</div>
