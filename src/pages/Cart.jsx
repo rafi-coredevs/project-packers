@@ -148,12 +148,13 @@ const Cart = () => {
   const submitHandler = () => {
     navigate('/checkout')
   }
+  console.log(cart);
   return (
     <>
       <Breadcrumb />
       <div className="container mx-auto py-12 px-2 md:px-0">
         {
-          cart?.products?.length < 1 && cart?.requests?.length < 1 ? <div className="min-h-[50vh] flex flex-col space-y-4 justify-center items-center border-[1px] rounded p-4">
+          !cart?.products?.length && !cart?.requests?.length? <div className="min-h-[50vh] flex flex-col space-y-4 justify-center items-center border-[1px] rounded p-4">
             <img className="h-40 md:h-72" src={emptyCart} />
             <p className="text-center sm:text-2xl font-bold">Currently there are no items in your cart</p>
             <Link to={'/shop'}>

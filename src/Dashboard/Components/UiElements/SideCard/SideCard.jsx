@@ -6,14 +6,13 @@
 import canceled from "../../../../assets/icons/cd-cancel.svg";
 import CopyButton from "../CopyButton/CopyButton";
 
-const SideCard = ({ types, onClick, title, name, email, phone, address, orders, message, onChange, value}) => {
+const SideCard = ({ types, onClick, title, name, email, phone, address, orders, message, onChange, value, cross }) => {
   if (types === "customer") {
     return (
       <div className="grid gap-5 p-5 ">
         <div className="flex justify-between">
           <p className="text-base text-secondary font-semibold">Customer</p>
           <button onClick={onClick}>
-
             <img src={canceled} alt="" />
           </button>
         </div>
@@ -31,7 +30,9 @@ const SideCard = ({ types, onClick, title, name, email, phone, address, orders, 
           <p className="text-base text-secondary font-semibold">
             Contact information
           </p>
-          <button className="text-emerald-500">Edit</button>
+          {
+            cross === false ? <></> : <button className="text-emerald-500">Edit</button>
+          }
         </div>
         <div className="grid gap-2">
           <div className="flex justify-between items-center">
@@ -51,7 +52,9 @@ const SideCard = ({ types, onClick, title, name, email, phone, address, orders, 
           <p className="text-base text-secondary font-semibold">
             {title}
           </p>
-          <button className="text-emerald-500">Edit</button>
+          {
+            cross === false ? <></> : <button className="text-emerald-500">Edit</button>
+          }
         </div>
         <div className="grid gap-2">
           <div className="flex justify-between items-center">
@@ -69,10 +72,13 @@ const SideCard = ({ types, onClick, title, name, email, phone, address, orders, 
           <p className="text-base text-secondary font-semibold">
             Note
           </p>
-          <button onClick={onClick}>
+          {
+            cross === false ? <></> : <button onClick={onClick}>
 
-            <img src={canceled} alt="" />
-          </button>
+              <img src={canceled} alt="" />
+            </button>
+          }
+
         </div>
         <div className="grid gap-2">
           <p className="text-[#475569]">{message || "No Message"}</p>

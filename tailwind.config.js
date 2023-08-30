@@ -9,7 +9,7 @@
 //       colors:{
 //         primary : '#F2C852',
 //         secondary: '#0D3D4B'
-        
+
 //       },
 //       content:{
 //         'arrowLeft': 'url(./src/assets/icons/cd-arrow-right-2.svg)'
@@ -39,7 +39,7 @@ export default {
       },
       content: {
         'arrowLeft': 'url(./src/assets/icons/cd-arrow-right-2.svg)',
-        
+
       },
 
       animation: {
@@ -47,14 +47,15 @@ export default {
         wiggle: 'wiggle 1s ease-in-out infinite',
         bounce: 'bounce 1s ease-in-out infinite',
         send: 'send .5s linear infinite',
-        scale: 'scaleUp 1s ease-in-out infinite',
-        loading: 'loading 1s ease-in-out infinite'
+        scale: 'scaleUp 5s ease-in-out infinite',
+        loading: 'loading 1s ease-in-out infinite',
+        coming: 'coming 8s ease-in-out infinite'
       },
 
       keyframes: {
         wiggle: {
-          '0%, 100%': { transform: 'rotate(-3deg)' },
-          '50%': { transform: 'rotate(3deg)' },
+          '0%, 100%': { transform: 'rotate(-10deg)' },
+          '50%': { transform: 'rotate(10deg)' },
         },
         bounce: {
           '0%, 100%': {
@@ -76,7 +77,7 @@ export default {
             transform: 'none',
           },
           '50%': {
-            transform: 'scale(1.5)'
+            transform: 'scale(6)'
           }
         },
         loading: {
@@ -85,6 +86,17 @@ export default {
           },
           '50%': {
             backgroundPosition: '100% 50%'
+          }
+        },
+        coming: {
+          '0%': {
+            left: '-200%'
+          },
+          '50%':{
+            left: '150%'
+          },
+          '100%': {
+            left: '-200%'
           }
         }
       }
