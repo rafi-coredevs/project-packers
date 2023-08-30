@@ -132,7 +132,7 @@ const AreaChart = ({ data }) => {
             <div className="">
               <span className=""></span>
             </div>
-            <CustomSelect  value={selected.name} options={OPTIONS} onChange={onChangeHandler} />
+            <CustomSelect  value={selected.name} options={OPTIONS} onChange={onChangeHandler} appearance={'select'} />
           </div>
         </div>
       </div>
