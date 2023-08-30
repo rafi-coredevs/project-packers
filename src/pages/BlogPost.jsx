@@ -5,22 +5,24 @@ import img from "../assets/Image/blog-post.png";
 import { useTitle } from "../Components/Hooks/useTitle";
 // 
 const BlogPost = () => {
-
   useTitle("replace-with-blog-title")
-  
+
   const { postId } = useParams();
   console.log(postId);
   return (
     <main>
-      <Breadcrumb />
-      <div className="w-full h-[60vh] relative">
-        <div className="h-full w-full absolute bg-[#00000094]"></div>
-        <img
-          className="w-full h-full object-fill"
-          src="https://source.unsplash.com/random/900×700/?nature"
-          alt=""
-        />
-        <div className="absolute w-full top-0 h-full flex items-center justify-center">
+      <Breadcrumb title='UBS is a multinational investment bank based in Switzerland,
+              active.' />
+      <div className="w-full h-[60vh] bg-black/50 bg-blend-overlay"
+        style={{
+          backgroundImage: `url(https://source.unsplash.com/random/900×700/?nature)`,
+          backgroundAttachment: 'fixed',
+          backgroundRepeat: 'no-repeat',
+          backgroundPosition: 'center',
+          backgroundSize: 'cover'
+        }}
+      >
+        <div className="w-full h-full flex items-center justify-center">
           <div className="max-w-[800px] grid gap-6 px-3 sm:px-0">
             <h3 className="text-[32px] sm:text-[40px] font-bold sm:font-semibold text-white">
               UBS is a multinational investment bank based in Switzerland,

@@ -4,7 +4,7 @@ const Query = ({ title, description }) => {
     <div className="flex gap-5 flex-wrap items-start mb-12">
       <img src={search} />
       <div className="">
-        <p className="pb-3 font-sans text-[24px] sm:text-[32px] text-secondary font-semibold">
+        <p className="pb-3 font-sans text-xl sm:text-[32px] text-secondary font-semibold">
           {title}
         </p>
         <p className=" text-[#475569] text-base font-normal font-sans">
