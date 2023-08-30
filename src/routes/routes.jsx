@@ -36,6 +36,7 @@ import NewDiscount from "../Dashboard/Pages/NewDiscount";
 import Category from "../Dashboard/Pages/Category";
 import Payment from "../Dashboard/Pages/Payment";
 import { terminal } from "../contexts/terminal/Terminal";
+import ComingSoon from "../pages/ComingSoon";
 export const router = createBrowserRouter([
   {
     path: "/",
@@ -71,8 +72,8 @@ export const router = createBrowserRouter([
         element: <ProtectedRoute accessTo="general"><Cart /></ProtectedRoute>,
       },
       {
-        path: "/test",
-        element: <Test />,
+        path: "/comingsoon",
+        element: <ComingSoon />,
       },
       {
         path: "/checkout",
@@ -96,7 +97,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/account",
-        loader:  () => redirect('/account/orders')
+        loader: () => redirect('/account/orders')
       },
       {
         path: "account/orders",
