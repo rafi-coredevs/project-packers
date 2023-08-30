@@ -75,7 +75,7 @@ const AllOrders = () => {
   ]
   return (
     <div className="h-full px-5 ">
-      
+
       <Modal show={isModal} onClose={() => setIsModal(false)}><div className="text-center text-xl my-10">Are you sure you want to delete this order?
         <div className="flex gap-2 items-center justify-center mx-auto w-full mt-5"><span onClick={deleteHandler}><Button style='primary'><span className="px-2">Yes</span></Button></span><span onClick={() => setIsModal(false)}><Button style='outline'><span className="px-2">No</span></Button></span></div></div></Modal>
       <Heading title="All Orders">
@@ -152,8 +152,9 @@ const AllOrders = () => {
                 <Input type="text" placeholder="Search" styles="secondary">
                   <img src={search} alt="" />
                 </Input>
-                <CustomSelect value={selectedOrderStatus.name} options={orderStatuses} onChange={orderStatusHandler} bg="bg-white" appearance="filter" />
-
+                <div className="flex ">
+                  <CustomSelect value={selectedOrderStatus.name} options={orderStatuses} onChange={orderStatusHandler} bg="bg-white" appearance="filter" />
+                </div>
                 <button onClick={() => setSortBy(sortBy === 'date:desc' ? 'date:asc' : 'date:desc')} className="border border-[#0000001f] p-2  ">
                   <img className="opacity-70" src={sort} alt="" />
                 </button>

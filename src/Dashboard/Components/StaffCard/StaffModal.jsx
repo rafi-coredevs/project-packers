@@ -37,7 +37,7 @@ const StaffModal = ({ setModal, user }) => {
             <div className="shadow-sm pb-5">
                 <h3 className="font-semibold ">User Access</h3>
             </div>
-            <div className="shadow-sm py-5 flex justify-between items-center">
+            <div className="shadow-sm py-5 flex justify-between items-start">
                 <div className=" flex gap-4">
                     <div className="h-10 w-10 rounded-full flex items-center justify-center bg-primary">
                         <p className=""><UserIcon name={user.fullName} /></p>
@@ -48,7 +48,7 @@ const StaffModal = ({ setModal, user }) => {
                     </div>
                 </div>
 
-                <CustomSelect value={selectedRole.name} bg="bg-white" options={roleOptions} onChange={selectedRoleHandler} appearance={"select"}/>
+                <CustomSelect value={selectedRole.name} bg="bg-white" options={roleOptions} onChange={selectedRoleHandler} appearance={"select"} />
 
             </div>
             <div className="p-5 grid gap-4 items-start">

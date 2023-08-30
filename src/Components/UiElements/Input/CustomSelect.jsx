@@ -11,7 +11,7 @@
 import React, { useState, useEffect } from "react";
 import downArrow from '../../../assets/icons/caret-down_minor.svg'
 import filter from "../../../assets/icons/cd-filter.svg";
-const CustomSelect = ({ options, value, onChange, appearance,bg }) => {
+const CustomSelect = ({ options, value, onChange, appearance, bg }) => {
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -19,22 +19,18 @@ const CustomSelect = ({ options, value, onChange, appearance,bg }) => {
   //   setIsOpen(false)
   // })
   const toggleDropdown = () => {
-
     setIsOpen(!isOpen);
   };
 
   const handleOptionSelect = (selectedValue) => {
-
     onChange(selectedValue);
     setIsOpen(false);
   };
 
-
+  const sty_log = () => appearance == "select" ? "left-0 w-full" : " right-[0rem] w-[22rem]";
   return (
     <div className="relative inline-block w-full">
       {/* {JSON.stringify(options)} */}
-
-
 
       {appearance == "select" &&
         <div
@@ -46,14 +42,14 @@ const CustomSelect = ({ options, value, onChange, appearance,bg }) => {
         </div>
       }
       {appearance == "filter" &&
-        <button onClick={toggleDropdown} className="border border-[#0000001f] p-2  ">
+        <button onClick={toggleDropdown} className=" border-[#0000001f] p-2 ">
           <img className="opacity-70" src={filter} alt="" />
         </button>
 
       }
 
       {isOpen ? (
-        <ul className={`absolute z-10 top-full left-0 w-full ${bg} border rounded-t-none shadow max-h-40 overflow-y-auto scrollbar`}>
+        <ul className={`absolute z-10 top-full  ${bg} ${sty_log()} border  rounded-t-none shadow   overflow-y-auto scrollbar`}>
           {options?.map((option, index) => (<li
             key={index}
             className={`${value === option.name ? 'bg-primary' : bg} py-2 px-4 cursor-pointer   hover:bg-primary`}
