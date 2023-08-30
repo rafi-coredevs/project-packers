@@ -37,9 +37,8 @@ import Category from "../Dashboard/Pages/Category";
 import Payment from "../Dashboard/Pages/Payment";
 import { terminal } from "../contexts/terminal/Terminal";
 import ComingSoon from "../pages/ComingSoon";
-import UserOrderDetails from "../pages/UserOrderDetails";
 import ErrorPage from "../pages/ErrorPage";
-
+import UserOrderDetails from "../pages/UserOrderDetails";
 
 export const router = createBrowserRouter([
   {
@@ -126,6 +125,7 @@ export const router = createBrowserRouter([
   {
     path: "/admin",
     element: <DashboardLayout />,
+    errorElement: <ErrorPage/>,
     children: [
       {
         path: "",
