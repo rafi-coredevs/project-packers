@@ -33,7 +33,7 @@ export default function ProtectedRoute({ accessTo, children }) {
         }
         else {
             if (accessTo == "login" || accessTo == "signup") {
-                navigate('/');
+                user.role == "user" ? navigate('/') : navigate('/admin');
             }
             else if (accessByRole[user.role].includes(accessTo)) {
                 return <>{children}</>

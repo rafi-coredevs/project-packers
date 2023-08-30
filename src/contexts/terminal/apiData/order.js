@@ -43,6 +43,16 @@ export const order = {
             id: "Please provide an id"
         }
     },
+    payOrder: {
+        method: "PATCH",
+        uri: "payorder",
+        params: {
+            id: undefined
+        },
+        suggestions: {
+            id: "Please provide an id"
+        }
+    },
     deleteOrder: {
         method: "DELETE",
         uri: "deleteorder",

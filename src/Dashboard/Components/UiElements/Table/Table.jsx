@@ -87,8 +87,8 @@ const Table = ({ data, paginate, loading, dashboardToogle, modalHandler }) => {
           </tr>
         </thead>
         <tbody>
-        {
-           loading? (
+          {
+            loading ? (
               [...Array(10)].map((arr, i) => <tr key={i} className=' hover:bg-[#FEF9DC]'>
                 <td className='py-8 border-b lazy-loading' />
                 {
@@ -99,7 +99,7 @@ const Table = ({ data, paginate, loading, dashboardToogle, modalHandler }) => {
                     />))
                 }
               </tr>)
-            ) : (data?.docs == null || data?.docs?.length === 0) ? <tr><td className='w-full'>No data found</td></tr>: (
+            ) : (data?.docs == null || data?.docs?.length === 0) ? <tr><td className='w-full'>No data found</td></tr> : (
               <>
                 {
                   //Products  Data Table
