@@ -55,43 +55,31 @@ const Discount = () => {
                   All
                 </button>
                 <button
-                  onClick={() => tableButtonHandler("active")}
+                  onClick={() => tableButtonHandler("valid")}
                   className={`py-2 px-3 text-[#475569] text-xs font-semibold ${
-                    active === "active"
+                    active === "valid"
                       ? "bg-[#CFF6EF] rounded"
                       : "bg-transparent"
                   }`}
                 >
-                  Active
+                  Valid
                 </button>
                 <button
-                  onClick={() => tableButtonHandler("draft")}
+                  onClick={() => tableButtonHandler("expired")}
                   className={`py-2 px-3 text-[#475569] text-xs font-semibold ${
-                    active === "draft"
+                    active === "expired"
                       ? "bg-[#CFF6EF] rounded"
                       : "bg-transparent"
                   }`}
                 >
-                  Draft
+                  Expired
                 </button>
-                <button
-                  onClick={() => tableButtonHandler("archived")}
-                  className={`py-2 px-3 text-[#475569] text-xs font-semibold ${
-                    active === "archived"
-                      ? "bg-[#CFF6EF] rounded"
-                      : "bg-transparent"
-                  }`}
-                >
-                  Archived
-                </button>
+               
               </div>
               <div className="py-2 flex gap-1">
                 <Input type="text" placeholder="Search" styles="secondary">
                   <img src={search} alt="" />
                 </Input>
-                <button className="border border-[#0000001f] p-2  ">
-                  <img className="opacity-70" src={filter} alt="" />
-                </button>
                 <button className="border border-[#0000001f] p-2  ">
                   <img className="opacity-70" src={sort} alt="" />
                 </button>
