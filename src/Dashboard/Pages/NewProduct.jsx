@@ -20,6 +20,8 @@ import removeEmptyFields from "../../Util/removeEmptyFields";
 import { terminal } from "../../contexts/terminal/Terminal";
 import toaster from "../../Util/toaster";
 import { useTitle } from "../../Components/Hooks/useTitle";
+import CustomSelect from "../../Components/UiElements/Input/CustomSelect";
+
 
 
 const NewProduct = () => {
@@ -28,15 +30,13 @@ const NewProduct = () => {
   const [product, setProduct] = useState(null);
   const [btnType, setBtnType] = useState('submit')
   const [categories, setCategories] = useState([]);
-  const [selectedCategeory, setSelectedcategory] = useState(null);
-  const [selectedSubcategeory, setSelectedsubcategory] = useState(null);
+  const [subCategories, setSubCategories] = useState([]);
+  const [selectedCategeory, setSelectedcategory] = useState({ name: 'Select', value: null, id: 0 });
+  const [selectedSubcategeory, setSelectedsubcategory] = useState({ name: 'Select', value: null, id: 0 });
   const [categoryError, setCategoryerror] = useState({
     category: false,
     subCategory: false,
   });
-
-
-
 
   const productForm = useFormik({
     initialValues: {
@@ -60,8 +60,8 @@ const NewProduct = () => {
         return;
       }
       values.status = btnType;
-      values.category = selectedCategeory;
-      values.subcategory = selectedSubcategeory;
+      values.category = selectedCategeory.value;
+      values.subcategory = selectedSubcategeory.value;
       removeEmptyFields(values);
       const { images, ...rest } = values;
       product ? terminal.request({ name: 'updateProduct', params: { id: product?.id }, body: { data: rest } }).then(res => res?.status === false ? toaster({ type: 'success', message: res.message }) : toaster({ type: 'success', message: 'Product successfully Updated' })) : terminal.request({ name: 'registerProduct', body: { data: rest, images } }).then(res => res?.status === false ? toaster({ type: 'success', message: res.message }) : toaster({ type: 'success', message: 'Product successfully added' }))
@@ -80,8 +80,9 @@ const NewProduct = () => {
           }
           else {
             setProduct(res);
-            setSelectedcategory(res.category.id);
-            setSelectedsubcategory(res.subcategory)
+            console.log("res:  " + JSON.stringify(res))
+            setSelectedcategory({ name: 'Select', value: null, id: 0 })
+            setSelectedsubcategory({ name: 'Select', value: null, id: 0 })
 
             productForm.setValues({
               "name": res.name,
@@ -99,22 +100,39 @@ const NewProduct = () => {
         }
         );
     }
-
-
   }, []);
+  useEffect(() => {
+    let arr = categories.find(item => item.id === selectedCategeory.id)?.subcategory;
+    console.log("::  ", selectedCategeory.id, arr)
+    setSubCategories(arr)
+
+  }, [selectedCategeory])
   const handleCheck = () => {
-    if (selectedCategeory === null) {
+    if (selectedCategeory.value === null) {
       setCategoryerror({
         category: true,
         subCategory: true,
       });
-    } else if (selectedSubcategeory === null) {
+    } else if (selectedSubcategeory.value === null) {
       setCategoryerror({
         category: false,
         subCategory: true,
       });
     }
   };
+
+  function categoryHandler(id) {
+    setSelectedcategory(categories.find(item => item.id === id)), setSelectedsubcategory({ name: 'Select', value: null, id: 0 }), setCategoryerror({
+      category: false,
+      subCategory: true,
+    });
+  }
+  function subCategoryHandler(id) {
+    setSelectedsubcategory(subCategories.find(item => item.id === id)), setCategoryerror({
+      category: false,
+      subCategory: false,
+    });
+  }
 
   return (
     <div className="h-full px-5">
@@ -162,39 +180,12 @@ const NewProduct = () => {
             <div className="border border-[#0000001c] rounded-lg p-3 grid gap-3">
               <label className="text-[#475569] text-sm">Parent Category</label>
 
-              <select
-                className={`bg-transparent border-[1px] w-full outline-none px-3 py-2 rounded-lg appearance-none ${categoryError.category ? "border-[red]" : ""
-                  } `}
-                onChange={(e) => {
-                  setSelectedcategory(e.target.value), setSelectedsubcategory(null), setCategoryerror({
-                    category: false,
-                    subCategory: true,
-                  });
-                }}
-                value={selectedCategeory || ''}>
-                <option disabled value="">Select</option>
-                {categories.map((cat, i) => <option key={i} value={cat.id} >{cat.name}</option>)}
-              </select>
+              <CustomSelect value={selectedCategeory.name} options={categories} onChange={categoryHandler} appearance="select" />
 
               <label className="text-[#475569] text-sm">Sub Category</label>
-              <select
-                className={`bg-transparent border-[1px] w-full outline-none px-3 py-2 rounded-lg ${categoryError.subCategory ? "border-[red]" : ""
-                  } `}
-                onChange={(e) => {
-                  setSelectedsubcategory(e.target.value), setCategoryerror({
-                    category: false,
-                    subCategory: false,
-                  })
-                }}
-                value={selectedSubcategeory || ''}>
-                <option disabled value="">
-                  Select
-                </option>
-                {
-                  categories?.find(item => item.id === selectedCategeory)?.subcategory?.map(sub => <option key={sub.id} value={sub.id}>{sub.name}</option>)
-                }
+              <CustomSelect value={selectedSubcategeory.name} options={subCategories} onChange={subCategoryHandler} appearance="select" />
 
-              </select>
+
 
               <Input
                 styles="basic"
