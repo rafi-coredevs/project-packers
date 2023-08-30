@@ -21,7 +21,7 @@ const Blog = () => {
           {loading ? (
             <>
                 {[...Array(20)].map((array, i) => (
-                  <div className="bg-white w-full rounded-md shadow-sm shadow-[#00000026] ">
+                  <div key={i} className="bg-white w-full rounded-md shadow-sm shadow-[#00000026] ">
                     <div className="rounded-t-md w-full h-60 lazy-loading" ></div>
                     <div className="p-5 flex flex-col justify-between gap-2">
                       <h4 className="font-semibold text-base line-clamp-2 w-full h-3 lazy-loading"></h4>
