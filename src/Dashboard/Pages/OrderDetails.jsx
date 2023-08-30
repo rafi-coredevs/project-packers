@@ -53,7 +53,7 @@ const [selected, setSelected] = useState(DROP_DOWN[0])
 
   const odrerForm = useFormik({
     initialValues:{
-
+      
     }
   })
   const fetchData = () => terminal.request({ name: 'singleOrder', params: { id: orderId } }).then(res => res.status === false ? toaster({ type: 'error', message: res.message }) : setOrder(res))
