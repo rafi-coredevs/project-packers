@@ -36,7 +36,7 @@ const NewProduct = () => {
 		category: false,
 		subCategory: false,
 	});
-
+	const navigate = useNavigate();
 	// formik and handleSubmit
 	const productForm = useFormik({
 		initialValues: {
@@ -50,9 +50,12 @@ const NewProduct = () => {
 			link: '',
 			tags: '',
 			images: [],
+			removeImages: [],
 		},
 		validationSchema: productSchema,
 		onSubmit: (values) => {
+			// const { images, ...rest } = values;
+			// console.log("remove image after submit",	 removeImages);
 			if (
 				categoryError.category === true ||
 				categoryError.subCategory === true
@@ -69,25 +72,30 @@ const NewProduct = () => {
 						.request({
 							name: 'updateProduct',
 							params: { id: product?.id },
-							body: { data: rest },
+							body: { data: rest, images: images },
 						})
 						.then((res) =>
 							res?.status === false
 								? toaster({ type: 'success', message: res.message })
-								: toaster({
+								: (toaster({
 										type: 'success',
 										message: 'Product successfully Updated',
 								  }),
+								  navigate(-1)),
 						)
 				: terminal
-						.request({ name: 'registerProduct', body: { data: rest, images } })
+						.request({
+							name: 'registerProduct',
+							body: { data: rest, images: images },
+						})
 						.then((res) =>
 							res?.status === false
 								? toaster({ type: 'success', message: res.message })
-								: toaster({
+								: (toaster({
 										type: 'success',
 										message: 'Product successfully added',
 								  }),
+								  navigate(-1)),
 						);
 		},
 	});
@@ -410,7 +418,7 @@ const NewProduct = () => {
 									onClick={() => {
 										handleCheck(), setBtnType('active');
 									}}
-								style='primary'
+									style='primary'
 									type='submit'
 								>
 									Publish
