@@ -16,21 +16,33 @@ const Customer = () => {
   const [active, setActive] = useState("all");
   const [tableData, setTabledata] = useState(null);
   const [loading,setLoading]=useState(true);
+  const [sortBy, setSortBy] = useState(true);
   const navigate = useNavigate();
   const tableButtonHandler = (value) => {
     setActive(value);
-    console.log(value);
+    fetchData({ status: value });
   };
   useEffect(() => {
     fetchData();
-   
   }, []);
 
-  const fetchData = (page=1) => {
-    terminal.request({name:'allOrders', queries: {page}}).then((res) => {
+  const fetchData = (queries) => {
+    terminal.request({name:'getCustomerOrder', queries }).then((res) => {
       res.status===false? '': setTabledata(res), setLoading(false);
     });
   };
+
+  function handleSorting() {
+    setSortBy(!sortBy)
+    fetchData({ sortBy: `date|${sortBy === false ? 'desc' : 'asc'}` });
+  }
+
+  function handleSearch(e) {
+    if(e.key === 'Enter') {
+      fetchData({ search: e.target.value });
+      e.target.value = '';
+    }
+  }
 
   return (
     <div className="h-full px-5 ">
@@ -83,13 +95,13 @@ const Customer = () => {
                 </button>
               </div>
               <div className="py-2 flex gap-1">
-                <Input type="text" placeholder="Search" styles="secondary">
+                <Input type="text" keyenter={handleSearch} placeholder="Search" styles="secondary">
                   <img src={search} alt="" />
                 </Input>
                 <button className="border border-[#0000001f] p-2  ">
                   <img className="opacity-70" src={filter} alt="" />
                 </button>
-                <button className="border border-[#0000001f] p-2  ">
+                <button className="border border-[#0000001f] p-2" onClick={handleSorting}>
                   <img className="opacity-70" src={sort} alt="" />
                 </button>
               </div>

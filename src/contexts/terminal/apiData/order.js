@@ -98,6 +98,13 @@ export const order = {
             id: "Please provide the order id.",
         }
     },
+    getCustomerOrder: {
+        method: "GET",
+        uri: "getcustomer",
+        suggestions: {
+            raw: "A raw example of the uri: 'getcustomer'.",
+        }
+    },
     overviewData: {
         method: "GET",
         uri: "overview",
