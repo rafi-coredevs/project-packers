@@ -48,7 +48,7 @@ const Notification = () => {
   useEffect(() => {
     user?.id &&
       terminal
-        .request({ name: 'getNotification', queries: { limit: 100, time: JSON.stringify({ '$gte': sevenDaysAgoISO }) } })
+        .request({ name: 'getNotification', queries: { limit: 100, time: {"$gte": sevenDaysAgoISO } } })
         .then((data) => data.docs && setNotifications(data.docs));
   }, [user]);
   return (
