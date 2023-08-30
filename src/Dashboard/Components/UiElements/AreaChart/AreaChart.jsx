@@ -152,7 +152,6 @@ const AreaChart = ({ data, setFilter, filter }) => {
               <option value="month">Monthly</option>
               <option value="week">Weekly</option>
             </select>
-            <CustomSelect  value={selected.name} options={OPTIONS} onChange={onChangeHandler} />
           </div>
         </div>
       </div>
