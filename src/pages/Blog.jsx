@@ -7,11 +7,11 @@ import { useEffect, useState } from "react";
 const Blog = () => {
   useTitle("Latest Blog Posts");
   const [page, setPage] = useState(1);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     // TODO  Data fetch here
     console.log(page);
-    setLoading(false)
+    setTimeout(()=>setLoading(false), 1000)
   }, [page]);
   return (
     <>
