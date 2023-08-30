@@ -132,7 +132,7 @@ const AreaChart = ({ data }) => {
         options={options}
         series={series}
         type="area"
-        height={400}
+        height={445}
       />
     </div>
   );
