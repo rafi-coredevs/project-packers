@@ -14,6 +14,7 @@ import Modal from "../../Components/UiElements/Modal/Modal";
 import Button from "../../Dashboard/Components/UiElements/Button/Button";
 import toaster from "../../Util/toaster";
 import CustomSelect from "../../Components/UiElements/Input/CustomSelect";
+import DateRangeSelector from "../Components/UiElements/DateSelector/DateRangesSelector";
 
 const orderStatuses = [{ id: 1, name: "All", value: "all" }, { id: 2, name: "Paid", value: "paid" }, { id: 3, name: "Pending", value: "pending" }]
 
@@ -22,6 +23,7 @@ const AllOrders = () => {
   const [active, setActive] = useState("all");
   const [tableData, setTabledata] = useState(orderTable);
   const [isModal, setIsModal] = useState(false);
+  const [filterDate, setFilterDate] = useState();
   const[overView,setOverView]= useState([
     {
       title: 'Total Cost',
