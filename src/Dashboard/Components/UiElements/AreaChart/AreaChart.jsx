@@ -4,7 +4,21 @@
  */
 import ReactApexChart from "react-apexcharts";
 import cd_information from '../../../../assets/icons/cd-information-circle.svg'
+import CustomSelect from "../../../../Components/UiElements/Input/CustomSelect";
+import { useState } from "react";
 
+const OPTIONS = [
+  {
+    id: 1,
+    name: "Monthly",
+    value: 'monthly'
+  },
+  {
+    id: 2,
+    name: "Weekly",
+    value: 'monthly'
+  },
+]
 
 const MONTH = [
   "Jan",
@@ -31,6 +45,13 @@ const DAY = [
 
 ];
 const AreaChart = ({ data, setFilter, filter }) => {
+
+const AreaChart = ({ data }) => {
+  const [selected,setSelected] = useState(OPTIONS[0])
+  const onChangeHandler = (id) => {
+    setSelected(OPTIONS.find(item => item.id === id))
+    
+  }
   const options = {
     chart: {
       id: "area-chart",
@@ -92,7 +113,7 @@ const AreaChart = ({ data, setFilter, filter }) => {
         opacity: 0.2,
       },
       padding: {
-        top: 0,
+        top: 30,
         right: 0,
         bottom: 0,
         left: 0,
@@ -132,6 +153,7 @@ const AreaChart = ({ data, setFilter, filter }) => {
               <option value="month">Monthly</option>
               <option value="week">Weekly</option>
             </select>
+            <CustomSelect  value={selected.name} options={OPTIONS} onChange={onChangeHandler} />
           </div>
         </div>
       </div>

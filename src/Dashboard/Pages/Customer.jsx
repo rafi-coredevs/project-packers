@@ -9,12 +9,22 @@ import sort from "../../assets/icons/cd-arrow-data-transfer-vertical-round.svg";
 import search from "../../assets/icons/cd-search2.svg";
 import { useTitle } from "../../Components/Hooks/useTitle";
 import { terminal } from "../../contexts/terminal/Terminal";
+import CustomSelect from "../../Components/UiElements/Input/CustomSelect";
+//
+const customerStatuses = [{ id: 1, name: "All", value: "all" }, { id: 2, name: "Paid", value: "paid" }, { id: 3, name: "Pending", value: "pending" }]
+
 
 const Customer = () => {
   useTitle("Customers");
   const [active, setActive] = useState("all");
   const [tableData, setTabledata] = useState(null);
-  const [loading,setLoading]=useState(true);
+
+  const [selectedCustomerStatus, setSelectedCustomerStatus] = useState({ name: 'Select', value: null, id: 0 });
+
+  function customerStatusHandler(id) {
+    setSelectedCustomerStatus(customerStatuses.find(item => item.id === id))
+  }
+
   const navigate = useNavigate();
   const tableButtonHandler = (value) => {
     setActive(value);
@@ -85,9 +95,8 @@ const Customer = () => {
                 <Input type="text" placeholder="Search" styles="secondary">
                   <img src={search} alt="" />
                 </Input>
-                <button className="border border-[#0000001f] p-2  ">
-                  <img className="opacity-70" src={filter} alt="" />
-                </button>
+                <CustomSelect value={selectedCustomerStatus.name} options={customerStatuses} onChange={customerStatusHandler} bg="bg-white" appearance="filter" />
+
                 <button className="border border-[#0000001f] p-2  ">
                   <img className="opacity-70" src={sort} alt="" />
                 </button>

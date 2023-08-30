@@ -36,10 +36,15 @@ import NewDiscount from "../Dashboard/Pages/NewDiscount";
 import Category from "../Dashboard/Pages/Category";
 import Payment from "../Dashboard/Pages/Payment";
 import { terminal } from "../contexts/terminal/Terminal";
+import ComingSoon from "../pages/ComingSoon";
+import ErrorPage from "../pages/ErrorPage";
+import UserOrderDetails from "../pages/UserOrderDetails";
+
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <Main />,
+    errorElement: <ErrorPage/>,
     children: [
       {
         path: "/",
@@ -51,7 +56,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/reset",
-        element: <ProtectedRoute accessTo="general"><Recovery /></ProtectedRoute>,
+        element: <ProtectedRoute accessTo="recover"><Recovery /></ProtectedRoute>,
       },
       {
         path: "/signup",
@@ -71,8 +76,8 @@ export const router = createBrowserRouter([
         element: <ProtectedRoute accessTo="general"><Cart /></ProtectedRoute>,
       },
       {
-        path: "/test",
-        element: <Test />,
+        path: "/comingsoon",
+        element: <ComingSoon />,
       },
       {
         path: "/checkout",
@@ -96,11 +101,16 @@ export const router = createBrowserRouter([
       },
       {
         path: "/account",
-        loader:  () => redirect('/account/orders')
+        loader: () => redirect('/account/orders')
       },
       {
         path: "account/orders",
         element: <ProtectedRoute accessTo={"general"}><Orders /></ProtectedRoute>,
+      },
+      {
+        path: "account/orders/:orderId",
+        element: <UserOrderDetails />,
+        loader: async ({ params }) => await terminal.request({ name: 'singleOrder', params: { id: params.orderId } }),
       },
       {
         path: "/notification",
@@ -115,6 +125,7 @@ export const router = createBrowserRouter([
   {
     path: "/admin",
     element: <DashboardLayout />,
+    errorElement: <ErrorPage/>,
     children: [
       {
         path: "",

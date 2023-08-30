@@ -7,14 +7,23 @@ import React, { useEffect, useState } from "react";
  */
 const Carousel = ({ isHome = Boolean }) => {
     const value = isHome
-    const [slides, setSlides] = useState();
-    useEffect(() => {
-        const options = { method: 'GET' };
-        fetch('/youtubeLink.json', options)
-            .then(response => response.json())
-            .then(response => setSlides(response))
-            .catch(err => console.error(err))
-    }, [])
+    const slides = [
+        {
+            "videoId": "dqeklvD30EA"
+        },
+        {
+            "videoId": "gcJe6Hhwiaw"
+        },
+        {
+            "videoId": "CKySIlyliMg"
+        },
+        {
+            "videoId": "V9Z7_6HCPsA"
+        },
+        {
+            "videoId": "3h5V8LN0lTc"
+        }
+      ];
 
     return <section
         className={`max-w flex gap-4 w-full px-5 overflow-scroll no-scrollbar 
@@ -27,7 +36,7 @@ const Carousel = ({ isHome = Boolean }) => {
                     src={`https://www.youtube.com/embed/${slide.videoId}?autoplay=0&loop=1&playlist=${slide.videoId}&controls=0`}
                     allow="autoplay; encrypted-media"
                     allowFullScreen
-                    className='rounded-2xl h-[370px] w-[260px]'
+                    className='rounded-2xl h-[370px] w-[260px] mx-auto'
                 />
             </React.Fragment>)
         }

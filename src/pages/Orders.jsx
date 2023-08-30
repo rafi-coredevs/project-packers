@@ -7,7 +7,7 @@ import eye from "../assets/icons/eye.svg";
 import { useEffect, useState } from "react";
 import Badge from "../Components/UiElements/Badge/Badge";
 import Button from "../Components/UiElements/Buttons/Button";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import { profileSchema } from "../Util/ValidationSchema"
 import { useUserCtx } from "../contexts/user/UserContext";
@@ -162,12 +162,13 @@ const Orders = () => {
                                     <Badge text={item.status} />
                                   </td>
                                   <td className="px-6 py-4">
-                                    <img
-                                      className="cursor-pointer"
-                                      onClick={() => console.log("first")}
-                                      src={eye}
-                                      alt=""
-                                    />
+                                    <Link to={`/account/orders/${item.id}`}>
+                                      <img
+                                        className="cursor-pointer"
+                                        src={eye}
+                                        alt=""
+                                      />
+                                    </Link>
                                   </td>
                                 </tr>
                               })

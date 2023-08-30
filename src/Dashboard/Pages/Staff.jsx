@@ -10,6 +10,7 @@ import { terminal } from "../../contexts/terminal/Terminal";
 import StaffModal from "../Components/StaffCard/StaffModal";
 import UserIcon from "../../Components/UiElements/UserIcon/UserIcon";
 import toaster from "../../Util/toaster";
+import CustomSelect from "../../Components/UiElements/Input/CustomSelect";
 
 const Staff = () => {
   useTitle("Staff");
@@ -17,6 +18,7 @@ const Staff = () => {
   const [loading, setLoading] = useState(false);
   const [users, setUsers] = useState([])
   const [user, setUser] = useState();
+  const [selectedRole, setSelectedRole] = useState({ name: 'Select', value: '', id: 0 })
   useEffect(() => {
     terminal.request({ name: 'allUser', queries: { role: JSON.stringify(['admin', 'staff', 'super-admin']) } }).then(data => data?.docs?.length && setUsers(data.docs))
   }, [])
@@ -43,6 +45,16 @@ const Staff = () => {
       }
     })
   };
+
+  const roleOptions =
+    [
+      { name: "Admin", value: "admin", id: 1 },
+      { name: "Super Admin", value: "super-admin", id: 2 },
+      { name: "Staff", value: "staff", id: 3 },
+      { name: "User", value: "user", id: 4 },
+    ]
+  const categoryHandler = (id) => setSelectedRole(roleOptions.find(item => item.id === id));
+
   return (
     <div className="px-5 h-full">
       <Heading title={`Staff`}>
@@ -127,17 +139,11 @@ const Staff = () => {
                 placeholder="01700000000"
                 name='phone'
               />
-              <Input
-                styles="select"
-                label="Role"
-                name='role'
-                option={[
-                  { name: "Admin", value: "admin" },
-                  { name: "Super Admin", value: "super-admin" },
-                  { name: "Staff", value: "staff" },
-                  { name: "User", value: "user" },
-                ]}
-              />
+
+              <CustomSelect value={selectedRole.name} options={roleOptions} bg="bg-white" onChange={categoryHandler} />
+
+
+
             </div>
 
             <div className="flex justify-end">

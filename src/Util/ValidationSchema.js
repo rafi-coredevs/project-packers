@@ -107,3 +107,15 @@ export const requestItems = object({
 	shippingaddress:string(),
 	billingaddress: string(),
 })
+
+// New Customer
+
+export const customerSchema = object({
+	firstName: string().required(),
+	lastName: string().required(),
+	email: string().email().required('Please Enter Your Email Address.'),
+	phone: string().matches(/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/, 'Invalid phone number').required(),
+	address: string().required(),
+	city: string().required(),
+	zip: string().required(),
+})

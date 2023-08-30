@@ -11,10 +11,16 @@ const About = () => {
   return (
     <main>
       <Breadcrumb />
-      <div className="w-full h-[60vh] relative">
-        <div className="h-full w-full absolute bg-[#00000094]"></div>
-        <img className="w-full h-full object-fill" src={about} alt="" />
-        <div className="absolute w-full top-0 h-full flex items-center justify-center">
+      <div className="w-full h-[60vh] bg-black/50 bg-blend-overlay"
+        style={{
+          backgroundImage: `url(${about})`,
+          backgroundAttachment: 'fixed',
+          backgroundRepeat: 'no-repeat',
+          backgroundPosition: 'center',
+          backgroundSize: 'cover'
+        }}
+      >
+        <div className="w-full h-full flex items-center justify-center">
           <div className="max-w-[800px] grid gap-6 px-3 sm:px-0 text-left sm:text-center">
             <h5 className="text-[24px] font-bold text-[#6BCCCB]">About Us</h5>
             <h3 className="text-[32px] sm:text-[40px] font-bold sm:font-semibold text-white">

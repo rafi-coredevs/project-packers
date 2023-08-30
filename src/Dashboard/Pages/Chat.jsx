@@ -4,6 +4,7 @@ import { terminal } from "../../contexts/terminal/Terminal";
 import Messages from "../Components/UiElements/Messages/Messages";
 import EmptyMassage from "../Components/UiElements/Messages/EmptyMassage";
 import { useTitle } from "../../Components/Hooks/useTitle";
+import CustomSelect from "../../Components/UiElements/Input/CustomSelect";
 
 const SUPPORT_TYPE = [{ name: 'all', value: "all" }, { name: 'Account', value: 'account' }, { name: 'Order', value: 'order' }, { name: 'Payment', value: 'payment' }, { name: 'Refund', value: 'refund' }]
 
@@ -40,6 +41,10 @@ const Chat = () => {
   const actionButtonHandler = (value) => {
     setActiveStatusButton(value);
   };
+
+  // const supportTypes = [{ id: 1, name: "All", value: "all" }, { id: 2, name: "Account", value: "account" }, { id: 3, name: "Order", value: "order" }, { id: 4, name: "Payment", value: "payment" }, { id: 5, name: "Refund", value: "refund" }]
+
+  // const supportTypeHandler = (id) => setSupportType(supportTypes.find(item => item.id === id));
 
   return (
     <div className="grid grid-cols-12">
@@ -93,6 +98,8 @@ const Chat = () => {
               <option value="payment">Payment</option>
               <option value="refund">Refund</option>
             </select>
+
+            {/* <CustomSelect value={supportType} options={supportTypes} onChange={categoryHandler} /> */}
           </div>
         </div>
         <div className="">
