@@ -52,8 +52,8 @@ const OrderDetails = () => {
   }, []);
 
   const odrerForm = useFormik({
-    initialValues: {
-
+    initialValues:{
+      
     }
   })
   const fetchData = () => terminal.request({ name: 'singleOrder', params: { id: orderId } }).then(res => res.status === false ? toaster({ type: 'error', message: res.message }) : setOrder(res))

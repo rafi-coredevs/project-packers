@@ -19,9 +19,30 @@ const AllOrders = () => {
   const [active, setActive] = useState("all");
   const [tableData, setTabledata] = useState(orderTable);
   const [isModal, setIsModal] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const [sortBy, setSortBy] = useState('date:asc');
-  const [overView, setOverView] = useState([])
+  const [loading,setLoading]=useState(true);
+  const [sortBy,setSortBy]=useState('date:asc');
+  const[overView,setOverView]= useState([
+    {
+      title: 'Total Cost',
+      total: 0
+    },
+    {
+      title: 'Total Revenue',
+      total: 0
+    },
+    {
+      title: 'Total Order',
+      total: 0
+    },
+    {
+      title: 'Completed',
+      total: 0
+    },
+    {
+      title: 'Cancelled',
+      total: 0
+    }
+  ]);
 
   const tableButtonHandler = (value) => {
     setActive(value);

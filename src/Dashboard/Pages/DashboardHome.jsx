@@ -41,7 +41,7 @@ const DashboardHome = () => {
       total: 0
     },
     {
-      title: 'Canceled',
+      title: 'Cancelled',
       total: 0
     }
   ]);
