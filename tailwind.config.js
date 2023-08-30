@@ -93,7 +93,7 @@ export default {
             left: '-200%'
           },
           '50%':{
-            left: '100%'
+            left: '150%'
           },
           '100%': {
             left: '-200%'
