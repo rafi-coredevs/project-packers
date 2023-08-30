@@ -3,9 +3,8 @@
  * 
  */
 import ReactApexChart from "react-apexcharts";
-import { heatMap } from "../../../../Store/Data";
 
-const HeatMap = () => {
+const HeatMap = ({data}) => {
   const options = {
     chart: {
       height: 400,
@@ -76,7 +75,7 @@ const HeatMap = () => {
       </div>
       <ReactApexChart
         options={options}
-        series={heatMap}
+        series={data}
         type="heatmap"
         height={400}
         width={350}
