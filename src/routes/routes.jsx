@@ -38,10 +38,14 @@ import Payment from "../Dashboard/Pages/Payment";
 import { terminal } from "../contexts/terminal/Terminal";
 import ComingSoon from "../pages/ComingSoon";
 import UserOrderDetails from "../pages/UserOrderDetails";
+import ErrorPage from "../pages/ErrorPage";
+
+
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <Main />,
+    errorElement: <ErrorPage/>,
     children: [
       {
         path: "/",

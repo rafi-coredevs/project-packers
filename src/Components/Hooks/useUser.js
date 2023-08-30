@@ -22,7 +22,6 @@ const useUser = () => {
 	};
 
 	const SignUp = (userInfo) => {
-		setLoading(true);
 		return terminal.request({ name: 'registerUser', body: userInfo });
 	};
 
