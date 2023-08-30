@@ -319,7 +319,7 @@ const NewProduct = () => {
 							/>
 						</div>
 
-						<div className="flex justify-between">
+						<div className="flex justify-between mb-10">
 							<Button
 								onClick={() => productForm.resetForm()}
 								style="outline"

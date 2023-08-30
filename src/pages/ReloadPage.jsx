@@ -4,7 +4,7 @@ import logo from '../assets/logo.svg'
 const ReloadPage = () => {
   return <>
     <div className='min-h-screen flex flex-col justify-center items-center'>
-      <img src={logo} className='animate-scale' />
+      <img src={logo} className='w-8 animate-scale' />
     </div>
   </>;
 };
