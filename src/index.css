@@ -87,3 +87,8 @@ textarea{
 .lazy-loading{
 	@apply bg-[length:400%] bg-gradient-to-r from-gray-200 via-white to-gray-200 animate-loading
 }
+
+.text-outline{
+	-webkit-text-fill-color: transparent;
+  -webkit-text-stroke: 1px;
+}
