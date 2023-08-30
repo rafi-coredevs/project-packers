@@ -15,8 +15,13 @@ const CustomSelect = ({ options, value, onChange, appearance, bg }) => {
 
   const [isOpen, setIsOpen] = useState(false);
 
-  // window.addEventListener('click', ()=>{
-  //   setIsOpen(false)
+  // window.addEventListener('click', (e) => {
+  //   let triggerId = e.target.id;
+  //   console.log(triggerId)
+  //   if (triggerId == "customselect" || triggerId == "customselectfilter") { setIsOpen(true); }
+  //   else {
+  //     setIsOpen(false);
+  //   }
   // })
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
@@ -34,16 +39,17 @@ const CustomSelect = ({ options, value, onChange, appearance, bg }) => {
 
       {appearance == "select" &&
         <div
+          id="customselect"
           className={`py-2 px-4 ${bg} border border-[#ededed] rounded-md  cursor-pointer flex justify-between`}
           onClick={toggleDropdown}
         >
           {value === null ? 'Select' : value}
-          <img src={downArrow} alt="" />
+          <img src={downArrow} alt="" className="w-[1.5rem] h-[1.5rem]" />
         </div>
       }
       {appearance == "filter" &&
-        <button onClick={toggleDropdown} className=" border-[#0000001f] p-2 ">
-          <img className="opacity-70" src={filter} alt="" />
+        <button onClick={toggleDropdown} className=" border-[#0000001f] p-2 " id="customselectfilter">
+          <img src={filter} alt="" className="w-[1.5rem] h-[1.5rem]" />
         </button>
 
       }

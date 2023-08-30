@@ -150,7 +150,7 @@ const AllOrders = () => {
               </div>
               <div className="py-2 flex gap-1">
                 <Input type="text" placeholder="Search" styles="secondary">
-                  <img src={search} alt="" />
+                  <img src={search} alt="" className="w-[1.5rem] h-[1.5rem]" />
                 </Input>
                 <div className="flex ">
                   <CustomSelect value={selectedOrderStatus.name} options={orderStatuses} onChange={orderStatusHandler} bg="bg-white" appearance="filter" />
