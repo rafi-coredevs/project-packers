@@ -277,6 +277,7 @@ const NewProduct = () => {
 									</>
 								}
 								preLoadedImages={preLoadedImages}
+					
 							/>
 						</div>
 						<h2 className='text-base text-secondary font-semibold'>Pricing</h2>
