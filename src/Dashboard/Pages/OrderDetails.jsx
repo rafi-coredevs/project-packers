@@ -114,26 +114,26 @@ const [selected, setSelected] = useState(DROP_DOWN[0])
                       <td className="py-2">
                         <div className="flex gap-2 items-center">
                           <div
-                            className="w-10 h-10 rounded bg-[length:400%] bg-gradient-to-r from-gray-200 via-white to-gray-200 animate-loading"
+                            className="w-10 h-10 rounded lazy-loading"
                           />
                           <div>
-                            <p className="line-clamp-1 bg-[length:400%] bg-gradient-to-r from-gray-200 via-white to-gray-200 animate-loading"><span className="invisible">product?.product?.name</span></p>
-                            <p className="text-[#475569] bg-[length:400%] bg-gradient-to-r from-gray-200 via-white to-gray-200 animate-loading">
+                            <p className="line-clamp-1 lazy-loading"><span className="invisible">product?.product?.name</span></p>
+                            <p className="text-[#475569] lazy-loading">
                               <span className="invisible">price</span>
                             </p>
                           </div>
                         </div>
                       </td>
                       <td className="py-2">
-                        <input type="text" className='h-9 w-28 bg-[length:400%] bg-gradient-to-r from-gray-200 via-white to-gray-200 animate-loading' />
+                        <input type="text" className='h-9 w-28 lazy-loading' />
                       </td>
-                      <td><span className="py-2 px-8 bg-[length:400%] bg-gradient-to-r from-gray-200 via-white to-gray-200 animate-loading"></span></td>
+                      <td><span className="py-2 px-8 lazy-loading"></span></td>
                       <td className="py-2 text-right">
                         <button
                           className="pe-3"
                           onClick={() => console.log("first")}
                         >
-                          <div className="h-4 w-4 bg-[length:400%] bg-gradient-to-r from-gray-200 via-white to-gray-200 animate-loading" />
+                          <div className="h-4 w-4 lazy-loading" />
                         </button>
                       </td>
                     </tr> :

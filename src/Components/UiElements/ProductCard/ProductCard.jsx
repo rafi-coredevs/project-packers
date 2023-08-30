@@ -12,17 +12,17 @@ export const LazyProductCard = ({ isShop = Boolean }) => {
       className={`w-[22rem] lg:w-[24rem] p-3 cursor-pointer flex justify-center gap-4 group border ${isShop ? 'lg:flex-col' : 'flex-col'}`}
     >
       <div
-        className='w-[40%] lg:w-full h-40 lg:h-80 rounded-xl bg-[length:400%] bg-gradient-to-r from-gray-200 via-white to-gray-200 animate-loading'
+        className='w-[40%] lg:w-full h-40 lg:h-80 rounded-xl lazy-loading'
       />
       <div className='w-[60%] lg:w-full lg:mt-7'>
-        <h3 className='w-full text-2xl font-semibold bg-[length:400%] bg-gradient-to-r from-gray-200 via-white to-gray-200 animate-loading'>
+        <h3 className='w-full text-2xl font-semibold lazy-loading'>
           <span className='opacity-0'>title</span>
         </h3>
         <div className='flex flex-col lg:flex-row lg:justify-between lg:items-center mt-4 text-base'>
-          <p className='w-fit bg-[length:400%] bg-gradient-to-r from-gray-200 via-white to-gray-200 animate-loading'>
+          <p className='w-fit lazy-loading'>
             <span className='opacity-0'>Retailer price</span>
           </p>
-          <p className='font-semibold w-fit bg-[length:400%] bg-gradient-to-r from-gray-200 via-white to-gray-200 animate-loading'>
+          <p className='font-semibold w-fit lazy-loading'>
             <span className='opacity-0'>$ price</span>
           </p>
         </div>

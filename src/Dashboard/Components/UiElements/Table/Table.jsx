@@ -90,12 +90,12 @@ console.log(data);
         {
            loading? (
               [...Array(10)].map((arr, i) => <tr key={i} className=' hover:bg-[#FEF9DC]'>
-                <td className='py-8 border-b bg-[length:400%] bg-gradient-to-r from-gray-200 via-white to-gray-200 animate-loading' />
+                <td className='py-8 border-b lazy-loading' />
                 {
                   tableHeadData?.map((item, index) => (
                     <td
                       key={index}
-                      className='py-8 border-b bg-[length:400%] bg-gradient-to-r from-gray-200 via-white to-gray-200 animate-loading'
+                      className='py-8 border-b lazy-loading'
                     />))
                 }
               </tr>)
@@ -372,7 +372,7 @@ console.log(data);
       {(location !== 'category' && loading===false) && (
         <div className='flex justify-between items-center py-6 px-4'>
           <p className='text-[#475569] text-sm'>
-            Showing {data?.page===1? 0 :((data?.page-1 )* 10)} - {data?.page===1? data?.docs?.length:((data?.page-1 )* 10)+data?.docs?.length} of {data?.totalDocs} results
+            Showing {data?.page===1? 1 :((data?.page-1 )* 10)} - {data?.page===1? data?.docs?.length:((data?.page-1 )* 10)+data?.docs?.length} of {data?.totalDocs} results
           </p>
           <div className='flex'>
             <button

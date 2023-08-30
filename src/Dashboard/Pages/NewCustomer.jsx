@@ -10,7 +10,7 @@ const NewCustomer = () => {
   };
   return (
     <div className="px-5 h-full">
-      <Heading type="navigate" title={`New Customer`} />
+      <Heading type="navigate" title={`New Customer`} back={'customer'} />
       <div className="grid grid-cols-2 gap-5">
         <div className="col-span-2 sm:col-span-1 grid">
           <div className="space-y-3">
@@ -48,12 +48,12 @@ const NewCustomer = () => {
             <Input styles="basic" label="Phone Number" placeholder="01700000000" />
           </div>
           <div className="flex justify-between">
-              <Button style="outline">Discard</Button>
-              <div className="space-x-2">
-                <Button style="outline">Draft</Button>
-                <Button style="primary">Publish</Button>
-              </div>
+            <Button style="outline">Discard</Button>
+            <div className="space-x-2">
+              <Button style="outline">Draft</Button>
+              <Button style="primary">Publish</Button>
             </div>
+          </div>
         </form>
       </div>
     </div>

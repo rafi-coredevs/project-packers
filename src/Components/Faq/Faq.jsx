@@ -7,29 +7,29 @@ const DUMMY_DATA = {
 };
 const Faq = () => {
   return (
-    <div className="container mx-auto flex flex-col items-center my-[34px] sm:my-[74px]">
+    <div className="container mx-auto flex flex-col items-center my-[34px] sm:my-[74px] min-h-[1178px] md:min-h-[730px] lg:min-h-[550px]">
       <Heading title="Frequently Asked Questions" />
-  
-        <div className="grid grid-cols-1 px-5 sm:p-0 sm:grid-cols-3 gap-8 justify-center items-start">
-          <div className="flex flex-col">
-            <Collapse data={DUMMY_DATA} />
-            <Collapse data={DUMMY_DATA} />
-            <Collapse data={DUMMY_DATA} />
-            <Collapse data={DUMMY_DATA} />
-          </div>
-          <div className="flex flex-col">
-            <Collapse data={DUMMY_DATA} />
-            <Collapse data={DUMMY_DATA} />
-            <Collapse data={DUMMY_DATA} />
-            <Collapse data={DUMMY_DATA} />
-          </div>
-          <div className="flex flex-col">
-            <Collapse data={DUMMY_DATA} />
-            <Collapse data={DUMMY_DATA} />
-            <Collapse data={DUMMY_DATA} />
-            <Collapse data={DUMMY_DATA} />
-          </div>
+
+      <div className="grid grid-cols-1 px-5 sm:p-0  md:grid-cols-3 gap-8 justify-center items-start">
+        <div className="flex flex-col">
+          <Collapse data={DUMMY_DATA} />
+          <Collapse data={DUMMY_DATA} />
+          <Collapse data={DUMMY_DATA} />
+          <Collapse data={DUMMY_DATA} />
         </div>
+        <div className="flex flex-col">
+          <Collapse data={DUMMY_DATA} />
+          <Collapse data={DUMMY_DATA} />
+          <Collapse data={DUMMY_DATA} />
+          <Collapse data={DUMMY_DATA} />
+        </div>
+        <div className="flex flex-col">
+          <Collapse data={DUMMY_DATA} />
+          <Collapse data={DUMMY_DATA} />
+          <Collapse data={DUMMY_DATA} />
+          <Collapse data={DUMMY_DATA} />
+        </div>
+      </div>
 
     </div>
   );

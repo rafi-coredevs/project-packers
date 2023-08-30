@@ -16,10 +16,6 @@ import NavNoDropdown from './NavNoDropdown';
  * nav list hold the structure for the admin sidebar 
  */
 const DDNav = ({ userRole }) => {
-
-
-
-
     const navList = [
         {
             id: 1,

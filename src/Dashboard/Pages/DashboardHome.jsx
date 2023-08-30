@@ -10,17 +10,66 @@ import { Link, useNavigate } from "react-router-dom";
 import Overview from "../Components/Overview/Overview";
 import { useTitle } from "../../Components/Hooks/useTitle";
 import { terminal } from "../../contexts/terminal/Terminal";
+import toaster from "../../Util/toaster";
 // 
 const DashboardHome = () => {
   useTitle("Dashboard")
   const [active, setActive] = useState("orders");
   const [tableData, setTabledata] = useState(orderTable);
   const [loading,setLoading]= useState(false);
+  const [areaChartData,setAreaChartData]=useState(areaChart)
+  const[overView,setOverView]= useState([
+    {
+      title: 'Total Cost',
+      total: 0
+    },
+    {
+      title: 'Total Request',
+      total: 0
+    },
+    {
+      title: 'Total Order',
+      total: 0
+    },
+    {
+      title: 'Completed',
+      total: 0
+    },
+    {
+      title: 'Canceled',
+      total: 0
+    }
+  ]);
   useEffect(() => {
     setLoading(true);
     active==='orders'?fetchOrder():fetchRequest();
   }, [active]);
+  useEffect(()=>{
+    terminal.request({name: 'overviewData'}).then(res=> setOverView(res?.status===false? []: [
+      {
+        title: 'Total Cost',
+        total: res?.totalCost
+      },
+      {
+        title: 'Total Request',
+        total: res?.totalRequest
+      },
+      {
+        title: 'Total Order',
+        total: res?.totalOrder
+      },
+      {
+        title: 'Completed',
+        total: res?.completedOrder
+      },
+      {
+        title: 'Canceled',
+        total: res?.cancelledOrder
+      }
+    ]));
+    terminal.request({name: 'chartData'}).then(res=> res?.status===false? toaster({tyoe:'error',message:res?.message}): setAreaChartData(res?.areaChart));
 
+  },[])
   const fetchOrder = (page = 1) => {
     terminal.request({ name: 'allOrders', queries: { page } }).then((res) => {
       res.status === false ? '' : setTabledata(res),setLoading(false);
@@ -34,43 +83,21 @@ const DashboardHome = () => {
 
   const tableButtonHandler = (value) => {
     setActive(value);
-    console.log(value);
   };
 
-  const DashboardOverview = [
-    {
-      title: 'Total Cost',
-      total: 10440.00
-    },
-    {
-      title: 'Total Request',
-      total: 294.00
-    },
-    {
-      title: 'Total Order',
-      total: 125.00
-    },
-    {
-      title: 'Completed',
-      total: 100.00
-    },
-    {
-      title: 'Canceled',
-      total: 25.00
-    }
-  ]
+  
 
   return (
     <div className="h-full px-5 ">
       <Heading title="Overview" />
       <div className="grid grid-cols-3 gap-5">
         <div className="col-span-3">
-          <Overview data={DashboardOverview} />
+          <Overview data={overView} />
         </div>
         <div className="col-span-3 grid gap-5 grid-cols-7">
           <div className="col-span-7 sm:col-span-5">
             <div className="w-full bg-white p-5 border border-[#0000001f] rounded-md">
-              <AreaChart data={areaChart} />
+              <AreaChart data={areaChartData} />
             </div>
           </div>
           <div className="col-span-7 sm:col-span-2">

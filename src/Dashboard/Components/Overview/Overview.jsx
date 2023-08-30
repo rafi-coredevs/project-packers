@@ -1,8 +1,9 @@
-
-
+/**
+ * Overview Component
+ * @param {Object} data Overview data 
+ * @returns Overview 
+ */
 const Overview = ({ data }) => {
-
-
     return (
         <section>
             <div className='mt-6 pb-5 flex justify-between items-center border-b divide-x'>
@@ -15,17 +16,18 @@ const Overview = ({ data }) => {
                             <h4>{data.title}</h4>
                             {
                                 data.title === 'Total Cost' ?
-                                    <p className='text-xl font-semibold'>$ {data.total}</p> :
+                                    <p className='text-xl font-semibold'>৳ {data.total}</p> :
                                     <div className='flex items-center gap-2'>
                                         <p className='text-xl font-semibold'>
                                             {data.total}
                                         </p>
                                         <span
-                                            className={`w-3 h-3 rounded-full ${data.title === 'Total Request' && 'bg-[#A2EEE7]'
+                                            className={`w-3 h-3 rounded-full
+                                                ${data.title === 'Total Request' && 'bg-[#A2EEE7]'
+                                                || data.title === 'Total Revenue' && 'bg-[#A2EEE7]'
                                                 || data.title === 'Total Order' && 'bg-[#F2C852]'
                                                 || data.title === 'Completed' && 'bg-[#16A34A]'
-                                                || data.title === 'Canceled' && 'bg-[#EF4444]'
-                                                }`}
+                                                || data.title === 'Canceled' && 'bg-[#EF4444]'}`}
                                         />
                                     </div>
                             }

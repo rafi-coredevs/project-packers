@@ -83,3 +83,7 @@ select option:hover {
 textarea{
 	resize: none !important;
 }
+
+.lazy-loading{
+	@apply bg-[length:400%] bg-gradient-to-r from-gray-200 via-white to-gray-200 animate-loading
+}

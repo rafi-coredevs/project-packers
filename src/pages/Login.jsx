@@ -9,6 +9,7 @@ import apple from '../assets/icons/apple.svg';
 import { useUserCtx } from '../contexts/user/UserContext';
 import toaster from '../Util/toaster';
 import { terminal } from '../contexts/terminal/Terminal';
+import PasswordSymbol from '../Components/UiElements/PasswordSymbol/PasswordSymbol';
 
 const Login = () => {
 	const navigate = useNavigate();
@@ -17,7 +18,7 @@ const Login = () => {
 	const requestItemData = location.state?.requestItem;
 	const sendRequest = location.state?.sendRequest;
 
-
+	const destinedTo = location.state?.afterLogin;
 
 	const { Login, setUser } = useUserCtx();
 	const loginForm = useFormik({
@@ -49,7 +50,7 @@ const Login = () => {
 								navigate('/', { state: true });
 							});
 					} else {
-						navigate('/');
+						destinedTo ? navigate(destinedTo) : navigate('/');
 					}
 				}
 			});
@@ -60,7 +61,7 @@ const Login = () => {
 			<div className='container mx-auto grid grid-cols-1 sm:grid-cols-2 relative z-20 justify-center divide-x divide-[#ffffff1a] flex-wrap'>
 				<div className='w-full sm:max-w-[30vw]'>
 					<p className='text-white text-[52px] font-sora font-extrabold'>
-						Welcome Back
+						Welcome Back {JSON.stringify(destinedTo)}
 					</p>
 					<form
 						className='flex flex-col gap-5'
@@ -100,8 +101,8 @@ const Login = () => {
 								placeholder='Enter your Password'
 								label='Password'
 							/>
+							{/* <PasswordSymbol width='full' py='3' placeholder='Enter Your Password' /> */}
 						</div>
-
 						{/* remember me */}
 						<div className='flex justify-between mt-[10px]'>
 							<div className='font-sans text-base '>

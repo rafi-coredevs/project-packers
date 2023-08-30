@@ -6,7 +6,7 @@ const useUser = () => {
 	const [user, setUser] = useState(null);
 
 	const Login = (userCred) => {
-		setLoading(true);
+ 
 		return terminal.request({ name: 'logIn', body: userCred });
 	};
 

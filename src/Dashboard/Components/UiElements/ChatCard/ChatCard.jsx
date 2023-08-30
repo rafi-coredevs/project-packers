@@ -5,10 +5,10 @@ export const LazyChatCard = () => {
       <div className={`p-3 border-[#0000001c] border-b cursor-pointer hover:bg-[#3b3b3b10]`}>
         <div className="flex gap-2 items-center">
           <span className={`h-2 w-2 rounded-full ${styles[status]}`}></span>
-          <p className="font-medium first-letter:uppercase bg-[length:400%] bg-gradient-to-r from-gray-200 via-white to-gray-200 animate-loading"></p>
+          <p className="font-medium first-letter:uppercase lazy-loading"></p>
         </div>
-        <p className="font-medium bg-[length:400%] bg-gradient-to-r from-gray-200 via-white to-gray-200 animate-loading"></p>
-        <p className="line-clamp-2 bg-[length:400%] bg-gradient-to-r from-gray-200 via-white to-gray-200 animate-loading"></p>
+        <p className="font-medium lazy-loading"></p>
+        <p className="line-clamp-2 lazy-loading"></p>
       </div>
     </div>
   );

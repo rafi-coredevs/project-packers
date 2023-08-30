@@ -29,7 +29,7 @@ const Header = () => {
     }
   })
   return (
-    <div className="sticky top-0 mt-0 pt-0  bg-white z-50 border-b border-gray-300 shadow-md">
+    <div className="sticky top-0 mt-0 pt-0  bg-white z-50 border-b border-gray-300">
       <div className="mx-6 hidden  sm:flex navbar gap-4 py-[10px] items-center justify-between">
         <Link
           to="/admin"
@@ -42,10 +42,11 @@ const Header = () => {
             Packers
           </div>
         </Link>
-        <div className="w-full max-w-[650px]">
+        <div className="w-full max-w-[650px] border rounded-md">
           <Input
             type="text"
             placeholder="Search"
+            className={'placeholder:text-black'}
           >
             <img src={search} alt="" />
           </Input>
