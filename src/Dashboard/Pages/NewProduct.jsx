@@ -21,6 +21,7 @@ import { terminal } from '../../contexts/terminal/Terminal';
 import toaster from '../../Util/toaster';
 import { useTitle } from '../../Components/Hooks/useTitle';
 import UploadIcon from '../../assets/icons/UploadIcon.svg';
+import ProductImageUpload from '../Components/uploadImages/ProductImageUpload/ProductImagesUpdate';
 
 const NewProduct = () => {
 	useTitle('New Product');
@@ -257,7 +258,7 @@ const NewProduct = () => {
 							Product Images
 						</h2>
 						<div className='border border-[#0000001c] rounded-lg p-3 min-h-[12rem]'>
-							<ImageUploader
+							<ProductImageUpload
 								formikProps={productForm}
 								className='flex-row-reverse items-center justify-end mr-auto'
 								uploadButtonIcon={UploadIcon}
