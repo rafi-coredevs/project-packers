@@ -10,9 +10,6 @@ const ProductImageUpload = ({
 }) => {
 	const [allImages, setAllImages] = useState([]);
 	const [removeImages, setRemoveImages] = useState([]);
-	const [mouseEnterIndex, setMouseEnterIndex] = useState(false);
-
-	const baseURL = import.meta.env.VITE_SERVER_URL;
 
 	/**
 	 *
@@ -25,19 +22,23 @@ const ProductImageUpload = ({
 		}
 	};
 
+	/**
+	 * @description - for showing preLoaded images if theres any
+	 */
 	useEffect(() => {
 		if (preLoadedImages.length > 0 || !preLoadedImages) {
 			setAllImages(preLoadedImages);
 		}
 	}, [preLoadedImages]);
 
+	/**
+	 * @description - for register uploaded images, replaced images and deleted images
+	 */
 	useEffect(() => {
 		const imageFile = allImages.filter((image) => image instanceof File);
-
 		formikProps.setFieldValue('images', imageFile);
 
 		const imageURL = removeImages.filter((image) => !(image instanceof File));
-
 		formikProps.setFieldValue('removeImages', imageURL);
 
 		return () => {
@@ -74,15 +75,15 @@ const ProductImageUpload = ({
 		setAllImages((prev) => [...prev, file]);
 	};
 
+	/**
+	 * @description - for handling image replace
+	 */
 	const handleReplace = (e, index) => {
 		const file = e.target.files[0];
 		const replacedImage = allImages[index];
 		setRemoveImages((prev) => [...prev, replacedImage]);
 		console.log(allImages[index]);
-
 		allImages[index] = file;
-
-		setMouseEnterIndex(null);
 	};
 
 	return (
@@ -94,14 +95,12 @@ const ProductImageUpload = ({
 							<div
 								key={index}
 								className={`w-[134px] h-[133px] border rounded-lg flex items-center justify-center relative p-3`}
-								onMouseEnter={() => setMouseEnterIndex(index)}
-								// onMouseOutCapture={() => setMouseEnterIndex(null)}
 							>
 								<img
 									src={
 										image instanceof File
 											? URL.createObjectURL(image)
-											: `${baseURL}/${image}`
+											: `${import.meta.env.VITE_SERVER_URL}/${image}`
 									}
 									alt=''
 									className='max-w-[123px] min-w-[123px] h-[123px]'

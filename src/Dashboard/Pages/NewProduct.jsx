@@ -54,8 +54,6 @@ const NewProduct = () => {
 		},
 		validationSchema: productSchema,
 		onSubmit: (values) => {
-			// const { images, ...rest } = values;
-			// console.log("remove image after submit",	 removeImages);
 			if (
 				categoryError.category === true ||
 				categoryError.subCategory === true
