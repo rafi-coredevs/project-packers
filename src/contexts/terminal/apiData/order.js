@@ -44,7 +44,7 @@ export const order = {
         }
     },
     payOrder: {
-        method: "PATCH",
+        method: "GET",
         uri: "payorder",
         params: {
             id: undefined
