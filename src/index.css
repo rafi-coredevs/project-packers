@@ -95,7 +95,8 @@ textarea{
   -webkit-text-stroke: 0.5px;
 }
 
-.rdrDays rdrDayActive{
-	color:black !important
-	
+
+/* Calendar */
+.rdrDefinedRangesWrapper {
+    display: none;
 }
