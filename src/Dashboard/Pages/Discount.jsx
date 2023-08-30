@@ -9,13 +9,21 @@ import sort from "../../assets/icons/cd-arrow-data-transfer-vertical-round.svg";
 import search from "../../assets/icons/cd-search2.svg";
 import { useTitle } from "../../Components/Hooks/useTitle";
 import { terminal } from "../../contexts/terminal/Terminal";
+import CustomSelect from "../../Components/UiElements/Input/CustomSelect";
+
+const discountStatuses = [{ id: 1, name: "All", value: "all" }, { id: 2, name: "Paid", value: "paid" }, { id: 3, name: "Pending", value: "pending" }]
+
 
 const Discount = () => {
   useTitle("Active Discounts");
   const [active, setActive] = useState("all");
   const [tableData, setTabledata] = useState(null);
   const [loading,setLoading]= useState(false);
+  const [selectedDiscountStatus, setSelectedDiscountStatus] = useState({ name: 'Select', value: null, id: 0 });
 
+  function discountStatusHandler(id) {
+    setSelectedDiscountStatus(discountStatuses.find(item => item.id === id))
+  }
   const navigate = useNavigate();
   const tableButtonHandler = (value) => {
     setActive(value);
@@ -25,12 +33,12 @@ const Discount = () => {
   useEffect(() => {
     setLoading(true);
     fetchData();
-   
+
   }, []);
 
-  const fetchData = (page=1) => {
-    terminal.request({name:'allDiscount', queries: {page}}).then((res) => {
-      res.status===false? '': setTabledata(res), setLoading(false);
+  const fetchData = (page = 1) => {
+    terminal.request({ name: 'allDiscount', queries: { page } }).then((res) => {
+      res.status === false ? '' : setTabledata(res);
     });
   };
 
@@ -48,39 +56,35 @@ const Discount = () => {
               <div className="py-2 my-auto">
                 <button
                   onClick={() => tableButtonHandler("all")}
-                  className={`py-2 px-3 text-[#475569] text-xs font-semibold ${
-                    active === "all" ? "bg-[#CFF6EF] rounded" : "bg-transparent"
-                  }`}
+                  className={`py-2 px-3 text-[#475569] text-xs font-semibold ${active === "all" ? "bg-[#CFF6EF] rounded" : "bg-transparent"
+                    }`}
                 >
                   All
                 </button>
                 <button
                   onClick={() => tableButtonHandler("active")}
-                  className={`py-2 px-3 text-[#475569] text-xs font-semibold ${
-                    active === "active"
-                      ? "bg-[#CFF6EF] rounded"
-                      : "bg-transparent"
-                  }`}
+                  className={`py-2 px-3 text-[#475569] text-xs font-semibold ${active === "active"
+                    ? "bg-[#CFF6EF] rounded"
+                    : "bg-transparent"
+                    }`}
                 >
                   Active
                 </button>
                 <button
                   onClick={() => tableButtonHandler("draft")}
-                  className={`py-2 px-3 text-[#475569] text-xs font-semibold ${
-                    active === "draft"
-                      ? "bg-[#CFF6EF] rounded"
-                      : "bg-transparent"
-                  }`}
+                  className={`py-2 px-3 text-[#475569] text-xs font-semibold ${active === "draft"
+                    ? "bg-[#CFF6EF] rounded"
+                    : "bg-transparent"
+                    }`}
                 >
                   Draft
                 </button>
                 <button
                   onClick={() => tableButtonHandler("archived")}
-                  className={`py-2 px-3 text-[#475569] text-xs font-semibold ${
-                    active === "archived"
-                      ? "bg-[#CFF6EF] rounded"
-                      : "bg-transparent"
-                  }`}
+                  className={`py-2 px-3 text-[#475569] text-xs font-semibold ${active === "archived"
+                    ? "bg-[#CFF6EF] rounded"
+                    : "bg-transparent"
+                    }`}
                 >
                   Archived
                 </button>
@@ -89,9 +93,9 @@ const Discount = () => {
                 <Input type="text" placeholder="Search" styles="secondary">
                   <img src={search} alt="" />
                 </Input>
-                <button className="border border-[#0000001f] p-2  ">
-                  <img className="opacity-70" src={filter} alt="" />
-                </button>
+                <CustomSelect value={selectedDiscountStatus.name} options={discountStatuses} onChange={discountStatusHandler} bg="bg-white" appearance="filter" />
+             
+             
                 <button className="border border-[#0000001f] p-2  ">
                   <img className="opacity-70" src={sort} alt="" />
                 </button>

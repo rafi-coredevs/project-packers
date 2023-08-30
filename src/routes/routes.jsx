@@ -56,7 +56,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/reset",
-        element: <ProtectedRoute accessTo="general"><Recovery /></ProtectedRoute>,
+        element: <ProtectedRoute accessTo="recover"><Recovery /></ProtectedRoute>,
       },
       {
         path: "/signup",

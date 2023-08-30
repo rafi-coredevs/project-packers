@@ -56,6 +56,15 @@ const OrderDetails = () => {
       
     }
   })
+  const orderStatuses = [{ id: 1, name: "Completed", value: "completed" }, { id: 2, name: "Pending", value: "pending" }, { id: 3, name: "Processing", value: "processing" },
+  { id: 4, name: "Shipping", value: "shipping" }, { id: 5, name: "Cancel", value: "cancel" }]
+
+  const [selectedOrderStatus, setSelectedOrderStatus] = useState({ name: 'Select', value: null, id: 0 });
+
+  function orderStatusHandler(id) {
+    setSelectedOrderStatus(orderStatuses.find(item => item.id === id))
+  }
+
   const fetchData = () => terminal.request({ name: 'singleOrder', params: { id: orderId } }).then(res => res.status === false ? toaster({ type: 'error', message: res.message }) : setOrder(res))
   const statusHandler = (value) => {
     console.log(value)
@@ -258,11 +267,7 @@ const OrderDetails = () => {
                 <p className="text-lg font-semibold">৳ {order?.total}</p>
               </div>
               <div className="py-5 flex gap-2 justify-end border-t border-[#0000001c] ">
-                <div className="w-40">
-
-                  <CustomSelect options={DROP_DOWN} styles={'bg-[#3E949A] text-white'} value={selected.name} onChange={statusHandler} />
-                </div>
-
+                <CustomSelect bg="bg-[#3E949A]" value={selectedOrderStatus.name} options={orderStatuses} onChange={orderStatusHandler} appearance="select" />
               </div>
             </div>
           </div>
