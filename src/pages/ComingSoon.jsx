@@ -20,7 +20,7 @@ const ComingSoon = () => {
 
     return <>
         <div className='min-h-[60vh] flex flex-col justify-center items-center'>
-            <div className='w-2/5 p-2 border-2 border-primary rounded-full'>
+            <div className='w-2/5 p-1 border-2 border-primary rounded-full'>
                 <div className='relative rounded-full overflow-hidden'>
                     <p className='text-center font-extrabold text-5xl py-3 text-secondary'>Coming Soon</p>
                     <span className='w-[200%] h-full bg-primary absolute top-0 z-10 animate-coming' />
