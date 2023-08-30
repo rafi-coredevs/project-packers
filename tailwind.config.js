@@ -47,7 +47,7 @@ export default {
         wiggle: 'wiggle 1s ease-in-out infinite',
         bounce: 'bounce 1s ease-in-out infinite',
         send: 'send .5s linear infinite',
-        scale: 'scaleUp 1s ease-in-out infinite',
+        scale: 'scaleUp 5s ease-in-out infinite',
         loading: 'loading 1s ease-in-out infinite',
         coming: 'coming 8s ease-in-out infinite'
       },
@@ -77,7 +77,7 @@ export default {
             transform: 'none',
           },
           '50%': {
-            transform: 'scale(1.5)'
+            transform: 'scale(6)'
           }
         },
         loading: {
