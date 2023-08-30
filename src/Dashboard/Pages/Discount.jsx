@@ -38,7 +38,7 @@ const Discount = () => {
 
   const fetchData = (page = 1) => {
     terminal.request({ name: 'allDiscount', queries: { page } }).then((res) => {
-      res.status === false ? '' : setTabledata(res);
+      res.status === false ? '' : setTabledata(res), setLoading(false);
     });
   };
 
