@@ -23,6 +23,7 @@ const DashboardHome = () => {
   const [areaChartData,setAreaChartData]=useState(areaChart);;
   const [heatmapData,setHeatmapData]=useState(heatMap);
   const [isModal, setIsModal] = useState(false);
+  const [filter,setFilter]= useState('month');
   const[overView,setOverView]= useState([
     {
       title: 'Total Cost',
@@ -72,11 +73,15 @@ const DashboardHome = () => {
         total: res?.cancelledOrder
       }
     ]));
-    terminal.request({name: 'chartData'}).then(res=> {
+   
+  },[])
+  useEffect(()=>{
+    terminal.request({name: 'chartData', queries: {filter}}).then(res=> {
       res?.status===false? toaster({tyoe:'error',message:res?.message}): (setAreaChartData(res?.areaChart), formateHeatmapData(res?.heatmapData));
     });
 
-  },[])
+  },[filter]);
+
   const fetchOrder = (page = 1) => {
     terminal.request({ name: 'allOrders', queries: { page } }).then((res) => {
       res.status === false ? '' : setTabledata(res),setLoading(false);
@@ -120,7 +125,7 @@ const DashboardHome = () => {
     setHeatmapData(result);
   }
 
-  
+  console.log(filter);
 
   return (
     <div className="h-full px-5 ">
@@ -134,7 +139,7 @@ const DashboardHome = () => {
         <div className="col-span-3 grid gap-5 grid-cols-7">
           <div className="col-span-7 sm:col-span-5">
             <div className="w-full bg-white p-5 border border-[#0000001f] rounded-md">
-              <AreaChart data={areaChartData} />
+              <AreaChart data={areaChartData} setFilter={setFilter} filter={filter} />
             </div>
           </div>
           <div className="col-span-7 sm:col-span-2">

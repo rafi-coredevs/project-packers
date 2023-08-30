@@ -20,10 +20,17 @@ const MONTH = [
   "Nov",
   "Dec",
 ];
-const AreaChart = ({ data }) => {
-  const onChangeHandler = (event) => {
-    console.log(event.target.value)
-  }
+const DAY = [
+  "Mon",
+  "Tue",
+  "Wed",
+  "Thu",
+  "Fri",
+  "Sat",
+  "Sun",
+
+];
+const AreaChart = ({ data, setFilter, filter }) => {
   const options = {
     chart: {
       id: "area-chart",
@@ -32,7 +39,7 @@ const AreaChart = ({ data }) => {
       },
     },
     xaxis: {
-      categories: data.map((item) => MONTH[item.month - 1]),
+      categories: filter==='month'? data.map((item) => MONTH[item.month - 1]): data.map((item) => DAY[item.day - 1]),
       lines: {
         show: true,
       },
@@ -118,12 +125,12 @@ const AreaChart = ({ data }) => {
             </div>
             <select
               className="text-xs text-secondary border-none bg-[#CFF6EF] outline-none rounded-md py-0 px-0"
-              onChange={onChangeHandler}
+              onChange={(e)=>setFilter(e.target.value)}
               name="category"
               id="category"
             >
-              <option value="monthly">Monthly</option>
-              <option value="weekly">Weekly</option>
+              <option value="month">Monthly</option>
+              <option value="week">Weekly</option>
             </select>
           </div>
         </div>
