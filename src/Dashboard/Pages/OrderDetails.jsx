@@ -11,6 +11,7 @@ import { terminal } from "../../contexts/terminal/Terminal";
 import { useEffect, useState } from "react";
 import toaster from "../../Util/toaster";
 import { BASE_URL } from "../../Util/apiCall";
+import CustomSelect from "../../Components/UiElements/Input/CustomSelect";
 // 
 const OrderDetails = () => {
   useTitle("Order Details");
@@ -21,6 +22,15 @@ const OrderDetails = () => {
     fetchData();
 
   }, []);
+
+  const orderStatuses = [{ id: 1, name: "Completed", value: "completed" }, { id: 2, name: "Pending", value: "pending" }, { id: 3, name: "Processing", value: "processing" },
+  { id: 4, name: "Shipping", value: "shipping" }, { id: 5, name: "Cancel", value: "cancel" }]
+
+  const [selectedOrderStatus, setSelectedOrderStatus] = useState({ name: 'Select', value: null, id: 0 });
+
+  function orderStatusHandler(id) {
+    setSelectedOrderStatus(orderStatuses.find(item => item.id === id))
+  }
 
   const fetchData = () => terminal.request({ name: 'singleOrder', params: { id: orderId } }).then(res => res.status === false ? toaster({ type: 'error', message: res.message }) : setOrder(res))
   const updateHandler = () => {
@@ -180,19 +190,7 @@ const OrderDetails = () => {
                 <p className="text-lg font-semibold">৳ {order?.total}</p>
               </div>
               <div className="py-5 flex gap-2 justify-end border-t border-[#0000001c] ">
-                <select
-                  className="bg-[#3E949A] border-none outline-none py-2 px-3 text-white rounded"
-                  name=""
-                  id=""
-                >
-                  <option value="completed" selected>
-                    Completed
-                  </option>
-                  <option value="pending">Pending</option>
-                  <option value="processing">Processing</option>
-                  <option value="shipping">Shipping</option>
-                  <option value="cancel">Cancel</option>
-                </select>
+                <CustomSelect bg="bg-[#3E949A]" value={selectedOrderStatus.name} options={orderStatuses} onChange={orderStatusHandler} appearance="select" />
               </div>
             </div>
           </div>

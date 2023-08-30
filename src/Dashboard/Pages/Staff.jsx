@@ -140,7 +140,7 @@ const Staff = () => {
                 name='phone'
               />
 
-              <CustomSelect value={selectedRole.name} options={roleOptions} onChange={categoryHandler} />
+              <CustomSelect value={selectedRole.name} options={roleOptions} bg="bg-white" onChange={categoryHandler} />
 
 
 

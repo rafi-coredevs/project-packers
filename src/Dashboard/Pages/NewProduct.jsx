@@ -80,7 +80,6 @@ const NewProduct = () => {
           }
           else {
             setProduct(res);
-            console.log("res:  " + JSON.stringify(res))
             setSelectedcategory({ name: 'Select', value: null, id: 0 })
             setSelectedsubcategory({ name: 'Select', value: null, id: 0 })
 
@@ -180,10 +179,10 @@ const NewProduct = () => {
             <div className="border border-[#0000001c] rounded-lg p-3 grid gap-3">
               <label className="text-[#475569] text-sm">Parent Category</label>
 
-              <CustomSelect value={selectedCategeory.name} options={categories} onChange={categoryHandler} appearance="select" />
+              <CustomSelect value={selectedCategeory.name} options={categories} bg="bg-white" onChange={categoryHandler} appearance="select" />
 
               <label className="text-[#475569] text-sm">Sub Category</label>
-              <CustomSelect value={selectedSubcategeory.name} options={subCategories} onChange={subCategoryHandler} appearance="select" />
+              <CustomSelect value={selectedSubcategeory.name} options={subCategories} bg="bg-white" onChange={subCategoryHandler} appearance="select" />
 
 
 

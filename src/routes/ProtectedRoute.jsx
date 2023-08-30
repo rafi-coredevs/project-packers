@@ -24,7 +24,7 @@ export default function ProtectedRoute({ accessTo, children }) {
     }
     else {
         if (!user) {
-            if (accessTo == "login" || accessTo == "signup") {
+            if (accessTo == "login" || accessTo == "signup" || accessTo == "recover") {
                 return <>{children}</>
             }
             else {
@@ -32,7 +32,7 @@ export default function ProtectedRoute({ accessTo, children }) {
             }
         }
         else {
-            if (accessTo == "login" || accessTo == "signup") {
+            if (accessTo == "login" || accessTo == "signup" || accessTo == "recover") {
                 user.role == "user" ? navigate('/') : navigate('/admin');
             }
             else if (accessByRole[user.role].includes(accessTo)) {

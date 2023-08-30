@@ -4,11 +4,13 @@ import Button from '../UiElements/Button/Button';
 import UserIcon from '../../../Components/UiElements/UserIcon/UserIcon';
 import { terminal } from '../../../contexts/terminal/Terminal';
 import toaster from '../../../Util/toaster';
+import CustomSelect from '../../../Components/UiElements/Input/CustomSelect';
 
 const StaffModal = ({ setModal, user }) => {
     const totalaccess = ['support', 'product', 'order', 'request']
     const [access, setAccess] = useState(user?.access)
-    const [role, setRole] = useState()
+
+    const [selectedRole, setSelectedRole] = useState({ name: 'Select', value: '', id: 0 })
     const handleSubmit = () => {
         terminal.request({ name: 'updateUser', params: { id: user.id }, body: { data: { role, access } } }).then(data => {
             if (data.id) {
@@ -21,6 +23,15 @@ const StaffModal = ({ setModal, user }) => {
             }
         })
     }
+
+    const roleOptions =
+        [
+            { name: "Admin", value: "admin", id: 1 },
+            { name: "Super Admin", value: "super-admin", id: 2 },
+            { name: "Staff", value: "staff", id: 3 },
+            { name: "User", value: "user", id: 4 },
+        ]
+    const selectedRoleHandler = (id) => setSelectedRole(roleOptions.find(item => item.id === id));
     return (
         <>
             <div className="shadow-sm pb-5">
@@ -36,16 +47,9 @@ const StaffModal = ({ setModal, user }) => {
                         <p className="text-[#6D7175] text-sm">{user.access.length === totalaccess.length ? 'Full access' : user.access.length === 1 ? user.access : 'Limited access'}</p>
                     </div>
                 </div>
-                <Input
-                    styles="select"
-                    change={(e) => setRole(e.target.value)}
-                    option={[
-                        { name: "Admin", value: "admin" },
-                        { name: "Super Admin", value: "super-admin" },
-                        { name: "Staff", value: "staff" },
-                        { name: "User", value: "user" },
-                    ]}
-                />
+
+                <CustomSelect value={selectedRole.name} bg="bg-white" options={roleOptions} onChange={selectedRoleHandler} appearance={"select"}/>
+
             </div>
             <div className="p-5 grid gap-4 items-start">
                 <div className="space-x-2">

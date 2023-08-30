@@ -6,6 +6,8 @@ import EmptyMassage from "../Components/UiElements/Messages/EmptyMassage";
 import { useTitle } from "../../Components/Hooks/useTitle";
 import CustomSelect from "../../Components/UiElements/Input/CustomSelect";
 
+const SUPPORT_TYPE = [{ name: 'all', value: "all" }, { name: 'Account', value: 'account' }, { name: 'Order', value: 'order' }, { name: 'Payment', value: 'payment' }, { name: 'Refund', value: 'refund' }]
+
 const buttonStyle = {
   active: "bg-secondary text-white",
   deactive: "bg-white text-black",
@@ -13,12 +15,12 @@ const buttonStyle = {
 const Chat = () => {
   useTitle('Support');
   const [activeStatusButton, setActiveStatusButton] = useState("all");
-  const [supportType, setSupportType] = useState({ name: "All", value: "all", id: 1 });
+  const [supportType, setSupportType] = useState("all");
   const [supportData, setSupportData] = useState([]);
   const [activeChat, setActiveChat] = useState();
   const [loading, setLoading] = useState(false)
   useEffect(() => {
-    terminal.request({ name: 'allSupport', queries: { status: activeStatusButton, type: supportType.value } }).then(data => {
+    terminal.request({ name: 'allSupport', queries: { status: activeStatusButton, type: supportType } }).then(data => {
       console.log(data)
       setSupportData(() => {
         return data.length > 0 && data?.map(support => {
@@ -40,10 +42,9 @@ const Chat = () => {
     setActiveStatusButton(value);
   };
 
-  const supportTypes = [{ id: 1, name: "All", value: "all" }, { id: 2, name: "Account", value: "account" }, { id: 3, name: "Order", value: "order" }, { id: 4, name: "Payment", value: "payment" }, { id: 5, name: "Refund", value: "refund" }];
+  // const supportTypes = [{ id: 1, name: "All", value: "all" }, { id: 2, name: "Account", value: "account" }, { id: 3, name: "Order", value: "order" }, { id: 4, name: "Payment", value: "payment" }, { id: 5, name: "Refund", value: "refund" }]
 
-
-  const supportTypeHandler = (id) => setSupportType(supportTypes.find(item => item.id === id));
+  // const supportTypeHandler = (id) => setSupportType(supportTypes.find(item => item.id === id));
 
   return (
     <div className="grid grid-cols-12">
@@ -86,8 +87,19 @@ const Chat = () => {
             </div>
           </button>
           <div className="py-2 px-1 font-medium w-full ">
+            <select
+              onChange={(e) => setSupportType(e.target.value)}
+              className=" bg-white outline-none w-full " defaultValue="all"
+            >
 
-            <CustomSelect value={supportType.name} options={supportTypes} onChange={supportTypeHandler} />
+              <option selected value="all">All</option>
+              <option value="account">Account</option>
+              <option value="order">Order</option>
+              <option value="payment">Payment</option>
+              <option value="refund">Refund</option>
+            </select>
+
+            {/* <CustomSelect value={supportType} options={supportTypes} onChange={categoryHandler} /> */}
           </div>
         </div>
         <div className="">

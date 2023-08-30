@@ -9,6 +9,10 @@ import { requestTable } from "../../Store/Data";
 import Button from "../Components/UiElements/Button/Button";
 import { useTitle } from "../../Components/Hooks/useTitle";
 import { terminal } from "../../contexts/terminal/Terminal";
+import CustomSelect from "../../Components/UiElements/Input/CustomSelect";
+// 
+const requestStatuses = [{ id: 1, name: "All", value: "all" }, { id: 2, name: "Paid", value: "paid" }, { id: 3, name: "Pending", value: "pending" }]
+
 // 
 const RequestItems = () => {
   
@@ -21,7 +25,12 @@ const RequestItems = () => {
     fetchData();
    
   }, [sortBy, active]);
-  console.log(tableData);
+  
+  const [selectedRequestStatus, setSelectedRequestStatus] = useState({ name: 'Select', value: null, id: 0 });
+
+  function requestStatusHandler(id) {
+    setSelectedRequestStatus(requestStatuses.find(item => item.id === id))
+  }
 
   const fetchData = (page=1) => {
     setLoading(true);
@@ -101,9 +110,9 @@ const RequestItems = () => {
                 <Input type="text" placeholder="Search" styles="secondary">
                   <img src={search} alt="" />
                 </Input>
-                <button className="border border-[#0000001f] p-2  ">
-                  <img className="opacity-70" src={filter} alt="" />
-                </button>
+
+                <CustomSelect value={selectedRequestStatus.name} options={requestStatuses} onChange={requestStatusHandler} bg="bg-white" appearance="filter" />
+
                 <button onClick={()=>setSortBy(sortBy==='createdAt:desc'?'createdAt:asc':'createdAt:desc')}  className="border border-[#0000001f] p-2  ">
                   <img className="opacity-70" src={sort} alt="" />
                 </button>
