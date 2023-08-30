@@ -55,7 +55,7 @@ const head = {
   ],
 };
 
-const Table = ({ data, paginate, loading, dashboardToogle }) => {
+const Table = ({ data, paginate, loading, dashboardToogle, modalHandler }) => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const location = pathname.split('/')[pathname.split('/').length - 1];
@@ -67,7 +67,7 @@ const Table = ({ data, paginate, loading, dashboardToogle }) => {
   const selectHandler = (id) => {
     console.log(id);
   };
-console.log(data);
+
   return (
     <div className='relative overflow-x-auto'>
       <table className='w-full'>
@@ -189,13 +189,13 @@ console.log(data);
                         <div className='flex gap-2'>
                           <img
                             className='cursor-pointer opacity-70'
-                            onClick={() => console.log('Edit row')}
+                            onClick={() => navigate(`/admin/orders/${item?.id}`)}
                             src={edit}
                             alt=''
                           />
                           <img
                             className='cursor-pointer opacity-70'
-                            onClick={() => console.log('Delete row')}
+                            onClick={() =>  modalHandler(item?.id)}
                             src={dlt}
                             alt=''
                           />
