@@ -45,6 +45,13 @@ const DAY = [
 
 ];
 const AreaChart = ({ data, setFilter, filter }) => {
+
+const AreaChart = ({ data }) => {
+  const [selected,setSelected] = useState(OPTIONS[0])
+  const onChangeHandler = (id) => {
+    setSelected(OPTIONS.find(item => item.id === id))
+    
+  }
   const options = {
     chart: {
       id: "area-chart",
@@ -146,6 +153,7 @@ const AreaChart = ({ data, setFilter, filter }) => {
               <option value="month">Monthly</option>
               <option value="week">Weekly</option>
             </select>
+            <CustomSelect  value={selected.name} options={OPTIONS} onChange={onChangeHandler} />
           </div>
         </div>
       </div>
@@ -158,5 +166,6 @@ const AreaChart = ({ data, setFilter, filter }) => {
     </div>
   );
 };
+}
 
 export default AreaChart;
