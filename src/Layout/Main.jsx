@@ -10,7 +10,7 @@ const Main = () => {
   const [toggle, setToggle] = useState(false);
   const toggleHandler = () => setToggle(!toggle);
   const [reload, setReload] = useState(true);
-  setTimeout(() => setReload(false), 1500);
+  setTimeout(() => setReload(false), 1000);
 
   return <>
     {

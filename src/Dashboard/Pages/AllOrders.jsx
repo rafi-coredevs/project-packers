@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 // import { Link } from "react-router-dom";
 import Heading from "../Components/UiElements/Heading/Heading";
-import filter from "../../assets/icons/cd-filter.svg";
+
 import sort from "../../assets/icons/cd-arrow-data-transfer-vertical-round.svg";
 import Table from "../Components/UiElements/Table/Table";
 import Input from "../Components/UiElements/Input/Input";
@@ -13,16 +13,15 @@ import Overview from "../Components/Overview/Overview";
 import Modal from "../../Components/UiElements/Modal/Modal";
 import Button from "../../Dashboard/Components/UiElements/Button/Button";
 import toaster from "../../Util/toaster";
-import DateRangeSelector from "../Components/UiElements/DateSelector/DateRangesSelector";
+import CustomSelect from "../../Components/UiElements/Input/CustomSelect";
 
+const orderStatuses = [{ id: 1, name: "All", value: "all" }, { id: 2, name: "Paid", value: "paid" }, { id: 3, name: "Pending", value: "pending" }]
 
 const AllOrders = () => {
   useTitle("Order list");
   const [active, setActive] = useState("all");
   const [tableData, setTabledata] = useState(orderTable);
   const [isModal, setIsModal] = useState(false);
-  const [loading,setLoading]=useState(true);
-  const [sortBy,setSortBy]=useState('date:asc');
   const[overView,setOverView]= useState([
     {
       title: 'Total Cost',
@@ -45,7 +44,14 @@ const AllOrders = () => {
       total: 0
     }
   ]);
-  const [filterDate, setFilterDate] = useState(null)
+  const [loading, setLoading] = useState(true);
+  const [sortBy, setSortBy] = useState('date:asc');
+  const [selectedOrderStatus, setSelectedOrderStatus] = useState({ name: 'Select', value: null, id: 0 });
+
+  function orderStatusHandler(id) {
+    setSelectedOrderStatus(orderStatuses.find(item => item.id === id))
+  }
+
   const tableButtonHandler = (value) => {
     setActive(value);
   };
@@ -93,6 +99,7 @@ const AllOrders = () => {
  
   return (
     <div className="h-full px-5 ">
+      
       <Modal show={isModal} onClose={() => setIsModal(false)}><div className="text-center text-xl my-10">Are you sure you want to delete this order?
         <div className="flex gap-2 items-center justify-center mx-auto w-full mt-5"><span onClick={deleteHandler}><Button style='primary'><span className="px-2">Yes</span></Button></span><span onClick={() => setIsModal(false)}><Button style='outline'><span className="px-2">No</span></Button></span></div></div></Modal>
       <Heading title="All Orders">
@@ -170,10 +177,9 @@ const AllOrders = () => {
               <div className="py-2 flex gap-1">
                 <Input type="text" placeholder="Search" styles="secondary">
                   <img src={search} alt="" />
-                </Input>  
-                <button className="border border-[#0000001f] p-2  ">
-                  <img className="opacity-70" src={filter} alt="" />
-                </button>
+                </Input>
+                <CustomSelect value={selectedOrderStatus.name} options={orderStatuses} onChange={orderStatusHandler} bg="bg-white" appearance="filter" />
+
                 <button onClick={() => setSortBy(sortBy === 'date:desc' ? 'date:asc' : 'date:desc')} className="border border-[#0000001f] p-2  ">
                   <img className="opacity-70" src={sort} alt="" />
                 </button>
