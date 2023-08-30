@@ -1,7 +1,5 @@
 # Project-Packers
 
-# React and Tailwind Group Project
-
 Welcome to the project repository for an **Project-Packers** web application built using React and Tailwind CSS! This project consists of two main parts: the **Client** and the **Dashboard**.
 
 ## Project Overview
