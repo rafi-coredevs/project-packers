@@ -22,7 +22,6 @@ export default function prepareReq(serverUrl) {
 			if (headers && method !== 'GET') payload = { ...payload, headers, body };
 			else if (method === 'POST' || (method === 'PATCH' && !headers))
 				payload = { ...payload, body };
-			console.log(url,payload);
 			const response = await fetch(url, payload);
 			return await response.json();
 		} catch (err) {

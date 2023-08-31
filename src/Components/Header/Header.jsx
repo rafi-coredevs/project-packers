@@ -86,7 +86,7 @@ const Header = ({ sideBar, state }) => {
 		if (cart && cart?.products?.length > 0) {
 			cart?.products?.forEach((product) => {
 				cartData.push({
-					id: product.product.id,
+					id: product.product?.id,
 					title: product.product.name,
 					price: product.product.price,
 					image: product.product.images[0],
@@ -98,10 +98,10 @@ const Header = ({ sideBar, state }) => {
 		if (cart && cart?.requests?.length > 0) {
 			cart?.requests?.forEach(request => {
 				cartData.push({
-					id: request.request.id,
-					title: request.request.name,
+					id: request.request?.id,
+					title: request.request?.name,
 					price: request.request?.sellerTakes || "",
-					image: request.request.images[0] || "",
+					image: request.request?.images[0] || "",
 					qty: request.requestQuantity
 				})
 			})
