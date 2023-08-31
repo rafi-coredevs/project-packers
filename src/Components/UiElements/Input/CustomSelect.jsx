@@ -31,7 +31,7 @@ const CustomSelect = ({ options, value, onChange, appearance, bg }) => {
     onChange(selectedValue);
     setIsOpen(false);
   };
-  console.log(value)
+  console.log(options)
 
 
   const sty_log = () => appearance == "select" ? "left-0 w-full" : " right-[0rem] w-[22rem]";
@@ -45,7 +45,7 @@ const CustomSelect = ({ options, value, onChange, appearance, bg }) => {
           className={`py-2 px-4 ${bg} border border-[#ededed] rounded-md  cursor-pointer flex justify-between`}
           onClick={toggleDropdown}
         >
-          {value === null ? 'Select' : value}
+          {value? value:'Select' }
           <img src={downArrow} alt="" className="w-[1.5rem] h-[1.5rem]" />
         </div>
       }
@@ -57,7 +57,7 @@ const CustomSelect = ({ options, value, onChange, appearance, bg }) => {
       }
 
       {isOpen ? (
-        <ul className={`absolute z-10 top-full  ${bg} ${sty_log()} border  rounded-t-none shadow   overflow-y-auto scrollbar`}>
+        <ul className={`absolute z-10 top-full  ${bg} ${sty_log()} border  rounded-t-none shadow   overflow-y-auto scrollbar bg-white max-h-60`}>
           {options?.map((option, index) => (<li
             key={index}
             className={`${value === option.name ? 'bg-primary' : bg} py-2 px-4 cursor-pointer   hover:bg-primary`}
