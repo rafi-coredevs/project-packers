@@ -5,8 +5,10 @@ import minor from "../../../assets/icons/cd-select_minor.svg";
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useRef } from "react";
 import formatTimeAgo from "../../../Util/formatTimeAgo";
+import { BASE_URL } from "../../../Util/apiCall";
 
 const Dropdown = ({ isOpen, onClick, type, title, data }) => {
+  
 
   const navidate = useNavigate()
   const ref = useRef(null);
@@ -101,7 +103,7 @@ const Dropdown = ({ isOpen, onClick, type, title, data }) => {
                       <div className="h-16 w-16">
                         <img
                           className="w-full h-full"
-                          src={item.image}
+                          src={BASE_URL+'/api/'+item.image}
                           alt=""
                         />
                       </div>
