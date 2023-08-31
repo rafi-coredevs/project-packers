@@ -12,7 +12,7 @@ import { useTitle } from "../../Components/Hooks/useTitle";
 import { terminal } from "../../contexts/terminal/Terminal";
 import CustomSelect from "../../Components/UiElements/Input/CustomSelect";
 
-const productStatuses = [{ id: 1, name: "All", value: "all" }, { id: 2, name: "Paid", value: "paid" }, { id: 3, name: "Pending", value: "pending" }]
+const productStatuses = [{ id: 1, name: "All", value: "all" }, { id: 2, name: "Active", value: "active" }, { id: 3, name: "Draft", value: "draft" }, { id: 4, name: "Archived", value: "archive" }]
 
 
 const Products = () => {
@@ -24,7 +24,9 @@ const Products = () => {
   const [selectedProductStatus, setSelectedProductStatus] = useState({ name: 'Select', value: null, id: 0 });
 
   function productStatusHandler(id) {
-    setSelectedProductStatus(productStatuses.find(item => item.id === id))
+    const selected = productStatuses.find(item => item.id === id);
+    setSelectedProductStatus(selected);
+    setActive(selected.value)
   }
   useEffect(() => {
     fetchData();
