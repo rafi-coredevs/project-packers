@@ -50,7 +50,13 @@ const AllOrders = () => {
   const [sortBy, setSortBy] = useState('date:asc');
   const [selectedOrderStatus, setSelectedOrderStatus] = useState({ name: 'Select', value: null, id: 0 });
 
+  function dateFormatter(date) {
+    date = date.toString().replace(/date /)
+    const dateObj = new Date(date);
+    return dateObj.toISOString();
+  }
 
+  console.log('filter date', filterDate?.startDate.toString())
   function orderStatusHandler(id) {
     const selected = orderStatuses.find(item => item.id === id)
     setSelectedOrderStatus(selected);

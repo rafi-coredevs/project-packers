@@ -30,7 +30,7 @@ const CustomerDetails = () => {
 
   const fetchData = () => {
     terminal.request({name:'customerAllOrders', queries: { user: customerId} }).then((res) => {
-      res.status===false? '': setTabledata(res), setLoading(false);
+      res.status===false? '': setTabledata(res);
     });
   };
   
