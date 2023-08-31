@@ -11,12 +11,12 @@ const OPTIONS = [
   {
     id: 1,
     name: "Monthly",
-    value: 'monthly'
+    value: 'month'
   },
   {
     id: 2,
     name: "Weekly",
-    value: 'monthly'
+    value: 'week'
   },
 ]
 
@@ -48,7 +48,8 @@ const AreaChart = ({ data, setFilter, filter }) => {
 
   const [selected,setSelected] = useState(OPTIONS[0])
   const onChangeHandler = (id) => {
-    setSelected(OPTIONS.find(item => item.id === id))
+    setSelected(OPTIONS.find(item => item.id === id)) 
+    setFilter(selected.value)
     
   }
   const options = {
