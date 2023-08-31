@@ -10,7 +10,7 @@ import { useTitle } from "../../Components/Hooks/useTitle";
 import { terminal } from "../../contexts/terminal/Terminal";
 import CustomSelect from "../../Components/UiElements/Input/CustomSelect";
 
-const discountStatuses = [{ id: 1, name: "All", value: "all" }, { id: 2, name: "Paid", value: "paid" }, { id: 3, name: "Pending", value: "pending" }]
+const discountStatuses = [{ id: 1, name: "All", value: "all" }, { id: 2, name: "Valid", value: "valid" }, { id: 3, name: "Expired", value: "expired" }]
 
 
 const Discount = () => {
@@ -21,7 +21,9 @@ const Discount = () => {
   const [selectedDiscountStatus, setSelectedDiscountStatus] = useState({ name: 'Select', value: null, id: 0 });
 
   function discountStatusHandler(id) {
-    setSelectedDiscountStatus(discountStatuses.find(item => item.id === id))
+    const  selected = discountStatuses.find(item => item.id === id)
+    setSelectedDiscountStatus(selected);
+    setActive(selected.value)
   }
   const navigate = useNavigate();
   const tableButtonHandler = (value) => {
