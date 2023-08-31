@@ -408,7 +408,7 @@ const OrderDetails = () => {
 						{/* status selector */}
 						<div className='py-5 ml-auto p-5 gap-2  border-[#0000001c] '>
 							<CustomSelect
-								bg='bg-[#3E949A]'
+								bg='green'
 								value={selectedOrderStatus?.name}
 								options={orderStatuses}
 								onChange={orderStatusHandler}
