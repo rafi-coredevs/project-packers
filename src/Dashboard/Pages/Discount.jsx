@@ -38,7 +38,7 @@ const Discount = () => {
 
   const fetchData = (page = 1) => {
     terminal.request({ name: 'allDiscount', queries: { page } }).then((res) => {
-      res.status === false ? '' : setTabledata(res);
+      res.status === false ? '' : setTabledata(res), setLoading(false);
     });
   };
 
@@ -62,39 +62,34 @@ const Discount = () => {
                   All
                 </button>
                 <button
-                  onClick={() => tableButtonHandler("active")}
-                  className={`py-2 px-3 text-[#475569] text-xs font-semibold ${active === "active"
-                    ? "bg-[#CFF6EF] rounded"
-                    : "bg-transparent"
-                    }`}
+                  onClick={() => tableButtonHandler("valid")}
+                  className={`py-2 px-3 text-[#475569] text-xs font-semibold ${
+                    active === "valid"
+                      ? "bg-[#CFF6EF] rounded"
+                      : "bg-transparent"
+                  }`}
                 >
-                  Active
+                  Valid
                 </button>
                 <button
-                  onClick={() => tableButtonHandler("draft")}
-                  className={`py-2 px-3 text-[#475569] text-xs font-semibold ${active === "draft"
-                    ? "bg-[#CFF6EF] rounded"
-                    : "bg-transparent"
-                    }`}
+                  onClick={() => tableButtonHandler("expired")}
+                  className={`py-2 px-3 text-[#475569] text-xs font-semibold ${
+                    active === "expired"
+                      ? "bg-[#CFF6EF] rounded"
+                      : "bg-transparent"
+                  }`}
                 >
-                  Draft
+                  Expired
                 </button>
-                <button
-                  onClick={() => tableButtonHandler("archived")}
-                  className={`py-2 px-3 text-[#475569] text-xs font-semibold ${active === "archived"
-                    ? "bg-[#CFF6EF] rounded"
-                    : "bg-transparent"
-                    }`}
-                >
-                  Archived
-                </button>
+               
               </div>
               <div className="py-2 flex gap-1">
                 <Input type="text" placeholder="Search" styles="secondary">
                   <img src={search} alt="" />
                 </Input>
+                <div className="flex">
                 <CustomSelect value={selectedDiscountStatus.name} options={discountStatuses} onChange={discountStatusHandler} bg="bg-white" appearance="filter" />
-             
+             </div>
              
                 <button className="border border-[#0000001f] p-2  ">
                   <img className="opacity-70" src={sort} alt="" />

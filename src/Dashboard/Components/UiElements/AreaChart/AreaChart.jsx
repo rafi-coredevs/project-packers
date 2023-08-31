@@ -34,7 +34,18 @@ const MONTH = [
   "Nov",
   "Dec",
 ];
-const AreaChart = ({ data }) => {
+const DAY = [
+  "Mon",
+  "Tue",
+  "Wed",
+  "Thu",
+  "Fri",
+  "Sat",
+  "Sun",
+
+];
+const AreaChart = ({ data, setFilter, filter }) => {
+
   const [selected,setSelected] = useState(OPTIONS[0])
   const onChangeHandler = (id) => {
     setSelected(OPTIONS.find(item => item.id === id))
@@ -48,7 +59,7 @@ const AreaChart = ({ data }) => {
       },
     },
     xaxis: {
-      categories: data.map((item) => MONTH[item.month - 1]),
+      categories: filter==='month'? data.map((item) => MONTH[item.month - 1]): data.map((item) => DAY[item.day - 1]),
       lines: {
         show: true,
       },
@@ -145,5 +156,6 @@ const AreaChart = ({ data }) => {
     </div>
   );
 };
+
 
 export default AreaChart;

@@ -62,8 +62,8 @@ const Products = () => {
                 <button
                   onClick={() => setActive("active")}
                   className={`py-2 px-3 text-[#475569] text-xs font-semibold ${active === "active"
-                      ? "bg-[#CFF6EF] rounded"
-                      : "bg-transparent"
+                    ? "bg-[#CFF6EF] rounded"
+                    : "bg-transparent"
                     }`}
                 >
                   Active
@@ -71,8 +71,8 @@ const Products = () => {
                 <button
                   onClick={() => setActive("draft")}
                   className={`py-2 px-3 text-[#475569] text-xs font-semibold ${active === "draft"
-                      ? "bg-[#CFF6EF] rounded"
-                      : "bg-transparent"
+                    ? "bg-[#CFF6EF] rounded"
+                    : "bg-transparent"
                     }`}
                 >
                   Draft
@@ -80,19 +80,20 @@ const Products = () => {
                 <button
                   onClick={() => setActive("archived")}
                   className={`py-2 px-3 text-[#475569] text-xs font-semibold ${active === "archived"
-                      ? "bg-[#CFF6EF] rounded"
-                      : "bg-transparent"
+                    ? "bg-[#CFF6EF] rounded"
+                    : "bg-transparent"
                     }`}
                 >
                   Archived
                 </button>
               </div>
-              <div className="py-2 flex gap-1">
+              <div className="py-2 flex gap-1 ">
                 <Input type="text" placeholder="Search" styles="secondary">
                   <img src={search} alt="" />
                 </Input>
-                <CustomSelect value={selectedProductStatus.name} options={productStatuses} onChange={productStatusHandler} bg="bg-white" appearance="filter" />
-
+                <div className="flex ">
+                  <CustomSelect value={selectedProductStatus.name} options={productStatuses} onChange={productStatusHandler} bg="bg-white" appearance="filter" />
+                </div>
                 <button onClick={() => setSortBy(sortBy === 'createdAt:desc' ? 'createdAt:asc' : 'createdAt:desc')} className="border border-[#0000001f] p-2  ">
                   <img className="opacity-70" src={sort} alt="" />
                 </button>

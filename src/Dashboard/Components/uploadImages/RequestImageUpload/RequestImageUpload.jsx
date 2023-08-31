@@ -9,11 +9,8 @@ const RequestImageUpload = ({
 	placeholder,
 	preLoadedImages,
 }) => {
-	const [previewImages, setPreviewImages] = useState([]);
 	const [allImages, setAllImages] = useState([]);
 	const [removeImages, setRemoveImages] = useState([]);
-
-	const baseURL = import.meta.env.VITE_SERVER_URL;
 
 	/**
 	 *
@@ -26,44 +23,31 @@ const RequestImageUpload = ({
 		}
 	};
 
-	// allImages.map((image) => {
-	// 	console.log(image instanceof File);
-	// });
-
 	/**
-	 * @description - for showing images in display and register images in formink
+	 * @description - for showing preLoaded images if theres any
 	 */
-	// useEffect(() => {
-	// 	const preLoadedPreviewImages = preLoadedImages.map(
-	// 		(url) => baseURL + '/' + url,
-	// 	);
-	// 	const uploadedPreviewImages = allImages.map((file) =>
-	// 		URL.createObjectURL(file),
-	// 	);
-	// 	setPreviewImages([...preLoadedPreviewImages, ...uploadedPreviewImages]);
-
-	// 	formikProps.setFieldValue('images', allImages);
-
-	// 	return () => {
-	// 		uploadedPreviewImages.forEach((image) => URL.revokeObjectURL(image));
-	// 	};
-	// }, [allImages, preLoadedImages]);
-
 	useEffect(() => {
-		if (preLoadedImages.length > 0 || !preLoadedImages) {
+		if (preLoadedImages?.length > 0 || !preLoadedImages) {
 			setAllImages(preLoadedImages);
 		}
 	}, [preLoadedImages]);
 
+	/**
+	 * @description - for register uploaded images, replaced images and deleted images
+	 */
 	useEffect(() => {
-		formikProps.setFieldValue('images', allImages);
+		const imageFile = allImages.filter((image) => image instanceof File);
+		formikProps.setFieldValue('images', imageFile);
+
+		const imageURL = removeImages.filter((image) => !(image instanceof File));
+		formikProps.setFieldValue('removeImages', imageURL);
 
 		return () => {
 			allImages.forEach(
 				(image) => image instanceof File && URL.revokeObjectURL(image),
 			);
 		};
-	}, [allImages]);
+	}, [allImages, removeImages]);
 
 	/**
 	 * @description - for handling image deletion
@@ -92,13 +76,11 @@ const RequestImageUpload = ({
 		setAllImages((prev) => [...prev, file]);
 	};
 
-	// console.log(allImages);
-
 	return (
 		<>
-			<div className='p-3 rounded-lg '>
+			<div className=''>
 				<div className={`flex items-center gap-3 ${className}`}>
-					<div className='flex  md:max-w-[400px] scrollbar  overflow-x-auto overflow-y-hidden'>
+					<div className='flex gap-1 md:max-w-[830px] scrollbar  overflow-x-auto overflow-y-hidden'>
 						{allImages.map((image, index) => (
 							<div
 								key={index}
@@ -108,7 +90,7 @@ const RequestImageUpload = ({
 									src={
 										image instanceof File
 											? URL.createObjectURL(image)
-											: `${baseURL}/${image}`
+											: `${import.meta.env.VITE_SERVER_URL}/${image}`
 									}
 									alt=''
 									className='max-w-[123px] min-w-[123px] h-[123px]'
