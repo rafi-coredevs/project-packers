@@ -7,18 +7,6 @@ import cd_information from '../../../../assets/icons/cd-information-circle.svg'
 import CustomSelect from "../../../../Components/UiElements/Input/CustomSelect";
 import { useState } from "react";
 
-const OPTIONS = [
-  {
-    id: 1,
-    name: "Monthly",
-    value: 'month'
-  },
-  {
-    id: 2,
-    name: "Weekly",
-    value: 'week'
-  },
-]
 
 const MONTH = [
   "Jan",
@@ -44,13 +32,11 @@ const DAY = [
   "Sun",
 
 ];
-const AreaChart = ({ data, setFilter, filter }) => {
+const AreaChart = ({ data, selected, setSelected, OPTIONS }) => {
 
-  const [selected,setSelected] = useState(OPTIONS[0])
+
   const onChangeHandler = (id) => {
-    setSelected(OPTIONS.find(item => item.id === id)) 
-    setFilter(selected.value)
-    
+    setSelected(OPTIONS.find(item => item.id === id))
   }
   const options = {
     chart: {
@@ -60,7 +46,7 @@ const AreaChart = ({ data, setFilter, filter }) => {
       },
     },
     xaxis: {
-      categories: filter==='month'? data.map((item) => MONTH[item.month - 1]): data.map((item) => DAY[item.day - 1]),
+      categories: selected.value === 'month' ? data.map((item) => MONTH[item.month - 1]) : data.map((item) => DAY[item.day - 1]),
       lines: {
         show: true,
       },
@@ -144,7 +130,7 @@ const AreaChart = ({ data, setFilter, filter }) => {
             <div className="">
               <span className=""></span>
             </div>
-            <CustomSelect  value={selected.name} options={OPTIONS} onChange={onChangeHandler} appearance={'select'} />
+            <CustomSelect value={selected.name} options={OPTIONS} onChange={onChangeHandler} appearance={'select'} />
           </div>
         </div>
       </div>
