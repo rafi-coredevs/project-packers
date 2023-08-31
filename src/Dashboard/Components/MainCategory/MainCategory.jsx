@@ -110,7 +110,7 @@ const MainCategory = () => {
             <div className="border border-[#0000001c] rounded-lg p-3 grid gap-3">
               <label className="text-[#475569] text-sm">Parent Category</label>
 
-              <CustomSelect value={selected.name} options={categories} onChange={categoryHandler} bg="bg-white" />
+              <CustomSelect value={selected.name} options={categories} onChange={categoryHandler} bg="bg-white" appearance={"select"} />
 
               <Input
                 styles="basic"
