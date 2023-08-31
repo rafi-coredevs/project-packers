@@ -10,6 +10,7 @@
 
 import React, { useState } from "react";
 import downArrow from '../../../assets/icons/caret-down_minor.svg'
+import downArrowWhite from '../../../assets/icons/caret-down_minor_white.svg'
 import filter from "../../../assets/icons/cd-filter.svg";
 const CustomSelect = ({ options, value, onChange, appearance, bg }) => {
 
@@ -31,8 +32,18 @@ const CustomSelect = ({ options, value, onChange, appearance, bg }) => {
     onChange(selectedValue);
     setIsOpen(false);
   };
-  console.log(options)
 
+
+  const colorComb = {
+    green: "bg-[#3E949A] text-white",
+    white: "bg-white text-black",
+    paste:"bg-[#CFF6EF]"
+  }
+  const iconComb = {
+    green: downArrowWhite,
+    white: downArrow,
+    paste: downArrow
+  }
 
   const sty_log = () => appearance == "select" ? "left-0 w-full" : " right-[0rem] w-[22rem]";
   return (
@@ -42,11 +53,11 @@ const CustomSelect = ({ options, value, onChange, appearance, bg }) => {
       {appearance == "select" &&
         <div
           id="customselect"
-          className={`py-2 px-4 ${bg} border border-[#ededed] rounded-md  cursor-pointer flex justify-between`}
+          className={`py-2 px-4 ${colorComb[bg]} border border-[#ededed] rounded-md  cursor-pointer flex justify-between`}
           onClick={toggleDropdown}
         >
-          {value? value:'Select' }
-          <img src={downArrow} alt="" className="w-[1.5rem] h-[1.5rem]" />
+          {value ? value : 'Select'}
+          <img src={iconComb[bg]} alt="" className="w-[1.5rem] h-[1.5rem]" />
         </div>
       }
       {appearance == "filter" &&
@@ -57,10 +68,10 @@ const CustomSelect = ({ options, value, onChange, appearance, bg }) => {
       }
 
       {isOpen ? (
-        <ul className={`absolute z-10 top-full  ${bg} ${sty_log()} border  rounded-t-none shadow   overflow-y-auto scrollbar bg-white max-h-60`}>
+        <ul className={`absolute z-10 top-full  ${colorComb[bg]} ${sty_log()} border  rounded-t-none shadow   overflow-y-auto scrollbar bg-white max-h-60`}>
           {options?.map((option, index) => (<li
             key={index}
-            className={`${value === option.name ? 'bg-primary' : bg} py-2 px-4 cursor-pointer   hover:bg-primary`}
+            className={`${value === option.name ? 'bg-primary' : colorComb['white']} py-2 px-4 cursor-pointer   hover:bg-primary`}
             onClick={() => handleOptionSelect(option.id)}
           >
             {option.name}

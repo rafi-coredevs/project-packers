@@ -139,7 +139,7 @@ const Staff = () => {
                 placeholder="01700000000"
                 name='phone'
               />
-              <CustomSelect value={selectedRole.name} options={roleOptions} bg="bg-white" onChange={categoryHandler} appearance={'select'} />
+              <CustomSelect value={selectedRole.name} options={roleOptions} bg="white" onChange={categoryHandler} appearance={'select'} />
             </div>
             <div className="flex justify-end">
               <Button type="submit" style="green">Add user</Button>

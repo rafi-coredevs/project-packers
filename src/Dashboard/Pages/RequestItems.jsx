@@ -109,7 +109,7 @@ const RequestItems = () => {
                 </Input>
 
                 <div className=" flex ">
-                  <CustomSelect value={selectedRequestStatus} options={requestStatuses} onChange={filterHandler} bg="bg-white" appearance="filter" />
+                  <CustomSelect value={selectedRequestStatus} options={requestStatuses} onChange={filterHandler} bg="white" appearance="filter" />
                 </div>
                 <button onClick={() => setSortBy(sortBy === 'createdAt:desc' ? 'createdAt:asc' : 'createdAt:desc')} className="border border-[#0000001f] p-2  ">
                   <img className="opacity-70" src={sort} alt="" />

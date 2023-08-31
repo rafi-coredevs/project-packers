@@ -37,6 +37,11 @@ const DashboardHome = () => {
   const [heatmapData, setHeatmapData] = useState(heatMap);
   const [isModal, setIsModal] = useState(false);
   const [selected, setSelected] = useState(OPTIONS[0])
+
+  useEffect(() => {
+    console.log(">>>     ",selected)
+  }, [selected])
+
   const [overView, setOverView] = useState([
     {
       title: 'Total Cost',

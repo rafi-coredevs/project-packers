@@ -18,7 +18,7 @@ const Customer = () => {
   useTitle("Customers");
   const [active, setActive] = useState("all");
   const [tableData, setTabledata] = useState(null);
-  const [loading,setLoading]=useState(true);
+  const [loading, setLoading] = useState(true);
   const [sortBy, setSortBy] = useState(true);
 
   const [selectedCustomerStatus, setSelectedCustomerStatus] = useState({ name: 'Select', value: null, id: 0 });
@@ -37,8 +37,8 @@ const Customer = () => {
   }, []);
 
   const fetchData = (queries) => {
-    terminal.request({name:'getCustomerOrder', queries }).then((res) => {
-      res.status===false? '': setTabledata(res), setLoading(false);
+    terminal.request({ name: 'getCustomerOrder', queries }).then((res) => {
+      res.status === false ? '' : setTabledata(res), setLoading(false);
     });
   };
 
@@ -48,7 +48,7 @@ const Customer = () => {
   }
 
   function handleSearch(e) {
-    if(e.key === 'Enter') {
+    if (e.key === 'Enter') {
       fetchData({ search: e.target.value });
       e.target.value = '';
     }
@@ -108,7 +108,9 @@ const Customer = () => {
                 <Input type="text" keyenter={handleSearch} placeholder="Search" styles="secondary">
                   <img src={search} alt="" />
                 </Input>
-                <CustomSelect value={selectedCustomerStatus.name} options={customerStatuses} onChange={customerStatusHandler} bg="bg-white" appearance="filter" />
+                <div className="flex ">
+                  <CustomSelect value={selectedCustomerStatus.name} options={customerStatuses} onChange={customerStatusHandler} bg="bg-white" appearance="filter" />
+                </div>
                 <button className="border border-[#0000001f] p-2" onClick={handleSorting}>
                   <img className="opacity-70" src={sort} alt="" />
                 </button>

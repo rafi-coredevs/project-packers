@@ -45,8 +45,10 @@ const StaffModal = ({ setModal, user }) => {
                         <p className="text-[#6D7175] text-sm">{user.access.length === totalaccess.length ? 'Full access' : user.access.length === 1 ? user.access : 'Limited access'}</p>
                     </div>
                 </div>
-                <CustomSelect value={selectedRole.name} bg="bg-white" options={roleOptions} onChange={selectedRoleHandler} appearance={"select"} />
-            </div>
+                <div className='flex-shrink min-w-[12rem]'>
+                <CustomSelect value={selectedRole.name} bg="white" options={roleOptions} onChange={selectedRoleHandler} appearance={"select"} />
+                </div>
+                </div>
             <div className="p-5 grid gap-4 items-start">
                 <div className="space-x-2">
                     <input
