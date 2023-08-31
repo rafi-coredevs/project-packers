@@ -150,7 +150,7 @@ const DashboardHome = () => {
         <div className="col-span-3 grid gap-5 grid-cols-7">
           <div className="col-span-7 sm:col-span-5">
             <div className="w-full bg-white p-5 border border-[#0000001f] rounded-md">
-              <AreaChart data={areaChartData} setSelected={setSelected} selected={selected} OPTIONS={OPTIONS} />
+              <AreaChart data={areaChartData} setSelected={setSelected} selected={selected} OPTIONS={OPTIONS} chartLoading={chartLoading} />
             </div>
           </div>
           <div className="col-span-7 sm:col-span-2">

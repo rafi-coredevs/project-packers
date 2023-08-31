@@ -32,7 +32,7 @@ const DAY = [
   "Sun",
 
 ];
-const AreaChart = ({ data, selected, setSelected, OPTIONS }) => {
+const AreaChart = ({ data, selected, setSelected, OPTIONS, chartLoading }) => {
 
 
   const onChangeHandler = (id) => {
