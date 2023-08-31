@@ -11,12 +11,12 @@ const OPTIONS = [
   {
     id: 1,
     name: "Monthly",
-    value: 'monthly'
+    value: 'month'
   },
   {
     id: 2,
     name: "Weekly",
-    value: 'monthly'
+    value: 'week'
   },
 ]
 
@@ -48,7 +48,8 @@ const AreaChart = ({ data, setFilter, filter }) => {
 
   const [selected,setSelected] = useState(OPTIONS[0])
   const onChangeHandler = (id) => {
-    setSelected(OPTIONS.find(item => item.id === id))
+    setSelected(OPTIONS.find(item => item.id === id)) 
+    setFilter(selected.value)
     
   }
   const options = {
@@ -143,15 +144,7 @@ const AreaChart = ({ data, setFilter, filter }) => {
             <div className="">
               <span className=""></span>
             </div>
-            <select
-              className="text-xs text-secondary border-none bg-[#CFF6EF] outline-none rounded-md py-0 px-0"
-              onChange={(e)=>setFilter(e.target.value)}
-              name="category"
-              id="category"
-            >
-              <option value="month">Monthly</option>
-              <option value="week">Weekly</option>
-            </select>
+            <CustomSelect  value={selected.name} options={OPTIONS} onChange={onChangeHandler} appearance={'select'} />
           </div>
         </div>
       </div>
