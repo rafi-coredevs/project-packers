@@ -5,17 +5,20 @@ import { useUserCtx } from '../../../../contexts/user/UserContext';
 import { terminal } from '../../../../contexts/terminal/Terminal';
 import send from '../../../../assets/icons/send.png';
 import toaster from '../../../../Util/toaster';
+import loader from '../../../../assets/icons/cd-reload.svg'
 
 const Messages = ({ activeChat, chatCardHandler, setSupportData }) => {
     const { user } = useUserCtx()
     const [modal, setModal] = useState(true)
     const [messages, setMessages] = useState()
     const messageBody = useRef(null)
+    const [loading, setLoading] = useState(false)
     const [page, setPage] = useState(1)
+    const [totalPage, setTotalPage] = useState()
     useEffect(() => {
         setModal(true)
         setMessages([])
-        terminal.request({ name: 'getMessage', params: { id: activeChat?.id }, queries: { page: 1, limit: 20 } }).then(data => {
+        terminal.request({ name: 'getMessage', params: { id: activeChat?.id }, queries: { page: 1, limit: 100 } }).then(data => {
             data.docs?.length > 0 && setMessages(data.docs)
         })
         if (activeChat && activeChat.status !== 'pending') {
@@ -34,7 +37,7 @@ const Messages = ({ activeChat, chatCardHandler, setSupportData }) => {
     }, [activeChat])
 
     let throttleTimer;
-    const throttle = (callback, time) => {
+    const debounce = (callback, time) => {
         if (throttleTimer) return;
         throttleTimer = true;
         setTimeout(() => {
@@ -44,8 +47,21 @@ const Messages = ({ activeChat, chatCardHandler, setSupportData }) => {
     };
 
     const handleScroll = () => {
-        console.log(messageBody.current.scrollHeight);
-        console.log(messageBody.current.scrollTop + messageBody.current.clientHeight);
+        // if (messageBody.current.scrollTop - messageBody.current.clientHeight + messageBody.current.scrollHeight < 1) {
+        //     setLoading(true)
+        //     debounce(() => {
+        //         setPage(prev => prev + 1)
+        //         if (page <= totalPage) {
+        //             console.log('object');
+        //             terminal.request({ name: 'getMessage', params: { id: activeChat?.id }, queries: { page } }).then(data => {
+        //                 data.docs?.length > 0 && setMessages(prev => [...data.docs, ...prev]), setLoading(false), setTotalPage(data.totalPages);
+        //             })
+        //         }
+        //     }, 500)
+        // }
+        // else {
+        //     setLoading(false)
+        // }
     }
 
     const handleSubmit = (e) => {
@@ -105,16 +121,23 @@ const Messages = ({ activeChat, chatCardHandler, setSupportData }) => {
                 </div>
             </div>
             <div className="px-8 py-2 relative h-[calc(100vh-215px)]  w-full">
+                {
+                    loading &&
+                    <div className='absolute flex w-full justify-center text-primary'>
+                        <img src={loader} alt="" className='animate-spin' />
+                    </div>
+                }
                 <div ref={messageBody} onScroll={handleScroll} className="h-full overflow-y-auto flex  flex-col-reverse gap-12 pb-2 scrollbar">
+
                     {
                         messages?.length > 0 && messages.map((message) =>
                             <ChatBubble
-                                key={message.id}
-                                userId={user.id}
-                                sender={message.sender.id}
-                                name={message.sender.fullName || message.sender.email}
-                                date={message.createdAt}
-                                message={message.message}
+                                key={message?.id}
+                                userId={user?.id}
+                                sender={message?.sender?.id}
+                                name={message?.sender?.fullName || message?.sender?.email}
+                                date={message?.createdAt}
+                                message={message?.message}
                             />)
                     }
                 </div>
