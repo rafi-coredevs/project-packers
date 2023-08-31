@@ -128,5 +128,12 @@ export const order = {
         suggestions: {
             raw: "A raw example of the uri: 'discount'.",
         }
-    }
+    },
+    customerAllOrders: {
+        method: "GET",
+        uri: "order",
+        suggestions: {
+            raw: "A raw example of the uri: 'orders'.",
+        }
+    },
 }

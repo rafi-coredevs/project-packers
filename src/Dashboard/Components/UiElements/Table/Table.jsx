@@ -38,7 +38,7 @@ const head = {
     'Orders',
     'Amount spent',
   ],
-  customerDetails: ['', 'Products', 'Status', 'Price'],
+  customerDetails: ['Products', 'Status', 'Price'],
   discount: [
     'Code',
     'Coupon type',
@@ -312,6 +312,7 @@ useEffect(()=>{
                     <tr
                       key={index}
                       className='border-y border-[#0000001c] hover:bg-[#FEF9DC]'
+                      onClick={() => navigate(`/admin/customers/${item._id}`)}
                     >
                       <td className='text-left py-[10px] pl-4 w-[10px]'>
                         <input type='checkbox' name='check' className='accent-yellow-300' />
@@ -334,6 +335,29 @@ useEffect(()=>{
                       </td>
                       <td className='px-4 py-[18px] text-black text-sm'>
                         ৳{item?.totalSpent}
+                      </td>
+                    </tr>
+                  ))}
+
+                  {dashboardToogle === 'customerDetails' && data?.docs?.map((item, index) => (
+                    <tr
+                      key={index}
+                      className='border-y border-[#0000001c] hover:bg-[#FEF9DC]'
+                    >
+                      <td className='text-left py-[10px] pl-4 w-[10px]'>
+                        <input type='checkbox' className='accent-yellow-300' />
+                      </td>
+                      <td
+                        onClick={() => selectHandler(item.id)}
+                        className='px-4 py-[18px] text-black text-sm cursor-pointer line-clamp-2'
+                      >
+                        {item?.products.length > 0 ? item.products[0].product.name : item?.requests.length > 0 ? item.requests[0].request.name : ''}
+                      </td>
+                      <td className='px-4 py-[18px] text-black text-sm '>
+                        {item?.status}
+                      </td>
+                      <td className='px-4 py-[18px] text-black text-sm '>
+                        {item?.total}
                       </td>
                     </tr>
                   ))}
