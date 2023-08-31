@@ -21,26 +21,28 @@ const NewDiscount = () => {
   const [selectedCategory,setSelectedCategory]=useState(null);
   const [selectedSubcategory,setSelectedSubcategory]=useState(null);
   const [selectedType,setSelectedtype]=useState(null);
+  const [code,setCode]=useState('');
  
 
   useEffect(()=>{
     terminal.request({name:'allCategory'}).then(res=>res?.status===false? toaster({type:'error', message: res?.message}): setCategory(res));
   },[])
-  const categorySelector = (val)=> {
-    
-    setSelectedCategory(category.find(item=>item.id===val))
-
+  const categorySelector = (val)=> setSelectedCategory(category.find(item=>item.id===val));
+  const subcategorySelector = (val)=>setSelectedSubcategory(selectedCategory.subcategory.find(item=>item.id===val));
+  function generateCoupon() {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    let coupon = '';
+    for (let i = 0; i < 8; i++) {
+      const randomIndex = Math.floor(Math.random() * characters.length);
+      coupon += characters[randomIndex];
+    }
+    setCode(coupon);
   }
   useTitle("New Discount");
-  const submitHandler = () => {
+  const submitHandler = (e) => {
+    e.preventDefault();
     console.log("update clicked");
   };
-  const subcategorySelector = (val)=>{
-
-    setSelectedSubcategory(selectedCategory.subcategory.find(item=>item.id===val));
-
-
-  }
   return (
     <div className="px-5 h-full">
       <Heading type="navigate" title={`Add New Discount`} />
@@ -52,8 +54,8 @@ const NewDiscount = () => {
             </h2>
             <div className="border border-[#0000001c] rounded-lg p-3 grid gap-3">
               <div className="flex items-end gap-2 ">
-                <Input styles="basic" label="Coupon Code"  placeholder="Coupon" />
-                <button className="shrink-0 py-[10px] px-3 rounded-md border border-[#0000001c] h-fit text-sm text-[#000316]">Generate Coupone</button>
+                <Input styles="basic" label="Coupon Code" value={code}  placeholder="Coupon" change={(e)=>setCode(e.target.value)} />
+                <div onClick={generateCoupon} className="shrink-0 py-[10px] px-3 rounded-md border border-[#0000001c] h-fit text-sm text-[#000316] cursor-pointer">Generate Coupone</div>
               </div>
               <Input
                 styles="area"
@@ -65,10 +67,10 @@ const NewDiscount = () => {
                <div className="">
                <label htmlFor="Type" className="text-[#475569] text-sm">Type</label>
                <CustomSelect appearance={"select"} options={discountType} onChange={setSelectedtype} value={selectedType}/></div> 
-              <Input styles="basic" label="Amount"  placeholder=" 500" /></div>
+              <Input styles="basic" label="Amount"  placeholder={selectedType==='Percentage'? '30%': 500}/></div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
               <Input styles="basic" label="Limit"  placeholder=" 100" />
-              <input type="date" />
+              <input type="date" className="" />
               </div>
               
             </div>
