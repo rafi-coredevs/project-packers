@@ -197,8 +197,8 @@ const Cart = () => {
                       tax += request?.request?.tax * request.requestQuantity;
                       fee += request?.request?.fee * request.requestQuantity;
                       totalPrice += (request?.request?.price + request?.request?.tax + request?.request?.fee) * request.requestQuantity
-                      return (
-                        <CartItem
+                     return (
+                      request.request?.sellerTakes &&   <CartItem
                           key={request?.id}
                           data={request?.request}
                           quantity={request.requestQuantity}

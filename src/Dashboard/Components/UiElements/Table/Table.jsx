@@ -122,7 +122,7 @@ useEffect(()=>{
         <tbody>
           {
             loading ? (
-              [...Array(10)].map((arr, i) => <tr key={i} className=' hover:bg-[#FEF9DC]'>
+              [...Array(10)].map((arr, i) => <tr key={i}>
                 <td className='py-8 border-b lazy-loading' />
                 {
                   tableHeadData?.map((item, index) => (

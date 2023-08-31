@@ -112,36 +112,42 @@ const Orders = () => {
             <div className="col-span-5 sm:col-span-4">
               {active === "orders" ? (
                 <>
-                  {
-                    order?.length < 1 ? <div>
-                      <p>No orders available</p>
-                    </div> : <div className="w-full overflow-x-auto">
-                      <div className="relative overflow-x-auto">
-                        <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                          <thead className="text-xs text-[#475569]  bg-[#F8FAFC] font-medium border-b">
-                            <tr>
-                              <th scope="col" className="p-3 font-medium">
-                                Order ID
-                              </th>
-                              <th scope="col" className="px-6 py-3 font-medium">
-                                Date
-                              </th>
-                              <th scope="col" className="px-6 py-3 font-medium">
-                                Items
-                              </th>
-                              <th scope="col" className="px-6 py-3 font-medium">
-                                Total
-                              </th>
-                              <th scope="col" className="px-6 py-3 font-medium">
-                                Status
-                              </th>
-                              <th scope="col" className="px-6 py-3 font-medium">
-                                Action
-                              </th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {
+
+                  <div className="w-full overflow-x-auto">
+                    <div className="relative overflow-x-auto">
+                      <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                        <thead className="text-xs text-[#475569]  bg-[#F8FAFC] font-medium border-b">
+                          <tr>
+                            <th scope="col" className="p-3 font-medium">
+                              Order ID
+                            </th>
+                            <th scope="col" className="px-6 py-3 font-medium">
+                              Date
+                            </th>
+                            <th scope="col" className="px-6 py-3 font-medium">
+                              Items
+                            </th>
+                            <th scope="col" className="px-6 py-3 font-medium">
+                              Total
+                            </th>
+                            <th scope="col" className="px-6 py-3 font-medium">
+                              Status
+                            </th>
+                            <th scope="col" className="px-6 py-3 font-medium">
+                              Action
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {
+                            order?.length < 1 ? [...Array(10)].map((arr, i) => <tr key={i} className="border-b">
+                                <td className="px-6 py-7 lazy-loading"></td>
+                                <td className="px-6 py-7 lazy-loading"></td>
+                                <td className="px-6 py-7 lazy-loading"></td>
+                                <td className="px-6 py-7 lazy-loading"></td>
+                                <td className="px-6 py-7 lazy-loading"></td>
+                                <td className="px-6 py-7 lazy-loading"></td>
+                              </tr>) :
                               order?.map(item => {
                                 const formattedDate = new Intl.DateTimeFormat('en-US', {
                                   year: 'numeric',
@@ -153,7 +159,7 @@ const Orders = () => {
                                 }).format(new Date(item.date));
                                 return <tr key={item.id} className="border-b text-sm text-black">
                                   <th scope="row" className="p-3 font-normal">
-                                    # {item.id}
+                                    # {item.orderNumber}
                                   </th>
                                   <td className="px-6 py-4">{formattedDate}</td>
                                   <td className="px-6 py-4">{item?.products?.length + item?.requests?.length}</td>
@@ -172,14 +178,13 @@ const Orders = () => {
                                   </td>
                                 </tr>
                               })
-                            }
-                          </tbody>
-                        </table>
-                      </div>
+                          }
+                        </tbody>
+                      </table>
                     </div>
-                  }
-                </>
+                  </div>
 
+                </>
               ) : (
                 <div className="max-w-[700px]">
                   <form

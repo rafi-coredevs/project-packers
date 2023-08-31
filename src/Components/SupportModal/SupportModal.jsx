@@ -33,8 +33,13 @@ const SupportModal = () => {
       const data = { message: values.message, type: values.type };
       terminal.request({ name: 'registerSupport', body: { data, images } }).then(data => {
         if (data.id) {
+          setVisible(false)
           terminal.request({ name: 'getMessage', params: { id: data.id } }).then(data => {
-            data.docs && setChat(data.docs)
+            if (data.docs) {
+
+              setChat(data.docs)
+              setVisible(true)
+            }
           })
         }
       })
@@ -48,12 +53,16 @@ const SupportModal = () => {
         id = data.id
         terminal.socket.on('entry')
         terminal.socket.emit('entry', { "entry": true, "room": data.id })
-        terminal.request({ name: 'getMessage', params: { id: data.id } }).then(data => {
+        terminal.request({ name: 'getMessage', params: { id: data.id }, queries: { limit: 100 } }).then(data => {
           data.docs?.length > 0 && setChat(data.docs)
         })
         terminal.socket.on('message', (data) => {
           data.id && setChat(prev => [data, ...prev])
         })
+      }
+      else{
+        setSupport()
+        setChat([])
       }
     })
     return () => {
@@ -130,7 +139,7 @@ const SupportModal = () => {
                 Type of support request
               </label>
               <select
-                
+
                 className="bg-white outline-none px-5 py-2 rounded-full select"
                 name="type"
                 value={supportForm.values.type}

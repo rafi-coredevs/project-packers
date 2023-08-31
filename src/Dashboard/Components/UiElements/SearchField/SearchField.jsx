@@ -58,7 +58,7 @@ export const SearchField = () => {
             />
         </div>
         <div
-            className={open ? 'block bg-slate-100 px-5 py-4 absolute w-[650px] mt-1 rounded-lg' : 'hidden'}
+            className={open ? 'block bg-[#fdfdfd] px-5 py-4 absolute w-[650px] mt-1 rounded-lg' : 'hidden'}
         >
             {/* <h1>Search Results :</h1> */}
             {notfound && <h1>{notfound}</h1>}
@@ -150,7 +150,7 @@ export const SearchField = () => {
                 {/* {
                     [...Array(4)].map((list, i) => <li
                         key={i}
-                        className='w-full p-4 rounded-lg hover:bg-slate-200'
+                        className='w-full p-4 rounded-lg hover:bg-[#FEF9DC]'
                         onClick={() => setOpen(false)}
                     >
                         <Link

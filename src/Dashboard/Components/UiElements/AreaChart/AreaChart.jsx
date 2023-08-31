@@ -120,19 +120,16 @@ const AreaChart = ({ data, selected, setSelected, OPTIONS, chartLoading }) => {
   ];
   return (
     <div className="relative">
-      <div className='w-full absolute flex justify-between'>
+      <div className='w-full absolute flex justify-between items-start'>
         <h4 className="text-base font-semibold text-secondary flex items-center gap-2">
           <span>Request vs Order</span>
           <img src={cd_information} alt="cd_information" />
         </h4>
-        <div>
-          <div className="bg-[#CFF6EF] px-2 py-1 absolute right-0 top-0  rounded z-[70]">
-            <div className="">
-              <span className=""></span>
-            </div>
-            <CustomSelect value={selected.name} options={OPTIONS} onChange={onChangeHandler} appearance={'select'} />
+         
+          <div className="bg-[#CFF6EF] min-w-[8rem] py-1 absolute right-0 top-0  rounded z-[70]"> 
+            <CustomSelect bg="paste" value={selected.name} options={OPTIONS} onChange={onChangeHandler} appearance={'select'} />
           </div>
-        </div>
+         
       </div>
       <ReactApexChart
         options={options}

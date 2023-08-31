@@ -40,7 +40,7 @@ const Checkout = () => {
     let discountamount = 0;
     let totalPrice = 0;
     if (cart) {
-      cart.products.forEach((product) => {
+      cart.products?.length > 0 && cart?.products.forEach((product) => {
         const total =
           (product.product.price + product.product.tax + product.product.fee) *
           product.productQuantity;
@@ -48,7 +48,7 @@ const Checkout = () => {
           discount?.code &&
           product.product.category.toString() === discount.category &&
           product.product.subcategory.toString() === discount.subcategory
-        ) {
+        ) { 
           discountItemsTotal += total;
         } else {
           nondiscountItemsTotal += total;
@@ -325,10 +325,6 @@ const Checkout = () => {
                     request?.request?.tax +
                     request?.request?.fee) *
                   request.requestQuantity;
-                setSubTotal(prev => prev += (request?.request?.price +
-                  request?.request?.tax +
-                  request?.request?.fee) *
-                  request.requestQuantity)
                 return (
                   <div
                     key={request.request.id}
@@ -358,7 +354,7 @@ const Checkout = () => {
             {/* Subtotal */}
             <div className="flex items-center justify-between border-b py-4 text-base text-slate-600 font-medium">
               <p className="text-start">Subtotal</p>
-              <p className="text-end text-black">৳ {subtotal}tk </p>
+              <p className="text-end text-black">৳ {subtotal > 0 ? subtotal : price + totalPrice}tk </p>
             </div>
           </div>
           <h4 className="flex items-center justify-between pt-4 text-base text-slate-600 font-medium">

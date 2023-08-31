@@ -190,7 +190,7 @@ const AllOrders = () => {
                   <img src={search} alt="" className="w-[1.5rem] h-[1.5rem]" />
                 </Input>
                 <div className="flex ">
-                  <CustomSelect value={selectedOrderStatus.name} options={orderStatuses} onChange={orderStatusHandler} bg="bg-white" appearance="filter" />
+                  <CustomSelect value={selectedOrderStatus.name} options={orderStatuses} onChange={orderStatusHandler} bg="white" appearance="filter" />
                 </div>
                 <button onClick={() => setSortBy(sortBy === 'date:desc' ? 'date:asc' : 'date:desc')} className="border border-[#0000001f] p-2  ">
                   <img className="opacity-70" src={sort} alt="" />

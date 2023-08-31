@@ -108,7 +108,9 @@ const Customer = () => {
                 <Input type="text" keyenter={handleSearch} placeholder="Search" styles="secondary">
                   <img src={search} alt="" />
                 </Input>
-                <CustomSelect value={selectedCustomerStatus.name} options={customerStatuses} onChange={customerStatusHandler} bg="bg-white" appearance="filter" />
+                <div className="flex ">
+                  <CustomSelect value={selectedCustomerStatus.name} options={customerStatuses} onChange={customerStatusHandler} bg="bg-white" appearance="filter" />
+                </div>
                 <button className="border border-[#0000001f] p-2" onClick={handleSorting}>
                   <img className="opacity-70" src={sort} alt="" />
                 </button>

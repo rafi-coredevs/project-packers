@@ -27,12 +27,12 @@ const styles = {
   close: "bg-red-400",
   pending: "bg-yellow-400",
 };
-export const ChatCard = ({ onClick, active, status, type, id, message }) => {
+export const ChatCard = ({ onClick, active, status, type, id, message, number }) => {
   return (
     <div className="relative">
       <div className={`border-l-2 ${active === id ? 'border-primary' : 'border-white'}   absolute h-full left-0`}></div>
       <div
-        onClick={() => onClick({ id, status, type })}
+        onClick={() => onClick({ id, status, type, number })}
         className={`p-3 border-[#0000001c] border-b cursor-pointer hover:bg-[#3b3b3b10]`}
       >
         <div className="flex gap-2 items-center">
@@ -41,7 +41,7 @@ export const ChatCard = ({ onClick, active, status, type, id, message }) => {
             {type || "No Data"}
           </p>
         </div>
-        <p className="font-medium   ">Order Id #{id}</p>
+        <p className="font-medium   ">Support number: #{number}</p>
         <p className="text-[#475569] line-clamp-2">{message}</p>
       </div>
     </div>

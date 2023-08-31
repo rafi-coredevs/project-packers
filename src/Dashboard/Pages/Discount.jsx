@@ -18,6 +18,7 @@ const Discount = () => {
   const [active, setActive] = useState("all");
   const [tableData, setTabledata] = useState(null);
   const [loading,setLoading]= useState(false);
+  const [sortBy,setSortby]=useState('createdAt:asc');
   const [selectedDiscountStatus, setSelectedDiscountStatus] = useState({ name: 'Select', value: null, id: 0 });
 
   function discountStatusHandler(id) {
@@ -30,15 +31,16 @@ const Discount = () => {
     setActive(value);
     console.log(value);
   };
-
+ console.log(active);
   useEffect(() => {
-    setLoading(true);
+    
     fetchData();
 
-  }, []);
+  }, [active, sortBy]);
 
   const fetchData = (page = 1) => {
-    terminal.request({ name: 'allDiscount', queries: { page } }).then((res) => {
+    setLoading(true);
+    terminal.request({ name: 'allDiscount', queries: { page,filter: active , sortBy} }).then((res) => {
       res.status === false ? '' : setTabledata(res), setLoading(false);
     });
   };
@@ -89,10 +91,10 @@ const Discount = () => {
                   <img src={search} alt="" />
                 </Input>
                 <div className="flex">
-                <CustomSelect value={selectedDiscountStatus.name} options={discountStatuses} onChange={discountStatusHandler} bg="bg-white" appearance="filter" />
+                <CustomSelect value={selectedDiscountStatus.name} options={discountStatuses} onChange={discountStatusHandler} bg="white" appearance="filter" />
              </div>
              
-                <button className="border border-[#0000001f] p-2  ">
+                <button onClick={() => setSortby(sortBy === 'createdAt:desc' ? 'createdAt:asc' : 'createdAt:desc')} className="border border-[#0000001f] p-2  ">
                   <img className="opacity-70" src={sort} alt="" />
                 </button>
               </div>

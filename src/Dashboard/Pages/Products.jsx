@@ -98,7 +98,7 @@ const Products = () => {
                   <img src={search} alt="" />
                 </Input>
                 <div className="flex ">
-                  <CustomSelect value={selectedProductStatus.name} options={productStatuses} onChange={productStatusHandler} bg="bg-white" appearance="filter" />
+                  <CustomSelect value={selectedProductStatus.name} options={productStatuses} onChange={productStatusHandler} bg="white" appearance="filter" />
                 </div>
                 <button onClick={() => setSortBy(sortBy === 'createdAt:desc' ? 'createdAt:asc' : 'createdAt:desc')} className="border border-[#0000001f] p-2  ">
                   <img className="opacity-70" src={sort} alt="" />

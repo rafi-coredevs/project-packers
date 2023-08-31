@@ -20,6 +20,7 @@ import toaster from '../../Util/toaster';
 import { useTitle } from '../../Components/Hooks/useTitle';
 import UploadIcon from '../../assets/icons/UploadIcon.svg';
 import ProductImageUpload from '../Components/uploadImages/ProductImageUpload/ProductImagesUpdate';
+import CustomSelect from '../../Components/UiElements/Input/CustomSelect';
 
 const NewProduct = () => {
     useTitle('New Product');
@@ -27,8 +28,8 @@ const NewProduct = () => {
     const [product, setProduct] = useState(null);
     const [btnType, setBtnType] = useState('submit');
     const [categories, setCategories] = useState([]);
-    const [selectedCategeory, setSelectedcategory] = useState(null);
-    const [selectedSubcategeory, setSelectedsubcategory] = useState(null);
+    const [selectedCategeory, setSelectedCategory] = useState(null);
+    const [selectedSubCategeory, setselectedSubCategeory] = useState(null);
     const [preLoadedImages, setPreLoadedImages] = useState([]);
     const [categoryError, setCategoryerror] = useState({
         category: false,
@@ -59,40 +60,40 @@ const NewProduct = () => {
                 return;
             }
             values.status = btnType;
-            values.category = selectedCategeory;
-            values.subcategory = selectedSubcategeory;
+            values.category = selectedCategeory.id;
+            values.subcategory = selectedSubCategeory.id;
             removeEmptyFields(values);
             const { images, ...rest } = values;
             product
                 ? terminal
-                        .request({
-                            name: 'updateProduct',
-                            params: { id: product?.id },
-                            body: { data: rest, images: images },
-                        })
-                        .then((res) =>
-                            res?.status === false
-                                ? toaster({ type: 'success', message: res.message })
-                                : (toaster({
-                                        type: 'success',
-                                        message: 'Product successfully Updated',
-                                  }),
-                                  navigate(-1)),
-                        )
+                    .request({
+                        name: 'updateProduct',
+                        params: { id: product?.id },
+                        body: { data: rest, images: images },
+                    })
+                    .then((res) =>
+                        res?.status === false
+                            ? toaster({ type: 'success', message: res.message })
+                            : (toaster({
+                                type: 'success',
+                                message: 'Product successfully Updated',
+                            }),
+                                navigate(-1)),
+                    )
                 : terminal
-                        .request({
-                            name: 'registerProduct',
-                            body: { data: rest, images: images },
-                        })
-                        .then((res) =>
-                            res?.status === false
-                                ? toaster({ type: 'success', message: res.message })
-                                : (toaster({
-                                        type: 'success',
-                                        message: 'Product successfully added',
-                                  }),
-                                  navigate(-1)),
-                        );
+                    .request({
+                        name: 'registerProduct',
+                        body: { data: rest, images: images },
+                    })
+                    .then((res) =>
+                        res?.status === false
+                            ? toaster({ type: 'success', message: res.message })
+                            : (toaster({
+                                type: 'success',
+                                message: 'Product successfully added',
+                            }),
+                                navigate(-1)),
+                    );
         },
     });
 
@@ -108,8 +109,8 @@ const NewProduct = () => {
                         toaster({ type: 'error', message: res.message });
                     } else {
                         setProduct(res);
-                        setSelectedcategory(res.category.id);
-                        setSelectedsubcategory(res.subcategory);
+                        setSelectedCategory(res.category.id);
+                        setselectedSubCategeory(res.subcategory);
 
                         // console.log(res);
                         setPreLoadedImages(res.images);
@@ -135,13 +136,20 @@ const NewProduct = () => {
                 category: true,
                 subCategory: true,
             });
-        } else if (selectedSubcategeory === null) {
+        } else if (selectedSubCategeory === null) {
             setCategoryerror({
                 category: false,
                 subCategory: true,
             });
         }
     };
+
+    const categorySelector = (val) => setSelectedCategory(categories.find(item => item.id === val));
+    const subcategorySelector = (val) => setselectedSubCategeory(selectedCategeory.subcategory.find(item => item.id === val));
+
+    useEffect(() => {
+        setselectedSubCategeory(null)
+    }, [selectedCategeory])
 
     return (
         <div className='h-full px-5'>
@@ -178,7 +186,7 @@ const NewProduct = () => {
                                 value={productForm.values.description}
                                 error={
                                     productForm.touched.description &&
-                                    productForm.errors.description
+                                        productForm.errors.description
                                         ? productForm.errors.description
                                         : null
                                 }
@@ -190,13 +198,16 @@ const NewProduct = () => {
                         <div className='border border-[#0000001c] rounded-lg p-3 grid gap-3'>
                             <label className='text-[#475569] text-sm'>Parent Category</label>
 
-                            <select
+
+                            <CustomSelect appearance={"select"} bg="white" options={categories} onChange={categorySelector} value={selectedCategeory?.name} />
+
+                            {/* <select
                                 className={`bg-transparent border-[1px] w-full outline-none px-3 py-2 rounded-lg appearance-none ${
                                     categoryError.category ? 'border-[red]' : ''
                                 } `}
                                 onChange={(e) => {
                                     setSelectedcategory(e.target.value),
-                                        setSelectedsubcategory(null),
+                                        setselectedSubCategeory(null),
                                         setCategoryerror({
                                             category: false,
                                             subCategory: true,
@@ -212,21 +223,22 @@ const NewProduct = () => {
                                         {cat.name}
                                     </option>
                                 ))}
-                            </select>
+                            </select> */}
 
                             <label className='text-[#475569] text-sm'>Sub Category</label>
-                            <select
-                                className={`bg-transparent border-[1px] w-full outline-none px-3 py-2 rounded-lg ${
-                                    categoryError.subCategory ? 'border-[red]' : ''
-                                } `}
+                            <CustomSelect appearance={"select"} bg="white" options={selectedCategeory?.subcategory} onChange={subcategorySelector} value={selectedSubCategeory?.name} />
+
+                            {/* <select
+                                className={`bg-transparent border-[1px] w-full outline-none px-3 py-2 rounded-lg ${categoryError.subCategory ? 'border-[red]' : ''
+                                    } `}
                                 onChange={(e) => {
-                                    setSelectedsubcategory(e.target.value),
+                                    setselectedSubCategeory(e.target.value),
                                         setCategoryerror({
                                             category: false,
                                             subCategory: false,
                                         });
                                 }}
-                                value={selectedSubcategeory || ''}
+                                value={selectedSubCategeory || ''}
                             >
                                 <option disabled value=''>
                                     Select
@@ -238,7 +250,7 @@ const NewProduct = () => {
                                             {sub.name}
                                         </option>
                                     ))}
-                            </select>
+                            </select> */}
 
                             <Input
                                 styles='basic'
@@ -275,7 +287,7 @@ const NewProduct = () => {
                                     </>
                                 }
                                 preLoadedImages={preLoadedImages}
-                    
+
                             />
                         </div>
                         <h2 className='text-base text-secondary font-semibold'>Pricing</h2>
