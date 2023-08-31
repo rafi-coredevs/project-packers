@@ -26,7 +26,7 @@ const MainCategory = () => {
     fetchdata();
 
   }, []);
- 
+
   const fetchdata = () => terminal.request({ name: 'allCategory' }).then(res => res.status === false ? toaster({ type: 'error', message: res.message }) : setCategories(res));
 
   const categoryForm = useFormik({
