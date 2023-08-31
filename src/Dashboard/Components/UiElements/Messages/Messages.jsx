@@ -11,6 +11,7 @@ const Messages = ({ activeChat, chatCardHandler, setSupportData }) => {
     const [modal, setModal] = useState(true)
     const [messages, setMessages] = useState()
     const messageBody = useRef(null)
+    const [page, setPage] = useState(1)
     useEffect(() => {
         setModal(true)
         setMessages([])
@@ -32,9 +33,20 @@ const Messages = ({ activeChat, chatCardHandler, setSupportData }) => {
         }
     }, [activeChat])
 
-    useEffect(() => {
-        console.log(messageBody.current);
-    }, [])
+    let throttleTimer;
+    const throttle = (callback, time) => {
+        if (throttleTimer) return;
+        throttleTimer = true;
+        setTimeout(() => {
+            callback();
+            throttleTimer = false;
+        }, time);
+    };
+
+    const handleScroll = () => {
+        console.log(messageBody.current.scrollHeight);
+        console.log(messageBody.current.scrollTop + messageBody.current.clientHeight);
+    }
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -93,7 +105,7 @@ const Messages = ({ activeChat, chatCardHandler, setSupportData }) => {
                 </div>
             </div>
             <div className="px-8 py-2 relative h-[calc(100vh-215px)]  w-full">
-                <div ref={messageBody} className="h-full overflow-y-auto flex  flex-col-reverse gap-12 pb-2 scrollbar">
+                <div ref={messageBody} onScroll={handleScroll} className="h-full overflow-y-auto flex  flex-col-reverse gap-12 pb-2 scrollbar">
                     {
                         messages?.length > 0 && messages.map((message) =>
                             <ChatBubble
