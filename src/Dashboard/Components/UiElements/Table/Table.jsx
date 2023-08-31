@@ -69,7 +69,7 @@ const Table = ({ data, paginate, loading, dashboardToogle, modalHandler, getData
   const [selectedItem, setSelectItem] = useState([]);
 
 useEffect(()=>{
-  getData(selectedItem)
+  getData &&  getData(selectedItem)
 },[selectedItem])
 
   const checkboxHandler = (status) => {
