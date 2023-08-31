@@ -32,7 +32,7 @@ export const ChatCard = ({ onClick, active, status, type, id, message, number })
     <div className="relative">
       <div className={`border-l-2 ${active === id ? 'border-primary' : 'border-white'}   absolute h-full left-0`}></div>
       <div
-        onClick={() => onClick({ id, status, type })}
+        onClick={() => onClick({ id, status, type, number })}
         className={`p-3 border-[#0000001c] border-b cursor-pointer hover:bg-[#3b3b3b10]`}
       >
         <div className="flex gap-2 items-center">
