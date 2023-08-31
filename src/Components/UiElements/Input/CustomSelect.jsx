@@ -50,7 +50,7 @@ const CustomSelect = ({ options, value, onChange, appearance, bg }) => {
         </div>
       }
       {appearance == "filter" &&
-        <button onClick={toggleDropdown} className=" border-[#0000001f] p-2 " id="customselectfilter">
+        <button onClick={toggleDropdown} className="border border-[#0000001f] p-2 " id="customselectfilter">
           <img src={filter} alt="" className="w-[1.5rem] h-[1.5rem]" />
         </button>
 
