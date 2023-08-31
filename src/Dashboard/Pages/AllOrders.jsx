@@ -16,7 +16,7 @@ import toaster from "../../Util/toaster";
 import CustomSelect from "../../Components/UiElements/Input/CustomSelect";
 import DateRangeSelector from "../Components/UiElements/DateSelector/DateRangesSelector";
 
-const orderStatuses = [{ id: 1, name: "All", value: "all" }, { id: 2, name: "Paid", value: "paid" }, { id: 3, name: "Pending", value: "pending" }]
+const orderStatuses = [{ id: 1, name: "All", value: "all" }, { id: 2, name: "Paid", value: "paid" }, { id: 3, name: "Refunded", value: "refunded" }, { id: 4, name: "Refund Processing", value: "refundProcessing" }]
 
 const AllOrders = () => {
   useTitle("Order list");
@@ -50,8 +50,11 @@ const AllOrders = () => {
   const [sortBy, setSortBy] = useState('date:asc');
   const [selectedOrderStatus, setSelectedOrderStatus] = useState({ name: 'Select', value: null, id: 0 });
 
+
   function orderStatusHandler(id) {
-    setSelectedOrderStatus(orderStatuses.find(item => item.id === id))
+    const selected = orderStatuses.find(item => item.id === id)
+    setSelectedOrderStatus(selected);
+    setActive(selected?.value)
   }
 
   const tableButtonHandler = (value) => {
