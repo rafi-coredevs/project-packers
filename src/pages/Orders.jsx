@@ -153,7 +153,7 @@ const Orders = () => {
                                 }).format(new Date(item.date));
                                 return <tr key={item.id} className="border-b text-sm text-black">
                                   <th scope="row" className="p-3 font-normal">
-                                    # {item.id}
+                                    # {item.orderNumber}
                                   </th>
                                   <td className="px-6 py-4">{formattedDate}</td>
                                   <td className="px-6 py-4">{item?.products?.length + item?.requests?.length}</td>

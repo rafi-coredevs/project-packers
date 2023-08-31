@@ -100,7 +100,7 @@ const Header = ({ sideBar, state }) => {
 				cartData.push({
 					id: request.request.id,
 					title: request.request.name,
-					price: request.request?.price || "",
+					price: request.request?.sellerTakes || "",
 					image: request.request.images[0] || "",
 					qty: request.requestQuantity
 				})
