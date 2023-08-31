@@ -21,7 +21,6 @@ const Chat = () => {
   const [loading, setLoading] = useState(false)
   useEffect(() => {
     terminal.request({ name: 'allSupport', queries: { status: activeStatusButton, type: supportType } }).then(data => {
-      console.log(data)
       setSupportData(() => {
         return data.length > 0 && data?.map(support => {
           return {
@@ -124,7 +123,7 @@ const Chat = () => {
       </div>
       <div className="col-span-12 sm:col-span-9 relative bg-[#E2E8F0]">
         {
-          activeChat?.id ? <Messages chatCardHandler={chatCardHandler} activeChat={activeChat} /> : <EmptyMassage />
+          activeChat?.id ? <Messages chatCardHandler={chatCardHandler} activeChat={activeChat} setSupportData={setSupportData} /> : <EmptyMassage />
         }
       </div>
     </div>

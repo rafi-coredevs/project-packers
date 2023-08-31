@@ -4,8 +4,9 @@ import Button from '../Button/Button';
 import { useUserCtx } from '../../../../contexts/user/UserContext';
 import { terminal } from '../../../../contexts/terminal/Terminal';
 import send from '../../../../assets/icons/send.png';
+import toaster from '../../../../Util/toaster';
 
-const Messages = ({ activeChat, chatCardHandler }) => {
+const Messages = ({ activeChat, chatCardHandler, setSupportData }) => {
     const { user } = useUserCtx()
     const [modal, setModal] = useState(true)
     const [messages, setMessages] = useState()
@@ -20,7 +21,6 @@ const Messages = ({ activeChat, chatCardHandler }) => {
             terminal.socket.on('entry')
             terminal.socket.emit('entry', { "entry": true, "room": activeChat?.id })
             terminal.socket.on('message', (data) => {
-                console.log(data);
                 data.id && setMessages(prev => [data, ...prev])
             })
         }
@@ -35,16 +35,27 @@ const Messages = ({ activeChat, chatCardHandler }) => {
         e.preventDefault()
         if (activeChat && activeChat.status !== 'pending') {
             terminal.request({ name: 'sendMessage', params: { id: activeChat.id }, body: { data: { message: e.target.message.value } } })
-            e.target.message.value ="";
+            e.target.message.value = "";
         }
-
+    }
+    const handleStatus = (e) => {
+        terminal.request({ name: 'updateSupport', params: { id: activeChat.id }, body: { status: e.target.value } }).then(data => {
+            if (data.id) {
+                chatCardHandler({ id: data.id, status: data.status, type: data.type });
+                toaster({ type: 'success', message: 'Status updated successfully' })
+                return
+            }
+            toaster({ type: 'error', message: 'An error occurred' })
+        })
     }
     return (
         <>
             {modal && <div className="absolute top-0 bottom-0 left-0 right-0 bg-[#0000004b] z-10">
                 <div className="h-full w-full flex items-center justify-center">
                     <div className="flex gap-2">
-                        <Button onClick={() => console.log('object')} style={"secondary"}>Decline</Button>
+                        <Button onClick={() => setSupportData(prev => {
+                            return prev.filter(item => item.id !== activeChat.id)
+                        })} style={"secondary"}>Decline</Button>
                         <Button onClick={() => terminal.request({ name: 'acceptSupport', params: { id: activeChat.id } }).then(data => {
                             if (data.id) { chatCardHandler({ id: data.id, status: data.status, type: data.type }) }
                         })} style={"primary"}>Accept</Button>
@@ -63,14 +74,13 @@ const Messages = ({ activeChat, chatCardHandler }) => {
                 </div>
                 <div>
                     <select
-                        className="bg-transparent outline-none cursor-pointer"
-                        name=""
-                        id=""
+                        className="bg-transparent outline-none cursor-pointer w-20"
+                        onChange={handleStatus}
                     >
-                        <option value="open" selected>
+                        <option value="open" selected={activeChat.status === 'open'}>
                             Open
                         </option>
-                        <option value="close" selected>
+                        <option value="close" selected={activeChat.status === 'close'}>
                             Close
                         </option>
                     </select>
@@ -98,7 +108,7 @@ const Messages = ({ activeChat, chatCardHandler }) => {
                             name='message'
                             placeholder="Type text message"
                             required
-                            
+
                         />
                         <button type='submit'>
                             <img
