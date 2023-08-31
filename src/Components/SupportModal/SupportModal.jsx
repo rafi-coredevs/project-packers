@@ -33,8 +33,13 @@ const SupportModal = () => {
       const data = { message: values.message, type: values.type };
       terminal.request({ name: 'registerSupport', body: { data, images } }).then(data => {
         if (data.id) {
+          setVisible(false)
           terminal.request({ name: 'getMessage', params: { id: data.id } }).then(data => {
-            data.docs && setChat(data.docs)
+            if (data.docs) {
+
+              setChat(data.docs)
+              setVisible(true)
+            }
           })
         }
       })
@@ -54,6 +59,10 @@ const SupportModal = () => {
         terminal.socket.on('message', (data) => {
           data.id && setChat(prev => [data, ...prev])
         })
+      }
+      else{
+        setSupport()
+        setChat([])
       }
     })
     return () => {
