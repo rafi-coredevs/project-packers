@@ -22,7 +22,7 @@ const Products = () => {
   const [sortBy, setSortBy] = useState('createdAt:asc');
   const [loading, setLoading] = useState(true);
   const [selectedProductStatus, setSelectedProductStatus] = useState({ name: 'Select', value: null, id: 0 });
-
+  const [selectedItem, setSelectedItem] = useState([]);
   function productStatusHandler(id) {
     setSelectedProductStatus(productStatuses.find(item => item.id === id))
   }
@@ -30,6 +30,10 @@ const Products = () => {
     fetchData();
 
   }, [sortBy, active]);
+  useEffect(()=>{
+    console.log("products",selectedItem)
+  },[selectedItem])
+
 
   const fetchData = (page = 1) => {
     setLoading(true);
@@ -100,7 +104,7 @@ const Products = () => {
               </div>
             </div>
 
-            <Table type="products" data={tableData} paginate={fetchData} loading={loading} />
+            <Table type="products" data={tableData} paginate={fetchData} loading={loading} getData={setSelectedItem}/> 
           </div>
         </div>
       </div>

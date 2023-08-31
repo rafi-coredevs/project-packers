@@ -1,9 +1,11 @@
 /**
  *
- * @prams {type} args.type - to determine where the table is to be used
- * @params {array} args.data - the data table will hold
- * @params {function} args.reFatch - handle the request for next or previous page data
- * @params {} args.pageItem - number of item the table supposed to hold. plays role in pagination
+ * @param {object} args.data - table field data
+ * @param {number} args.paginate - Number of table
+ * @param {boolean} args.loading - loading state
+ * @param {string} args.dashboardToogle - types of table. heads will render depends on this
+ * @param {boolean} args.modalHandler - modal hide show 
+ * @param {function} args.getData - Callback function to return selected items to the parent
  * @returns table JSX Element.
  */
 
@@ -13,7 +15,7 @@ import edit from '../../../../assets/icons/cd-edit.svg';
 import dlt from '../../../../assets/icons/cd-delete.svg';
 import arrowLeft from '../../../../assets/icons/cd-arrow-left-1.svg';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { BASE_URL } from '../../../../Util/apiCall';
 
 const head = {
@@ -55,26 +57,57 @@ const head = {
   ],
 };
 
-const Table = ({ data, paginate, loading, dashboardToogle, modalHandler }) => {
+const Table = ({ data, paginate, loading, dashboardToogle, modalHandler, getData }) => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const location = pathname.split('/')[pathname.split('/').length - 1];
-  const tableHeadData = head[dashboardToogle|| location];
+  const tableHeadData = head[dashboardToogle || location];
   const [currentPage, setCurrentPage] = useState(1);
   const totalPages = Math.ceil(data?.docs?.length / 10);
   const startIndex = (currentPage - 1) * 10;
   const endIndex = startIndex + 10;
-  const selectHandler = (id) => {
-    console.log(id);
-  };
- console.log(data);
+  const [selectedItem, setSelectItem] = useState([]);
+
+useEffect(()=>{
+  getData(selectedItem)
+},[selectedItem])
+
+  const checkboxHandler = (status) => {
+    const ele = document.getElementsByName('check');
+    if (status.target.checked) {
+      setSelectItem([]);
+      for (let i = 0; i < ele.length; i++) {
+        if (ele[i].type == 'checkbox')
+          ele[i].checked = true;
+          setSelectItem(prev => [...prev, ele[i].id])
+     
+      }
+    } else {
+      for (let i = 0; i < ele.length; i++) {
+        if (ele[i].type == 'checkbox')
+          ele[i].checked = false;
+      }
+      setSelectItem([]);
+    }
+
+  }
+  const changeHandler = (event) =>{
+    if(event.target.checked){
+      setSelectItem(prev => [...prev, event.target.id]);
+    }else{
+      const updateItem = selectedItem.filter((item)=> item != event.target.id );
+      setSelectItem(updateItem);
+    }
+
+  }
+
   return (
     <div className='relative overflow-x-auto'>
       <table className='w-full'>
         <thead>
           <tr className='bg-[#F8FAFC] border-y border-[#0000001c]'>
             <th className='text-left py-[10px] pl-4 w-[10px]'>
-              <input type='checkbox' className='accent-yellow-300' />
+              <input type='checkbox' onChange={checkboxHandler} className='accent-yellow-300' />
             </th>
             {tableHeadData?.map((item, index) => (
               <th
@@ -110,7 +143,7 @@ const Table = ({ data, paginate, loading, dashboardToogle, modalHandler }) => {
                       className='border-y border-[#0000001c] hover:bg-[#FEF9DC]'
                     >
                       <td className='text-left py-[10px] pl-4 w-[10px]'>
-                        <input type='checkbox' className='accent-yellow-300' />
+                        <input onChange={changeHandler} type='checkbox' name="check" id={item?.id} className='accent-yellow-300' />
                       </td>
                       <td className='px-4 py-[18px] text-black text-sm '>
                         <img
@@ -146,14 +179,14 @@ const Table = ({ data, paginate, loading, dashboardToogle, modalHandler }) => {
                 }
                 {
                   //All Orders Data Table
-                  (location === 'orders' || (location === 'admin' && dashboardToogle==='orders')) &&
+                  (location === 'orders' || (location === 'admin' && dashboardToogle === 'orders')) &&
                   data?.docs?.map((item, index) => (
                     <tr
                       key={index}
                       className='border-y border-[#0000001c] hover:bg-[#FEF9DC]'
                     >
                       <td className='text-left py-[10px] pl-4 w-[10px]'>
-                        <input type='checkbox' className='accent-yellow-300' />
+                        <input type='checkbox' name='check' className='accent-yellow-300' />
                       </td>
                       <td className='px-4 py-[18px] text-black text-sm '>
                         #{item?.id}
@@ -195,7 +228,7 @@ const Table = ({ data, paginate, loading, dashboardToogle, modalHandler }) => {
                           />
                           <img
                             className='cursor-pointer opacity-70'
-                            onClick={() =>  modalHandler(item?.id)}
+                            onClick={() => modalHandler(item?.id)}
                             src={dlt}
                             alt=''
                           />
@@ -207,14 +240,14 @@ const Table = ({ data, paginate, loading, dashboardToogle, modalHandler }) => {
 
                 {
                   //Requested Item Data Table
-                  (location === 'request' || dashboardToogle==='request') &&
+                  (location === 'request' || dashboardToogle === 'request') &&
                   data?.docs?.map((item, index) => (
                     <tr
                       key={index}
                       className='border-y border-[#0000001c] hover:bg-[#FEF9DC]'
                     >
                       <td className='text-left py-[10px] pl-4 w-[10px]'>
-                        <input type='checkbox' className='accent-yellow-300' />
+                        <input type='checkbox' name='check' className='accent-yellow-300' />
                       </td>
                       <td className='px-4 py-[18px] text-black text-sm '>
                         #{item?.id}
@@ -256,7 +289,7 @@ const Table = ({ data, paginate, loading, dashboardToogle, modalHandler }) => {
                       className='border-y border-[#0000001c] hover:bg-[#FEF9DC]'
                     >
                       <td className='text-left py-[10px] pl-4 w-[10px]'>
-                        <input type='checkbox' className='accent-yellow-300' />
+                        <input type='checkbox' name='check' className='accent-yellow-300' />
                       </td>
 
                       <td
@@ -281,7 +314,7 @@ const Table = ({ data, paginate, loading, dashboardToogle, modalHandler }) => {
                       className='border-y border-[#0000001c] hover:bg-[#FEF9DC]'
                     >
                       <td className='text-left py-[10px] pl-4 w-[10px]'>
-                        <input type='checkbox' className='accent-yellow-300' />
+                        <input type='checkbox' name='check' className='accent-yellow-300' />
                       </td>
 
                       <td
@@ -312,7 +345,7 @@ const Table = ({ data, paginate, loading, dashboardToogle, modalHandler }) => {
                       className='border-y border-[#0000001c] hover:bg-[#FEF9DC]'
                     >
                       <td className='text-left py-[10px] pl-4 w-[10px]'>
-                        <input type='checkbox' className='accent-yellow-300' />
+                        <input type='checkbox' name='check' className='accent-yellow-300' />
                       </td>
 
                       <td
@@ -322,23 +355,23 @@ const Table = ({ data, paginate, loading, dashboardToogle, modalHandler }) => {
                         {item?.code}
                       </td>
                       <td className='px-4 py-[18px] text-black text-sm '>
-                        {item?.amount? 'Fixed': 'Percentage'}
+                        {item?.amount ? 'Fixed' : 'Percentage'}
                       </td>
                       <td className='px-4 py-[18px] text-black text-sm '>
-                        {item?.amount? '৳  '+ item?.amount : item?.percentage + '  %'}
+                        {item?.amount ? '৳  ' + item?.amount : item?.percentage + '  %'}
                       </td>
                       <td className='px-4 py-[18px] text-black text-sm '>
-                        {item?.description || 'N/A'} 
+                        {item?.description || 'N/A'}
                       </td>
                       <td className='px-4 py-[18px] text-black text-sm '>
                         {item?.limit}
                       </td>
                       <td className='px-4 py-[18px] text-black text-sm '>
-                        {item?.expiry_date? new Intl.DateTimeFormat('en-US', {
+                        {item?.expiry_date ? new Intl.DateTimeFormat('en-US', {
                           year: 'numeric',
                           month: 'long',
                           day: 'numeric',
-                        }).format(new Date(item?.expiry_date)) :'Not Available'}
+                        }).format(new Date(item?.expiry_date)) : 'Not Available'}
                       </td>
                     </tr>
                   ))}
@@ -373,10 +406,10 @@ const Table = ({ data, paginate, loading, dashboardToogle, modalHandler }) => {
           </div>
         )
       }
-      {(location !== 'category' && loading===false) && (
+      {(location !== 'category' && loading === false) && (
         <div className='flex justify-between items-center py-6 px-4'>
           <p className='text-[#475569] text-sm'>
-            Showing {data?.page===1? 1 :((data?.page-1 )* 10)} - {data?.page===1? data?.docs?.length:((data?.page-1 )* 10)+data?.docs?.length} of {data?.totalDocs} results
+            Showing {data?.page === 1 ? 1 : ((data?.page - 1) * 10)} - {data?.page === 1 ? data?.docs?.length : ((data?.page - 1) * 10) + data?.docs?.length} of {data?.totalDocs} results
           </p>
           <div className='flex'>
             <button
