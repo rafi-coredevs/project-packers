@@ -11,31 +11,33 @@ import { useTitle } from "../../Components/Hooks/useTitle";
 import { terminal } from "../../contexts/terminal/Terminal";
 import CustomSelect from "../../Components/UiElements/Input/CustomSelect";
 // 
-const requestStatuses = [{ id: 1, name: "All", value: "all" }, { id: 2, name: "Paid", value: "paid" }, { id: 3, name: "Pending", value: "pending" }]
+const requestStatuses = [{ id: 'All', name: "All", value: "All" }, { id: 'Paid', name: "Paid", value: "Paid" }, { id: 'Pending', name: "Pending", value: "Pending" }]
 
 // 
 const RequestItems = () => {
-  
+
   useTitle("Requested Items")
   const [active, setActive] = useState("all");
   const [tableData, setTabledata] = useState(null);
-  const [loading,setLoading]=useState(true);
-  const [sortBy,setSortBy]=useState('createdAt:asc');
+  const [loading, setLoading] = useState(true);
+  const [sortBy, setSortBy] = useState('createdAt:asc');
   useEffect(() => {
     fetchData();
-   
+
   }, [sortBy, active]);
+
+  const [selectedRequestStatus, setSelectedRequestStatus] = useState('all');
+ const filterHandler = (val)=>{
+  setSelectedRequestStatus(val);
+  setActive(val.toLowerCase());
+ }
+
   
-  const [selectedRequestStatus, setSelectedRequestStatus] = useState({ name: 'Select', value: null, id: 0 });
 
-  function requestStatusHandler(id) {
-    setSelectedRequestStatus(requestStatuses.find(item => item.id === id))
-  }
-
-  const fetchData = (page=1) => {
+  const fetchData = (page = 1) => {
     setLoading(true);
-    terminal.request({name:'allRequest', queries: { page, sortBy, status: active } }).then((res) => {
-      res.status===false? '': setTabledata(res),  setLoading(false);
+    terminal.request({ name: 'allRequest', queries: { page, sortBy, status: active } }).then((res) => {
+      res.status === false ? '' : setTabledata(res), setLoading(false);
     })
   };
   const tableButtonHandler = (value) => {
@@ -59,49 +61,44 @@ const RequestItems = () => {
               <div className="py-2 my-auto">
                 <button
                   onClick={() => tableButtonHandler("all")}
-                  className={`py-2 px-3 text-[#475569] text-xs font-semibold ${
-                    active === "all" ? "bg-[#CFF6EF] rounded" : "bg-transparent"
-                  }`}
+                  className={`py-2 px-3 text-[#475569] text-xs font-semibold ${active === "all" ? "bg-[#CFF6EF] rounded" : "bg-transparent"
+                    }`}
                 >
                   All
                 </button>
                 <button
                   onClick={() => tableButtonHandler("pending")}
-                  className={`py-2 px-3 text-[#475569] text-xs font-semibold ${
-                    active === "pending"
+                  className={`py-2 px-3 text-[#475569] text-xs font-semibold ${active === "pending"
                       ? "bg-[#CFF6EF] rounded"
                       : "bg-transparent"
-                  }`}
+                    }`}
                 >
                   Pending
                 </button>
                 <button
                   onClick={() => tableButtonHandler("estimate")}
-                  className={`py-2 px-3 text-[#475569] text-xs font-semibold ${
-                    active === "estimate"
+                  className={`py-2 px-3 text-[#475569] text-xs font-semibold ${active === "estimate"
                       ? "bg-[#CFF6EF] rounded"
                       : "bg-transparent"
-                  }`}
+                    }`}
                 >
                   Estimate sent
                 </button>
                 <button
                   onClick={() => tableButtonHandler("closed")}
-                  className={`py-2 px-3 text-[#475569] text-xs font-semibold ${
-                    active === "closed"
+                  className={`py-2 px-3 text-[#475569] text-xs font-semibold ${active === "closed"
                       ? "bg-[#CFF6EF] rounded"
                       : "bg-transparent"
-                  }`}
+                    }`}
                 >
                   Closed
                 </button>
                 <button
                   onClick={() => tableButtonHandler("abandoned")}
-                  className={`py-2 px-3 text-[#475569] text-xs font-semibold ${
-                    active === "abandoned"
+                  className={`py-2 px-3 text-[#475569] text-xs font-semibold ${active === "abandoned"
                       ? "bg-[#CFF6EF] rounded"
                       : "bg-transparent"
-                  }`}
+                    }`}
                 >
                   Abandoned
                 </button>
@@ -111,9 +108,10 @@ const RequestItems = () => {
                   <img src={search} alt="" />
                 </Input>
 
-                <CustomSelect value={selectedRequestStatus.name} options={requestStatuses} onChange={requestStatusHandler} bg="bg-white" appearance="filter" />
-
-                <button onClick={()=>setSortBy(sortBy==='createdAt:desc'?'createdAt:asc':'createdAt:desc')}  className="border border-[#0000001f] p-2  ">
+                <div className=" flex ">
+                  <CustomSelect value={selectedRequestStatus} options={requestStatuses} onChange={filterHandler} bg="white" appearance="filter" />
+                </div>
+                <button onClick={() => setSortBy(sortBy === 'createdAt:desc' ? 'createdAt:asc' : 'createdAt:desc')} className="border border-[#0000001f] p-2  ">
                   <img className="opacity-70" src={sort} alt="" />
                 </button>
               </div>

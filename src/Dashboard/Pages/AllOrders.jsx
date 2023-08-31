@@ -16,7 +16,7 @@ import toaster from "../../Util/toaster";
 import CustomSelect from "../../Components/UiElements/Input/CustomSelect";
 import DateRangeSelector from "../Components/UiElements/DateSelector/DateRangesSelector";
 
-const orderStatuses = [{ id: 1, name: "All", value: "all" }, { id: 2, name: "Paid", value: "paid" }, { id: 3, name: "Pending", value: "pending" }]
+const orderStatuses = [{ id: 1, name: "All", value: "all" }, { id: 2, name: "Paid", value: "paid" }, { id: 3, name: "Refunded", value: "refunded" }, { id: 4, name: "Refund Processing", value: "refundProcessing" }]
 
 const AllOrders = () => {
   useTitle("Order list");
@@ -50,8 +50,11 @@ const AllOrders = () => {
   const [sortBy, setSortBy] = useState('date:asc');
   const [selectedOrderStatus, setSelectedOrderStatus] = useState({ name: 'Select', value: null, id: 0 });
 
+
   function orderStatusHandler(id) {
-    setSelectedOrderStatus(orderStatuses.find(item => item.id === id))
+    const selected = orderStatuses.find(item => item.id === id)
+    setSelectedOrderStatus(selected);
+    setActive(selected?.value)
   }
 
   const tableButtonHandler = (value) => {
@@ -101,7 +104,7 @@ const AllOrders = () => {
  
   return (
     <div className="h-full px-5 ">
-      
+
       <Modal show={isModal} onClose={() => setIsModal(false)}><div className="text-center text-xl my-10">Are you sure you want to delete this order?
         <div className="flex gap-2 items-center justify-center mx-auto w-full mt-5"><span onClick={deleteHandler}><Button style='primary'><span className="px-2">Yes</span></Button></span><span onClick={() => setIsModal(false)}><Button style='outline'><span className="px-2">No</span></Button></span></div></div></Modal>
       <Heading title="All Orders">
@@ -178,10 +181,11 @@ const AllOrders = () => {
               </div>
               <div className="py-2 flex gap-1">
                 <Input type="text" placeholder="Search" styles="secondary">
-                  <img src={search} alt="" />
+                  <img src={search} alt="" className="w-[1.5rem] h-[1.5rem]" />
                 </Input>
-                <CustomSelect value={selectedOrderStatus.name} options={orderStatuses} onChange={orderStatusHandler} bg="bg-white" appearance="filter" />
-
+                <div className="flex ">
+                  <CustomSelect value={selectedOrderStatus.name} options={orderStatuses} onChange={orderStatusHandler} bg="white" appearance="filter" />
+                </div>
                 <button onClick={() => setSortBy(sortBy === 'date:desc' ? 'date:asc' : 'date:desc')} className="border border-[#0000001f] p-2  ">
                   <img className="opacity-70" src={sort} alt="" />
                 </button>

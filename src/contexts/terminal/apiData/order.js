@@ -108,6 +108,13 @@ export const order = {
             id: "Please provide the order id.",
         }
     },
+    getCustomerOrder: {
+        method: "GET",
+        uri: "getcustomer",
+        suggestions: {
+            raw: "A raw example of the uri: 'getcustomer'.",
+        }
+    },
     overviewData: {
         method: "GET",
         uri: "overview",
@@ -121,5 +128,12 @@ export const order = {
         suggestions: {
             raw: "A raw example of the uri: 'discount'.",
         }
-    }
+    },
+    customerAllOrders: {
+        method: "GET",
+        uri: "order",
+        suggestions: {
+            raw: "A raw example of the uri: 'orders'.",
+        }
+    },
 }

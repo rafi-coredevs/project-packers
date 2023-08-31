@@ -12,7 +12,7 @@ import { useTitle } from "../../Components/Hooks/useTitle";
 import { terminal } from "../../contexts/terminal/Terminal";
 import CustomSelect from "../../Components/UiElements/Input/CustomSelect";
 
-const productStatuses = [{ id: 1, name: "All", value: "all" }, { id: 2, name: "Paid", value: "paid" }, { id: 3, name: "Pending", value: "pending" }]
+const productStatuses = [{ id: 1, name: "All", value: "all" }, { id: 2, name: "Active", value: "active" }, { id: 3, name: "Draft", value: "draft" }, { id: 4, name: "Archived", value: "archive" }]
 
 
 const Products = () => {
@@ -22,14 +22,20 @@ const Products = () => {
   const [sortBy, setSortBy] = useState('createdAt:asc');
   const [loading, setLoading] = useState(true);
   const [selectedProductStatus, setSelectedProductStatus] = useState({ name: 'Select', value: null, id: 0 });
-
+  const [selectedItem, setSelectedItem] = useState([]);
   function productStatusHandler(id) {
-    setSelectedProductStatus(productStatuses.find(item => item.id === id))
+    const selected = productStatuses.find(item => item.id === id);
+    setSelectedProductStatus(selected);
+    setActive(selected.value)
   }
   useEffect(() => {
     fetchData();
 
   }, [sortBy, active]);
+  useEffect(()=>{
+    console.log("products",selectedItem)
+  },[selectedItem])
+
 
   const fetchData = (page = 1) => {
     setLoading(true);
@@ -62,8 +68,8 @@ const Products = () => {
                 <button
                   onClick={() => setActive("active")}
                   className={`py-2 px-3 text-[#475569] text-xs font-semibold ${active === "active"
-                      ? "bg-[#CFF6EF] rounded"
-                      : "bg-transparent"
+                    ? "bg-[#CFF6EF] rounded"
+                    : "bg-transparent"
                     }`}
                 >
                   Active
@@ -71,8 +77,8 @@ const Products = () => {
                 <button
                   onClick={() => setActive("draft")}
                   className={`py-2 px-3 text-[#475569] text-xs font-semibold ${active === "draft"
-                      ? "bg-[#CFF6EF] rounded"
-                      : "bg-transparent"
+                    ? "bg-[#CFF6EF] rounded"
+                    : "bg-transparent"
                     }`}
                 >
                   Draft
@@ -80,26 +86,27 @@ const Products = () => {
                 <button
                   onClick={() => setActive("archived")}
                   className={`py-2 px-3 text-[#475569] text-xs font-semibold ${active === "archived"
-                      ? "bg-[#CFF6EF] rounded"
-                      : "bg-transparent"
+                    ? "bg-[#CFF6EF] rounded"
+                    : "bg-transparent"
                     }`}
                 >
                   Archived
                 </button>
               </div>
-              <div className="py-2 flex gap-1">
+              <div className="py-2 flex gap-1 ">
                 <Input type="text" placeholder="Search" styles="secondary">
                   <img src={search} alt="" />
                 </Input>
-                <CustomSelect value={selectedProductStatus.name} options={productStatuses} onChange={productStatusHandler} bg="bg-white" appearance="filter" />
-
+                <div className="flex ">
+                  <CustomSelect value={selectedProductStatus.name} options={productStatuses} onChange={productStatusHandler} bg="white" appearance="filter" />
+                </div>
                 <button onClick={() => setSortBy(sortBy === 'createdAt:desc' ? 'createdAt:asc' : 'createdAt:desc')} className="border border-[#0000001f] p-2  ">
                   <img className="opacity-70" src={sort} alt="" />
                 </button>
               </div>
             </div>
 
-            <Table type="products" data={tableData} paginate={fetchData} loading={loading} />
+            <Table type="products" data={tableData} paginate={fetchData} loading={loading} getData={setSelectedItem}/> 
           </div>
         </div>
       </div>

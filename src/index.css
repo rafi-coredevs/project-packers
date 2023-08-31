@@ -99,3 +99,8 @@ textarea{
 	color:black !important
 	
 }
+
+/* Calendar */
+.rdrDefinedRangesWrapper {
+    display: none;
+}

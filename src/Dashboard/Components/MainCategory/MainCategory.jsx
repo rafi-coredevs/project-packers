@@ -26,7 +26,7 @@ const MainCategory = () => {
     fetchdata();
 
   }, []);
- 
+
   const fetchdata = () => terminal.request({ name: 'allCategory' }).then(res => res.status === false ? toaster({ type: 'error', message: res.message }) : setCategories(res));
 
   const categoryForm = useFormik({
@@ -110,7 +110,7 @@ const MainCategory = () => {
             <div className="border border-[#0000001c] rounded-lg p-3 grid gap-3">
               <label className="text-[#475569] text-sm">Parent Category</label>
 
-              <CustomSelect value={selected.name} options={categories} onChange={categoryHandler} bg="bg-white" />
+              <CustomSelect value={selected.name} options={categories} onChange={categoryHandler} bg="white" appearance={"select"} />
 
               <Input
                 styles="basic"

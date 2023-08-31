@@ -4,14 +4,13 @@ import Button from "../Components/UiElements/Button/Button";
 import Heading from "../Components/UiElements/Heading/Heading";
 import Input from "../Components/UiElements/Input/Input";
 import Table from "../Components/UiElements/Table/Table";
-import filter from "../../assets/icons/cd-filter.svg";
 import sort from "../../assets/icons/cd-arrow-data-transfer-vertical-round.svg";
 import search from "../../assets/icons/cd-search2.svg";
 import { useTitle } from "../../Components/Hooks/useTitle";
 import { terminal } from "../../contexts/terminal/Terminal";
 import CustomSelect from "../../Components/UiElements/Input/CustomSelect";
 
-const discountStatuses = [{ id: 1, name: "All", value: "all" }, { id: 2, name: "Paid", value: "paid" }, { id: 3, name: "Pending", value: "pending" }]
+const discountStatuses = [{ id: 1, name: "All", value: "all" }, { id: 2, name: "Valid", value: "valid" }, { id: 3, name: "Expired", value: "expired" }]
 
 
 const Discount = () => {
@@ -19,25 +18,29 @@ const Discount = () => {
   const [active, setActive] = useState("all");
   const [tableData, setTabledata] = useState(null);
   const [loading,setLoading]= useState(false);
+  const [sortBy,setSortby]=useState('createdAt:asc');
   const [selectedDiscountStatus, setSelectedDiscountStatus] = useState({ name: 'Select', value: null, id: 0 });
 
   function discountStatusHandler(id) {
-    setSelectedDiscountStatus(discountStatuses.find(item => item.id === id))
+    const  selected = discountStatuses.find(item => item.id === id)
+    setSelectedDiscountStatus(selected);
+    setActive(selected.value)
   }
   const navigate = useNavigate();
   const tableButtonHandler = (value) => {
     setActive(value);
     console.log(value);
   };
-
+ console.log(active);
   useEffect(() => {
-    setLoading(true);
+    
     fetchData();
 
-  }, []);
+  }, [active, sortBy]);
 
   const fetchData = (page = 1) => {
-    terminal.request({ name: 'allDiscount', queries: { page } }).then((res) => {
+    setLoading(true);
+    terminal.request({ name: 'allDiscount', queries: { page,filter: active , sortBy} }).then((res) => {
       res.status === false ? '' : setTabledata(res), setLoading(false);
     });
   };
@@ -87,7 +90,11 @@ const Discount = () => {
                 <Input type="text" placeholder="Search" styles="secondary">
                   <img src={search} alt="" />
                 </Input>
-                <button className="border border-[#0000001f] p-2  ">
+                <div className="flex">
+                <CustomSelect value={selectedDiscountStatus.name} options={discountStatuses} onChange={discountStatusHandler} bg="white" appearance="filter" />
+             </div>
+             
+                <button onClick={() => setSortby(sortBy === 'createdAt:desc' ? 'createdAt:asc' : 'createdAt:desc')} className="border border-[#0000001f] p-2  ">
                   <img className="opacity-70" src={sort} alt="" />
                 </button>
               </div>

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Input from '../UiElements/Input/Input';
 import Button from '../UiElements/Button/Button';
 import UserIcon from '../../../Components/UiElements/UserIcon/UserIcon';
 import { terminal } from '../../../contexts/terminal/Terminal';
@@ -12,7 +11,7 @@ const StaffModal = ({ setModal, user }) => {
 
     const [selectedRole, setSelectedRole] = useState({ name: 'Select', value: '', id: 0 })
     const handleSubmit = () => {
-        terminal.request({ name: 'updateUser', params: { id: user.id }, body: { data: { role, access } } }).then(data => {
+        terminal.request({ name: 'updateUser', params: { id: user.id }, body: { data: { role: selectedRole.value, access } } }).then(data => {
             if (data.id) {
                 setModal(false)
                 toaster({ type: 'success', message: 'Staff updated' })
@@ -36,7 +35,7 @@ const StaffModal = ({ setModal, user }) => {
             <div className="shadow-sm pb-5">
                 <h3 className="font-semibold ">User Access</h3>
             </div>
-            <div className="shadow-sm py-5 flex justify-between items-center">
+            <div className="shadow-sm py-5 flex justify-between items-start">
                 <div className=" flex gap-4">
                     <div className="h-10 w-10 rounded-full flex items-center justify-center bg-primary">
                         <p className=""><UserIcon name={user.fullName} /></p>
@@ -46,10 +45,10 @@ const StaffModal = ({ setModal, user }) => {
                         <p className="text-[#6D7175] text-sm">{user.access.length === totalaccess.length ? 'Full access' : user.access.length === 1 ? user.access : 'Limited access'}</p>
                     </div>
                 </div>
-
-                <CustomSelect value={selectedRole.name} bg="bg-white" options={roleOptions} onChange={selectedRoleHandler} appearance={"select"}/>
-
-            </div>
+                <div className='flex-shrink min-w-[12rem]'>
+                <CustomSelect value={selectedRole.name} bg="white" options={roleOptions} onChange={selectedRoleHandler} appearance={"select"} />
+                </div>
+                </div>
             <div className="p-5 grid gap-4 items-start">
                 <div className="space-x-2">
                     <input

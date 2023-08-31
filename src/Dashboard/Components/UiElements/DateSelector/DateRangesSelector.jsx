@@ -65,7 +65,7 @@ const DateRangeSelector = ({ onSubmit }) => {
             moveRangeOnFirstSelection={false}
             months={1}
             ranges={[selectedDateRange]}
-            rangeColors={'#ededed'}
+            rangeColors={['#F2C852']}
             direction="horizontal"
           />
           <div className=" flex items-center justify-around">

@@ -20,7 +20,7 @@ const Login = () => {
 
 	const destinedTo = location.state?.afterLogin;
 
-	const { Login, setUser, user } = useUserCtx();
+	const { Login, setUser } = useUserCtx();
 	const loginForm = useFormik({
 		initialValues: {
 			email: '',
@@ -46,10 +46,11 @@ const Login = () => {
 								body: requestItemData,
 							})
 							.then((d) => {
+								// console.log('item request response from login', d);
 								navigate('/', { state: true });
 							});
 					} else {
-						destinedTo ? navigate(destinedTo) : user.role == "user" ? navigate('/') : navigate('/admin');
+						destinedTo ? navigate(destinedTo) : navigate('/');
 					}
 				}
 			});
@@ -60,7 +61,7 @@ const Login = () => {
 			<div className='container mx-auto grid grid-cols-1 sm:grid-cols-2 relative z-20 justify-center divide-x divide-[#ffffff1a] flex-wrap'>
 				<div className='w-full sm:max-w-[30vw]'>
 					<p className='text-white text-[52px] font-sora font-extrabold'>
-						Welcome Back
+						Welcome Back {JSON.stringify(destinedTo)}
 					</p>
 					<form
 						className='flex flex-col gap-5'

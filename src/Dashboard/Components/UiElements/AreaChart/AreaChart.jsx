@@ -7,18 +7,6 @@ import cd_information from '../../../../assets/icons/cd-information-circle.svg'
 import CustomSelect from "../../../../Components/UiElements/Input/CustomSelect";
 import { useState } from "react";
 
-const OPTIONS = [
-  {
-    id: 1,
-    name: "Monthly",
-    value: 'monthly'
-  },
-  {
-    id: 2,
-    name: "Weekly",
-    value: 'monthly'
-  },
-]
 
 const MONTH = [
   "Jan",
@@ -44,12 +32,11 @@ const DAY = [
   "Sun",
 
 ];
-const AreaChart = ({ data, setFilter, filter }) => {
+const AreaChart = ({ data, selected, setSelected, OPTIONS, chartLoading }) => {
 
-  const [selected,setSelected] = useState(OPTIONS[0])
+
   const onChangeHandler = (id) => {
     setSelected(OPTIONS.find(item => item.id === id))
-    
   }
   const options = {
     chart: {
@@ -59,7 +46,7 @@ const AreaChart = ({ data, setFilter, filter }) => {
       },
     },
     xaxis: {
-      categories: filter==='month'? data.map((item) => MONTH[item.month - 1]): data.map((item) => DAY[item.day - 1]),
+      categories: selected.value === 'month' ? data.map((item) => MONTH[item.month - 1]) : data.map((item) => DAY[item.day - 1]),
       lines: {
         show: true,
       },
@@ -133,27 +120,16 @@ const AreaChart = ({ data, setFilter, filter }) => {
   ];
   return (
     <div className="relative">
-      <div className='w-full absolute flex justify-between'>
+      <div className='w-full absolute flex justify-between items-start'>
         <h4 className="text-base font-semibold text-secondary flex items-center gap-2">
           <span>Request vs Order</span>
           <img src={cd_information} alt="cd_information" />
         </h4>
-        <div>
-          <div className="bg-[#CFF6EF] px-2 py-1 absolute right-0 top-0  rounded z-10">
-            <div className="">
-              <span className=""></span>
-            </div>
-            <select
-              className="text-xs text-secondary border-none bg-[#CFF6EF] outline-none rounded-md py-0 px-0"
-              onChange={(e)=>setFilter(e.target.value)}
-              name="category"
-              id="category"
-            >
-              <option value="month">Monthly</option>
-              <option value="week">Weekly</option>
-            </select>
+         
+          <div className="bg-[#CFF6EF] min-w-[8rem] py-1 absolute right-0 top-0  rounded z-[70]"> 
+            <CustomSelect bg="paste" value={selected.name} options={OPTIONS} onChange={onChangeHandler} appearance={'select'} />
           </div>
-        </div>
+         
       </div>
       <ReactApexChart
         options={options}
