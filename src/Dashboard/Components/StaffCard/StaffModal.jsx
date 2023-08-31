@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Input from '../UiElements/Input/Input';
 import Button from '../UiElements/Button/Button';
 import UserIcon from '../../../Components/UiElements/UserIcon/UserIcon';
 import { terminal } from '../../../contexts/terminal/Terminal';
