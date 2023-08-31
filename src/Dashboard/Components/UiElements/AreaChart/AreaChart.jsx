@@ -34,7 +34,18 @@ const MONTH = [
   "Nov",
   "Dec",
 ];
-const AreaChart = ({ data }) => {
+const DAY = [
+  "Mon",
+  "Tue",
+  "Wed",
+  "Thu",
+  "Fri",
+  "Sat",
+  "Sun",
+
+];
+const AreaChart = ({ data, setFilter, filter }) => {
+
   const [selected,setSelected] = useState(OPTIONS[0])
   const onChangeHandler = (id) => {
     setSelected(OPTIONS.find(item => item.id === id))
@@ -48,7 +59,7 @@ const AreaChart = ({ data }) => {
       },
     },
     xaxis: {
-      categories: data.map((item) => MONTH[item.month - 1]),
+      categories: filter==='month'? data.map((item) => MONTH[item.month - 1]): data.map((item) => DAY[item.day - 1]),
       lines: {
         show: true,
       },
@@ -132,7 +143,15 @@ const AreaChart = ({ data }) => {
             <div className="">
               <span className=""></span>
             </div>
-            <CustomSelect  value={selected.name} options={OPTIONS} onChange={onChangeHandler} />
+            <select
+              className="text-xs text-secondary border-none bg-[#CFF6EF] outline-none rounded-md py-0 px-0"
+              onChange={(e)=>setFilter(e.target.value)}
+              name="category"
+              id="category"
+            >
+              <option value="month">Monthly</option>
+              <option value="week">Weekly</option>
+            </select>
           </div>
         </div>
       </div>
@@ -145,5 +164,6 @@ const AreaChart = ({ data }) => {
     </div>
   );
 };
+
 
 export default AreaChart;

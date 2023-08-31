@@ -37,7 +37,8 @@ const NewProduct = () => {
 		category: false,
 		subCategory: false,
 	});
-
+	const navigate = useNavigate();
+	// formik and handleSubmit
 	const productForm = useFormik({
 		initialValues: {
 			name: "",
@@ -50,6 +51,7 @@ const NewProduct = () => {
 			link: "",
 			tags: "",
 			images: [],
+			removeImages: [],
 		},
 		validationSchema: productSchema,
 		onSubmit: (values) => {
@@ -64,8 +66,36 @@ const NewProduct = () => {
 			values.subcategory = selectedSubcategeory.value;
 			removeEmptyFields(values);
 			const { images, ...rest } = values;
-			product ? terminal.request({ name: 'updateProduct', params: { id: product?.id }, body: { data: rest } }).then(res => res?.status === false ? toaster({ type: 'success', message: res.message }) : toaster({ type: 'success', message: 'Product successfully Updated' })) : terminal.request({ name: 'registerProduct', body: { data: rest, images } }).then(res => res?.status === false ? toaster({ type: 'success', message: res.message }) : toaster({ type: 'success', message: 'Product successfully added' }))
-
+			product
+				? terminal
+						.request({
+							name: 'updateProduct',
+							params: { id: product?.id },
+							body: { data: rest, images: images },
+						})
+						.then((res) =>
+							res?.status === false
+								? toaster({ type: 'success', message: res.message })
+								: (toaster({
+										type: 'success',
+										message: 'Product successfully Updated',
+								  }),
+								  navigate(-1)),
+						)
+				: terminal
+						.request({
+							name: 'registerProduct',
+							body: { data: rest, images: images },
+						})
+						.then((res) =>
+							res?.status === false
+								? toaster({ type: 'success', message: res.message })
+								: (toaster({
+										type: 'success',
+										message: 'Product successfully added',
+								  }),
+								  navigate(-1)),
+						);
 		},
 	});
 
@@ -327,10 +357,28 @@ const NewProduct = () => {
 							>
 								Discard
 							</Button>
-							<div className="space-x-2">
-								<Button onClick={() => setBtnType('archived')} style="outline" type="submit">Archive</Button>
-								<Button onClick={() => setBtnType('draft')} style="outline" type="submit">Draft</Button>
-								<Button onClick={() => { handleCheck(), setBtnType('active') }} style="primary" type="submit">
+							<div className='space-x-2'>
+								<Button
+									onClick={() => setBtnType('archived')}
+									style='outline'
+									type='submit'
+								>
+									Archive
+								</Button>
+								<Button
+									onClick={() => setBtnType('draft')}
+									style='outline'
+									type='submit'
+								>
+									Draft
+								</Button>
+								<Button
+									onClick={() => {
+										handleCheck(), setBtnType('active');
+									}}
+									style='primary'
+									type='submit'
+								>
 									Publish
 								</Button>
 							</div>

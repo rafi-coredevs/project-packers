@@ -1,5 +1,7 @@
 /* custom font Jakarta pro plus and sora */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@300;400;600;800&family=Sora:wght@300;500;700&display=swap');
+/* @import 'react-date-range/dist/styles.css'; // main style file
+@import 'react-date-range/dist/theme/default.css'; // theme css file */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -91,4 +93,9 @@ textarea{
 .text-outline{
 	-webkit-text-fill-color: transparent;
   -webkit-text-stroke: 0.5px;
+}
+
+.rdrDays rdrDayActive{
+	color:black !important
+	
 }

@@ -18,6 +18,7 @@ const Customer = () => {
   useTitle("Customers");
   const [active, setActive] = useState("all");
   const [tableData, setTabledata] = useState(null);
+  const [loading, setLoading] = useState(false)
 
   const [selectedCustomerStatus, setSelectedCustomerStatus] = useState({ name: 'Select', value: null, id: 0 });
 

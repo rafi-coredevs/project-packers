@@ -4,6 +4,8 @@ import Button from "../Components/UiElements/Button/Button";
 import Heading from "../Components/UiElements/Heading/Heading";
 import Input from "../Components/UiElements/Input/Input";
 import { customerSchema } from "../../Util/ValidationSchema";
+import { terminal } from "../../contexts/terminal/Terminal";
+import toaster from "../../Util/toaster";
 
 const NewCustomer = () => {
   useTitle("New Customer");
@@ -22,7 +24,24 @@ const NewCustomer = () => {
     },
     validationSchema: customerSchema,
     onSubmit: (values) => {
-      console.log(values);
+     const body={
+      fullName : values.firstName + ' '+ values.lastName,
+      email:values.email,
+      phone:values.phone,
+      shippingaddress: {
+        address: values.address,
+        city: values.city,
+        zip: values.zip,
+      },
+     }
+     terminal.request({ name: 'registerUser', body }).then(data=> {
+      if(data.id){
+        toaster({type:'success',message:'Customer Created'})
+      }
+      else{
+        toaster({type:'error',message:'An error occured'})
+      }
+     })
     },
   });
   return (
