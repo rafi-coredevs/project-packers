@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import ChatBubble from '../ChatBubble/ChatBubble';
 import Button from '../Button/Button';
 import { useUserCtx } from '../../../../contexts/user/UserContext';
@@ -10,6 +10,7 @@ const Messages = ({ activeChat, chatCardHandler, setSupportData }) => {
     const { user } = useUserCtx()
     const [modal, setModal] = useState(true)
     const [messages, setMessages] = useState()
+    const messageBody = useRef(null)
     useEffect(() => {
         setModal(true)
         setMessages([])
@@ -31,6 +32,10 @@ const Messages = ({ activeChat, chatCardHandler, setSupportData }) => {
         }
     }, [activeChat])
 
+    useEffect(() => {
+        console.log(messageBody.current);
+    }, [])
+
     const handleSubmit = (e) => {
         e.preventDefault()
         if (activeChat && activeChat.status !== 'pending') {
@@ -38,6 +43,7 @@ const Messages = ({ activeChat, chatCardHandler, setSupportData }) => {
             e.target.message.value = "";
         }
     }
+
     const handleStatus = (e) => {
         terminal.request({ name: 'updateSupport', params: { id: activeChat.id }, body: { status: e.target.value } }).then(data => {
             if (data.id) {
@@ -87,7 +93,7 @@ const Messages = ({ activeChat, chatCardHandler, setSupportData }) => {
                 </div>
             </div>
             <div className="px-8 py-2 relative h-[calc(100vh-215px)]  w-full">
-                <div className="h-full overflow-y-auto flex  flex-col-reverse gap-12 pb-2 scrollbar">
+                <div ref={messageBody} className="h-full overflow-y-auto flex  flex-col-reverse gap-12 pb-2 scrollbar">
                     {
                         messages?.length > 0 && messages.map((message) =>
                             <ChatBubble
