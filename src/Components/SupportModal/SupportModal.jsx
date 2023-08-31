@@ -57,10 +57,16 @@ const SupportModal = () => {
           data.docs?.length > 0 && setChat(data.docs)
         })
         terminal.socket.on('message', (data) => {
-          data.id && setChat(prev => [data, ...prev])
+          if (data.id) {
+            setChat(prev => [data, ...prev])
+            return
+          }
+          else if (data == 'closed') {
+            setVisible(false)
+          }
         })
       }
-      else{
+      else {
         setSupport()
         setChat([])
       }
@@ -234,9 +240,7 @@ const SupportModal = () => {
                       </div>
                       <div
                         className={
-                          chat?.type === "customer"
-                            ? "text-[#a7a7a7]"
-                            : "text-[#000316CC] "
+                          chat.sender?.id === user.id ? "text-[#000316CC]" : "text-[#a7a7a7]"
                         }
                       >
                         {chat?.message}
