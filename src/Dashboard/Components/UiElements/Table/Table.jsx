@@ -67,7 +67,6 @@ const Table = ({ data, paginate, loading, dashboardToogle, modalHandler }) => {
   const selectHandler = (id) => {
     console.log(id);
   };
- console.log(data);
   return (
     <div className='relative overflow-x-auto'>
       <table className='w-full'>
@@ -288,19 +287,19 @@ const Table = ({ data, paginate, loading, dashboardToogle, modalHandler }) => {
                         onClick={() => selectHandler(item.id)}
                         className='px-4 py-[18px] text-black text-sm cursor-pointer line-clamp-2'
                       >
-                        {item?.name}
+                        {item?.fullName}
                       </td>
                       <td className='px-4 py-[18px] text-black text-sm '>
                         {item?.phone}
                       </td>
                       <td className='px-4 py-[18px] text-black text-sm '>
-                        {item?.location}
+                        {item?.shippingAddress?.city || 'No Data'}
                       </td>
                       <td className='px-4 py-[18px] text-black text-sm '>
-                        {item?.orders} items
+                        {item?.totalOrder} items
                       </td>
                       <td className='px-4 py-[18px] text-black text-sm'>
-                        ${item?.spent}
+                        ৳{item?.totalSpent}
                       </td>
                     </tr>
                   ))}

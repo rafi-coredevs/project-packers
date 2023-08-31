@@ -29,6 +29,7 @@ const Input = ({
   placeholder,
   value,
   change,
+  keyenter,
   blur,
   error,
   children,
@@ -182,6 +183,7 @@ const Input = ({
           value={value}
           placeholder={placeholder}
           onChange={change}
+          onKeyUp={keyenter}
           onBlur={blur}
           min={0}
           disabled={disabled}
