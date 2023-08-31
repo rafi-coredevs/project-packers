@@ -139,7 +139,7 @@ const AreaChart = ({ data, setFilter, filter }) => {
           <img src={cd_information} alt="cd_information" />
         </h4>
         <div>
-          <div className="bg-[#CFF6EF] px-2 py-1 absolute right-0 top-0  rounded z-[70]">
+          <div className="bg-[#CFF6EF] px-2 py-1 absolute right-0 top-0  rounded z-10">
             <div className="">
               <span className=""></span>
             </div>

@@ -33,7 +33,7 @@ const Dropdown = ({ isOpen, onClick, type, title, data }) => {
     return (
       <div ref={ref}>
         {isOpen && (
-          <div className="bg-white p-5 rounded-xl w-[21.25rem] absolute top-[70px] right-0">
+          <div className="bg-white p-5 rounded-xl w-[21.25rem] absolute top-[70px] right-0 z-30">
             <div className="flex justify-between pb-3">
               <p className="font-sans text-sm font-semibold text-secondary">
                 {title || "Loading..."}
