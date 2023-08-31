@@ -26,21 +26,12 @@ const NewDiscount = () => {
   useEffect(()=>{
     terminal.request({name:'allCategory'}).then(res=>res?.status===false? toaster({type:'error', message: res?.message}): setCategory(res));
   },[])
-  const categorySelector = (val)=> {
-    
-    setSelectedCategory(category.find(item=>item.id===val))
-
-  }
+  const categorySelector = (val)=> setSelectedCategory(category.find(item=>item.id===val));
+  const subcategorySelector = (val)=>setSelectedSubcategory(selectedCategory.subcategory.find(item=>item.id===val));
   useTitle("New Discount");
   const submitHandler = () => {
     console.log("update clicked");
   };
-  const subcategorySelector = (val)=>{
-
-    setSelectedSubcategory(selectedCategory.subcategory.find(item=>item.id===val));
-
-
-  }
   return (
     <div className="px-5 h-full">
       <Heading type="navigate" title={`Add New Discount`} />
@@ -65,10 +56,10 @@ const NewDiscount = () => {
                <div className="">
                <label htmlFor="Type" className="text-[#475569] text-sm">Type</label>
                <CustomSelect appearance={"select"} options={discountType} onChange={setSelectedtype} value={selectedType}/></div> 
-              <Input styles="basic" label="Amount"  placeholder=" 500" /></div>
+              <Input styles="basic" label="Amount"  placeholder={selectedType==='Percentage'? '30%': 500}/></div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
               <Input styles="basic" label="Limit"  placeholder=" 100" />
-              <input type="date" />
+              <input type="date" className="" />
               </div>
               
             </div>
