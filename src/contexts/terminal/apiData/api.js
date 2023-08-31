@@ -10,6 +10,7 @@ import { notification } from './notification'
 import { order } from './order'
 import { request } from './request'
 import { support } from './support'
+import { search } from './search'
 
 export const apiData = {
     ...user,
@@ -24,4 +25,5 @@ export const apiData = {
     ...order,
     ...request,
     ...support,
+    ...search
 }

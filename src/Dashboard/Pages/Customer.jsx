@@ -18,7 +18,7 @@ const Customer = () => {
   useTitle("Customers");
   const [active, setActive] = useState("all");
   const [tableData, setTabledata] = useState(null);
-  const [loading,setLoading]=useState(true);
+  const [loading, setLoading] = useState(true);
   const [sortBy, setSortBy] = useState(true);
 
   const [selectedCustomerStatus, setSelectedCustomerStatus] = useState({ name: 'Select', value: null, id: 0 });
@@ -36,9 +36,9 @@ const Customer = () => {
     fetchData();
   }, []);
 
-  const fetchData = (queries) => {
-    terminal.request({name:'getCustomerOrder', queries }).then((res) => {
-      res.status===false? '': setTabledata(res), setLoading(false);
+  const fetchData = (queries = {}) => {
+    terminal.request({ name: 'getCustomerOrder', queries }).then((res) => {
+      res.status === false ? '' : setTabledata(res), setLoading(false);
     });
   };
 
@@ -48,7 +48,7 @@ const Customer = () => {
   }
 
   function handleSearch(e) {
-    if(e.key === 'Enter') {
+    if (e.key === 'Enter') {
       fetchData({ search: e.target.value });
       e.target.value = '';
     }
