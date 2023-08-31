@@ -60,8 +60,8 @@ const NewProduct = () => {
                 return;
             }
             values.status = btnType;
-            values.category = selectedCategeory;
-            values.subcategory = selectedSubCategeory;
+            values.category = selectedCategeory.id;
+            values.subcategory = selectedSubCategeory.id;
             removeEmptyFields(values);
             const { images, ...rest } = values;
             product
