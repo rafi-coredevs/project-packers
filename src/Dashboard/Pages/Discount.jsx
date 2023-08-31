@@ -89,7 +89,7 @@ const Discount = () => {
                   <img src={search} alt="" />
                 </Input>
                 <div className="flex">
-                <CustomSelect value={selectedDiscountStatus.name} options={discountStatuses} onChange={discountStatusHandler} bg="bg-white" appearance="filter" />
+                <CustomSelect value={selectedDiscountStatus.name} options={discountStatuses} onChange={discountStatusHandler} bg="white" appearance="filter" />
              </div>
              
                 <button className="border border-[#0000001f] p-2  ">

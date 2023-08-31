@@ -52,8 +52,8 @@ const OrderDetails = () => {
   }, []);
 
   const odrerForm = useFormik({
-    initialValues:{
-      
+    initialValues: {
+
     }
   })
   const orderStatuses = [{ id: 1, name: "Completed", value: "completed" }, { id: 2, name: "Pending", value: "pending" }, { id: 3, name: "Processing", value: "processing" },
@@ -266,8 +266,10 @@ const OrderDetails = () => {
                 <p className="text-base font-semibold">Total</p>
                 <p className="text-lg font-semibold">৳ {order?.total}</p>
               </div>
-              <div className="py-5 flex gap-2 justify-end border-t border-[#0000001c] ">
-                <CustomSelect bg="bg-[#3E949A]" value={selectedOrderStatus.name} options={orderStatuses} onChange={orderStatusHandler} appearance="select" />
+              <div className="py-5 flex justify-end border-t border-[#0000001c] ">
+                <div className="flex-shrink min-w-[12rem]">
+                  <CustomSelect bg="green" value={selectedOrderStatus.name} options={orderStatuses} onChange={orderStatusHandler} appearance="select" />
+                </div>
               </div>
             </div>
           </div>
