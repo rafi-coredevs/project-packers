@@ -30,15 +30,15 @@ const Discount = () => {
     setActive(value);
     console.log(value);
   };
-
+ console.log(active);
   useEffect(() => {
     setLoading(true);
     fetchData();
 
-  }, []);
+  }, [active]);
 
   const fetchData = (page = 1) => {
-    terminal.request({ name: 'allDiscount', queries: { page } }).then((res) => {
+    terminal.request({ name: 'allDiscount', queries: { page,filter: active } }).then((res) => {
       res.status === false ? '' : setTabledata(res), setLoading(false);
     });
   };
