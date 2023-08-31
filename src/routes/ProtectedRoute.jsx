@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react'
-import { UserProvider, useUserCtx } from '../contexts/user/UserContext'
-import { useNavigate, Navigate } from 'react-router-dom';
+import React from 'react'
+import { useUserCtx } from '../contexts/user/UserContext'
+import { useNavigate } from 'react-router-dom';
 import Loading from './Loading';
 import Unauthorized from './Unauthorized';
 import { useLocation } from 'react-router-dom';

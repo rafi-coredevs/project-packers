@@ -2,13 +2,12 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Dropdown from "../../../Components/UiElements/Dropdown/Dropdown";
 import Icon from "../../../Components/UiElements/Icon/Icon";
-import Input from "../UiElements/Input/Input";
-import search from "../../../assets/icons/search3.svg";
 import logo from "../../../assets/logo.svg";
 import notification from "../../../assets/icons/cd-notification.svg";
 import profile from "../../../assets/icons/user-1.svg";
 import { useUserCtx } from "../../../contexts/user/UserContext";
 import { terminal } from "../../../contexts/terminal/Terminal";
+import { SearchField } from "../UiElements/SearchField/SearchField";
 
 const Header = () => {
   const [notifyState, setNotifyState] = useState(false);
@@ -42,14 +41,15 @@ const Header = () => {
             Packers
           </div>
         </Link>
-        <div className="w-full max-w-[650px] border rounded-md">
-          <Input
+        <div className="w-full max-w-[650px] border-2 border-[#00000041] rounded-lg">
+          {/* <Input
             type="text"
             placeholder="Search"
             className={'placeholder:text-black'}
           >
             <img src={search} alt="" />
-          </Input>
+          </Input> */}
+          <SearchField />
         </div>
         <div className="flex gap-10 items-center">
           <div className="flex gap-2 items-center">
