@@ -29,10 +29,10 @@ const Staff = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    const [firstName, lastName, email, phone, role] = ['firstName', 'lastName', 'email', 'phone', 'role'].map((k) =>
+    const [firstName, lastName, email, phone] = ['firstName', 'lastName', 'email', 'phone'].map((k) =>
       e.target.elements[k].value
     );
-    terminal.request({ name: 'registerStaff', body: { fullName: `${firstName} ${lastName}`, email, phone, role } }).then(data => {
+    terminal.request({ name: 'registerStaff', body: { fullName: `${firstName} ${lastName}`, email, phone, role: selectedRole.value } }).then(data => {
       if (data.id) {
         setUsers(prev => [...prev, { id: data.id, fullName: data.fullName, role: data.role, access: data.access }])
         ['firstName', 'lastName', 'email', 'phone'].map((k) =>
@@ -140,7 +140,7 @@ const Staff = () => {
                 name='phone'
               />
 
-              <CustomSelect value={selectedRole.name} options={roleOptions} bg="bg-white" onChange={categoryHandler} />
+              <CustomSelect value={selectedRole.name} options={roleOptions} bg="bg-white" onChange={categoryHandler} appearance={'select'} />
 
 
 

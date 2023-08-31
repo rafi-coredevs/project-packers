@@ -12,7 +12,7 @@ const StaffModal = ({ setModal, user }) => {
 
     const [selectedRole, setSelectedRole] = useState({ name: 'Select', value: '', id: 0 })
     const handleSubmit = () => {
-        terminal.request({ name: 'updateUser', params: { id: user.id }, body: { data: { role, access } } }).then(data => {
+        terminal.request({ name: 'updateUser', params: { id: user.id }, body: { data: { role: selectedRole.value, access } } }).then(data => {
             if (data.id) {
                 setModal(false)
                 toaster({ type: 'success', message: 'Staff updated' })
@@ -46,9 +46,7 @@ const StaffModal = ({ setModal, user }) => {
                         <p className="text-[#6D7175] text-sm">{user.access.length === totalaccess.length ? 'Full access' : user.access.length === 1 ? user.access : 'Limited access'}</p>
                     </div>
                 </div>
-
                 <CustomSelect value={selectedRole.name} bg="bg-white" options={roleOptions} onChange={selectedRoleHandler} appearance={"select"} />
-
             </div>
             <div className="p-5 grid gap-4 items-start">
                 <div className="space-x-2">
