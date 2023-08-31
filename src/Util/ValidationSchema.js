@@ -119,3 +119,17 @@ export const customerSchema = object({
 	city: string().required(),
 	zip: string().required(),
 })
+
+// Discount
+
+export const discountSchema = object({
+	coupon: string().min(6).required(),
+	description: string().required(),
+	type: string().required(),
+	amount: number().required(),
+	limit: number().required(),
+	expiry: string().required(),
+	category: string().required(),
+	subCategory: string().required(),
+	tags: string().required()
+})
