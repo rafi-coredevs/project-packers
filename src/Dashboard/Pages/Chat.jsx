@@ -27,6 +27,7 @@ const Chat = () => {
             id: support.id,
             status: support.status,
             type: support.type,
+            number:support.supportNumber
           }
         }
         )
@@ -114,6 +115,7 @@ const Chat = () => {
                   status={chat.status}
                   type={chat.type}
                   id={chat.id}
+                  number={chat.number}
                   message={chat.message}
                 />
               ))
