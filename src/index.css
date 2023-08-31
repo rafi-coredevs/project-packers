@@ -104,3 +104,6 @@ textarea{
 .rdrDefinedRangesWrapper {
     display: none;
 }
+.rdrMonth{
+	background-color: #ffffff !important	;
+}
