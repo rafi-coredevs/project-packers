@@ -11,7 +11,7 @@ import { useTitle } from "../../Components/Hooks/useTitle";
 import { terminal } from "../../contexts/terminal/Terminal";
 import CustomSelect from "../../Components/UiElements/Input/CustomSelect";
 // 
-const requestStatuses = [{ id: 1, name: "All", value: "all" }, { id: 2, name: "Paid", value: "paid" }, { id: 3, name: "Pending", value: "pending" }]
+const requestStatuses = [{ id: 'All', name: "All", value: "All" }, { id: 'Paid', name: "Paid", value: "Paid" }, { id: 'Pending', name: "Pending", value: "Pending" }]
 
 // 
 const RequestItems = () => {
@@ -26,11 +26,13 @@ const RequestItems = () => {
 
   }, [sortBy, active]);
 
-  const [selectedRequestStatus, setSelectedRequestStatus] = useState({ name: 'Select', value: null, id: 0 });
+  const [selectedRequestStatus, setSelectedRequestStatus] = useState('all');
+ const filterHandler = (val)=>{
+  setSelectedRequestStatus(val);
+  setActive(val.toLowerCase());
+ }
 
-  function requestStatusHandler(id) {
-    setSelectedRequestStatus(requestStatuses.find(item => item.id === id))
-  }
+  
 
   const fetchData = (page = 1) => {
     setLoading(true);
@@ -107,7 +109,7 @@ const RequestItems = () => {
                 </Input>
 
                 <div className=" flex ">
-                  <CustomSelect value={selectedRequestStatus.name} options={requestStatuses} onChange={requestStatusHandler} bg="bg-white" appearance="filter" />
+                  <CustomSelect value={selectedRequestStatus} options={requestStatuses} onChange={filterHandler} bg="bg-white" appearance="filter" />
                 </div>
                 <button onClick={() => setSortBy(sortBy === 'createdAt:desc' ? 'createdAt:asc' : 'createdAt:desc')} className="border border-[#0000001f] p-2  ">
                   <img className="opacity-70" src={sort} alt="" />
