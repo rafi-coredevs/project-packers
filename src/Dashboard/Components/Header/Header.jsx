@@ -75,6 +75,7 @@ const Header = () => {
                 to="/admin"
                 className="flex gap-2 items-center cursor-pointer"
               >
+                <UserIcon name={user?.fullName} />
                 <Icon type="active" unread={false} icon={profile} />
                 <p className="font-sans text-secondary text-sm font-semibold">
                   {user?.fullName || "User"}
