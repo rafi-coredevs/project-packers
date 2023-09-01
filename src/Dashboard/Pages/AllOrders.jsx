@@ -23,8 +23,7 @@ const AllOrders = () => {
   const [active, setActive] = useState("all");
   const [tableData, setTabledata] = useState(orderTable);
   const [isModal, setIsModal] = useState(false);
-  const [filterDate, setFilterDate] = useState();
-  const[overView,setOverView]= useState([
+  const [overView, setOverView] = useState([
     {
       title: 'Total Cost',
       total: 0
@@ -50,13 +49,7 @@ const AllOrders = () => {
   const [sortBy, setSortBy] = useState('date:asc');
   const [selectedOrderStatus, setSelectedOrderStatus] = useState({ name: 'Select', value: null, id: 0 });
 
-  function dateFormatter(date) {
-    date = date.toString().replace(/date /)
-    const dateObj = new Date(date);
-    return dateObj.toISOString();
-  }
 
-  console.log('filter date', filterDate?.startDate.toString())
   function orderStatusHandler(id) {
     const selected = orderStatuses.find(item => item.id === id)
     setSelectedOrderStatus(selected);
@@ -71,8 +64,8 @@ const AllOrders = () => {
     fetchData();
 
   }, [sortBy, active]);
-  useEffect(()=>{
-    terminal.request({name: 'overviewData'}).then(res=> setOverView(res?.status===false? []: [
+  useEffect(() => {
+    terminal.request({ name: 'overviewData' }).then(res => setOverView(res?.status === false ? [] : [
       {
         title: 'Total Cost',
         total: res?.totalCost
@@ -95,7 +88,7 @@ const AllOrders = () => {
       }
     ]))
 
-  },[])
+  }, [])
 
   const fetchData = (page = 1) => {
     setLoading(true);
@@ -107,7 +100,44 @@ const AllOrders = () => {
   const modalHandler = (id) => setIsModal([id]);
   const deleteHandler = () => terminal.request({ name: 'deleteOrder', body: { id: isModal } }).then(res => res.status === true ? (toaster({ type: 'success', message: res.message }), setIsModal(false), fetchData()) : (toaster({ type: 'error', message: res.message }), setIsModal(false)))
 
- 
+  function convertISODate(startDate = new Date()) {
+    const dateObj = new Date(startDate.toString());
+    return dateObj.toISOString();
+  }
+
+  function handleDateRangeSearch(dateObj) {
+    const startDate = convertISODate(dateObj.startDate)
+    const endingDate = convertISODate(dateObj.endDate)
+
+    setLoading(true);
+    terminal.request({ name: 'allOrders', queries: { sortBy, status: active, date: JSON.stringify({ $gte : startDate, $lte: endingDate }) } }).then((res) => {
+      res.status === false ? '' : setTabledata(res), setLoading(false);
+    });
+  }
+
+  function handleSearch(e) {
+    if(e.target.value?.length >= 1) {
+      setLoading(true);
+      terminal.request({ name: 'allOrders', queries: { sortBy, status: active, search: e.target.value } }).then((res) => {
+        res.status === false ? '' : setTabledata(res), setLoading(false);
+      });
+    } else {
+      fetchData();
+    }
+  }
+
+  function handleTableSearch(e) {
+    if(e.target.value?.length >= 1) {
+      setLoading(true);
+      terminal.request({ name: 'allOrders', queries: { sortBy, status: active, search: e.target.value } }).then((res) => {
+        res.status === false ? '' : setTabledata(res), setLoading(false);
+      });
+    } else {
+      fetchData();
+    }
+  }
+
+
   return (
     <div className="h-full px-5 ">
 
@@ -115,15 +145,15 @@ const AllOrders = () => {
         <div className="flex gap-2 items-center justify-center mx-auto w-full mt-5"><span onClick={deleteHandler}><Button style='primary'><span className="px-2">Yes</span></Button></span><span onClick={() => setIsModal(false)}><Button style='outline'><span className="px-2">No</span></Button></span></div></div></Modal>
       <Heading title="All Orders">
         <div className="flex gap-1 items-center">
-          <Input type="text" placeholder="Search" styles="secondary">
+          <Input type="text" change={handleSearch} placeholder="Search" styles="secondary">
             <img src={search} alt="" />
           </Input>
           {/* <Input type="date" styles="secondary" /> */}
-          
-          <DateRangeSelector onSubmit={setFilterDate}  />
+
+          <DateRangeSelector onSubmit={handleDateRangeSearch} />
         </div>
       </Heading>
-      <div className="grid grid-cols-3 gap-5">
+      <div className=" grid grid-cols-3 gap-5">
         <div className="col-span-3 border-[#0000001c]">
           <Overview data={overView} />
         </div>
@@ -186,7 +216,7 @@ const AllOrders = () => {
                 </button>
               </div>
               <div className="py-2 flex gap-1">
-                <Input type="text" placeholder="Search" styles="secondary">
+                <Input type="text" change={handleTableSearch} placeholder="Search" styles="secondary">
                   <img src={search} alt="" className="w-[1.5rem] h-[1.5rem]" />
                 </Input>
                 <div className="flex ">
