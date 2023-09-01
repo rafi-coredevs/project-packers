@@ -135,7 +135,8 @@ const OrderDetails = () => {
 							message: 'deleted successfully',
 					  }),
 					  navigate(-1)),
-			).catch((err) => console.error('order delete error', err));
+			)
+			.catch((err) => console.error('order delete error', err));
 	};
 
 	return (
@@ -501,7 +502,6 @@ const OrderDetails = () => {
 								', ' +
 								order?.shippingaddress?.zip
 							}
-							
 						/>
 						{/* billing */}
 						<SideCard
