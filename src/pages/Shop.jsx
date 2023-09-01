@@ -29,7 +29,7 @@ const Shop = () => {
       })
   }, []);
   useEffect(() => {
-    
+
     fetchdata(page)
   }, [page])
   const fetchdata = (page = 1) => {
@@ -38,7 +38,6 @@ const Shop = () => {
       .then(res => {
         setData(res);
         setLoading(false);
-
       })
 
   }
