@@ -48,11 +48,14 @@ const Checkout = () => {
           discount?.code &&
           product.product.category.toString() === discount.category &&
           product.product.subcategory.toString() === discount.subcategory
-        ) { 
+        ) {
           discountItemsTotal += total;
         } else {
           nondiscountItemsTotal += total;
         }
+      });
+      cart.requests?.length > 0 && cart?.requests.forEach((request) => {
+        nondiscountItemsTotal = (request.request.price + request.request.tax + request.request.fee) * request.requestQuantity;
       });
       discountamount = discount?.percentage
         ? (discountItemsTotal * discount.percentage) / 100
@@ -354,7 +357,7 @@ const Checkout = () => {
             {/* Subtotal */}
             <div className="flex items-center justify-between border-b py-4 text-base text-slate-600 font-medium">
               <p className="text-start">Subtotal</p>
-              <p className="text-end text-black">৳ {subtotal > 0 ? subtotal : price + totalPrice}tk </p>
+              <p className="text-end text-black">৳ {subtotal}tk </p>
             </div>
           </div>
           <h4 className="flex items-center justify-between pt-4 text-base text-slate-600 font-medium">

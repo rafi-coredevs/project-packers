@@ -7,6 +7,12 @@ import send from '../../../../assets/icons/send.png';
 import toaster from '../../../../Util/toaster';
 import loader from '../../../../assets/icons/cd-reload.svg'
 
+const styles = {
+    open: "bg-green-400",
+    close: "bg-red-400",
+    pending: "bg-yellow-400",
+};
+
 const Messages = ({ activeChat, chatCardHandler, setSupportData }) => {
     const { user } = useUserCtx()
     const [modal, setModal] = useState(true)
@@ -48,19 +54,18 @@ const Messages = ({ activeChat, chatCardHandler, setSupportData }) => {
     };
 
     const handleScroll = () => {
-        const isAtTop = messageBody.current.scrollTop + messageBody.current.clientHeight <= messageBody.current.scrollHeight;
-
-        if (isAtTop) {
+        if (messageBody.current.scrollTop - messageBody.current.clientHeight + messageBody.current.scrollHeight < 1) {
             setLoading(true);
             if (page < totalPage) {
                 const nextPage = page + 1;
-                console.log(nextPage, totalPage);
-                terminal.request({ name: 'getMessage', params: { id: activeChat?.id }, queries: { page: nextPage } }).then(data => {
-                    if (data.docs?.length > 0) {
-                        setMessages(prev => [...prev, ...data.docs]);
-                    }
-                    setLoading(false);
-                });
+                debounce(() => {
+                    terminal.request({ name: 'getMessage', params: { id: activeChat?.id }, queries: { page: nextPage } }).then(data => {
+                        if (data.docs?.length > 0) {
+                            setMessages(prev => [...prev, ...data.docs]);
+                        }
+                        setLoading(false);
+                    });
+                }, 500)
                 setPage(nextPage);
             } else {
                 setLoading(false);
@@ -103,12 +108,12 @@ const Messages = ({ activeChat, chatCardHandler, setSupportData }) => {
             <div className="flex justify-between items-center px-8 py-3 shadow-sm">
                 <div>
                     <div className="flex gap-2 items-center">
-                        <span className={`h-2 w-2 rounded-full bg-green-600`}></span>
+                        <span className={`h-2 w-2 rounded-full ${styles[activeChat.status]}`}></span>
                         <p className="text-[#475569] font-medium first-letter:uppercase">
                             {activeChat.type}
                         </p>
                     </div>
-                    <p className="text-sm font-medium">{activeChat.id}</p>
+                    <p className="text-sm font-medium">{activeChat.number}</p>
                 </div>
                 <div>
                     <select
