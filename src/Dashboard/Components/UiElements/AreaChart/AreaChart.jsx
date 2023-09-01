@@ -5,7 +5,7 @@
 import ReactApexChart from "react-apexcharts";
 import cd_information from '../../../../assets/icons/cd-information-circle.svg'
 import CustomSelect from "../../../../Components/UiElements/Input/CustomSelect";
-import { useState } from "react";
+import loader from '../../../../assets/icons/cd-reload.svg'
 
 
 const MONTH = [
@@ -118,6 +118,7 @@ const AreaChart = ({ data, selected, setSelected, OPTIONS, chartLoading }) => {
       data: data.map((item) => item.order),
     },
   ];
+
   return (
     <div className="relative">
       <div className='w-full absolute flex justify-between items-start'>
@@ -125,11 +126,16 @@ const AreaChart = ({ data, selected, setSelected, OPTIONS, chartLoading }) => {
           <span>Request vs Order</span>
           <img src={cd_information} alt="cd_information" />
         </h4>
-         
-          <div className="bg-[#CFF6EF] min-w-[8rem] py-1 absolute right-0 top-0  rounded z-[70]"> 
+        <div className=" min-w-[8rem] py-1 absolute right-0 top-0  rounded z-[70] flex flex-shrink-0 justify-center items-center space-x-2">
+          {
+            chartLoading &&
+            <img src={loader} alt="" className='animate-spin' />
+          }
+          <div className="bg-[#CFF6EF]">
             <CustomSelect bg="paste" value={selected.name} options={OPTIONS} onChange={onChangeHandler} appearance={'select'} />
           </div>
-         
+        </div>
+
       </div>
       <ReactApexChart
         options={options}

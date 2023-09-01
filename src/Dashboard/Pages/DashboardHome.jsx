@@ -6,7 +6,7 @@ import { areaChart, heatMap } from "../../Store/Data";
 import HeatMap from "../Components/UiElements/HeatMap/HeatMap";
 import Table from "../Components/UiElements/Table/Table";
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Overview from "../Components/Overview/Overview";
 import { useTitle } from "../../Components/Hooks/useTitle";
 import { terminal } from "../../contexts/terminal/Terminal";
@@ -37,10 +37,6 @@ const DashboardHome = () => {
   const [heatmapData, setHeatmapData] = useState(heatMap);
   const [isModal, setIsModal] = useState(false);
   const [selected, setSelected] = useState(OPTIONS[0])
-
-  useEffect(() => {
-    console.log(">>>     ",selected)
-  }, [selected])
 
   const [overView, setOverView] = useState([
     {
