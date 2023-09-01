@@ -10,8 +10,8 @@ import toaster from "../Util/toaster";
 import { useCartCtx } from "../contexts/cart/CartContext";
 
 const Product = () => {
-  useTitle("Products");
   const product = useLoaderData();
+  useTitle(product?.name);
   const { getCart } = useCartCtx()
   const [relatedProduct, setrelatedProduct] = useState([]);
   useEffect(() => {
@@ -59,12 +59,12 @@ const Product = () => {
               />
             </div>
           </div>
-          <div className="px-[20px] sm:px-0 my-12">
+          <div className="px-[20px] sm:px-0 my-12 w-full lg:w-[70%]">
             <h3 className="text-secondary text-[20px] sm:text-[28px] font-semibold mb-4">
-              {product?.data?.name}
+              {product?.name}
             </h3>
-            <p className=" text-[#475569] max-w-[800px]">
-              {product?.data?.desc}
+            <p className="text-[#475569] text-justify">
+              {product?.description}
             </p>
           </div>
           <div className="my-10 sm:my-36 text-center mx-auto">
