@@ -8,13 +8,27 @@
  * @returns JSX Element 
  */
 
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import downArrow from '../../../assets/icons/caret-down_minor.svg'
 import downArrowWhite from '../../../assets/icons/caret-down_minor_white.svg'
 import filter from "../../../assets/icons/cd-filter.svg";
 const CustomSelect = ({ options, value, onChange, appearance, bg, error }) => {
 
   const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef(null);
+  const handleClickOutside = (e) => {
+    if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+      setIsOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   // window.addEventListener('click', (e) => {
   //   let triggerId = e.target.id;
@@ -47,7 +61,7 @@ const CustomSelect = ({ options, value, onChange, appearance, bg, error }) => {
 
   const sty_log = () => appearance == "select" ? "left-0 w-full" : " right-[0rem] w-[22rem]";
   return (
-    <div className="relative inline-block w-full">
+    <div className="relative inline-block w-full" ref={dropdownRef}>
       {/* {JSON.stringify(options)} */}
 
       {appearance == "select" &&
