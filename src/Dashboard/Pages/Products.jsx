@@ -12,7 +12,7 @@ import { useTitle } from "../../Components/Hooks/useTitle";
 import { terminal } from "../../contexts/terminal/Terminal";
 import CustomSelect from "../../Components/UiElements/Input/CustomSelect";
 
-const productStatuses = [{ id: 1, name: "All", value: "all" }, { id: 2, name: "Active", value: "active" }, { id: 3, name: "Draft", value: "draft" }, { id: 4, name: "Archived", value: "archive" }]
+const productStatuses = [{ id: 1, name: "All", value: "all" }, { id: 2, name: "Active", value: "active" }, { id: 3, name: "Draft", value: "draft" }, { id: 4, name: "Archived", value: "archived" }]
 
 
 const Products = () => {

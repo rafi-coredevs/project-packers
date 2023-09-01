@@ -406,7 +406,7 @@ const OrderDetails = () => {
 						<hr />
 
 						{/* status selector */}
-						<div className='py-5 ml-auto p-5 gap-2  border-[#0000001c] '>
+						<div className='py-5 ml-auto p-5 gap-2  border-[#0000001c] w-full max-w-[200px]'>
 							<CustomSelect
 								bg='green'
 								value={selectedOrderStatus?.name}
