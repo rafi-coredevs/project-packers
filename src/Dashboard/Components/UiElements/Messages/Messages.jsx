@@ -13,7 +13,7 @@ const Messages = ({ activeChat, chatCardHandler, setSupportData }) => {
     const [messages, setMessages] = useState()
     const messageBody = useRef(null)
     const [loading, setLoading] = useState(false)
-    const [page, setPage] = useState(0)
+    const [page, setPage] = useState(1)
     const [totalPage, setTotalPage] = useState()
     useEffect(() => {
         setLoading(true)
@@ -48,24 +48,25 @@ const Messages = ({ activeChat, chatCardHandler, setSupportData }) => {
     };
 
     const handleScroll = () => {
-        if (messageBody.current.scrollTop - messageBody.current.clientHeight + messageBody.current.scrollHeight < 1) {
-            setLoading(true)
-            debounce(() => {
-                setPage(prev => prev + 1)
-                if (page <= totalPage) {
-                    terminal.request({ name: 'getMessage', params: { id: activeChat?.id }, queries: { page } }).then(data => {
-                        data.docs?.length > 0 && console.log(data), setLoading(false);
-                    })
-                }
-                else {
-                    setLoading(false)
-                }
-            }, 500)
+        const isAtTop = messageBody.current.scrollTop + messageBody.current.clientHeight <= messageBody.current.scrollHeight;
+
+        if (isAtTop) {
+            setLoading(true);
+            if (page < totalPage) {
+                const nextPage = page + 1;
+                console.log(nextPage, totalPage);
+                terminal.request({ name: 'getMessage', params: { id: activeChat?.id }, queries: { page: nextPage } }).then(data => {
+                    if (data.docs?.length > 0) {
+                        setMessages(prev => [...prev, ...data.docs]);
+                    }
+                    setLoading(false);
+                });
+                setPage(nextPage);
+            } else {
+                setLoading(false);
+            }
         }
-        else {
-            setLoading(false)
-        }
-    }
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault()
