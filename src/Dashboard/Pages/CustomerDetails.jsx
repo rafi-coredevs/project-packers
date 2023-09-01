@@ -30,13 +30,14 @@ const CustomerDetails = () => {
 
   const fetchData = () => {
     terminal.request({name:'customerAllOrders', queries: { user: customerId} }).then((res) => {
+      console.log(res)
       res.status===false? '': setTabledata(res);
     });
   };
   
   return (
     <div className="px-5 h-full">
-      <Heading title={`#${customerId}`}>
+      <Heading type={'navigate'} back={'Customers'} title={`#${customerId}`}>
         <div className="flex items-center gap-1">
           <Button style="delete" onClick={updateHandler}>
             Delete
