@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { BASE_URL } from '../../../Util/apiCall';
-
+import errorImg from '../../../assets/loader.svg'
 /**
  * Lazy loading Component
  * @param {Boolean}
@@ -50,6 +50,14 @@ export const ProductCard = ({
   isShop = Boolean
 }) => {
 
+  const handleLoading = (event) =>{
+    console.log(`Picture successfully ${event.currentTarget.src} loaded.`);
+
+  }
+  const handleError = (event) => {
+    event.currentTarget.src = errorImg;
+    event.currentTarget.className = "flex items-center justify-center w-28 mt-16 mx-auto"
+  }
   return <>
     {
       <Link to={`/shop/${id}`}
@@ -58,9 +66,9 @@ export const ProductCard = ({
       >
         <div className={`h-40 lg:h-80 rounded-xl overflow-hidden ${isShop ? 'w-[40%] lg:w-full' : 'w-full'}`}>
           <img
-            src={`${BASE_URL}/api/${img}`}
+            src={`${BASE_URL}/api/${img}`} onLoad={handleLoading} onError={handleError}
             alt='Product Image'
-            className='h-full w-[22rem] lg:w-[24rem] object-contain duration-500 group-hover:scale-105'
+            className='h-full w-[22rem] lg:w-[24rem]  object-contain duration-500 group-hover:scale-105'
           />
         </div>
         <div className={isShop ? 'w-[60%] lg:w-full lg:mt-7' : 'w-full'}>
