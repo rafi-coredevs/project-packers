@@ -1,5 +1,5 @@
-import { Link } from 'react-router-dom';;
-import errorImg from '../../../assets/noImages.svg'
+import { Link } from 'react-router-dom';
+import errorImg from '../../../assets/loader.svg'
 /**
  * Lazy loading Component
  * @param {Boolean}
@@ -71,7 +71,7 @@ export const ProductCard = ({
           />
         </div>
         <div className={isShop ? 'w-[60%] lg:w-full lg:mt-7' : 'w-full'}>
-          <h3 className={`lg:text-2xl font-semibold  ${isShop ? 'lg:truncate' : 'truncate'} `}>{title}</h3>
+          <h3 className={`lg:text-2xl font-semibold line-clamp-2`}>{title}</h3>
           <div className={`text-left flex lg:justify-between lg:items-center mt-4 text-base 
             ${isShop ? 'flex-col lg:flex-row' : 'flex-row'}`}>
             <p>Retailer price</p>

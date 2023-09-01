@@ -16,7 +16,6 @@ import dlt from '../../../../assets/icons/cd-delete.svg';
 import arrowLeft from '../../../../assets/icons/cd-arrow-left-1.svg';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
-import { BASE_URL } from '../../../../Util/apiCall';
 
 const head = {
   orders: [
@@ -148,7 +147,7 @@ useEffect(()=>{
                       <td className='px-4 py-[18px] text-black text-sm '>
                         <img
                           className='w-10 h-10 rounded border border-[#0000001c]'
-                          src={BASE_URL + '/api/' + item?.images[0]}
+                          src={`${import.meta.env.VITE_SERVER_URL}/${item?.images[0]}`}
                           alt=''
                         />
                       </td>
