@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { BASE_URL } from '../../../Util/apiCall';
-import errorImg from '../../../assets/loader.svg'
+import errorImg from '../../../assets/noImages.svg'
 /**
  * Lazy loading Component
  * @param {Boolean}
@@ -50,13 +50,13 @@ export const ProductCard = ({
   isShop = Boolean
 }) => {
 
-  const handleLoading = (event) => {
-    console.log(`Picture successfully ${event.currentTarget.src} loaded.`);
+  const handleLoading = (event) =>{
+    // console.log(`Picture successfully ${event.currentTarget.src} loaded.`);
 
   }
   const handleError = (event) => {
     event.currentTarget.src = errorImg;
-    event.currentTarget.className = "flex items-center justify-center w-28 mt-16 mx-auto"
+    event.currentTarget.className = "flex items-center justify-center  my-auto  mx-auto"
   }
   return <>
     {

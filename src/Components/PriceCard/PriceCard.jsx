@@ -40,7 +40,7 @@ const PriceCard = ({
             : "Your Order"}
         </span>
         {type === "product" && (
-          <span className="text-2xl font-bold text-secondary">${price}</span>
+          <span className="text-2xl font-bold text-secondary">{price} tk</span>
         )}
       </div>
       {type === "product" && (
