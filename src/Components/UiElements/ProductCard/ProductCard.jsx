@@ -50,7 +50,7 @@ export const ProductCard = ({
   isShop = Boolean
 }) => {
 
-  const handleLoading = (event) =>{
+  const handleLoading = (event) => {
     console.log(`Picture successfully ${event.currentTarget.src} loaded.`);
 
   }
@@ -66,7 +66,7 @@ export const ProductCard = ({
       >
         <div className={`h-40 lg:h-80 rounded-xl overflow-hidden ${isShop ? 'w-[40%] lg:w-full' : 'w-full'}`}>
           <img
-            src={`${BASE_URL}/api/${img}`} onLoad={handleLoading} onError={handleError}
+            src={`${import.meta.env.VITE_SERVER_URL}/${img}`} onLoad={handleLoading} onError={handleError}
             alt='Product Image'
             className='h-full w-[22rem] lg:w-[24rem]  object-contain duration-500 group-hover:scale-105'
           />

@@ -37,11 +37,12 @@ const Product = () => {
       <main>
         <Breadcrumb title={product?.name} />
         <div className="container mx-auto my-12">
-          <div className="grid grid-cols-5 px-2 sm:px-0 gap-8">
-            <div className="col-span-5 sm:col-span-3">
+          {/* <div className="grid grid-cols-5 px-2 sm:px-0 gap-8"> */}
+          <div className="w-full lg:h-[70vh] flex flex-col lg:flex-row gap-4">
+            <div className="w-full lg:w-[70%] h-full px-5 lg:px-0">
               <GalleryCard data={product?.images} />
             </div>
-            <div className="col-span-5 sm:col-span-2">
+            <div className="w-full lg:w-[30%]">
               <PriceCard
                 type={"product"}
                 price={product?.price + product?.tax + product?.fee}
@@ -60,7 +61,7 @@ const Product = () => {
               {product?.data?.desc}
             </p>
           </div>
-          <div className=" my-10 sm:my-36 text-center mx-auto px-[20px] sm:px-0">
+          <div className="my-10 sm:my-36 text-center mx-auto">
             <Showcase
               type="slide"
               title="Related Items"

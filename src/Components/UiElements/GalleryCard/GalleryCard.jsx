@@ -10,7 +10,7 @@ const GalleryCard = ({ data }) => {
     return (
       <img
         onClick={() => setPresentImage(imgSrc)}
-        className="border rounded-xl cursor-pointer duration-200 active:scale-95 w-full"
+        className="p-4 border rounded-xl cursor-pointer duration-200 active:scale-95 w-full"
         src={`${BASE_URL}/api/${imgSrc}`}
         alt="product image"
       />
@@ -18,14 +18,13 @@ const GalleryCard = ({ data }) => {
   };
 
   return (
-    // to-do: make array for image
-    <div className="w-full h-full flex px-5 gap-4">
-      <aside className="w-1/4 h-full flex flex-col gap-4 overflow-y-auto">
+    <div className="w-full h-[35vh] lg:h-full flex gap-4">
+      <aside className="w-1/4 rounded-xl  h-full flex flex-col gap-4 overflow-auto no-scrollbar">
         {data?.map((item) => imgFn(item))}
       </aside>
-      <aside className="w-full flex-1">
+      <aside className="w-full h-full border rounded-xl flex-1 overflow-hidden">
         <img
-          className="w-full  h-full border rounded-xl"
+          className="h-full w-full p-4 duration-500 hover:scale-105 object-contain"
           src={`${BASE_URL}/api/${presentImage}`}
           alt="product image"
         />
