@@ -8,6 +8,7 @@ import profile from "../../../assets/icons/user-1.svg";
 import { useUserCtx } from "../../../contexts/user/UserContext";
 import { terminal } from "../../../contexts/terminal/Terminal";
 import { SearchField } from "../UiElements/SearchField/SearchField";
+import UserIcon from "../../../Components/UiElements/UserIcon/UserIcon";
 
 const Header = () => {
   const [notifyState, setNotifyState] = useState(false);
@@ -76,7 +77,6 @@ const Header = () => {
                 className="flex gap-2 items-center cursor-pointer"
               >
                 <UserIcon name={user?.fullName} />
-                <Icon type="active" unread={false} icon={profile} />
                 <p className="font-sans text-secondary text-sm font-semibold">
                   {user?.fullName || "User"}
                 </p>
