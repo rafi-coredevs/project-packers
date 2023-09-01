@@ -9,7 +9,7 @@ const GalleryCard = ({ data }) => {
     return (
       <img
         onClick={() => setPresentImage(imgSrc)}
-        className="p-4 border rounded-xl cursor-pointer duration-200 active:scale-95 w-full"
+        className="h-full p-4 border rounded-xl cursor-pointer duration-200 active:scale-95 w-full"
         src={`${import.meta.env.VITE_SERVER_URL}/${imgSrc}`}
         alt="product image"
       />

@@ -50,14 +50,14 @@ useEffect(()=>{
     <>
       <Breadcrumb />
       <div className="container py-12 mx-auto">
-        <div className="grid py-[1px] gap-5 grid-cols-12 px-2 sm:px-0">
-          <div className="col-span-12 sm:col-span-3 pr-3">
+        <div className="lg:flex gap-4">
+          <div className="lg:w-1/4 mb-4">
             <h3 className="font-semibold text-[28px] text-secondary mb-7">
               Trending Items
             </h3>
             <Category data={categories} refatch={refatch} />
           </div>
-          <div className="col-span-12 sm:col-span-9 flex">
+          <div className="lg:w-3/4 flex">
             <div className="w-full h-full">
               {loading ? (
                 <div className="flex justify-center">

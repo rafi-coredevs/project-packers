@@ -24,7 +24,7 @@ const Breadcrumb = ({title}) => {
                 } capitalize`}
                 to={item.url}
               >
-                {title && index === breadcrumb.length - 1 ? title : item.label}
+                <span>{title && index === breadcrumb.length - 1 ? title : item.label}</span>
               </Link>
             </div>
           );
