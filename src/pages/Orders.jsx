@@ -86,26 +86,26 @@ const Orders = () => {
               <div className="p-5 flex flex-row sm:flex-col gap-5 border rounded-xl text-base font-semibold ">
                 <button
                   onClick={() => setActive("orders")}
-                  className={`py-3 px-8 flex  gap-[10px] w-full rounded-full hover:bg-primary ${active === "orders" ? "bg-primary" : "bg-white border"
+                  className={`py-3 px-2 md:px-3 items-center justify-center md:justify-start flex  gap-[10px] w-full rounded-full hover:bg-primary ${active === "orders" ? "bg-primary" : "bg-white border"
                     }`}
                 >
                   <img src={ordericon} />
-                  <span className="hidden sm:block">Orders</span>
+                  <span className="hidden lg:block">Orders</span>
                 </button>
                 <button
                   onClick={() => setActive("profile")}
-                  className={`py-3 px-8 flex  gap-[10px] w-full rounded-full hover:bg-primary ${active === "profile" ? "bg-primary" : "bg-white border"
+                  className={`py-3 px-2 md:px-3 items-center justify-center md:justify-start flex  gap-[10px] w-full rounded-full hover:bg-primary ${active === "profile" ? "bg-primary" : "bg-white border"
                     }`}
                 >
                   <img src={profile} />
-                  <span className="hidden sm:block">User Account</span>
+                  <span className="hidden lg:block">User Account</span>
                 </button>
                 <button
                   onClick={logoutHandler}
-                  className={`py-3 px-8 flex  gap-[10px] w-full rounded-full hover:bg-primary bg-white border`}
+                  className={`py-3 px-2 md:px-3 items-center justify-center md:justify-start flex  gap-[10px] w-full rounded-full hover:bg-primary bg-white border`}
                 >
                   <img src={logout} />
-                  <span className="hidden sm:block">logout</span>
+                  <span className="hidden lg:block">logout</span>
                 </button>
               </div>
             </div>
