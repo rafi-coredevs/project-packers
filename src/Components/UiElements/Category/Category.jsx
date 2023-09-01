@@ -14,6 +14,12 @@ const Category = ({ data, refatch }) => {
 
   }
 
+  const handleCategoryfetch = (category)=>{
+    console.log(category);
+    if(category.subcategory.length===0) {
+      refatch({ category: category.id })
+    }
+  }
 
   const lgCategory = <div className="flex flex-col gap-2">
     <h5 className="text-[#3E949A] text-base font-sans font-semibold">
@@ -27,7 +33,7 @@ const Category = ({ data, refatch }) => {
             }`}
           onClick={() => toggleSubCategories(category.id)}
         >
-          <p className="">
+          <p className="" onClick={ ()=>handleCategoryfetch(category)}>
 
             {category.name}
           </p>
