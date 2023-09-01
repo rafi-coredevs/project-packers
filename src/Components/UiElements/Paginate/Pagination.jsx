@@ -39,7 +39,10 @@ const Pagination = ({
 
   const buttonsToShow = [];
 
-  if (page <= maxVisibleButtons - 2) {
+  if (pageLimit <= maxVisibleButtons) {
+    buttonsToShow.push(...pageNumbers.slice(0, maxVisibleButtons));
+  }
+  else if (page <= maxVisibleButtons - 2) {
     buttonsToShow.push(...pageNumbers.slice(0, maxVisibleButtons - 1), "...");
   } else if (page > pageLimit - maxVisibleButtons + 2) {
     buttonsToShow.push(
