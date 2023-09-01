@@ -154,7 +154,7 @@ useEffect(()=>{
                       </td>
                       <td
                         onClick={() => navigate(`/admin/products/${item?.id}`)}
-                        className='px-4 py-[18px] text-black text-sm cursor-pointer line-clamp-2'
+                        className='px-4 py-[18px] text-black text-sm cursor-pointer max-w-md line-clamp-1'
                       >
                         {item?.name}
                       </td>
@@ -193,7 +193,7 @@ useEffect(()=>{
                       </td>
                       <td
                         onClick={() => navigate(`/admin/orders/${item?.id}`)}
-                        className='px-4 py-[18px] text-black text-sm cursor-pointer'
+                        className='px-4 py-[18px] text-black text-sm cursor-pointer max-w-md line-clamp-1  '
                       >
                         {item?.products?.length > 0
                           ? item?.products[0]?.product?.name
@@ -254,7 +254,7 @@ useEffect(()=>{
                       </td>
                       <td
                         onClick={() => navigate(`/admin/request/${item?.id}`)}
-                        className='px-4 py-[18px] text-black text-sm cursor-pointer'
+                        className='px-4 py-[18px] text-black text-sm cursor-pointer max-w-md line-clamp-1'
                       >
                         {item?.name}
                       </td>
@@ -294,7 +294,7 @@ useEffect(()=>{
 
                       <td
                         onClick={() => selectHandler(item.id)}
-                        className='px-4 py-[18px] text-black text-sm cursor-pointer line-clamp-2'
+                        className='px-4 py-[18px] text-black text-sm cursor-pointer max-w-md line-clamp-1'
                       >
                         {item.name}
                       </td>
@@ -320,7 +320,7 @@ useEffect(()=>{
 
                       <td
                         onClick={() => selectHandler(item.id)}
-                        className='px-4 py-[18px] text-black text-sm cursor-pointer line-clamp-2'
+                        className='px-4 py-[18px] text-black text-sm cursor-pointer max-w-md line-clamp-1'
                       >
                         {item?.fullName}
                       </td>
@@ -349,7 +349,7 @@ useEffect(()=>{
                       </td>
                       <td
                         onClick={() => selectHandler(item.id)}
-                        className='px-4 py-[18px] text-black text-sm cursor-pointer line-clamp-2'
+                        className='px-4 py-[18px] text-black text-sm cursor-pointer max-w-md line-clamp-1'
                       >
                         {item?.products.length > 0 ? item.products[0].product.name : item?.requests.length > 0 ? item.requests[0].request.name : ''}
                       </td>
@@ -374,7 +374,7 @@ useEffect(()=>{
 
                       <td
                         onClick={() => selectHandler(item?.id)}
-                        className='px-4 py-[18px] text-black text-sm cursor-pointer line-clamp-2'
+                        className='px-4 py-[18px] text-black text-sm cursor-pointer max-w-md line-clamp-1'
                       >
                         {item?.code}
                       </td>

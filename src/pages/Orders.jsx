@@ -113,8 +113,8 @@ const Orders = () => {
               {active === "orders" ? (
                 <>
                   {
-                    order?.length < 1 ? <div>
-                      <p>No orders available</p>
+                    order?.length < 1 ? <div className="w-full h-full flex items-center justify-center">
+                      <p className="text-3xl font-sans font-semibold">No Orders</p>
                     </div> : <div className="w-full overflow-x-auto">
                       <div className="relative overflow-x-auto">
                         <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
