@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import { BASE_URL } from '../../../Util/apiCall';
 import errorImg from '../../../assets/loader.svg'
 /**
  * Lazy loading Component

@@ -6,14 +6,14 @@ const CartItem = ({ data, onChange, quantity }) => {
   const updateCuantity = (id, updatedquantity) => {
     onChange(id, quantity + updatedquantity)
   };
-  const BASE_URL = import.meta.env.VITE_SERVER_URL
+
   return (
     <tr className="border-b">
       <td>
         <div className="h-[60px] my-2 pr-2 flex gap-3 items-center">
           <img
             className="h-16 w-16 border-[1px] p-[1px]"
-            src={BASE_URL + `/${data.images[0]}`}
+            src={import.meta.env.VITE_SERVER_URL + `/${data.images[0]}`}
             alt=""
           />
           <div className="">

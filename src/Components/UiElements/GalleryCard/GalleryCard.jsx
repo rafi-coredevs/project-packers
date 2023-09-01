@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { BASE_URL } from "../../../Util/apiCall";
 
 const GalleryCard = ({ data }) => {
   const [presentImage, setPresentImage] = useState(data[0]);
@@ -11,7 +10,7 @@ const GalleryCard = ({ data }) => {
       <img
         onClick={() => setPresentImage(imgSrc)}
         className="p-4 border rounded-xl cursor-pointer duration-200 active:scale-95 w-full"
-        src={`${BASE_URL}/api/${imgSrc}`}
+        src={`${import.meta.env.VITE_SERVER_URL}/${imgSrc}`}
         alt="product image"
       />
     );
@@ -25,7 +24,7 @@ const GalleryCard = ({ data }) => {
       <aside className="w-full h-full border rounded-xl flex-1 overflow-hidden">
         <img
           className="h-full w-full p-4 duration-500 hover:scale-105 object-contain"
-          src={`${BASE_URL}/api/${presentImage}`}
+          src={`${import.meta.env.VITE_SERVER_URL}/${presentImage}`}
           alt="product image"
         />
       </aside>

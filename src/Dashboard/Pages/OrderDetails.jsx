@@ -10,7 +10,6 @@ import { useTitle } from '../../Components/Hooks/useTitle';
 import { terminal } from '../../contexts/terminal/Terminal';
 import { useEffect, useState } from 'react';
 import toaster from '../../Util/toaster';
-import { BASE_URL } from '../../Util/apiCall';
 import { useFormik } from 'formik';
 import CustomSelect from '../../Components/UiElements/Input/CustomSelect';
 
@@ -181,11 +180,7 @@ const OrderDetails = () => {
 																<div className='flex gap-2 items-center'>
 																	<img
 																		className='w-8 h-8 rounded border-b border-[#0000001c]'
-																		src={
-																			BASE_URL +
-																			'/api/' +
-																			product?.product?.images[0]
-																		}
+																		src={`${import.meta.env.VITE_SERVER_URL}/${product?.product?.images[0]}`}
 																		alt=''
 																	/>
 																	<div className=''>
@@ -247,11 +242,7 @@ const OrderDetails = () => {
 																<div className='flex gap-2 items-center'>
 																	<img
 																		className='w-8 h-8 rounded border-b border-[#0000001c]'
-																		src={
-																			BASE_URL +
-																			'/api/' +
-																			request?.request?.images[0]
-																		}
+																		src={`${import.meta.env.VITE_SERVER_URL}/${product?.product?.images[0]}`}
 																		alt=''
 																	/>
 																	<div className=''>
