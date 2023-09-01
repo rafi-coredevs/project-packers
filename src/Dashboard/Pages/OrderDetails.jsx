@@ -135,7 +135,7 @@ const OrderDetails = () => {
 							message: 'deleted successfully',
 					  }),
 					  navigate(-1)),
-			);
+			).catch((err) => console.error('order delete error', err));
 	};
 
 	return (

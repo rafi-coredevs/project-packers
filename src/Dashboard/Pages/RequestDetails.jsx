@@ -89,7 +89,8 @@ const RequestDetails = () => {
 					images: res.images,
 					fullName: res.user.fullName || 'No Name',
 				});
-			});
+			})
+			.catch((err) => console.error('request error when loaded', err));
 	}, []);
 
 	// for updating quantity
@@ -119,7 +120,8 @@ const RequestDetails = () => {
 						  }),
 						  setDisable(false)),
 				navigate(-1),
-			);
+			)
+			.catch((err) => console.error('request update error', err));
 	};
 
 	// deleting request
@@ -137,7 +139,8 @@ const RequestDetails = () => {
 					  }),
 					  navigate(-1),
 					  setDisable(false)),
-			);
+			)
+			.catch((err) => console.error('Error in delete request', err));
 	};
 
 	return (
