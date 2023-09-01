@@ -188,7 +188,7 @@ useEffect(()=>{
                         <input type='checkbox' name='check' className='accent-yellow-300' />
                       </td>
                       <td className='px-4 py-[18px] text-black text-sm '>
-                        #{item?.id}
+                        #{item?.orderNumber}
                       </td>
                       <td
                         onClick={() => navigate(`/admin/orders/${item?.id}`)}
@@ -249,7 +249,7 @@ useEffect(()=>{
                         <input onChange={changeHandler} id={item?.id} type='checkbox' name='check' className='accent-yellow-300' />
                       </td>
                       <td className='px-4 py-[18px] text-black text-sm '>
-                        #{item?.id}
+                        #{item?.requestNumber}
                       </td>
                       <td
                         onClick={() => navigate(`/admin/request/${item?.id}`)}
