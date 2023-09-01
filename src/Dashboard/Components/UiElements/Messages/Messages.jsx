@@ -21,6 +21,7 @@ const Messages = ({ activeChat, chatCardHandler, setSupportData }) => {
     const [loading, setLoading] = useState(false)
     const [page, setPage] = useState(1)
     const [totalPage, setTotalPage] = useState()
+    const [messageEnd, setMessageEnd] = useState(false)
     useEffect(() => {
         setLoading(true)
         setModal(true)
