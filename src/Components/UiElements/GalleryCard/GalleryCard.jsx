@@ -1,4 +1,7 @@
 import { useEffect, useState } from "react";
+import { BASE_URL } from "../../../Util/apiCall";
+import errorImg from '../../../assets/noImages.svg'
+
 const GalleryCard = ({ data }) => {
   console.log(data);
   const [presentImage, setPresentImage] = useState(data[0]);
@@ -19,6 +22,7 @@ const GalleryCard = ({ data }) => {
     return (
       <img
         onClick={() => setPresentImage(imgSrc)}
+        onLoad={handleLoading} onError={handleError}
         className="h-full p-4 border rounded-xl cursor-pointer duration-200 active:scale-95 w-full"
         src={`${import.meta.env.VITE_SERVER_URL}/${imgSrc}`}
         alt="product image"
@@ -34,6 +38,7 @@ const GalleryCard = ({ data }) => {
       <aside className="w-full h-full border rounded-xl flex-1 overflow-hidden">
         <img
           className="h-full w-full p-4 duration-500 hover:scale-105 object-contain"
+          onLoad={handleLoading} onError={handleError}
           src={`${import.meta.env.VITE_SERVER_URL}/${presentImage}`}
           alt="product image"
         />
