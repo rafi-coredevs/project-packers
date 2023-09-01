@@ -126,12 +126,12 @@ const AreaChart = ({ data, selected, setSelected, OPTIONS, chartLoading }) => {
           <span>Request vs Order</span>
           <img src={cd_information} alt="cd_information" />
         </h4>
-        <div className=" min-w-[8rem] py-1 absolute right-0 top-0  rounded z-[70] flex flex-shrink-0 justify-center items-center space-x-2">
+        <div className=" min-w-[8rem] py-1 absolute right-0 top-0  rounded z-[70] flex flex-shrink-0 justify-end items-center space-x-2">
           {
             chartLoading &&
             <img src={loader} alt="" className='animate-spin' />
           }
-          <div className="bg-[#CFF6EF]">
+          <div className="bg-[#CFF6EF] shrink-0">
             <CustomSelect bg="paste" value={selected.name} options={OPTIONS} onChange={onChangeHandler} appearance={'select'} />
           </div>
         </div>

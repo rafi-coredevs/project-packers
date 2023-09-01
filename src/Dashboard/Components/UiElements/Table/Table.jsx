@@ -348,7 +348,7 @@ useEffect(()=>{
                         <input type='checkbox' className='accent-yellow-300' />
                       </td>
                       <td
-                        onClick={() => selectHandler(item.id)}
+                        // onClick={() => selectHandler(item.id)}
                         className='px-4 py-[18px] text-black text-sm cursor-pointer max-w-md line-clamp-1'
                       >
                         {item?.products?.length > 0 ? item?.products[0]?.product?.name : item?.requests?.length > 0 ? item?.requests[0]?.request?.name : ''}
