@@ -46,8 +46,6 @@ const MainCategory = () => {
     },
     validationSchema: subCategorySchema,
     onSubmit: (values) => {
-      console.log(values);
-      console.log(selected);
       terminal.request({ name: 'registerCategory', body: { categoryname: selected?.name, categoryslug: selected?.slug, subcategoryname: values?.name, subcategoryslug: values?.slug } }).then(res => {
         res.status === false ? toaster({ type: 'error', message: res?.message }) : (toaster({type:'success',message: 'Sub Category Added'}),fetchdata())
       });
