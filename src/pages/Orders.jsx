@@ -86,62 +86,68 @@ const Orders = () => {
               <div className="p-5 flex flex-row sm:flex-col gap-5 border rounded-xl text-base font-semibold ">
                 <button
                   onClick={() => setActive("orders")}
-                  className={`py-3 px-8 flex  gap-[10px] w-full rounded-full hover:bg-primary ${active === "orders" ? "bg-primary" : "bg-white border"
+                  className={`py-3 px-2 md:px-3 items-center justify-center md:justify-start flex  gap-[10px] w-full rounded-full hover:bg-primary ${active === "orders" ? "bg-primary" : "bg-white border"
                     }`}
                 >
                   <img src={ordericon} />
-                  <span className="hidden sm:block">Orders</span>
+                  <span className="hidden lg:block">Orders</span>
                 </button>
                 <button
                   onClick={() => setActive("profile")}
-                  className={`py-3 px-8 flex  gap-[10px] w-full rounded-full hover:bg-primary ${active === "profile" ? "bg-primary" : "bg-white border"
+                  className={`py-3 px-2 md:px-3 items-center justify-center md:justify-start flex  gap-[10px] w-full rounded-full hover:bg-primary ${active === "profile" ? "bg-primary" : "bg-white border"
                     }`}
                 >
                   <img src={profile} />
-                  <span className="hidden sm:block">User Account</span>
+                  <span className="hidden lg:block">User Account</span>
                 </button>
                 <button
                   onClick={logoutHandler}
-                  className={`py-3 px-8 flex  gap-[10px] w-full rounded-full hover:bg-primary bg-white border`}
+                  className={`py-3 px-2 md:px-3 items-center justify-center md:justify-start flex  gap-[10px] w-full rounded-full hover:bg-primary bg-white border`}
                 >
                   <img src={logout} />
-                  <span className="hidden sm:block">logout</span>
+                  <span className="hidden lg:block">logout</span>
                 </button>
               </div>
             </div>
             <div className="col-span-5 sm:col-span-4">
               {active === "orders" ? (
                 <>
-                  {
-                    order?.length < 1 ? <div className="w-full h-full flex items-center justify-center">
-                      <p className="text-3xl font-sans font-semibold">No Orders</p>
-                    </div> : <div className="w-full overflow-x-auto">
-                      <div className="relative overflow-x-auto">
-                        <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                          <thead className="text-xs text-[#475569]  bg-[#F8FAFC] font-medium border-b">
-                            <tr>
-                              <th scope="col" className="p-3 font-medium">
-                                Order ID
-                              </th>
-                              <th scope="col" className="px-6 py-3 font-medium">
-                                Date
-                              </th>
-                              <th scope="col" className="px-6 py-3 font-medium">
-                                Items
-                              </th>
-                              <th scope="col" className="px-6 py-3 font-medium">
-                                Total
-                              </th>
-                              <th scope="col" className="px-6 py-3 font-medium">
-                                Status
-                              </th>
-                              <th scope="col" className="px-6 py-3 font-medium">
-                                Action
-                              </th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {
+
+                  <div className="w-full overflow-x-auto">
+                    <div className="relative overflow-x-auto">
+                      <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                        <thead className="text-xs text-[#475569]  bg-[#F8FAFC] font-medium border-b">
+                          <tr>
+                            <th scope="col" className="p-3 font-medium">
+                              Order ID
+                            </th>
+                            <th scope="col" className="px-6 py-3 font-medium">
+                              Date
+                            </th>
+                            <th scope="col" className="px-6 py-3 font-medium">
+                              Items
+                            </th>
+                            <th scope="col" className="px-6 py-3 font-medium">
+                              Total
+                            </th>
+                            <th scope="col" className="px-6 py-3 font-medium">
+                              Status
+                            </th>
+                            <th scope="col" className="px-6 py-3 font-medium">
+                              Action
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {
+                            order?.length < 1 ? [...Array(10)].map((arr, i) => <tr key={i} className="border-b">
+                                <td className="px-6 py-7 lazy-loading"></td>
+                                <td className="px-6 py-7 lazy-loading"></td>
+                                <td className="px-6 py-7 lazy-loading"></td>
+                                <td className="px-6 py-7 lazy-loading"></td>
+                                <td className="px-6 py-7 lazy-loading"></td>
+                                <td className="px-6 py-7 lazy-loading"></td>
+                              </tr>) :
                               order?.map(item => {
                                 const formattedDate = new Intl.DateTimeFormat('en-US', {
                                   year: 'numeric',
@@ -172,14 +178,13 @@ const Orders = () => {
                                   </td>
                                 </tr>
                               })
-                            }
-                          </tbody>
-                        </table>
-                      </div>
+                          }
+                        </tbody>
+                      </table>
                     </div>
-                  }
-                </>
+                  </div>
 
+                </>
               ) : (
                 <div className="max-w-[700px]">
                   <form

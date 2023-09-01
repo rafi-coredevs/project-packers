@@ -20,6 +20,29 @@ const Chat = () => {
   const [activeChat, setActiveChat] = useState();
   const [loading, setLoading] = useState(false)
   useEffect(() => {
+    terminal.socket.on('notification', (data) => {
+      console.log(data);
+      if (data.message == 'There is a new suport request') {
+        terminal.request({ name: 'allSupport', queries: { status: activeStatusButton, type: supportType } }).then(data => {
+          setSupportData(() => {
+            return data.length > 0 && data?.map(support => {
+              return {
+                id: support.id,
+                status: support.status,
+                type: support.type,
+                number: support.supportNumber
+              }
+            }
+            )
+          })
+        })
+      }
+    })
+    return () => {
+      terminal.socket.off('notification')
+    }
+  })
+  useEffect(() => {
     terminal.request({ name: 'allSupport', queries: { status: activeStatusButton, type: supportType } }).then(data => {
       setSupportData(() => {
         return data.length > 0 && data?.map(support => {
@@ -27,6 +50,7 @@ const Chat = () => {
             id: support.id,
             status: support.status,
             type: support.type,
+            number: support.supportNumber
           }
         }
         )
@@ -114,6 +138,7 @@ const Chat = () => {
                   status={chat.status}
                   type={chat.type}
                   id={chat.id}
+                  number={chat.number}
                   message={chat.message}
                 />
               ))

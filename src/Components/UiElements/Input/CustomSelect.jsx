@@ -12,7 +12,7 @@ import React, { useState } from "react";
 import downArrow from '../../../assets/icons/caret-down_minor.svg'
 import downArrowWhite from '../../../assets/icons/caret-down_minor_white.svg'
 import filter from "../../../assets/icons/cd-filter.svg";
-const CustomSelect = ({ options, value, onChange, appearance, bg }) => {
+const CustomSelect = ({ options, value, onChange, appearance, bg, error }) => {
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -53,7 +53,7 @@ const CustomSelect = ({ options, value, onChange, appearance, bg }) => {
       {appearance == "select" &&
         <div
           id="customselect"
-          className={`py-2 px-4 ${colorComb[bg]} border border-[#ededed] rounded-md  cursor-pointer flex justify-between`}
+          className={`py-2 px-4 ${bg} border ${error ? "border-red-600" : 'border-[#ededed]'} rounded-md  cursor-pointer flex justify-between`}
           onClick={toggleDropdown}
         >
           {value ? value : 'Select'}

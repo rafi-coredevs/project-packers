@@ -122,7 +122,7 @@ useEffect(()=>{
         <tbody>
           {
             loading ? (
-              [...Array(10)].map((arr, i) => <tr key={i} className=' hover:bg-[#FEF9DC]'>
+              [...Array(10)].map((arr, i) => <tr key={i}>
                 <td className='py-8 border-b lazy-loading' />
                 {
                   tableHeadData?.map((item, index) => (
@@ -351,7 +351,7 @@ useEffect(()=>{
                         onClick={() => selectHandler(item.id)}
                         className='px-4 py-[18px] text-black text-sm cursor-pointer max-w-md line-clamp-1'
                       >
-                        {item?.products.length > 0 ? item.products[0].product.name : item?.requests.length > 0 ? item.requests[0].request.name : ''}
+                        {item?.products?.length > 0 ? item?.products[0]?.product?.name : item?.requests?.length > 0 ? item?.requests[0]?.request?.name : ''}
                       </td>
                       <td className='px-4 py-[18px] text-black text-sm '>
                         {item?.status}

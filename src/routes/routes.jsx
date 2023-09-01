@@ -125,7 +125,7 @@ export const router = createBrowserRouter([
   {
     path: "/admin",
     element: <DashboardLayout />,
-    errorElement: <ErrorPage />,
+    // errorElement: <ErrorPage />,
     children: [
       {
         path: "",

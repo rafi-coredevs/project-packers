@@ -9,6 +9,7 @@ export const SearchField = () => {
     const [open, setOpen] = useState(false);
     const ref = useRef(null);
     const [searchData, setSearchData] = useState([]);
+    const [notfound, setNotFound] = useState('');
 
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -26,7 +27,7 @@ export const SearchField = () => {
 
     const fetchData = (queries) => {
         terminal.request({ name: 'globalSearchs', queries }).then((res) => {
-            res.status === false ? '' : setSearchData(res)
+            res.status === false ? setNotFound(res.message) : (setSearchData(res), setNotFound(''))
         });
     };
 
@@ -57,11 +58,12 @@ export const SearchField = () => {
             />
         </div>
         <div
-            className={open ? 'block bg-slate-100 px-5 py-4 absolute w-[650px] mt-1 rounded-lg' : 'hidden'}
+            className={open ? 'block bg-[#fdfdfd] px-5 py-4 absolute w-[650px] mt-1 rounded-lg' : 'hidden'}
         >
             {/* <h1>Search Results :</h1> */}
+            {notfound && <h1>{notfound}</h1>}
             <ul className='divide-y'>
-                {searchData.length && (
+                {!notfound && searchData.length && (
                     searchData.map((result) => {
                         if (result.from === 'product') {
                             return result.data.map((data, i) => (
@@ -148,7 +150,7 @@ export const SearchField = () => {
                 {/* {
                     [...Array(4)].map((list, i) => <li
                         key={i}
-                        className='w-full p-4 rounded-lg hover:bg-slate-200'
+                        className='w-full p-4 rounded-lg hover:bg-[#FEF9DC]'
                         onClick={() => setOpen(false)}
                     >
                         <Link
