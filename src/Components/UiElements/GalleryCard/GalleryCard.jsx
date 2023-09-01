@@ -15,7 +15,7 @@ const GalleryCard = ({ data }) => {
   }
   const handleError = (event) => {
     event.currentTarget.src = errorImg;
-    event.currentTarget.className = "flex items-center justify-center  mt-8 mx-auto"
+    event.currentTarget.className = ""
   }
 
   const imgFn = (imgSrc) => {
@@ -35,9 +35,9 @@ const GalleryCard = ({ data }) => {
       <aside className="w-1/4 rounded-xl  h-full flex flex-col gap-4 overflow-auto no-scrollbar">
         {data?.map((item) => imgFn(item))}
       </aside>
-      <aside className="w-full h-full border rounded-xl flex-1 overflow-hidden">
+      <aside className="w-full h-full border rounded-xl flex-1 overflow-hidden flex items-center justify-center">
         <img
-          className="h-full w-full p-4 duration-500 hover:scale-105 object-contain"
+          className="h-full w-full p-4 duration-500 hover:scale-105 object-contain "
           onLoad={handleLoading} onError={handleError}
           src={`${import.meta.env.VITE_SERVER_URL}/${presentImage}`}
           alt="product image"
