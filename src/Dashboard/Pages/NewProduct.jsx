@@ -63,6 +63,7 @@ const NewProduct = () => {
             values.category = selectedCategeory.id;
             values.subcategory = selectedSubCategeory.id;
             removeEmptyFields(values);
+            console.log(values)
             const { images, ...rest } = values;
             product
                 ? terminal
@@ -221,8 +222,10 @@ const NewProduct = () => {
 
 
                             <CustomSelect appearance={"select"} bg="white" options={categories} onChange={categorySelector} value={selectedCategeory?.name} />
+
                             <label className='text-[#475569] text-sm'>Sub Category</label>
                             <CustomSelect appearance={"select"} bg="white" options={selectedCategeory?.subcategory} onChange={subcategorySelector} value={selectedSubCategeory?.name} />
+
                             <Input
                                 styles='basic'
                                 label='Tags'

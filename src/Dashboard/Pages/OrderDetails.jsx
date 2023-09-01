@@ -1,34 +1,41 @@
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useFormik } from 'formik';
+import { useTitle } from '../../Components/Hooks/useTitle';
+import { terminal } from '../../contexts/terminal/Terminal';
 import Button from '../Components/UiElements/Button/Button';
 import Heading from '../Components/UiElements/Heading/Heading';
-import { useNavigate, useParams } from 'react-router-dom';
 import SideCard from '../Components/UiElements/SideCard/SideCard';
 import Input from '../Components/UiElements/Input/Input';
 import search from '../../assets/icons/cd-search2.svg';
 import remove from '../../assets/icons/cd-cancel.svg';
-import { products } from '../../Store/Data';
-import { useTitle } from '../../Components/Hooks/useTitle';
-import { terminal } from '../../contexts/terminal/Terminal';
-import { useEffect, useState } from 'react';
 import toaster from '../../Util/toaster';
-import { useFormik } from 'formik';
 import CustomSelect from '../../Components/UiElements/Input/CustomSelect';
+import removeEmptyFields from '../../Util/removeEmptyFields';
 
 const OrderDetails = () => {
 	useTitle('Order Details');
 	const { orderId } = useParams();
 	const [order, setOrder] = useState(null);
 	const navigate = useNavigate();
-	// const [selected, setSelected] = useState(DROP_DOWN[0]);
+	const [selectedOrderStatus, setSelectedOrderStatus] = useState();
 
 	useEffect(() => {
 		fetchData();
 	}, []);
 
+	// formik initailization
 	const odrerForm = useFormik({
 		initialValues: {
 			status: '',
+			address: '',
+			city: '',
+			area: '',
+			zip: '',
 		},
 	});
+
+	// for status
 	const orderStatuses = [
 		{ id: 1, name: 'Completed', value: 'completed' },
 		{ id: 2, name: 'Pending', value: 'pending' },
@@ -40,14 +47,14 @@ const OrderDetails = () => {
 		{ id: 8, name: 'RefundProcessing', value: 'refundProcessing' },
 	];
 
-	const [selectedOrderStatus, setSelectedOrderStatus] = useState();
-
+	// handling new status
 	function orderStatusHandler(id) {
 		const newStatus = orderStatuses.find((item) => item.id === id);
 		odrerForm.setFieldValue('status', newStatus.value);
 		setSelectedOrderStatus(newStatus);
 	}
 
+	// for fetching data when page loaded
 	const fetchData = () =>
 		terminal
 			.request({ name: 'singleOrder', params: { id: orderId } })
@@ -59,19 +66,49 @@ const OrderDetails = () => {
 					const olderStatus = orderStatuses.find(
 						(status) => status.value === res.status,
 					);
-					odrerForm.setFieldValue('status', olderStatus.value);
-					setSelectedOrderStatus(olderStatus);
-					console.log(res);
-				}
-			});
 
+					odrerForm.setFieldValue('status', olderStatus.value);
+					odrerForm.setFieldValue('address', res.shippingaddress.address);
+					odrerForm.setFieldValue('city', res.shippingaddress.city);
+					odrerForm.setFieldValue('area', res.shippingaddress.area);
+					odrerForm.setFieldValue('zip', res.shippingaddress.zip);
+
+					setSelectedOrderStatus(olderStatus);
+				}
+			})
+			.catch((err) => console.error('error when page loaded', err));
+
+	// order update
 	const updateHandler = () => {
-		// console.log(odrerForm.values);
+		const shipping = {
+			address: odrerForm.values.address,
+			city: odrerForm.values.city,
+			area: odrerForm.values.area,
+			zip: odrerForm.values.zip,
+		};
+
+		const billing = {
+			address: odrerForm.values.address,
+			city: odrerForm.values.city,
+			area: odrerForm.values.area,
+			zip: odrerForm.values.zip,
+		};
+		removeEmptyFields(shipping); //removing empty strings
+		removeEmptyFields(billing);
+
+		let data = {
+			status: odrerForm.values.status,
+			shippingaddress: shipping,
+			billingaddress: billing,
+		};
+
+		removeEmptyFields(data); //removing empty objects
+
 		terminal
 			.request({
 				name: 'updateOrder',
 				params: { id: orderId },
-				body: odrerForm.values,
+				body: data,
 			})
 			.then((res) => {
 				if (res.status === false) {
@@ -80,14 +117,33 @@ const OrderDetails = () => {
 					toaster({ type: 'success', message: 'successfully updated' });
 					navigate(-1);
 				}
-			});
+			})
+			.catch((err) => console.error('order update error', err));
 	};
+
+	// for deleting order
+	const deleteHandler = (e) => {
+		e.preventDefault();
+
+		terminal
+			.request({ name: 'deleteOrder', body: { id: [orderId] } })
+			.then((res) =>
+				res?.status === false
+					? toaster({ type: 'success', message: res.message })
+					: (toaster({
+							type: 'success',
+							message: 'deleted successfully',
+					  }),
+					  navigate(-1)),
+			).catch((err) => console.error('order delete error', err));
+	};
+
 	return (
 		<div className='px-5 h-full'>
 			<Heading type='navigate' title={`#${orderId}`} back={'All Order'}>
 				<div className='flex items-center gap-1'>
 					<Button>Download Invoice</Button>
-					<Button style='delete' onClick={updateHandler}>
+					<Button style='delete' onClick={deleteHandler}>
 						Delete
 					</Button>
 					<Button style='primary' onClick={updateHandler}>
@@ -180,7 +236,11 @@ const OrderDetails = () => {
 																<div className='flex gap-2 items-center'>
 																	<img
 																		className='w-8 h-8 rounded border-b border-[#0000001c]'
-																		src={`${import.meta.env.VITE_SERVER_URL}/${product?.product?.images[0]}`}
+																		src={
+																			import.meta.env.VITE_SERVER_URL +
+																			'/' +
+																			product?.product?.images[0]
+																		}
 																		alt=''
 																	/>
 																	<div className=''>
@@ -206,7 +266,6 @@ const OrderDetails = () => {
 
 															{/* total */}
 															<td className='py-2'>
-																{' '}
 																৳
 																{product?.product?.price?.toFixed(2) *
 																	product?.productQuantity}
@@ -242,7 +301,11 @@ const OrderDetails = () => {
 																<div className='flex gap-2 items-center'>
 																	<img
 																		className='w-8 h-8 rounded border-b border-[#0000001c]'
-																		src={`${import.meta.env.VITE_SERVER_URL}/${product?.product?.images[0]}`}
+																		src={
+																			import.meta.env.VITE_SERVER_URL +
+																			'/' +
+																			request?.request?.images[0]
+																		}
 																		alt=''
 																	/>
 																	<div className=''>
@@ -410,18 +473,25 @@ const OrderDetails = () => {
 				</div>
 				<div className='col-span-3 sm:col-span-1 h-fit grid gap-5 pb-3'>
 					<div className=' border border-[#0000001c] divide-y  rounded-lg '>
+						{/* customer name */}
 						<SideCard
 							types='customer'
-							value={order?.user?.fullName || 'No Name'}
+							customerName={order?.user?.fullName || 'No Name'}
 						/>
+
+						{/* customer information */}
 						<SideCard
 							types='contact'
 							email={order?.user?.email || 'No email'}
 							phone={order?.user?.phone || 'No Phone'}
 						/>
+
+						{/* shipping address */}
 						<SideCard
 							types='shipping'
 							title='Shipping Address'
+							editable={true}
+							formikProps={odrerForm}
 							address={
 								order?.shippingaddress?.address +
 								', ' +
@@ -431,10 +501,14 @@ const OrderDetails = () => {
 								', ' +
 								order?.shippingaddress?.zip
 							}
+							
 						/>
+						{/* billing */}
 						<SideCard
-							types='address'
+							types='billing'
 							title='Billing Address'
+							formikProps={odrerForm}
+							editable={true}
 							address={
 								order?.shippingaddress?.address +
 								', ' +
