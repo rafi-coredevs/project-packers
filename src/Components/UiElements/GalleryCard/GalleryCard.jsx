@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
 const GalleryCard = ({ data }) => {
+  console.log(data);
   const [presentImage, setPresentImage] = useState(data[0]);
   useEffect(() => {
     setPresentImage(data[0]);
