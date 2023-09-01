@@ -22,7 +22,7 @@ const Chat = () => {
   useEffect(() => {
     terminal.socket.on('notification', (data) => {
       console.log(data);
-      if (data.message == 'There is a new suport request') {
+      if (data.message == 'There is a new support request') {
         terminal.request({ name: 'allSupport', queries: { status: activeStatusButton, type: supportType } }).then(data => {
           setSupportData(() => {
             return data.length > 0 && data?.map(support => {

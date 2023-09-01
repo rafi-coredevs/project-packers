@@ -18,8 +18,6 @@ const Signup = () => {
 
 	const { SignUp } = useUserCtx();
 
-	const BASE_URL = import.meta.env.VITE_SERVER_URL;
-
 	const signUpForm = useFormik({
 		initialValues: {
 			fullName: '',
@@ -160,13 +158,13 @@ const Signup = () => {
 							</div>
 							<div className='flex  gap-2 mt-12'>
 								<Link
-									to={`${BASE_URL}/login/google`}
+									to={`${import.meta.env.VITE_SERVER_URL}/login/google`}
 									className='p-[11px] cursor-pointer bg-white rounded-full shrink-0'
 								>
 									<img src={google} alt='' />
 								</Link>
 								<Link
-									to={`${BASE_URL}/login/facebook`}
+									to={`${import.meta.env.VITE_SERVER_URL}/login/facebook`}
 									className='p-[11px] cursor-pointer bg-white rounded-full shrink-0'
 								>
 									<img src={facebook} alt='' />

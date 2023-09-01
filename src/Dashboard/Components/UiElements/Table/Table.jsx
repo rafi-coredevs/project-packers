@@ -16,7 +16,6 @@ import dlt from '../../../../assets/icons/cd-delete.svg';
 import arrowLeft from '../../../../assets/icons/cd-arrow-left-1.svg';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useRef, useState } from 'react';
-import { BASE_URL } from '../../../../Util/apiCall';
 
 const head = {
   orders: [
@@ -148,7 +147,7 @@ useEffect(()=>{
                       <td className='px-4 py-[18px] text-black text-sm '>
                         <img
                           className='w-10 h-10 rounded border border-[#0000001c]'
-                          src={BASE_URL + '/api/' + item?.images[0]}
+                          src={`${import.meta.env.VITE_SERVER_URL}/${item?.images[0]}`}
                           alt=''
                         />
                       </td>
@@ -430,10 +429,10 @@ useEffect(()=>{
           </div>
         )
       }
-      {(location !== 'category' && loading === false) && (
+      {(location !== 'category' && loading === false && data?.docs?.length!==0) && (
         <div className='flex justify-between items-center py-6 px-4'>
           <p className='text-[#475569] text-sm'>
-            Showing {data?.page === 1 ? 1 : ((data?.page - 1) * 10)} - {data?.page === 1 ? data?.docs?.length : ((data?.page - 1) * 10) + data?.docs?.length} of {data?.totalDocs} results
+            Showing {data?.page === 1 ? 1 : (((data?.page - 1) * 10)+1)} - {data?.page === 1 ? data?.docs?.length : ((data?.page - 1) * 10) + data?.docs?.length} of {data?.totalDocs} results
           </p>
           <div className='flex'>
             <button

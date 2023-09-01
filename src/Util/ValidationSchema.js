@@ -124,7 +124,6 @@ export const customerSchema = object({
 
 export const discountSchema = object({
 	coupon: string().min(6).required(),
-	description: string().required(),
 	type: string().required(),
 	amount: number().required(),
 	limit: number().required(),

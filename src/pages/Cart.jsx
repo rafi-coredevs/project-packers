@@ -50,7 +50,7 @@ const Cart = () => {
     let totalPrice = 0;
 
     if (cart) {
-      cart.products.forEach((product) => {
+      cart.products?.length > 0 && cart.products.forEach((product) => {
         const total =
           (product.product.price + product.product.tax + product.product.fee) *
           product.productQuantity;
@@ -63,6 +63,9 @@ const Cart = () => {
         } else {
           nondiscountItemsTotal += total;
         }
+      });
+      cart.requests?.length > 0 && cart?.requests.forEach((request) => {
+        nondiscountItemsTotal = (request.request.price + request.request.tax + request.request.fee) * request.requestQuantity;
       });
 
       discountamount = discount?.percentage
@@ -154,7 +157,7 @@ const Cart = () => {
       <Breadcrumb />
       <div className="container mx-auto py-12 px-2 md:px-0">
         {
-          !cart?.products?.length && !cart?.requests?.length? <div className="min-h-[50vh] flex flex-col space-y-4 justify-center items-center border-[1px] rounded p-4">
+          !cart?.products?.length && !cart?.requests?.length ? <div className="min-h-[50vh] flex flex-col space-y-4 justify-center items-center border-[1px] rounded p-4">
             <img className="h-40 md:h-72" src={emptyCart} />
             <p className="text-center sm:text-2xl font-bold">Currently there are no items in your cart</p>
             <Link to={'/shop'}>
@@ -196,9 +199,8 @@ const Cart = () => {
                       sellerTakes += request?.request?.price * request.requestQuantity;
                       tax += request?.request?.tax * request.requestQuantity;
                       fee += request?.request?.fee * request.requestQuantity;
-                      totalPrice += (request?.request?.price + request?.request?.tax + request?.request?.fee) * request.requestQuantity
-                     return (
-                      request.request?.sellerTakes &&   <CartItem
+                      return (
+                        request.request?.sellerTakes && <CartItem
                           key={request?.id}
                           data={request?.request}
                           quantity={request.requestQuantity}
