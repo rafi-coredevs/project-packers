@@ -39,7 +39,7 @@ const DashboardHome = () => {
   const [selected, setSelected] = useState(OPTIONS[0])
 
   useEffect(() => {
-    console.log(">>>     ",selected)
+    console.log(">>>     ", selected)
   }, [selected])
 
   const [overView, setOverView] = useState([
