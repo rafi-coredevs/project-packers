@@ -81,9 +81,10 @@ const SideCard = ({
 					<input
 						type='text'
 						name={name}
+            readOnly
 						className=' text-emerald-500'
 						value={email || 'No Details'}
-						disabled={false}
+						 
 					/>
 					{email && <CopyButton textToCopy={email} />}
 				</div>

@@ -103,7 +103,7 @@ const Input = ({
 				<input
 					className={`border ${
 						error ? 'border-red-600' : 'border-[#0000001c]'
-					}  w-full outline-none px-3 py-2 rounded-lg`}
+					}  w-full outline-none px-3 py-2 rounded-lg ${className}`}
 					type={type}
 					id={name}
 					name={name}
@@ -131,7 +131,7 @@ const Input = ({
 				<textarea
 					className={`border ${
 						error ? 'border-red-600' : 'border-[#0000001c]'
-					}  outline-none px-3 py-2 rounded-lg`}
+					}  outline-none px-3 py-2 rounded-lg ${className}`}
 					type={type}
 					id={name}
 					rows={rows}

@@ -165,10 +165,12 @@ const RequestDetails = () => {
 			>
 				<div className='col-span-3 sm:col-span-2 grid gap-5'>
 					{/* request details */}
-					<div className='grid gap-5 border border-[#0000001c] rounded p-5'>
-						<h3 className='text-base font-semibold'>Requested Items</h3>
+					<div className='grid gap-5 border border-[#0000001c] rounded-lg '>
+						<h3 className='text-base font-semibold p-5 pb-0'>
+							Requested Items
+						</h3>
 						{/* link */}
-						<div className='flex gap-2 items-center'>
+						<div className='flex gap-2 items-center px-5'>
 							<div className='w-full'>
 								<Input
 									styles='secondary'
@@ -191,7 +193,7 @@ const RequestDetails = () => {
 						</div>
 
 						{/* quantity */}
-						<div className='flex gap-2 items-center'>
+						<div className='flex gap-2 items-center px-5'>
 							<p className=''>Quantity</p>
 							<Input
 								styles='quantity'
@@ -205,7 +207,7 @@ const RequestDetails = () => {
 						</div>
 
 						{/* image upload */}
-						<div className=''>
+						<div className='px-5'>
 							<RequestImageUpload
 								formikProps={requestForm}
 								uploadButtonIcon={UploadIcon}
@@ -222,9 +224,9 @@ const RequestDetails = () => {
 								}
 							/>
 						</div>
-
+						<hr />
 						{/* note */}
-						<div className='grid gap-3'>
+						<div className='grid gap-3 px-5'>
 							<div className='flex justify-between items-center'>
 								<p className='text-sm font-semibold'>Note</p>
 								<button
@@ -251,17 +253,18 @@ const RequestDetails = () => {
 					</div>
 
 					{/* payment details */}
-					<div className='grid gap-5 border border-[#0000001c] rounded p-5'>
-						<p className='text-base font-semibold'>Payment Details</p>
-						<div className='grid gap-3'>
+					<div className='grid gap-5 border border-[#0000001c] rounded-lg '>
+						<p className='text-base font-semibold p-5'>Payment Details</p>
+						<div className='grid gap-4'>
 							{/* seller Takes */}
-							<div className='flex justify-between items-center'>
+							<div className='flex justify-between items-center px-5'>
 								<p className='text-[#475569] text-sm'>Seller Takes</p>
 								<div className='flex gap-1 items-center'>
 									<p className='text-lg font-semibold'>৳</p>
 									<Input
 										styles='secondary'
 										name='sellerTakes'
+										className={`text-end`}
 										type='number'
 										id='sellerTakes'
 										error={
@@ -278,12 +281,13 @@ const RequestDetails = () => {
 							</div>
 
 							{/* us seller tax */}
-							<div className='flex justify-between items-center'>
+							<div className='flex justify-between items-center px-5'>
 								<p className='text-[#475569] text-sm'>US Sales Tax</p>
 								<div className='flex gap-1 items-center'>
 									<p className='text-lg font-semibold'>৳</p>
 									<Input
 										styles='secondary'
+										className={`text-end`}
 										name='tax'
 										id='tax'
 										error={
@@ -300,7 +304,7 @@ const RequestDetails = () => {
 							</div>
 
 							{/* fee */}
-							<div className='flex justify-between items-center'>
+							<div className='flex justify-between items-center px-5'>
 								<p className='text-[#475569] text-sm'>Packers Fee</p>
 								<div className='flex gap-1 items-center'>
 									<p className='text-lg font-semibold'>৳</p>
@@ -308,6 +312,7 @@ const RequestDetails = () => {
 										styles='secondary'
 										name='fee'
 										type='number'
+										className={`text-end`}
 										id='fee'
 										error={
 											requestForm.touched.fee && requestForm.errors.fee
@@ -322,7 +327,7 @@ const RequestDetails = () => {
 							</div>
 
 							{/* total */}
-							<div className='flex justify-between items-center'>
+							<div className='flex justify-between items-center px-5'>
 								<p className='text-base font-semibold'>Total</p>
 								<p className='text-lg font-semibold'>
 									৳{' '}
@@ -333,8 +338,16 @@ const RequestDetails = () => {
 							</div>
 
 							{/* buttons */}
-							<div className='py-5 flex gap-2 justify-end border-t border-[#0000001c] '>
-								<Button style='outline'>Cancel</Button>
+							<div className='py-5 flex gap-2 justify-end border-t border-[#0000001c] px-5'>
+								<Button
+									style='outline'
+									onClick={(e) => {
+										e.preventDefault();
+										navigate(-1);
+									}}
+								>
+									Cancel
+								</Button>
 								<Button disabled={disable} type='submit' style='primary'>
 									Send Invoice
 								</Button>
