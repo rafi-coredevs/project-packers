@@ -15,7 +15,7 @@ import { terminal } from "../../contexts/terminal/Terminal";
 import { useUserCtx } from "../../contexts/user/UserContext";
 import UserIcon from "../UiElements/UserIcon/UserIcon";
 import cancel from '../../assets/icons/cd-cancel-w.svg';
-import loader from '../../assets/icons/cd-reload.svg'
+import loader from '../../assets/icons/cd-reload-white.svg'
 
 const SupportModal = () => {
   const { user } = useUserCtx()
