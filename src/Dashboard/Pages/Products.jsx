@@ -19,7 +19,7 @@ const Products = () => {
   useTitle("Products");
   const [active, setActive] = useState("all");
   const [tableData, setTabledata] = useState([]);
-  const [sortBy, setSortBy] = useState('createdAt:asc');
+  const [sortBy, setSortBy] = useState('createdAt:desc');
   const [loading, setLoading] = useState(true);
   const [selectedProductStatus, setSelectedProductStatus] = useState({ name: 'Select', value: null, id: 0 });
   const [selectedItem, setSelectedItem] = useState([]);

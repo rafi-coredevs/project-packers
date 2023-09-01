@@ -46,7 +46,7 @@ const head = {
     'Usage/Limit',
     'Expiry Date',
   ],
-  category: ['Name', 'Slug', 'Post'],
+  category: ['Name', 'Slug'],
   payment: [
     'payment ID',
     'Customer Name',
@@ -300,9 +300,7 @@ useEffect(()=>{
                       <td className='px-4 py-[18px] text-black text-sm '>
                         {item.slug}
                       </td>
-                      <td className='px-4 py-[18px] text-black text-sm '>
-                        {item.post}
-                      </td>
+                      
                     </tr>
                   ))
                 }
@@ -404,10 +402,11 @@ useEffect(()=>{
       </table>
       {
         //Pagination for  category and subcategory
-        location === 'category' && (
+        (location === 'category' && data?.docs?.length!==0) && (
           <div className='flex justify-between items-center py-6 px-4'>
             <p className='text-[#475569] text-sm'>
-              Showing {data?.docs?.slice(startIndex, endIndex).length} of{' '}
+              
+              Showing {currentPage===1? '1':((currentPage-1)*10)+1} -  {currentPage===1? data?.docs?.slice(startIndex, endIndex).length : ((currentPage-1)*10)+ data?.docs?.slice(startIndex, endIndex).length } of{' '}
               {data?.docs?.length} results
             </p>
             <div className='flex'>
