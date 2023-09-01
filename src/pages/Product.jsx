@@ -28,8 +28,14 @@ const Product = () => {
       });
   }, [product]);
   const requsetItemHandler = () => {
-    terminal.request({ name: 'registerCart', body: { products: [{ product: product.id, productQuantity: 1 }] } }).then(data => data.id ? toaster({ type: 'success', message: 'Added to cart' }) : toaster({ type: 'error', message: data.message || 'An error occured. Please try again later' }))
-    getCart()
+    terminal.request({ name: 'registerCart', body: { products: [{ product: product.id, productQuantity: 1 }] } }).then(data => {
+      if (data.id) {
+        toaster({ type: 'success', message: 'Added to cart' })
+        getCart()
+        return
+      }
+      toaster({ type: 'error', message: data.message || 'An error occured. Please try again later' })
+    })
   };
 
   return (

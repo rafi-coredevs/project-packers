@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import toaster from "../Util/toaster";
-import icon from "../assets/icons/product-ok.svg";
 import { useFormik } from "formik";
 import Modal from '../Components/UiElements/Modal/Modal'
 import Input from "../Components/UiElements/Input/Input";
@@ -9,6 +8,7 @@ import Button from "../Components/UiElements/Buttons/Button";
 import { checkoutSchema } from "../Util/ValidationSchema";
 import OrderSuccessModal from "../Components/OrderSuccessModal/OrderSuccessModal";
 import { terminal } from "../contexts/terminal/Terminal";
+
 const Checkout = () => {
   let totalPrice = 0;
   const [cart, setCart] = useState();
