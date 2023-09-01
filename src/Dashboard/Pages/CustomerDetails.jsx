@@ -61,12 +61,12 @@ const CustomerDetails = () => {
         </div>
       </Heading>
       <div className="grid grid-cols-3 gap-5">
-        <div className="col-span-3 sm:col-span-2 grid gap-5">
-          <div className="grid gap-5 rounded ">
+        <div className="col-span-3 md:col-span-2 grid gap-5">
+          <div className="grid gap-5 rounded h-fit">
             <div className="grid gap-3 relative overflow-x-auto">
               {/* table header */}
               <div className="flex justify-between">
-                <div className="pb-2 my-auto">
+                <div className=" my-auto">
                   <button
                     onClick={() => tableButtonHandler("all")}
                     className={`py-2 px-3 text-[#475569] text-xs font-semibold ${buttonType === "all" ? "bg-[#CFF6EF] rounded" : "bg-transparent"
@@ -100,7 +100,7 @@ const CustomerDetails = () => {
                     Abandoned Checkouts
                   </button>
                 </div>
-                <div className="pb-2 flex gap-1">
+                <div className=" flex gap-1">
                   <button className="border border-[#0000001f] p-2  ">
                     <img className="opacity-70" src={sort} alt="" />
                   </button>
