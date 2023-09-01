@@ -1,28 +1,28 @@
+import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useFormik } from 'formik';
+import { useTitle } from '../../Components/Hooks/useTitle';
+import { terminal } from '../../contexts/terminal/Terminal';
+import { requestItems } from '../../Util/ValidationSchema';
 import Heading from '../Components/UiElements/Heading/Heading';
 import Button from '../Components/UiElements/Button/Button';
 import Input from '../Components/UiElements/Input/Input';
 import globe from '../../assets/icons/cd-internet.svg';
-import ImageUploader from '../../Components/UiElements/ImageUploader/ImageUploader';
 import SideCard from '../Components/UiElements/SideCard/SideCard';
-import { useTitle } from '../../Components/Hooks/useTitle';
-import { useFormik } from 'formik';
-import { useEffect, useState } from 'react';
-import { terminal } from '../../contexts/terminal/Terminal';
 import UploadIcon from '../../assets/icons/UploadIcon.svg';
-import { requestItems } from '../../Util/ValidationSchema';
 import RequestImageUpload from '../Components/uploadImages/RequestImageUpload/RequestImageUpload';
 import toaster from '../../Util/toaster';
-//
+
 const RequestDetails = () => {
 	useTitle('Request Detail');
 	const { requestId } = useParams();
 	const [preLoadedImages, setPreLoadedImages] = useState([]);
 	const [disable, setDisable] = useState(false);
-	const [inputDisable, setInputDisable] = useState(false);
+	const [inputDisable, setInputDisable] = useState(true);
 
 	const navigate = useNavigate();
 
+	// formik initialization
 	const requestForm = useFormik({
 		initialValues: {
 			name: '',
@@ -31,19 +31,22 @@ const RequestDetails = () => {
 			phone: '',
 			link: '',
 			note: '',
-			sellerTakes: '',
-			tax: '',
-			fee: '',
+			sellerTakes: 0,
+			tax: 0,
+			fee: 0,
 			shippingaddress: '',
 			billingaddress: '',
 			user: {},
 			images: [],
 			removeImages: [],
+			fullName: '',
 		},
 		validationSchema: requestItems,
 		onSubmit: (values) => {
 			setDisable(true);
 			const { images, user, ...rest } = values;
+
+			// sending invoice
 			terminal
 				.request({
 					name: 'invoiceRequest',
@@ -63,6 +66,7 @@ const RequestDetails = () => {
 		},
 	});
 
+	// for fetching data when page is loaded
 	useEffect(() => {
 		terminal
 			.request({ name: 'singleRequest', params: { id: requestId } })
@@ -76,21 +80,24 @@ const RequestDetails = () => {
 					quantity: res.quantity || 1,
 					link: res.link,
 					note: res.note,
-					sellerTakes: res?.sellerTakes,
-					tax: res?.tax,
-					fee: res?.fee,
+					sellerTakes: res.sellerTakes || 0,
+					tax: res.tax || 0,
+					fee: res.fee || 0,
 					shippingaddress: res.shippingaddress,
 					billingaddress: res.billingaddress,
 					user: res.user,
 					images: res.images,
+					fullName: res.user.fullName || 'No Name',
 				});
 			});
 	}, []);
 
+	// for updating quantity
 	const handleQuantity = (value) => {
 		requestForm.setFieldValue('quantity', value);
 	};
 
+	// updating request
 	const updateHandler = (e) => {
 		e.preventDefault();
 		setDisable(true);
@@ -114,6 +121,8 @@ const RequestDetails = () => {
 				navigate(-1),
 			);
 	};
+
+	// deleting request
 	const deleteHandler = (e) => {
 		e.preventDefault();
 		setDisable(true);
@@ -130,6 +139,7 @@ const RequestDetails = () => {
 					  setDisable(false)),
 			);
 	};
+
 	return (
 		<div onSubmit={requestForm.handleSubmit} className='h-full px-5'>
 			<Heading type='navigate' title={`#${requestId}`} back={'Request'}>
@@ -231,7 +241,7 @@ const RequestDetails = () => {
 								onBlur={requestForm.handleBlur}
 								id='note'
 								rows='3'
-								value={requestForm.values.note}
+								value={requestForm.values.note || 'N/A'}
 								disabled={inputDisable}
 							></textarea>
 						</div>
@@ -313,9 +323,9 @@ const RequestDetails = () => {
 								<p className='text-base font-semibold'>Total</p>
 								<p className='text-lg font-semibold'>
 									৳{' '}
-									{Number(requestForm.values.sellerTakes) +
-										Number(requestForm.values.tax) +
-										Number(requestForm.values.fee)}
+									{Number(parseFloat(requestForm.values.sellerTakes)) +
+										Number(parseFloat(requestForm.values.tax)) +
+										Number(parseFloat(requestForm.values.fee))}
 								</p>
 							</div>
 
@@ -333,9 +343,8 @@ const RequestDetails = () => {
 				{/* right side's customer details */}
 				<div className='col-span-3 sm:col-span-1 h-fit grid gap-5 border border-[#0000001c] divide-y  rounded-lg '>
 					<SideCard
-						onChange={requestForm.handleChange}
 						types='customer'
-						value={requestForm.values.name}
+						customerName={requestForm.values.fullName}
 					/>
 					<SideCard
 						name={'email'}
@@ -344,14 +353,16 @@ const RequestDetails = () => {
 						phone={requestForm.values.phone}
 					/>
 					<SideCard
-						types='address'
+						types='shipping'
 						title='Shipping Address'
 						address='No Address'
+						editable={false}
 					/>
 					<SideCard
-						types='address'
+						types='billing'
 						title='Billing Address'
 						address='No Address'
+						editable={false}
 					/>
 				</div>
 			</form>

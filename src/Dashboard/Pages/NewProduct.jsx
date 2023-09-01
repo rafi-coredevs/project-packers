@@ -63,6 +63,7 @@ const NewProduct = () => {
             values.category = selectedCategeory.id;
             values.subcategory = selectedSubCategeory.id;
             removeEmptyFields(values);
+            console.log(values)
             const { images, ...rest } = values;
             product
                 ? terminal
@@ -201,56 +202,8 @@ const NewProduct = () => {
 
                             <CustomSelect appearance={"select"} bg="white" options={categories} onChange={categorySelector} value={selectedCategeory?.name} />
 
-                            {/* <select
-                                className={`bg-transparent border-[1px] w-full outline-none px-3 py-2 rounded-lg appearance-none ${
-                                    categoryError.category ? 'border-[red]' : ''
-                                } `}
-                                onChange={(e) => {
-                                    setSelectedcategory(e.target.value),
-                                        setselectedSubCategeory(null),
-                                        setCategoryerror({
-                                            category: false,
-                                            subCategory: true,
-                                        });
-                                }}
-                                value={selectedCategeory || ''}
-                            >
-                                <option disabled value=''>
-                                    Select
-                                </option>
-                                {categories.map((cat, i) => (
-                                    <option key={i} value={cat.id}>
-                                        {cat.name}
-                                    </option>
-                                ))}
-                            </select> */}
-
                             <label className='text-[#475569] text-sm'>Sub Category</label>
                             <CustomSelect appearance={"select"} bg="white" options={selectedCategeory?.subcategory} onChange={subcategorySelector} value={selectedSubCategeory?.name} />
-
-                            {/* <select
-                                className={`bg-transparent border-[1px] w-full outline-none px-3 py-2 rounded-lg ${categoryError.subCategory ? 'border-[red]' : ''
-                                    } `}
-                                onChange={(e) => {
-                                    setselectedSubCategeory(e.target.value),
-                                        setCategoryerror({
-                                            category: false,
-                                            subCategory: false,
-                                        });
-                                }}
-                                value={selectedSubCategeory || ''}
-                            >
-                                <option disabled value=''>
-                                    Select
-                                </option>
-                                {categories
-                                    ?.find((item) => item.id === selectedCategeory)
-                                    ?.subcategory?.map((sub) => (
-                                        <option key={sub.id} value={sub.id}>
-                                            {sub.name}
-                                        </option>
-                                    ))}
-                            </select> */}
 
                             <Input
                                 styles='basic'

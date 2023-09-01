@@ -197,7 +197,10 @@ useEffect(()=>{
                       >
                         {item?.products?.length > 0
                           ? item?.products[0]?.product?.name
-                          : ''}
+                          : item?.requests[0]?.request?.name}
+                          {
+                            console.log(item)
+                          }
                       </td>
                       <td className='px-4 py-[18px] text-black text-sm '>
                         {item?.date && new Intl.DateTimeFormat('en-US', {
