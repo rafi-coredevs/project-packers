@@ -10,6 +10,7 @@ import Button from "../Components/UiElements/Button/Button";
 import { useTitle } from "../../Components/Hooks/useTitle";
 import { terminal } from "../../contexts/terminal/Terminal";
 import CustomSelect from "../../Components/UiElements/Input/CustomSelect";
+import toaster from '../../Util/toaster';
 // 
 const requestStatuses = [{ id: 'All', name: "All", value: "All" }, { id: 'Paid', name: "Paid", value: "Paid" }, { id: 'Pending', name: "Pending", value: "Pending" }]
 
@@ -21,6 +22,7 @@ const RequestItems = () => {
   const [tableData, setTabledata] = useState(null);
   const [loading, setLoading] = useState(true);
   const [sortBy, setSortBy] = useState('createdAt:asc');
+  const [requestIds, setRequestIds] = useState([]);
   useEffect(() => {
     fetchData();
 
@@ -42,11 +44,22 @@ const RequestItems = () => {
   };
   const tableButtonHandler = (value) => {
     setActive(value);
-    console.log(value);
   };
   const deleteHandler = () => {
-    console.log("deleted");
+    terminal.request({ name: 'removeRequest', body: { id : requestIds} }).then(res => res.status === true ? (toaster({ type: 'success', message: res.message }), fetchData()) : (toaster({ type: 'error', message: res.message })))
   };
+
+  function handleSearch(e) {
+    if(e.target.value?.length >= 1) {
+      setLoading(true);
+      terminal.request({ name: 'allRequest', queries: { sortBy, status: active, search: e.target.value } }).then((res) => {
+        res.status === false ? '' : setTabledata(res), setLoading(false);
+      });
+    } else {
+      fetchData();
+    }
+  }
+
   return (
     <div className="h-full px-5 ">
       <Heading title="Item Request">
@@ -104,7 +117,7 @@ const RequestItems = () => {
                 </button>
               </div>
               <div className="py-2 flex gap-1">
-                <Input type="text" placeholder="Search" styles="secondary">
+                <Input type="text" change={handleSearch} placeholder="Search" styles="secondary">
                   <img src={search} alt="" />
                 </Input>
 
@@ -117,7 +130,7 @@ const RequestItems = () => {
               </div>
             </div>
 
-            <Table paginate={fetchData} data={tableData} loading={loading} />
+            <Table paginate={fetchData} data={tableData} loading={loading} getData={setRequestIds}/>
           </div>
         </div>
       </div>
