@@ -18,7 +18,7 @@ const Discount = () => {
   const [active, setActive] = useState("all");
   const [tableData, setTabledata] = useState(null);
   const [loading,setLoading]= useState(false);
-  const [sortBy,setSortby]=useState('createdAt:asc');
+  const [sortBy,setSortby]=useState('createdAt:desc');
   const [selectedDiscountStatus, setSelectedDiscountStatus] = useState({ name: 'Select', value: null, id: 0 });
 
   function discountStatusHandler(id) {

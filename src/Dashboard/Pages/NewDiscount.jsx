@@ -10,6 +10,7 @@ import { useFormik } from "formik";
 import { DateRange, DateRangePicker } from "react-date-range";
 import DateRangeSelector from "../Components/UiElements/DateSelector/DateRangesSelector";
 import { discountSchema } from "../../Util/ValidationSchema";
+import { useNavigate } from "react-router-dom";
 const discountType = [{
   id: 'Fixed',
   name: 'Fixed',
@@ -26,14 +27,16 @@ const NewDiscount = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedSubcategory, setSelectedSubcategory] = useState(null);
   const [selectedType, setSelectedtype] = useState(null);
-  // const [code,setCode]=useState('');
+  const navigate =  useNavigate();
+  const [description,setDescription]=useState('');
 
 
   useEffect(() => {
     terminal.request({ name: 'allCategory' }).then(res => res?.status === false ? toaster({ type: 'error', message: res?.message }) : setCategory(res));
   }, [])
   const categorySelector = (val) => {
-    setSelectedCategory(category.find(item => item.id === val))
+    setSelectedCategory(category.find(item => item.id === val));
+    setSelectedSubcategory(null)
     discountForm.setFieldValue('category', val);
   };
 const subcategorySelector = (val) => {
@@ -58,7 +61,6 @@ const subcategorySelector = (val) => {
   const discountForm = useFormik({
     initialValues: {
       coupon: '',
-      description: '',
       type: '',
       amount: '',
       limit: '',
@@ -69,8 +71,17 @@ const subcategorySelector = (val) => {
     },
     validationSchema: discountSchema,
     onSubmit: (data) => {
-      console.log(data)
-      discountForm.resetForm
+      const discountData = {
+        code: data.coupon,
+        category:data.category,
+        subcategory:data.subCategory,
+        expiry_date: data.expiry,
+        limit: data.limit
+      }
+      data.type==='Fixed'? discountData.amount=data.amount : discountData.percentage=data.amount;
+      if(description!=='') discountData.description=description;
+      terminal.request({ name: 'registerDiscount', body: {...discountData}}).then(res=>res.status===false? toaster({type: 'error', message: res.message}): toaster({type: 'success', message: "New Coupon Successfully Generated"} ), navigate(-1));
+      discountForm.resetForm();
     }
   })
 
@@ -91,14 +102,15 @@ const subcategorySelector = (val) => {
               <Input
                 styles="area"
                 rows={3}
-                name="description" change={discountForm.handleChange} blur={discountForm.handleBlur} value={discountForm.values.description} error={discountForm.touched.description && discountForm.errors.description ? discountForm.errors.description : null}
+                value={description}
+                change={(e)=>setDescription(e.target.value)}
                 label="Description (Optional)"
                 placeholder="Write here..."
               />
               <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                 <div className="">
                   <label htmlFor="Type" className="text-[#475569] text-sm">Type</label>
-                  <CustomSelect appearance={"select"} options={discountType} onChange={(type) => {discountForm.setFieldValue('type',type); setSelectedtype(type)}} value={discountForm.values.type} error={discountForm.touched.type && discountForm.errors.type ? true : false } /></div>
+                  <CustomSelect appearance="select" options={discountType} onChange={(type) => {discountForm.setFieldValue('type',type); setSelectedtype(type)}} value={discountForm.values.type} error={discountForm.touched.type && discountForm.errors.type ? true : false } /></div>
                 <Input styles="basic" name="amount" change={discountForm.handleChange} blur={discountForm.handleBlur} value={discountForm.values.amount} error={discountForm.touched.amount && discountForm.errors.amount ? discountForm.errors.amount : null} label="Amount" placeholder={selectedType === 'Percentage' ? '30%' : 500} /></div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                 <Input styles="basic" name={'limit'} change={discountForm.handleChange} blur={discountForm.handleBlur} value={discountForm.values.limit} error={discountForm.touched.limit && discountForm.errors.limit ? discountForm.errors.limit : null} label="Limit" placeholder=" 100" />
