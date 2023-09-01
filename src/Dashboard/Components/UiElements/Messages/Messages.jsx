@@ -13,13 +13,14 @@ const Messages = ({ activeChat, chatCardHandler, setSupportData }) => {
     const [messages, setMessages] = useState()
     const messageBody = useRef(null)
     const [loading, setLoading] = useState(false)
-    const [page, setPage] = useState(1)
+    const [page, setPage] = useState(0)
     const [totalPage, setTotalPage] = useState()
     useEffect(() => {
+        setLoading(true)
         setModal(true)
         setMessages([])
-        terminal.request({ name: 'getMessage', params: { id: activeChat?.id }, queries: { page: 1, limit: 100 } }).then(data => {
-            data.docs?.length > 0 && setMessages(data.docs)
+        terminal.request({ name: 'getMessage', params: { id: activeChat?.id }, queries: { page: 1 } }).then(data => {
+            data.docs?.length > 0 && setMessages(data.docs), setTotalPage(data.totalPages), setPage(data.page), setLoading(false);
         })
         if (activeChat && activeChat.status !== 'pending') {
             setModal(false)
@@ -47,21 +48,23 @@ const Messages = ({ activeChat, chatCardHandler, setSupportData }) => {
     };
 
     const handleScroll = () => {
-        // if (messageBody.current.scrollTop - messageBody.current.clientHeight + messageBody.current.scrollHeight < 1) {
-        //     setLoading(true)
-        //     debounce(() => {
-        //         setPage(prev => prev + 1)
-        //         if (page <= totalPage) {
-        //             console.log('object');
-        //             terminal.request({ name: 'getMessage', params: { id: activeChat?.id }, queries: { page } }).then(data => {
-        //                 data.docs?.length > 0 && setMessages(prev => [...data.docs, ...prev]), setLoading(false), setTotalPage(data.totalPages);
-        //             })
-        //         }
-        //     }, 500)
-        // }
-        // else {
-        //     setLoading(false)
-        // }
+        if (messageBody.current.scrollTop - messageBody.current.clientHeight + messageBody.current.scrollHeight < 1) {
+            setLoading(true)
+            debounce(() => {
+                setPage(prev => prev + 1)
+                if (page <= totalPage) {
+                    terminal.request({ name: 'getMessage', params: { id: activeChat?.id }, queries: { page } }).then(data => {
+                        data.docs?.length > 0 && console.log(data), setLoading(false);
+                    })
+                }
+                else {
+                    setLoading(false)
+                }
+            }, 500)
+        }
+        else {
+            setLoading(false)
+        }
     }
 
     const handleSubmit = (e) => {
