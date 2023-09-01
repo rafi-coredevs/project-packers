@@ -433,7 +433,7 @@ useEffect(()=>{
       {(location !== 'category' && loading === false && data?.docs?.length!==0) && (
         <div className='flex justify-between items-center py-6 px-4'>
           <p className='text-[#475569] text-sm'>
-            Showing {data?.page === 1 ? 1 : ((data?.page - 1) * 10)} - {data?.page === 1 ? data?.docs?.length : ((data?.page - 1) * 10) + data?.docs?.length} of {data?.totalDocs} results
+            Showing {data?.page === 1 ? 1 : (((data?.page - 1) * 10)+1)} - {data?.page === 1 ? data?.docs?.length : ((data?.page - 1) * 10) + data?.docs?.length} of {data?.totalDocs} results
           </p>
           <div className='flex'>
             <button
