@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { BASE_URL } from '../../../Util/apiCall';
+import loader from '../../../assets/loader.svg';
 
 /**
  * Lazy loading Component
@@ -50,6 +51,8 @@ export const ProductCard = ({
   isShop = Boolean
 }) => {
 
+  console.log(img);
+
   return <>
     {
       <Link to={`/shop/${id}`}
@@ -58,7 +61,7 @@ export const ProductCard = ({
       >
         <div className={`h-40 lg:h-80 rounded-xl overflow-hidden ${isShop ? 'w-[40%] lg:w-full' : 'w-full'}`}>
           <img
-            src={`${BASE_URL}/api/${img}`}
+            src={`${BASE_URL}/api/${img}` || `${loader}`}
             alt='Product Image'
             className='h-full w-[22rem] lg:w-[24rem] object-contain duration-500 group-hover:scale-105'
           />

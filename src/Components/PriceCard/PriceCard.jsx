@@ -30,7 +30,7 @@ const PriceCard = ({
   disabled,
 }) => {
   return (
-    <div className="border text-lg font-medium  font-sans border-[#0003160D] mx-5 sm:mx-0 max-w-[490px] rounded-lg px-5 pt-1 pb-8">
+    <div className="border text-lg font-medium  font-sans border-[#0003160D] mx-5 sm:mx-0 h-full rounded-lg px-5 pt-1 pb-8">
       <div className="py-4 flex justify-between border-b border-[#0000000D]">
         <span className="text-[#475569]">
           {type === "product"

@@ -1,5 +1,5 @@
 import axios from "axios";
-export const BASE_URL = "http://localhost:4000";
+export const BASE_URL = "http://10.11.70.113:4000";
 
 const config = {
   headers: {
