@@ -22,9 +22,9 @@ const SupportModal = () => {
   const [isVisible, setVisible] = useState(false);
   const [chat, setChat] = useState([]);
   const [images, setImages] = useState([])
-  const [support, setSupport] = useState()
+  const [support, setSupport] = useState(null)
   const [page, setPage] = useState(1)
-  const [totalPage, setTotalPage] = useState()
+  const [totalPage, setTotalPage] = useState(null)
   const [loading, setLoading] = useState(false)
   const messageBody = useRef(null)
   const supportForm = useFormik({

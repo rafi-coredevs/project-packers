@@ -18,8 +18,8 @@ const Cart = () => {
   let tax = 0;
   let fee = 0;
   let totalPrice = 0;
-  const [price, setPrice] = useState();
-  const [discount, setDiscount] = useState();
+  const [price, setPrice] = useState(null);
+  const [discount, setDiscount] = useState(null);
   const { cart, setCart, getCart } = useCartCtx();
   useEffect(() => {
     getCart()

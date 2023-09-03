@@ -5,7 +5,7 @@ import { terminal } from '../../contexts/terminal/Terminal';
 import Button from '../UiElements/Buttons/Button';
 
 const OrderSuccessModal = ({ setOrderModal, id }) => {
-    const [orderdata, setOrderdata] = useState()
+    const [orderdata, setOrderdata] = useState({})
     useEffect(() => {
         terminal.request({ name: 'singleOrder', params: { id: id } }).then(data => data.id && setOrderdata(data))
     }, [id])
