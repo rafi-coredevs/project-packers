@@ -9,12 +9,14 @@ import ImageUpload from "../../../assets/icons/cd-camera.svg";
  * @param {string} className - Additional CSS class names for styling.
  * @param {string} uploadButtonIcon - Icon for the upload button.
  * @param {string} placeholder - Placeholder text for the image upload.
+ * @param {string} title - title text for image uploader
  */
 const ImageUploader = ({
   formikProps,
   className,
   uploadButtonIcon,
   placeholder,
+  title,
 }) => {
   const [allImages, setAllImages] = useState([]); // Define state variables to manage uploaded images.
 
@@ -34,8 +36,7 @@ const ImageUploader = ({
    * Also handles cleanup when the component unmounts.
    */
   useEffect(() => {
-    const imageFile = allImages.filter((image) => image instanceof File); // Filter uploaded images to include only File objects.
-    formikProps.setFieldValue("images", imageFile); // Set Formik field value for 'images'.
+    formikProps.setFieldValue("images", allImages); // Set Formik field value for 'images'.
 
     // Cleanup function to revoke Object URLs for File objects.
     return () => {
@@ -65,9 +66,12 @@ const ImageUploader = ({
     setAllImages((prev) => [...prev, file]);
   };
 
+  console.log(allImages);
+
   return (
     <>
-      <div className="p-3 rounded-lg ">
+      <div className=" rounded-lg ">
+        <p className="text-base font-semibold text-[#0D3D4B] mb-2">{title}</p>
         <div className={`flex items-center gap-3 ${className}`}>
           <div className="flex  md:max-w-[400px] scrollbar  overflow-x-auto overflow-y-hidden">
             {allImages.map((image, index) => (

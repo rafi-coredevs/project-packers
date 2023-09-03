@@ -4,7 +4,7 @@ import Showcase from "../Components/Showcase/Showcase";
 import About from "../Components/About/About";
 import Carousel from "../Components/UiElements/Carousel/Carousel";
 import Faq from "../Components/Faq/Faq";
-import { carousel, brand } from "../Store/Data";
+import {  brand } from "../Store/Data";
 import { useEffect, useState } from "react";
 import { terminal } from "../contexts/terminal/Terminal";
 import { useTitle } from "../Components/Hooks/useTitle";
@@ -17,7 +17,7 @@ const Home = () => {
     .then(res=> {
       setProducts(res?.docs);
     })
-   
+
   }, []);
   return (
     <>

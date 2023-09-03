@@ -62,7 +62,7 @@ const NewProduct = () => {
       values.category = selectedCategeory.id;
       values.subcategory = selectedSubCategeory.id;
       removeEmptyFields(values);
-      console.log(values);
+
       const { images, ...rest } = values;
       product
         ? terminal
@@ -124,9 +124,13 @@ const NewProduct = () => {
             });
           }
         })
-        .then((res) => {});
+        .catch((err) => console.error("getting all category error", err));
     }
   }, []);
+
+  /**
+   * Handle category selection errors.
+   */
   const handleCheck = () => {
     if (selectedCategeory === null) {
       setCategoryerror({
@@ -141,18 +145,36 @@ const NewProduct = () => {
     }
   };
 
-  const categorySelector = (val) =>
+  /**
+   * Handle category selection.
+   * @param {string} val - Selected category value.
+   */
+  const categorySelector = (val) => {
     setSelectedCategory(categories.find((item) => item.id === val));
-  const subcategorySelector = (val) =>
+  };
+
+  /**
+   * Handle subcategory selection.
+   * @param {string} val - Selected subcategory value.
+   */
+  const subcategorySelector = (val) => {
     setselectedSubCategeory(
       selectedCategeory.subcategory.find((item) => item.id === val)
     );
+  };
+
+  /**
+   * Effect to set the selected category when productId is available.
+   */
   useEffect(() => {
     if (productId) {
       categorySelector(product?.category?.id);
     }
   }, [categories, product]);
 
+  /**
+   * Effect to set the selected subcategory when productId is available.
+   */
   useEffect(() => {
     if (productId) {
       setselectedSubCategeory(

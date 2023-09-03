@@ -20,10 +20,6 @@ const OrderDetails = () => {
   const navigate = useNavigate();
   const [selectedOrderStatus, setSelectedOrderStatus] = useState({});
 
-  useEffect(() => {
-    fetchData();
-  }, []);
-
   // formik initailization
   const odrerForm = useFormik({
     initialValues: {
@@ -47,14 +43,24 @@ const OrderDetails = () => {
     { id: 8, name: "RefundProcessing", value: "refundProcessing" },
   ];
 
-  // handling new status
+  /**
+   * Handles selecting an order status.
+   * @param {number} id - The ID of the selected status.
+   */
   function orderStatusHandler(id) {
-    const newStatus = orderStatuses.find((item) => item.id === id);
+    const newStatus = orderStatuses.find((item) => item.id === id); // Find the selected order status by id
     odrerForm.setFieldValue("status", newStatus.value);
     setSelectedOrderStatus(newStatus);
   }
 
-  // for fetching data when page loaded
+  // Fetch order data when the component mounts
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  /**
+   * Fetches order data from the API and populates the form.
+   */
   const fetchData = () =>
     terminal
       .request({ name: "singleOrder", params: { id: orderId } })
@@ -63,22 +69,27 @@ const OrderDetails = () => {
           toaster({ type: "error", message: res.message });
         } else {
           setOrder(res);
-          const olderStatus = orderStatuses.find(
-            (status) => status.value === res.status
-          );
 
+          // Set form values from the retrieved data
           odrerForm.setFieldValue("status", olderStatus.value);
           odrerForm.setFieldValue("address", res.shippingaddress.address);
           odrerForm.setFieldValue("city", res.shippingaddress.city);
           odrerForm.setFieldValue("area", res.shippingaddress.area);
           odrerForm.setFieldValue("zip", res.shippingaddress.zip);
 
+          //finding older status from order status array
+          const olderStatus = orderStatuses.find(
+            (status) => status.value === res.status
+          );
+
           setSelectedOrderStatus(olderStatus);
         }
       })
       .catch((err) => console.error("error when page loaded", err));
 
-  // order update
+  /**
+   * Handles updating the order details.
+   */
   const updateHandler = () => {
     const shipping = {
       address: odrerForm.values.address,
@@ -93,7 +104,9 @@ const OrderDetails = () => {
       area: odrerForm.values.area,
       zip: odrerForm.values.zip,
     };
-    removeEmptyFields(shipping); //removing empty strings
+
+    // Remove empty fields from shipping and billing
+    removeEmptyFields(shipping);
     removeEmptyFields(billing);
 
     let data = {
@@ -121,7 +134,9 @@ const OrderDetails = () => {
       .catch((err) => console.error("order update error", err));
   };
 
-  // for deleting order
+  /**
+   * Handles deletion of the order .
+   */
   const deleteHandler = (e) => {
     e.preventDefault();
 
