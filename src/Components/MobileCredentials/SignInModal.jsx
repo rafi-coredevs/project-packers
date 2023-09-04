@@ -184,20 +184,14 @@ const SignInModal = ({
 					</Button>
 					<p
 						onClick={() => clickHandler('reset')}
-						className='text-primary text-center'
+						className='text-primary text-center cursor-pointer'
 					>
 						Forgot your password?
 					</p>
 				</div>
 			</form>
-			<div className='text-center text-white text-xs'>
-				Don&apos;t have an Account?{' '}
-				<span
-					onClick={() => clickHandler('signup')}
-					className='text-primary underline'
-				>
-					Sign Up
-				</span>
+			<div className='text-center text-white text-base font-sans'>
+				Don&apos;t have an account yet? <span onClick={() => clickHandler('signup')} className='text-primary underline cursor-pointer'>Sign Up</span>
 			</div>
 		</>
 	);

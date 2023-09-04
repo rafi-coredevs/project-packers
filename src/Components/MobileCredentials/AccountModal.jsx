@@ -2,6 +2,7 @@ import Button from '../UiElements/Buttons/Button';
 import google from '../../assets/icons/google-icon.svg';
 import apple from '../../assets/icons/apple.svg';
 import facebook from '../../assets/icons/facebook.svg';
+import { Link } from 'react-router-dom';
 
 /**
  * Represents a React component for an account modal.
@@ -56,8 +57,8 @@ const AccountModal = ({ stateHandler, onClose }) => {
 				</div>
 			</div>
 			<div className='flex gap-5 justify-center'>
-				<img className='bg-white p-5 rounded-full' src={google} alt='' />
-				<img className='bg-white p-5 rounded-full' src={facebook} alt='' />
+			<Link to={`${import.meta.env.VITE_SERVER_URL}/login/google`}><img className='bg-white p-5 rounded-full' src={google} alt='' /></Link>
+			<Link to={`${import.meta.env.VITE_SERVER_URL}/login/facebook`}><img className='bg-white p-5 rounded-full' src={facebook} alt='' /></Link>
 				<img className='bg-white p-5 rounded-full' src={apple} alt='' />
 			</div>
 			<div className='grid gap-5 text-sm text-white'>
@@ -69,8 +70,8 @@ const AccountModal = ({ stateHandler, onClose }) => {
 					Login
 				</Button>
 			</div>
-			<div className='text-center text-white text-xs'>
-				Project Packers @2023
+			<div className='text-center text-white text-base font-sans'>
+				Don&apos;t have an account yet? <span onClick={() => clickHandler('signup')} className='text-primary underline cursor-pointer'>Sign Up</span>
 			</div>
 		</>
 	);
