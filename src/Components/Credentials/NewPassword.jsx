@@ -65,7 +65,7 @@ const NewPassword = ({ data, getResponse }) => {
 						<Input
 							name='newPassword'
 							label='New Password'
-							placeholder='*****'
+							placeholder='✱✱✱✱✱'
 							change={resetForm.handleChange}
 							blur={resetForm.handleBlur}
 							value={resetForm.values.newPassword}
@@ -75,13 +75,14 @@ const NewPassword = ({ data, getResponse }) => {
 									: null
 							}
 							type='password'
+							className='h-[56px] focus:placeholder:opacity-0'
 						/>
 					</div>
 					<div className='relative'>
 						<Input
 							name='confirmPassword'
 							label='Confirm Password'
-							placeholder='*****'
+							placeholder='✱✱✱✱✱'
 							change={resetForm.handleChange}
 							blur={resetForm.handleBlur}
 							value={resetForm.values.confirmPassword}
@@ -92,11 +93,12 @@ const NewPassword = ({ data, getResponse }) => {
 									: null
 							}
 							type='password'
+							className='h-[56px] focus:placeholder:opacity-0'
 						/>
 					</div>
 					<div className='mt-5'>
-						<Button full className='w-full' type='primary' buttonType='submit'>
-							{isSubmit ? 'Submitting...' : 'Reset Password'}
+						<Button full className='w-full h-[56px]' type='primary' buttonType='submit'>
+							{isSubmit ? 'Submitting...' : 'Save Password'}
 						</Button>
 					</div>
 				</form>

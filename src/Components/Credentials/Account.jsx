@@ -47,7 +47,7 @@ const Account = ({ getResponse }) => {
 						Account Recovery
 					</p>
 					<p className='font-sans text-lg font-medium text-[#ffffffb3]'>
-						Enter the email address or phone number associated with your
+						Enter the email address associated with your
 						account, and we will email you a link to reset your password.
 					</p>
 				</div>
@@ -66,11 +66,12 @@ const Account = ({ getResponse }) => {
 									: null
 							}
 							type='email'
+							className="h-[56px]"
 						/>
 					</div>
 					<Button
 						full
-						className='w-full'
+						className='w-full h-[56px]'
 						type='primary'
 						buttonType='submit'
 						disabled={isSubmit}
