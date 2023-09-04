@@ -38,6 +38,7 @@ const Login = () => {
 					toaster({ type: 'error', message: data.message });
 				} else {
 					setUser(data);
+					console.log("role: ",JSON.stringify(data))
 
 					if (sendRequest) {
 						terminal
@@ -50,7 +51,7 @@ const Login = () => {
 								navigate('/', { state: true });
 							});
 					} else {
-						destinedTo ? navigate(destinedTo) : navigate('/');
+						destinedTo ? navigate(destinedTo) : data.role=== "user" ? navigate('/'): navigate("/admin");
 					}
 				}
 			});
