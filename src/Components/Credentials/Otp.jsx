@@ -79,6 +79,7 @@ const Otp = ({ data, getResponse }) => {
 		
 		return () => clearInterval(interval);
 	  }, [minute, second]);
+
 	  const resendHandler = () =>{
 		setIsdisable(true)
 		
@@ -101,6 +102,18 @@ const Otp = ({ data, getResponse }) => {
 
 	  }
 
+	  function maskEmail(email) {
+		const atIndex = email.indexOf("@");
+		
+		if (atIndex !== -1) {
+		  const maskedPart = email.substring(1, atIndex).replace(/./g, "*");
+		  const maskedEmail = email.replace(email.substring(1, atIndex), maskedPart);
+		  return maskedEmail;
+		} else {
+		  return email; 
+		}
+	  }
+
 	return (
 		<>
 			<div className='max-w-[30vw] flex flex-col gap-12'>
@@ -110,7 +123,7 @@ const Otp = ({ data, getResponse }) => {
 					</p>
 					<p className='font-sans text-lg font-medium text-[#ffffffb3]'>
 						To get a verification code, first confirm the email address you added
-						to your account <span className='text-primary'>{data?.email}</span>.
+						to your account <span >{maskEmail(data?.email)}</span>. <br />
 						Standard rates apply.
 					</p>
 				</div>
