@@ -151,7 +151,7 @@ const PriceCard = ({
           </div>
         </>
       )}
-      <Button disabled={disabled} onClick={onSubmit} full buttonType='submit' type="primary">
+      <Button disabled={disabled} onClick={onSubmit} full buttonType='submit' type="primary" className='h-[48px]'>
         {type === "cart"
           ? "Checkout"
           : type === "product"

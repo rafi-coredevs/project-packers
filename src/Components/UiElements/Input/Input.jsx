@@ -58,7 +58,7 @@ const Input = ({
         </label>
       )}
       <div
-        className={`flex w-full bg-white rounded-full ${
+        className={` flex w-full bg-white rounded-full ${
           border ? "border border-[#00000036]" : ""
         }`}
       >
@@ -67,8 +67,9 @@ const Input = ({
             {children}
           </div>
         )}
+        
         <input
-          className={`px-5 py-2 focus:border-primary focus:shadow-2xl shadow-primary  ${
+          className={`px-5 py-2 focus:  ${
             children ? "rounded-e-full" : "rounded-full"
           } w-full outline-none placeholder-secondary text-secondary border ${
             error ? " border-red-600" : "border-white"
@@ -89,7 +90,8 @@ const Input = ({
           onKeyUp={onKeyUp}
           tabIndex={tabIndex && tabIndex}
         />
-      </div>
+        </div>
+      
       {error && (
         <div className=" absolute right-0 mt-1 gap-2 bg-red-600  py-1 px-2 rounded-full w-fit hidden sm:flex">
           <svg

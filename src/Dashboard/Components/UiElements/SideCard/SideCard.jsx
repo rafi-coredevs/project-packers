@@ -50,7 +50,8 @@ const SideCard = ({
 				</button>
 			</div>
 			<div className='grid gap-2'>
-				<p className='underline text-emerald-500'>{customerName}</p>
+				{customerName && <p className='underline text-emerald-500'>{}</p> }
+				
 				<p className='text-[#475569]'>{orders || 'No Orders'}</p>
 			</div>
 		</div>
