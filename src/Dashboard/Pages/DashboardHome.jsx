@@ -38,13 +38,6 @@ const DashboardHome = () => {
   const [isModal, setIsModal] = useState(false);
   const [selected, setSelected] = useState(OPTIONS[0])
 
-<<<<<<< HEAD
-  useEffect(() => {
-    console.log(">>>     ", selected)
-  }, [selected])
-
-=======
->>>>>>> 9c4d36d23d9daab18ff9ac6bbc0414bc52a0770e
   const [overView, setOverView] = useState([
     {
       title: 'Total Cost',
