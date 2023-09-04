@@ -1,11 +1,12 @@
+import Player from '../UiElements/Player/Player';
+import Query from '../UiElements/Query/Query';
+import video from '../../assets/Image/video1.mp4';
+
 /**
  * About Section
- * 
+ *
  * @returns JSX Element
  */
-import Player from "../UiElements/Player/Player";
-import Query from "../UiElements/Query/Query";
-import video from "../../assets/kampus-production.mp4";
 
 
 const About = () => {

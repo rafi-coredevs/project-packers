@@ -1,9 +1,4 @@
-/**
- * Brands component
- * @params {array} args.data - array of urls
- *
- * @returns JSX element
- */
+
 import nike from '../../assets/brand/nike.png';
 import walmart from '../../assets/brand/walmart.png';
 import ebay from '../../assets/brand/ebay.png';
@@ -11,6 +6,12 @@ import amazon from '../../assets/brand/amazon.png';
 import ikea from '../../assets/brand/ikea.png';
 import kroger from '../../assets/brand/kroger.png';
 
+/**
+ * Brands component
+ * @param {Object} data - array of urls
+ *
+ * @returns JSX element
+ */
 const Brands = ({ data }) => {
 	// return <section className="max-w-screen-lg mx-auto mt-20">
 	return (
