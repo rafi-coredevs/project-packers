@@ -11,7 +11,6 @@ import { useState } from 'react';
 
 const NavDropdown = ({ list = Object, userRole }) => {
   const [open, setOpen] = useState(false);
-  // console.log(list);
 
   // Check if any child link is active
   const anyChildActive = list.isDropdown

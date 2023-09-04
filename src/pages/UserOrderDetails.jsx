@@ -19,7 +19,7 @@ const UserOrderDetails = () => {
     }
     return (
         <div className='container mx-auto my-12'>
-            <div>
+            <div className='mb-5'>
                 <p className='text-xs text-slate-600'>Order Numer</p>
                 <p className='text-lg font-semibold'>#{order.orderNumber}</p>
             </div>
@@ -121,14 +121,7 @@ const UserOrderDetails = () => {
                                                                 {request?.requestQuantity}
                                                             </td>
                                                             <td className="py-2"> ৳{(request?.request?.price?.toFixed(2) * (request?.requestQuantity))}</td>
-                                                            <td className="py-2 text-right">
-                                                                <button
-                                                                    className="pe-3"
-                                                                    onClick={() => console.log("first")}
-                                                                >
-                                                                    <img className="h-4 w-4" src={remove} alt="" />
-                                                                </button>
-                                                            </td>
+
                                                         </tr>
                                                     );
                                                 }
@@ -145,7 +138,7 @@ const UserOrderDetails = () => {
                         <div className="grid gap-3">
                             <div className="flex justify-between items-center">
                                 <button className=" text-sm">Subtotal</button>
-                                <p className="">৳{order?.products?.reduce((accumulator = 0, product) => accumulator + ((product?.productQuantity) * (product?.product?.price)), 0)}</p>
+                                <p className="">৳{order?.products?.reduce((accumulator = 0, product) => accumulator + ((product?.productQuantity) * (product?.product?.price)), 0) + order?.requests?.reduce((accumulator = 0, request) => accumulator + ((request?.requestQuantity) * (request?.request?.price)), 0)}</p>
                             </div>
                             <div className="flex justify-between items-center">
                                 <button className="text-emerald-500 underline text-sm">
@@ -165,13 +158,13 @@ const UserOrderDetails = () => {
                                     Packers Fee
                                 </button>
                                 <p className="">{""}</p>
-                                <p className="">৳{order?.products?.reduce((accumulator = 0, product) => accumulator + ((product?.productQuantity) * (product?.product?.fee)), 0)}</p>
+                                <p className="">৳{order?.products?.reduce((accumulator = 0, product) => accumulator + ((product?.productQuantity) * (product?.product?.fee)), 0) + order?.requests?.reduce((accumulator = 0, request) => accumulator + ((request?.requestQuantity) * (request?.request?.fee)), 0)}</p>
                             </div>
                             <div className="flex justify-between items-center">
                                 <button className="text-emerald-500 underline text-sm">
                                     Estimated Tax
                                 </button>
-                                <p className="">৳{order?.products?.reduce((accumulator = 0, product) => accumulator + ((product?.productQuantity) * (product?.product?.tax)), 0)}</p>
+                                <p className="">৳{order?.products?.reduce((accumulator = 0, product) => accumulator + ((product?.productQuantity) * (product?.product?.tax)), 0) + order?.requests?.reduce((accumulator = 0, request) => accumulator + ((request?.requestQuantity) * (request?.request?.tax)), 0)}</p>
                             </div>
                             <div className="flex justify-between items-center">
                                 <p className="text-base font-semibold">Total</p>

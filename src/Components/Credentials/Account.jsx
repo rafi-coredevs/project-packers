@@ -1,11 +1,3 @@
-/**
- * Account() returns JSX Element
- * Email Validation form for Password recovery page
- * @param {function} getResponse initialized fetching data from server
- *
- * @returns JSX Element
- */
-
 import { useFormik } from 'formik';
 import Input from '../UiElements/Input/Input';
 import { emailSchema } from '../../Util/ValidationSchema';
@@ -15,8 +7,15 @@ import { useState } from 'react';
 import { terminal } from '../../contexts/terminal/Terminal';
 import toaster from '../../Util/toaster';
 
+/**
+ * Account() returns JSX Element
+ * Email Validation form for Password recovery page
+ * @param {function} getResponse - for passing response to parent component
+ *
+ * @returns JSX Element
+ */
 const Account = ({ getResponse }) => {
-	const [isSubmit, setIsSubmit] = useState(false);
+	const [isSubmit, setIsSubmit] = useState(false); // for showing submit button
 	const emailForm = useFormik({
 		initialValues: {
 			email: '',
@@ -25,15 +24,16 @@ const Account = ({ getResponse }) => {
 		onSubmit: (values) => {
 			setIsSubmit(true);
 
+			// send otp
 			terminal
 				.request({ name: 'sendOTP', body: values })
 				.then((data) => {
 					if (data.status === false) {
 						toaster({ type: 'error', message: data.message });
 					} else {
-						getResponse({ component: 'otp', token: data.token });
+						getResponse({ component: 'otp', token: data.token , email: values.email});
 					}
-				})
+				}).catch(err=>console.error("Error in email verification", err))
 				.finally(() => {
 					setIsSubmit(false);
 				});
@@ -47,7 +47,7 @@ const Account = ({ getResponse }) => {
 						Account Recovery
 					</p>
 					<p className='font-sans text-lg font-medium text-[#ffffffb3]'>
-						Enter the email address or phone number associated with your
+						Enter the email address associated with your
 						account, and we will email you a link to reset your password.
 					</p>
 				</div>
@@ -66,11 +66,12 @@ const Account = ({ getResponse }) => {
 									: null
 							}
 							type='email'
+							className="h-[56px]"
 						/>
 					</div>
 					<Button
 						full
-						className='w-full'
+						className='w-full h-[56px]'
 						type='primary'
 						buttonType='submit'
 						disabled={isSubmit}

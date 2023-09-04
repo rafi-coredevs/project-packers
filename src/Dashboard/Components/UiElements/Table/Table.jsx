@@ -260,7 +260,7 @@ const Table = ({ data, paginate, loading, dashboardToogle, modalHandler, getData
                       >
                         {item?.name}
                       </td>
-                      <td className='px-4 py-[18px] text-black text-sm '>
+                      <td className='w-[25%] px-4 py-[18px] text-black text-sm '>
                         {/* {new URL(
                           item?.products[0]?.product?.link,
                         ).hostname.replace('www.', '')} */}
@@ -276,7 +276,7 @@ const Table = ({ data, paginate, loading, dashboardToogle, modalHandler, getData
                       <td className='px-4 py-[18px] text-black text-sm '>
                         {item?.user?.fullName || item?.user?.email || ''}
                       </td>
-                      <td className='px-4 py-[18px] text-black text-sm '>
+                      <td className='py-[18px] text-black text-sm '>
                         <Badge text={item?.status} styles='' />{' '}
                       </td>
                     </tr>
@@ -295,7 +295,7 @@ const Table = ({ data, paginate, loading, dashboardToogle, modalHandler, getData
                       </td>
 
                       <td
-                        onClick={() => selectHandler(item.id)}
+                        // onClick={() => selectHandler(item.id)}
                         className='px-4 py-[18px] text-black text-sm cursor-pointer max-w-md line-clamp-1'
                       >
                         {item.name}
@@ -319,7 +319,7 @@ const Table = ({ data, paginate, loading, dashboardToogle, modalHandler, getData
                       </td>
 
                       <td
-                        onClick={() => selectHandler(item.id)}
+                        // onClick={() => selectHandler(item.id)}
                         className='px-4 py-[18px] text-black text-sm cursor-pointer max-w-md line-clamp-1'
                       >
                         {item?.fullName}
@@ -348,16 +348,28 @@ const Table = ({ data, paginate, loading, dashboardToogle, modalHandler, getData
                       <input type='checkbox' className='accent-yellow-300' />
                     </td>
                     <td
-                      onClick={() => selectHandler(item.id)}
+                      // onClick={() => selectHandler(item.id)}
                       className='px-4 py-[18px] text-black text-sm cursor-pointer max-w-md line-clamp-1'
                     >
-                      {item?.products?.length > 0 ? item?.products[0]?.product?.name : item?.requests?.length > 0 ? item?.requests[0]?.request?.name : ''}
+                      {(() => {
+                        const firstProductName = item?.products?.length > 0
+                          ? item?.products[0]?.product?.name
+                          : item?.requests?.length > 0
+                            ? item?.requests[0]?.request?.name
+                            : '';
+
+                        const formattedProductName = firstProductName.length > 45
+                          ? firstProductName.slice(0, 50) + ' ..... '
+                          : firstProductName;
+
+                        return formattedProductName;
+                      })()}
                     </td>
                     <td className='px-4 py-[18px] text-black text-sm '>
-                      {item?.status}
+                      <Badge text={item?.status} />{' '}
                     </td>
                     <td className='px-4 py-[18px] text-black text-sm '>
-                      {item?.total}
+                    ৳{item?.total}
                     </td>
                   </tr>
                 ))}
@@ -373,7 +385,7 @@ const Table = ({ data, paginate, loading, dashboardToogle, modalHandler, getData
                       </td>
 
                       <td
-                        onClick={() => selectHandler(item?.id)}
+                        // onClick={() => selectHandler(item?.id)}
                         className='px-4 py-[18px] text-black text-sm cursor-pointer max-w-md line-clamp-1'
                       >
                         {item?.code}

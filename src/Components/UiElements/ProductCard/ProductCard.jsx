@@ -49,6 +49,7 @@ export const ProductCard = ({
   isShop = Boolean
 }) => {
 
+  // console.log(`Picture successfully ${event.currentTarget.src} loaded.`);
   const handleLoading = (event) => {
     // console.log(`Picture successfully ${event.currentTarget.src} loaded.`);
 

@@ -4,15 +4,19 @@ import { posts } from "../Store/Data";
 import Pagination from "../Components/UiElements/Paginate/Pagination";
 import { useTitle } from "../Components/Hooks/useTitle";
 import { useEffect, useState } from "react";
+
+
 const Blog = () => {
   useTitle("Latest Blog Posts");
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     // TODO  Data fetch here
-    console.log(page);
+    setPage(page)
     setTimeout(()=>setLoading(false), 1000)
   }, [page]);
+  console.log(page);
+
   return (
     <>
       <Breadcrumb />
@@ -50,7 +54,7 @@ const Blog = () => {
           )}
         </div>
         <div className={ `justify-center my-12 ${5 > 1 ? "flex" : "hidden"}`}>
-          <Pagination page={page} pageLimit={20} setPage={setPage} />
+          <Pagination page={page} pageLimit={10} setPage={setPage} />
         </div>
       </div>
     </>

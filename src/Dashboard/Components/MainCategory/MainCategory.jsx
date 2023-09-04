@@ -23,11 +23,11 @@ const MainCategory = () => {
   const [selected, setSelected] = useState({ name: 'Select', value: null, id: null });
   const [isActive, setIsActive] = useState(true);
   useEffect(() => {
-    fetchdata();
+    fetchData();
 
   }, []);
 
-  const fetchdata = () => terminal.request({ name: 'allCategory' }).then(res => res.status === false ? toaster({ type: 'error', message: res.message }) : setCategories(res));
+  const fetchData = () => terminal.request({ name: 'allCategory' }).then(res => res.status === false ? toaster({ type: 'error', message: res.message }) : setCategories(res));
 
   const categoryForm = useFormik({
     initialValues: {
@@ -36,7 +36,7 @@ const MainCategory = () => {
     },
     validationSchema: categorySchema,
     onSubmit: (values) => {
-      terminal.request({ name: 'registerCategory', body: { categoryname: values?.name, categoryslug: values?.slug } }).then(res => res.status === false ? toaster({ type: 'error', message: res?.message }) : fetchdata())
+      terminal.request({ name: 'registerCategory', body: { categoryname: values?.name, categoryslug: values?.slug } }).then(res => res.status === false ? toaster({ type: 'error', message: res?.message }) : fetchData())
     },
   });
   const subCategoryForm = useFormik({
@@ -47,7 +47,7 @@ const MainCategory = () => {
     validationSchema: subCategorySchema,
     onSubmit: (values) => {
       terminal.request({ name: 'registerCategory', body: { categoryname: selected?.name, categoryslug: selected?.slug, subcategoryname: values?.name, subcategoryslug: values?.slug } }).then(res => {
-        res.status === false ? toaster({ type: 'error', message: res?.message }) : (toaster({type:'success',message: 'Sub Category Added'}),fetchdata())
+        res.status === false ? toaster({ type: 'error', message: res?.message }) : (toaster({type:'success',message: 'Sub Category Added'}),fetchData())
       });
 
 
@@ -83,7 +83,7 @@ const MainCategory = () => {
                     ? categoryForm.errors.name
                     : null
                 }
-                placeholder="Gategory name"
+                placeholder="Category name"
               />
               <Input
                 styles="basic"

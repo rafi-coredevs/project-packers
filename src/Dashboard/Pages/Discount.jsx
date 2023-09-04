@@ -29,7 +29,6 @@ const Discount = () => {
   const navigate = useNavigate();
   const tableButtonHandler = (value) => {
     setActive(value);
-    console.log(value);
   };
  console.log(active);
   useEffect(() => {

@@ -21,7 +21,6 @@ const Chat = () => {
 
   useEffect(() => {
     terminal.socket.on("notification", (data) => {
-      console.log(data);
       if (data.message == "There is a new support request") {
         terminal
           .request({
