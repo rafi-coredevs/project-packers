@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import { BASE_URL } from '../../../Util/apiCall';
 import errorImg from '../../../assets/noImages.svg'
 /**
  * Lazy loading Component
@@ -62,7 +61,7 @@ export const ProductCard = ({
   return <>
     {
       <Link to={`/shop/${id}`}
-        className={`w-full bg-white p-3 cursor-pointer flex justify-center gap-4 group border duration-200 active:scale-95 
+        className={`w-full bg-white p-3 cursor-pointer flex justify-center gap-4 group border duration-200 active:scale-95
         ${isShop ? 'lg:flex-col' : 'flex-col'}`}
       >
         <div className={`h-40 lg:h-80 rounded-xl overflow-hidden ${isShop ? 'w-[40%] lg:w-full' : 'w-full'}`}>
@@ -74,7 +73,7 @@ export const ProductCard = ({
         </div>
         <div className={isShop ? 'w-[60%] lg:w-full lg:mt-7' : 'w-full'}>
           <h3 className={`lg:text-2xl font-semibold  ${isShop ? 'lg:truncate' : 'truncate'} `}>{title}</h3>
-          <div className={`text-left flex lg:justify-between lg:items-center mt-4 text-base 
+          <div className={`text-left flex lg:justify-between lg:items-center mt-4 text-base
             ${isShop ? 'flex-col lg:flex-row' : 'flex-row'}`}>
             <p>Retailer price</p>
             <p className='font-semibold'>{price} TK</p>

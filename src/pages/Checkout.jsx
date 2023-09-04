@@ -11,10 +11,10 @@ import { terminal } from "../contexts/terminal/Terminal";
 
 const Checkout = () => {
   let totalPrice = 0;
-  const [cart, setCart] = useState();
-  const [discount, setDiscount] = useState();
-  const [price, setPrice] = useState();
-  const [subtotal, setSubTotal] = useState();
+  const [cart, setCart] = useState({});
+  const [discount, setDiscount] = useState(null);
+  const [price, setPrice] = useState(null);
+  const [subtotal, setSubTotal] = useState(null);
   const [inside, setInside] = useState(true);
   const [orderModal, setOrderModal] = useState(false);
   const [searchParams] = useSearchParams();

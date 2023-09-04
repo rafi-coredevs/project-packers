@@ -1,6 +1,24 @@
 /**
  * Input Component
  *
+ * @param {string} label - Label for the input.
+ * @param {string} name - Name attribute for the input.
+ * @param {string} type - Type of the input (e.g., text, number).
+ * @param {string} placeholder - Placeholder text for the input.
+ * @param {string} value - Value of the input.
+ * @param {function} change - Function to handle input value changes.
+ * @param {function} blur - Function to handle input blur event.
+ * @param {string} error - Error message to display.
+ * @param {object} children - Child components.
+ * @param {boolean} border - Whether to display a border around the input.
+ * @param {number} min - Minimum value for numeric input.
+ * @param {number} max - Maximum value for numeric input.
+ * @param {string} styles - Input styles (e.g., "primary").
+ * @param {boolean} required - Whether the input is required.
+ * @param {boolean} disabled - Whether the input is disabled.
+ * @param {function} onKeyUp - Function to handle key-up events.
+ * @param {number} tabIndex - Tab index for the input.
+ * @param {string} className - Additional CSS classes for styling the input.
  */
 const Input = ({
   label,
@@ -61,7 +79,7 @@ const Input = ({
           name={name}
           placeholder={placeholder}
           type={type}
-          min={0} 
+          min={0}
           minLength={min}
           maxLength={max}
           onChange={change}

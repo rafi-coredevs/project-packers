@@ -13,7 +13,7 @@ import UserIcon from "../../../Components/UiElements/UserIcon/UserIcon";
 const Header = () => {
   const [notifyState, setNotifyState] = useState(false);
   const { user, Logout } = useUserCtx()
-  const [notifications, setNotifications] = useState()
+  const [notifications, setNotifications] = useState([])
   useEffect(() => {
     user?.id && terminal.request({ name: 'getNotification' }).then(data => data.docs && setNotifications(data.docs))
   }, [user])

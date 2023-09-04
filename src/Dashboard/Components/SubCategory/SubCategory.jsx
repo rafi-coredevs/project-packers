@@ -1,6 +1,6 @@
 /**
  * SubCategory() return JSX Element
- * view of catregories, addition and deletion of a sub category handled here
+ * view of categories, addition and deletion of a sub category handled here
  * @returns JSX Element
  *
  */
@@ -12,7 +12,7 @@ import sort from "../../../assets/icons/cd-arrow-data-transfer-vertical-round.sv
 import { useFormik } from "formik";
 import { subCategorySchema } from "../../../Util/ValidationSchema";
 import { useEffect, useState } from "react";
-import { getApi, postApi } from "../../../Util/apiCall";
+import { getApi } from "../../../Util/apiCall";
 
 const SubCategory = () => {
   const [categories, setCategories] = useState([]);
@@ -26,7 +26,6 @@ const SubCategory = () => {
     validationSchema: subCategorySchema,
     onSubmit: (values) => {
       values.id = selected.id;
-
     },
   });
 

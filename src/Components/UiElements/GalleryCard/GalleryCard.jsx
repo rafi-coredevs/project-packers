@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { BASE_URL } from "../../../Util/apiCall";
 import errorImg from '../../../assets/noImages.svg'
 
 const GalleryCard = ({ data }) => {

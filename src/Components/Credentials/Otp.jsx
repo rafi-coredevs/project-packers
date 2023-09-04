@@ -12,7 +12,6 @@ import Input from '../UiElements/Input/Input';
 import Button from '../UiElements/Buttons/Button';
 import image from '../../assets/icons/otp.svg';
 import { useFormik } from 'formik';
-import { postApi } from '../../Util/apiCall';
 import { useState } from 'react';
 import { terminal } from '../../contexts/terminal/Terminal';
 import toaster from '../../Util/toaster';

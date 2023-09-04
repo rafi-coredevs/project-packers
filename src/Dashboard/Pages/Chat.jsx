@@ -1,66 +1,80 @@
 import { useState, useEffect } from "react";
-import { ChatCard, LazyChatCard } from "../Components/UiElements/ChatCard/ChatCard";
+import {
+  ChatCard,
+  LazyChatCard,
+} from "../Components/UiElements/ChatCard/ChatCard";
 import { terminal } from "../../contexts/terminal/Terminal";
 import Messages from "../Components/UiElements/Messages/Messages";
 import EmptyMassage from "../Components/UiElements/Messages/EmptyMassage";
 import { useTitle } from "../../Components/Hooks/useTitle";
-import CustomSelect from "../../Components/UiElements/Input/CustomSelect";
-
-const SUPPORT_TYPE = [{ name: 'all', value: "all" }, { name: 'Account', value: 'account' }, { name: 'Order', value: 'order' }, { name: 'Payment', value: 'payment' }, { name: 'Refund', value: 'refund' }]
 
 const buttonStyle = {
   active: "bg-secondary text-white",
   deactive: "bg-white text-black",
 };
 const Chat = () => {
-  useTitle('Support');
+  useTitle("Support");
   const [activeStatusButton, setActiveStatusButton] = useState("all");
   const [supportType, setSupportType] = useState("all");
   const [supportData, setSupportData] = useState([]);
-  const [activeChat, setActiveChat] = useState();
-  const [loading, setLoading] = useState(false)
+  const [activeChat, setActiveChat] = useState({});
+
   useEffect(() => {
-    terminal.socket.on('notification', (data) => {
+    terminal.socket.on("notification", (data) => {
       console.log(data);
-      if (data.message == 'There is a new support request') {
-        terminal.request({ name: 'allSupport', queries: { status: activeStatusButton, type: supportType } }).then(data => {
-          setSupportData(() => {
-            return data.length > 0 && data?.map(support => {
+      if (data.message == "There is a new support request") {
+        terminal
+          .request({
+            name: "allSupport",
+            queries: { status: activeStatusButton, type: supportType },
+          })
+          .then((data) => {
+            setSupportData(() => {
+              return (
+                data.length > 0 &&
+                data?.map((support) => {
+                  return {
+                    id: support.id,
+                    status: support.status,
+                    type: support.type,
+                    number: support.supportNumber,
+                  };
+                })
+              );
+            });
+          });
+      }
+    });
+    return () => {
+      terminal.socket.off("notification");
+    };
+  });
+  useEffect(() => {
+    terminal
+      .request({
+        name: "allSupport",
+        queries: { status: activeStatusButton, type: supportType },
+      })
+      .then((data) => {
+        setSupportData(() => {
+          return (
+            data.length > 0 &&
+            data?.map((support) => {
               return {
                 id: support.id,
                 status: support.status,
                 type: support.type,
-                number: support.supportNumber
-              }
-            }
-            )
-          })
-        })
-      }
-    })
-    return () => {
-      terminal.socket.off('notification')
-    }
-  })
-  useEffect(() => {
-    terminal.request({ name: 'allSupport', queries: { status: activeStatusButton, type: supportType } }).then(data => {
-      setSupportData(() => {
-        return data.length > 0 && data?.map(support => {
-          return {
-            id: support.id,
-            status: support.status,
-            type: support.type,
-            number: support.supportNumber
-          }
-        }
-        )
-      })
-    })
-  }, [activeStatusButton, supportType])
+                number: support.supportNumber,
+              };
+            })
+          );
+        });
+      });
+  }, [activeStatusButton, supportType]);
 
   const chatCardHandler = (element) => {
-    setActiveChat(element)
-  }
+    setActiveChat(element);
+  };
   const actionButtonHandler = (value) => {
     setActiveStatusButton(value);
   };
@@ -75,10 +89,11 @@ const Chat = () => {
         <div className=" border border-[#0000001c] text-sm rounded-md overflow-hidden flex">
           <button
             onClick={() => actionButtonHandler("all")}
-            className={`py-2 px-4 font-medium ${activeStatusButton === "all"
-              ? buttonStyle["active"]
-              : buttonStyle["deactive"]
-              }`}
+            className={`py-2 px-4 font-medium ${
+              activeStatusButton === "all"
+                ? buttonStyle["active"]
+                : buttonStyle["deactive"]
+            }`}
           >
             <div className=" flex gap-2 items-center">
               <span className="w-2 h-2  rounded-full bg-yellow-500"></span>
@@ -87,10 +102,11 @@ const Chat = () => {
           </button>
           <button
             onClick={() => actionButtonHandler("open")}
-            className={`py-2 px-4 font-medium ${activeStatusButton === "open"
-              ? buttonStyle["active"]
-              : buttonStyle["deactive"]
-              }`}
+            className={`py-2 px-4 font-medium ${
+              activeStatusButton === "open"
+                ? buttonStyle["active"]
+                : buttonStyle["deactive"]
+            }`}
           >
             <div className=" flex gap-2 items-center">
               <span className="w-2 h-2  rounded-full bg-green-500"></span>
@@ -99,10 +115,11 @@ const Chat = () => {
           </button>
           <button
             onClick={() => actionButtonHandler("close")}
-            className={`py-2 px-4 font-medium ${activeStatusButton === "close"
-              ? buttonStyle["active"]
-              : buttonStyle["deactive"]
-              }`}
+            className={`py-2 px-4 font-medium ${
+              activeStatusButton === "close"
+                ? buttonStyle["active"]
+                : buttonStyle["deactive"]
+            }`}
           >
             <div className=" flex gap-2 items-center">
               <span className="w-2 h-2  rounded-full bg-red-500"></span>
@@ -112,10 +129,12 @@ const Chat = () => {
           <div className="py-2 px-1 font-medium w-full ">
             <select
               onChange={(e) => setSupportType(e.target.value)}
-              className=" bg-white outline-none w-full " defaultValue="all"
+              className=" bg-white outline-none w-full "
+              defaultValue="all"
             >
-
-              <option selected value="all">All</option>
+              <option selected value="all">
+                All
+              </option>
               <option value="account">Account</option>
               <option value="order">Order</option>
               <option value="payment">Payment</option>
@@ -127,35 +146,37 @@ const Chat = () => {
         </div>
         <div className="">
           <div className="overflow-hidden overflow-y-auto  h-[calc(100vh-140px)]">
-            {
-              supportData.length === 0 ? supportData.map((chat, i) => (
-                <LazyChatCard key={i} />
-              )) : supportData.length > 0 && supportData?.map((chat) => (
-                <ChatCard
-                  onClick={chatCardHandler}
-                  active={activeChat?.id}
-                  key={chat.id}
-                  status={chat.status}
-                  type={chat.type}
-                  id={chat.id}
-                  number={chat.number}
-                  message={chat.message}
-                />
-              ))
-            }
+            {supportData.length === 0
+              ? supportData.map((chat, i) => <LazyChatCard key={i} />)
+              : supportData.length > 0 &&
+                supportData?.map((chat) => (
+                  <ChatCard
+                    onClick={chatCardHandler}
+                    active={activeChat?.id}
+                    key={chat.id}
+                    status={chat.status}
+                    type={chat.type}
+                    id={chat.id}
+                    number={chat.number}
+                    message={chat.message}
+                  />
+                ))}
           </div>
         </div>
       </div>
       <div className="col-span-12 sm:col-span-9 relative bg-[#E2E8F0]">
-        {
-          activeChat?.id ? <Messages chatCardHandler={chatCardHandler} activeChat={activeChat} setSupportData={setSupportData} /> : <EmptyMassage />
-        }
+        {activeChat?.id ? (
+          <Messages
+            chatCardHandler={chatCardHandler}
+            activeChat={activeChat}
+            setSupportData={setSupportData}
+          />
+        ) : (
+          <EmptyMassage />
+        )}
       </div>
     </div>
-
   );
 };
-
-
 
 export default Chat;

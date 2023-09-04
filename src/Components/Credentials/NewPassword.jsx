@@ -1,6 +1,6 @@
 /**
  * NewPassword() returns JSX Element
- * @param {object} args.data 
+ * @param {object} args.data
  * @param {function} args.getResponse validation from server
  *
  * @returns JSX element
@@ -10,7 +10,6 @@ import Input from '../UiElements/Input/Input';
 import { changePassword } from '../../Util/ValidationSchema';
 import Button from '../UiElements/Buttons/Button';
 import image from '../../assets/icons/otp.svg';
-import { postApi } from '../../Util/apiCall';
 import { useState } from 'react';
 import toaster from '../../Util/toaster';
 import { terminal } from '../../contexts/terminal/Terminal';

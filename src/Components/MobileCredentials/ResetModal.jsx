@@ -11,7 +11,6 @@ import { useState } from "react";
 import { emailSchema } from "../../Util/ValidationSchema";
 import Button from "../UiElements/Buttons/Button";
 import Input from "../UiElements/Input/Input";
-import { postApi } from "../../Util/apiCall";
 import { terminal } from "../../contexts/terminal/Terminal";
 import toaster from "../../Util/toaster";
 

@@ -9,7 +9,6 @@
 
 import { useFormik } from 'formik';
 import { useState } from 'react';
-import { postApi } from '../../Util/apiCall';
 import Input from '../UiElements/Input/Input';
 import Button from '../UiElements/Buttons/Button';
 import { terminal } from '../../contexts/terminal/Terminal';
@@ -28,19 +27,7 @@ const OtpModal = ({ data, getResponse, stateHandler, onClose }) => {
 		onSubmit: (values) => {
 			setIsSubmit(true);
 			const otp = Object.values(values).join('');
-			// postApi("/user/otp-verify", { token: data?.data?.token, otp })
-			//   .then((res) => {
-			//    if(res.status !== 200){
-			//       otpForm.setErrors(['field1','field2','field3','field14'],'error')
-			//    }
-			//     getResponse({
-			//       component: "resetPassword",
-			//       ...res,
-			//       otp,
-			//       email: data?.email,
-			//     });
-			//   })
-			console.log(data);
+
 			terminal
 				.request({ name: 'verifyOTP', body: { otp, token: data.token } })
 				.then((res) => {

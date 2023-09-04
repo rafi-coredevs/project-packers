@@ -35,7 +35,7 @@ const Header = ({ sideBar, state }) => {
 	const [cartState, setCartState] = useState(false);
 	const [notifyState, setNotifyState] = useState(false);
 	const [loginModal, setLoginModal] = useState(false);
-	const [notifications, setNotifications] = useState();
+	const [notifications, setNotifications] = useState([]);
 	const { user, Logout } = useUserCtx();
 	const navigate = useNavigate();
 	const [cartData, setCartData] = useState([]);

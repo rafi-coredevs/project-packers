@@ -16,12 +16,12 @@ const styles = {
 const Messages = ({ activeChat, chatCardHandler, setSupportData }) => {
     const { user } = useUserCtx()
     const [modal, setModal] = useState(true)
-    const [messages, setMessages] = useState()
+    const [messages, setMessages] = useState([])
     const messageBody = useRef(null)
     const [loading, setLoading] = useState(false)
     const [page, setPage] = useState(1)
-    const [totalPage, setTotalPage] = useState()
-    const [messageEnd, setMessageEnd] = useState(false)
+    const [totalPage, setTotalPage] = useState(null)
+
     useEffect(() => {
         setLoading(true)
         setModal(true)
