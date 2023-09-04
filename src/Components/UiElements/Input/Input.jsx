@@ -20,7 +20,7 @@
  * @param {number} tabIndex - Tab index for the input.
  * @param {string} className - Additional CSS classes for styling the input.
  */
-const Input = ({
+const   Input = ({
   label,
   name,
   type,
