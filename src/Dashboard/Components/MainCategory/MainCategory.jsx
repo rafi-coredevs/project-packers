@@ -83,7 +83,7 @@ const MainCategory = () => {
                     ? categoryForm.errors.name
                     : null
                 }
-                placeholder="Gategory name"
+                placeholder="Category name"
               />
               <Input
                 styles="basic"
