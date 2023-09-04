@@ -83,7 +83,6 @@ const Header = () => {
                 </p>
               </button>
               {logoutDropD && <div className="bg-white py-6 shadow-md shadow-primary px-2 border rounded-lg absolute top-10 left-0 right-0  mt-1">
-
                 <button onClick={() => { Logout(); navigate("/"); }} className="bg-primary px-2 w-full rounded-md py-2 text-secondary font-medium">Logout</button>
               </div>
 

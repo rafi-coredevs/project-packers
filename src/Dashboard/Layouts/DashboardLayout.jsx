@@ -1,4 +1,4 @@
-import { Outlet, useLocation } from "react-router-dom";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
 import Header from "../Components/Header/Header";
 import { useUserCtx } from "../../contexts/user/UserContext";
 import { useNavigate } from "react-router-dom";
@@ -32,7 +32,7 @@ const DashboardLayout = () => {
         </div>
       );
     } else {
-      navigate("/");
+      return <Navigate to="/" replace={true} />
     }
   }
 };
