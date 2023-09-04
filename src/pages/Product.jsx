@@ -59,7 +59,7 @@ const Product = () => {
               />
             </div>
           </div>
-          <div className="px-[20px] sm:px-0 my-12 w-full lg:w-[70%]">
+          <div className="pr-4 my-12 w-full lg:w-[70%]">
             <h3 className="text-secondary text-[20px] sm:text-[28px] font-semibold mb-4">
               {product?.name}
             </h3>
