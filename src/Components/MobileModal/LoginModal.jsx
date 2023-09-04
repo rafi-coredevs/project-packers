@@ -71,12 +71,12 @@ const LoginModal = ({
 			<div
 				className={`${
 					show ? 'block' : ' hidden'
-				}    fixed bottom-0 top-0 left-0 right-0 bg-[#03182ACC] z-[50] `}
+				}    fixed bottom-0 top-0 left-0 right-0 bg-[#03182ACC] z-[50] md:hidden `}
 			></div>
 			<div
 				className={`fixed ${
 					show ? 'bottom-0 ' : '-bottom-[1000px] '
-				}  duration-500 left-0 right-0 bg-secondary rounded-t-xl py-5 px-[30px] z-[60]`}
+				}  duration-500 left-0 right-0 bg-secondary rounded-t-xl py-5 px-[30px] z-[60] md:hidden`}
 			>
 				<div className='grid gap-8'>
 					{activeScreen === 'account' && (
