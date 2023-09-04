@@ -1,13 +1,3 @@
-/**
- * Header() returns JSX Element
- * Two different header section. 1 for small screen and another for the rest
- *
- * @param {function} sideBar This function only work for small screen to open side nav menu
- * @param {boolean} state  used to change button icon for small header.
- *
- * @returns JSX Element
- */
-
 import { Link, useNavigate } from 'react-router-dom';
 import Logo from '../../assets/logo.svg';
 import menu from '../../assets/icons/menu-01.svg';
@@ -25,12 +15,17 @@ import ScrollTop from '../../Util/ScrollTop';
 import LoginModal from '../MobileModal/LoginModal';
 import { useUserCtx } from '../../contexts/user/UserContext';
 import { terminal } from '../../contexts/terminal/Terminal';
-import useCart from '../Hooks/useCart';
 import Modal from '../UiElements/Modal/Modal';
 import RequestModal from '../Banner/RequestModal';
 import SuccessModal from '../Banner/SuccessModal';
 import { useCartCtx } from '../../contexts/cart/CartContext';
 
+/**
+ * Function to handle the header component.
+ *
+ * @param {function} sideBar - Function to open the side navigation menu for small screens.
+ * @param {boolean} state - State to change the button icon for the small header.
+ */
 const Header = ({ sideBar, state }) => {
 	const [cartState, setCartState] = useState(false);
 	const [notifyState, setNotifyState] = useState(false);
@@ -39,47 +34,73 @@ const Header = ({ sideBar, state }) => {
 	const { user, Logout } = useUserCtx();
 	const navigate = useNavigate();
 	const [cartData, setCartData] = useState([]);
-	const { cart } = useCartCtx()
+	const { cart } = useCartCtx();
 
 	const [isOpen, setIsOpen] = useState(false);
 	const [modalState, setModalState] = useState('request');
 	const [url, setUrl] = useState('');
 
+	/**
+	 * Handles form submission for URL search.
+	 *
+	 * @param {Event} e - The form submission event.
+	 */
 	const submitHandler = (e) => {
 		e.preventDefault();
 		setUrl(e.target[0].value);
 		setIsOpen(true);
 		e.target[0].value = '';
 	};
+
+	/**
+	 * Handles the modal close action.
+	 */
 	const handleOnClose = () => {
 		setIsOpen(false);
 		setModalState('request');
 	};
+
+	/**
+	 * Handles modal submission.
+	 *
+	 * @param {string} value - for new modal type
+	 */
 	const modalSbmitHandler = (value) => {
 		setModalState(value);
 	};
 
+	// Scroll to top function
 	ScrollTop();
+
+	/**
+	 * Click handler for small screen navigation.
+	 */
 	const clickHandler = () => {
 		sideBar();
 	};
+
+	// Fetch notifications for the logged-in user
 	useEffect(() => {
 		user?.id &&
 			terminal
 				.request({ name: 'getNotification' })
 				.then((data) => data.docs && setNotifications(data.docs));
 	}, [user]);
+
+	// Listen for real-time notifications via socket
 	useEffect(() => {
 		terminal.socket.on('notification', (data) => {
-			if (data.logout) { Logout(); navigate("/"); }
-			else
-				setNotifications((prev) => [data, ...prev]);
+			if (data.logout) {
+				Logout();
+				navigate('/');
+			} else setNotifications((prev) => [data, ...prev]);
 		});
 		return () => {
-			terminal.socket.off('notification');
+			terminal.socket.off('notification'); // Clean up socket event listener
 		};
 	});
 
+	// Prepare cart data for display
 	useEffect(() => {
 		const cartData = [];
 
@@ -90,24 +111,25 @@ const Header = ({ sideBar, state }) => {
 					title: product.product.name,
 					price: product.product.price,
 					image: product.product.images[0],
-					qty: product.productQuantity
-				})
-			})
+					qty: product.productQuantity,
+				});
+			});
 		}
 
 		if (cart && cart?.requests?.length > 0) {
-			cart?.requests?.forEach(request => {
-				request.request?.sellerTakes &&	cartData.push({
-					id: request.request?.id,
-					title: request.request?.name,
-					price: request.request?.sellerTakes ||0,
-					image: request.request?.images[0] ||0,
-					qty: request.requestQuantity
-				})
-			})
+			cart?.requests?.forEach((request) => {
+				request.request?.sellerTakes &&
+					cartData.push({
+						id: request.request?.id,
+						title: request.request?.name,
+						price: request.request?.sellerTakes || 0,
+						image: request.request?.images[0] || 0,
+						qty: request.requestQuantity,
+					});
+			});
 		}
 
-		setCartData(cartData)
+		setCartData(cartData);
 	}, [cart]);
 
 	return (
@@ -242,7 +264,11 @@ const Header = ({ sideBar, state }) => {
 					</div>
 				</div>
 			</div>
-			<LoginModal ModalActiveScreen='account' show={loginModal} onClose={() => setLoginModal(false)} />
+			<LoginModal
+				ModalActiveScreen='account'
+				show={loginModal}
+				onClose={() => setLoginModal(false)}
+			/>
 			<Modal show={isOpen} onClose={handleOnClose}>
 				{modalState === 'request' && (
 					<RequestModal

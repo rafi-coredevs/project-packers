@@ -1,3 +1,9 @@
+/**
+ * Badge component displays a badge with customizable text and background color.
+ *
+ * @param {string} text - The text to display on the badge (default: 'completed').
+ * @returns {JSX.Element} The rendered badge component.
+ */
 const Badge = ({ text = 'completed' }) => {
 	const data = {
 		completed: {
