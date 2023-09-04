@@ -33,12 +33,12 @@ const Signup = () => {
 				res.status === false
 					? toaster({ type: 'error', message: res.message })
 					: navigate('/login');
-			});
+			}).catch((err)=>console.error("Error in sign up", err ));
 		},
 	});
 
 	return (
-		<div className='bg-secondary pt-[5vh]  min-h-[calc(100vh-241px)]'>
+		<div className='bg-secondary pt-[5vh]  min-h-[calc(100vh-225px)]'>
 			<div className='container mx-auto grid grid-cols-1 sm:grid-cols-2 relative z-20 justify-center divide-x divide-[#ffffff1a] flex-wrap '>
 				<div className='flex justify-start items-center'>
 					<div className='max-w-[490px]'>

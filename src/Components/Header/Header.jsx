@@ -242,7 +242,7 @@ const Header = ({ sideBar, state }) => {
 					</div>
 				</div>
 			</div>
-			<LoginModal show={loginModal} onClose={() => setLoginModal(false)} />
+			<LoginModal ModalActiveScreen='account' show={loginModal} onClose={() => setLoginModal(false)} />
 			<Modal show={isOpen} onClose={handleOnClose}>
 				{modalState === 'request' && (
 					<RequestModal

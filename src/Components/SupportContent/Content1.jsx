@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 //  images & icons
 import bKash from "../../assets/bKash.png";
 import bKashPay from "../../assets/bKashPay.png";
+import SupportModal from "../SupportModal/SupportModal";
 
 export const Content1 = () => {
+  const [supportModal, setSupportModal] = useState(false);
   return (
     <div>
       <div className="flex flex-col gap-12">
@@ -130,12 +132,13 @@ export const Content1 = () => {
           <span className="text-lg text-slate-600 font-medium">
             Have more questions?
           </span>{" "}
-          <Link className="text-[#3E949A] text-lg font-medium underline">
+          <button type="button" onClick={()=> setSupportModal(true)} className="text-[#3E949A] text-lg font-medium underline">
             {" "}
             Submit a request
-          </Link>
+          </button>
         </div>
       </div>
+      <SupportModal show={supportModal} onChange={()=> setSupportModal(false)} />
     </div>
   );
 };

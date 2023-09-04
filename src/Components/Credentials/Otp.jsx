@@ -1,13 +1,3 @@
-/**
- * Otp() returns JSX Element
- * OTP Validation from email
- *
- * @param {object} data elements for post method
- * @param {function} getResponse callback function
- *
- * @return JSX Element
- */
-
 import Input from '../UiElements/Input/Input';
 import Button from '../UiElements/Buttons/Button';
 import image from '../../assets/icons/otp.svg';
@@ -15,11 +5,22 @@ import { useFormik } from 'formik';
 import { useEffect, useState } from 'react';
 import { terminal } from '../../contexts/terminal/Terminal';
 import toaster from '../../Util/toaster';
+
+/**
+ * Otp component for OTP validation from email.
+ *
+ * @param {object} data - Data containing the token for validation.
+ * @param {function} getResponse - Callback function to handle responses from this component.
+ *
+ * @returns {JSX.Element} - React JSX element for the OTP validation component.
+ */
 const Otp = ({ data, getResponse }) => {
 	const [isSubmit, setIsSubmit] = useState(false);
 	const [minute,setMinute]=useState(4);
 	const [second,setSecond]=useState(60);
 	const [isDisable,setIsdisable]= useState(true)
+
+	// Formik configuration for OTP input form
 	const otpForm = useFormik({
 		initialValues: {
 			field1: '',
@@ -29,16 +30,18 @@ const Otp = ({ data, getResponse }) => {
 		},
 		onSubmit: (values) => {
 			setIsSubmit(true);
-			const otp = Object.values(values).join('');
+			const otp = Object.values(values).join(''); // joining all otp field values
+
+			// otp velidation request
 			terminal
-				.request({ name: 'verifyOTP', body: { otp, token:data.token } })
+				.request({ name: 'verifyOTP', body: { otp, token: data.token } })
 				.then((res) => {
 					if (res.status === false) {
 						toaster({ type: 'error', message: res.message });
 					} else {
 						getResponse({ component: 'newPass', data, otp: otp });
 					}
-				})
+				}).catch(err=>console.error("Error in otp verification", err))
 				.finally(() => {
 					setIsSubmit(false);
 					otpForm.resetForm();
@@ -46,6 +49,11 @@ const Otp = ({ data, getResponse }) => {
 		},
 	});
 
+	/**
+	 * Handles keyboard navigation between OTP input fields.
+	 *
+	 * @param {Event} elmnt - The key event triggered by the input field.
+	 */
 	const handleKeys = (elmnt) => {
 		if (elmnt.key === 'Delete' || elmnt.key === 'Backspace') {
 			const next = elmnt.target.tabIndex - 2;
@@ -79,6 +87,7 @@ const Otp = ({ data, getResponse }) => {
 		
 		return () => clearInterval(interval);
 	  }, [minute, second]);
+
 	  const resendHandler = () =>{
 		setIsdisable(true)
 		
@@ -101,6 +110,18 @@ const Otp = ({ data, getResponse }) => {
 
 	  }
 
+	  function maskEmail(email) {
+		const atIndex = email.indexOf("@");
+		
+		if (atIndex !== -1) {
+		  const maskedPart = email.substring(1, atIndex).replace(/./g, "*");
+		  const maskedEmail = email.replace(email.substring(1, atIndex), maskedPart);
+		  return maskedEmail;
+		} else {
+		  return email; 
+		}
+	  }
+
 	return (
 		<>
 			<div className='max-w-[30vw] flex flex-col gap-12'>
@@ -109,8 +130,8 @@ const Otp = ({ data, getResponse }) => {
 						Enter your OTP verification code
 					</p>
 					<p className='font-sans text-lg font-medium text-[#ffffffb3]'>
-						To get a verification code, first confirm the phone number you added
-						to your account <span className='text-primary'>{data?.email}</span>.
+						To get a verification code, first confirm the email address you added
+						to your account <span >{maskEmail(data?.email)}</span>. <br />
 						Standard rates apply.
 					</p>
 				</div>
@@ -118,7 +139,7 @@ const Otp = ({ data, getResponse }) => {
 					<div className='relative flex gap-2'>
 						<Input
 							name='field1'
-							placeholder='*'
+							placeholder='✱'
 							tabIndex={1}
 							change={otpForm.handleChange}
 							blur={otpForm.handleBlur}
@@ -126,11 +147,11 @@ const Otp = ({ data, getResponse }) => {
 							value={otpForm.values.field1}
 							type='text'
 							onKeyUp={handleKeys}
-							className='text-center text-lg font-semibold placeholder:text-3xl p-[1.125rem_1.25rem]'
+							className='text-center text-lg font-semibold placeholder:text-3xl p-[1.125rem_1.25rem] h-[64px] placeholder:translate-y-1 focus:placeholder:opacity-0'
 						/>
 						<Input
 							name='field2'
-							placeholder='*'
+							placeholder='✱'
 							tabIndex={2}
 							change={otpForm.handleChange}
 							blur={otpForm.handleBlur}
@@ -138,11 +159,11 @@ const Otp = ({ data, getResponse }) => {
 							value={otpForm.values.field2}
 							type='text'
 							onKeyUp={handleKeys}
-							className='text-center text-lg font-semibold placeholder:text-3xl p-[1.125rem_1.25rem]'
+							className='text-center text-lg font-semibold placeholder:text-3xl p-[1.125rem_1.25rem] h-[64px] placeholder:translate-y-1 focus:placeholder:opacity-0'
 						/>
 						<Input
 							name='field3'
-							placeholder='*'
+							placeholder='✱'
 							tabIndex={3}
 							change={otpForm.handleChange}
 							blur={otpForm.handleBlur}
@@ -150,11 +171,11 @@ const Otp = ({ data, getResponse }) => {
 							value={otpForm.values.field3}
 							type='text'
 							onKeyUp={handleKeys}
-							className='text-center text-lg font-semibold placeholder:text-3xl p-[1.125rem_1.25rem]'
+							className='text-center text-lg font-semibold placeholder:text-3xl p-[1.125rem_1.25rem] h-[64px] placeholder:translate-y-1 focus:placeholder:opacity-0'
 						/>
 						<Input
 							name='field4'
-							placeholder='*'
+							placeholder='✱'
 							tabIndex={4}
 							change={otpForm.handleChange}
 							blur={otpForm.handleBlur}
@@ -162,12 +183,12 @@ const Otp = ({ data, getResponse }) => {
 							value={otpForm.values.field4}
 							type='text'
 							onKeyUp={handleKeys}
-							className='text-center text-lg font-semibold placeholder:text-3xl p-[1.125rem_1.25rem]'
+							className='text-center text-lg font-semibold placeholder:text-3xl p-[1.125rem_1.25rem] h-[64px] placeholder:translate-y-1 focus:placeholder:opacity-0'
 						/>
 					</div>
 					<Button
 						full
-						className='w-full'
+						className='w-full h-[54px]'
 						type='primary'
 						buttonType='submit'
 						disabled={isSubmit}

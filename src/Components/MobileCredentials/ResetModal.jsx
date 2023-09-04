@@ -1,11 +1,3 @@
-/**
- * ResetModal() returns JSX Element
- * @param {function} getResponse validation from server
- * @param {function} stateHandler takes string value to navigate state
- * @param {function} onClose callback function to close modal
- *
- * @returns JSX element
- */
 import { useFormik } from "formik";
 import { useState } from "react";
 import { emailSchema } from "../../Util/ValidationSchema";
@@ -14,6 +6,16 @@ import Input from "../UiElements/Input/Input";
 import { terminal } from "../../contexts/terminal/Terminal";
 import toaster from "../../Util/toaster";
 
+
+/**
+ * Represents a React component for email validation with a modal interface.
+ *
+ * @param {function} getResponse - Callback function for handling responses from the server.
+ * @param {function} stateHandler - Callback function to change the state of the modal.
+ * @param {function} onClose - Callback function to close the modal.
+ *
+ * @returns {JSX.Element} - React JSX element for email validation modal component.
+ */
 const ResetModal = ({ getResponse, stateHandler, onClose }) => {
   const [isSubmit, setIsSubmit] = useState(false);
 
@@ -30,10 +32,10 @@ const ResetModal = ({ getResponse, stateHandler, onClose }) => {
         if (data.status === false) {
           toaster({ type: 'error', message: data.message });
         } else {
-          getResponse({ component: 'otp', token: data.token });
+          getResponse({ component: 'otp', token: data.token , email: values?.email});
           stateHandler("otp")
         }
-      })
+      }).catch((err)=>console.error("Error reset modal when email verification", err ))
         .finally(() => {
           setIsSubmit(false);
         });
@@ -107,8 +109,8 @@ const ResetModal = ({ getResponse, stateHandler, onClose }) => {
         <div className="grid gap-5">
           <Input
             name="email"
-            label="Email or Phone Number"
-            placeholder="Enter your email address or phone number"
+            label="Email address"
+            placeholder="Enter your email address"
             change={emailForm.handleChange}
             blur={emailForm.handleBlur}
             value={emailForm.values.email}
@@ -118,10 +120,11 @@ const ResetModal = ({ getResponse, stateHandler, onClose }) => {
                 : null
             }
             type="email"
+            className="h-[50px]"
           />
           <Button
             full
-            className="w-full"
+            className="w-full h-[48px]"
             type="primary"
             buttonType="submit"
             disabled={isSubmit}
