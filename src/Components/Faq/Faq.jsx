@@ -1,3 +1,10 @@
+/**
+ * FAQ()
+ * 
+ * @returns JSX Element
+ * 
+ */
+
 import Heading from "../UiElements/Heading/Heading";
 import Collapse from "../UiElements/Collapse/Collapse";
 const DUMMY_DATA = {
