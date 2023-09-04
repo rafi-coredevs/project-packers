@@ -23,8 +23,8 @@ const Carousel = ({ isHome = Boolean }) => {
     ];
 
     return <section
-        className={`flex gap-[1.875rem] w-[90%] h-[25rem] mx-auto overflow-scroll no-scrollbar 
-            ${isHome && 'relative top-0 z-20'}`}
+        className={`max-w flex gap-2 md:gap-[1.8rem] w-full px-5 overflow-scroll no-scrollbar 
+            ${isHome && '-mb-12 relative -top-10 z-20'}`}
     >
         {
             slides?.map((slide, i) => <React.Fragment key={i}>

@@ -18,7 +18,6 @@ const AddOrder = () => {
     const { orderId } = useParams();
     const [order, setOrder] = useState(null);
     const navigate = useNavigate();
-    const [selectedOrderStatus, setSelectedOrderStatus] = useState({});
     const [customers, setCustomers] = useState([]);
     const [user, setUser] = useState({})
     const [inside, setInside] = useState(true);
@@ -42,16 +41,37 @@ const AddOrder = () => {
         },
     });
 
-    /**
-     * Handles selecting an order status.
-     * @param {number} id - The ID of the selected status.
-     */
-    function orderStatusHandler(id) {
-        const newStatus = orderStatuses.find((item) => item.id === id); // Find the selected order status by id
-        odrerForm.setFieldValue('status', newStatus.value);
-        setSelectedOrderStatus(newStatus);
-    }
+    useEffect(() => {
+        let discountItemsTotal = 0;
+        let nondiscountItemsTotal = 0;
+        let discountamount = 0;
+        let totalPrice = 0;
 
+        if (order) {
+            order.products?.length > 0 && order.products.forEach((product) => {
+                const total =
+                    (product.product.price + product.product.tax + product.product.fee) *
+                    product.productQuantity;
+                if (
+                    discount?.code &&
+                    product.product.category.toString() === discount.category &&
+                    product.product.subcategory.toString() === discount.subcategory
+                ) {
+                    discountItemsTotal += total;
+                } else {
+                    nondiscountItemsTotal += total;
+                }
+            });
+
+            discountamount = discount?.percentage
+                ? (discountItemsTotal * discount.percentage) / 100
+                : discount?.amount;
+            totalPrice = discountamount
+                ? totalPrice + nondiscountItemsTotal - discountamount
+                : totalPrice + nondiscountItemsTotal;
+            setPrice(totalPrice);
+        }
+    }, [cart, discount]);
     // Fetch order data when the component mounts
     // useEffect(() => {
     //     fetchData();
@@ -104,10 +124,6 @@ const AddOrder = () => {
             zip: billingForm.values.zip,
         };
 
-        // Remove empty fields from shipping and billing
-        removeEmptyFields(shipping);
-        removeEmptyFields(billing);
-
         let data = {
             user: user.id,
             email: user.email,
@@ -115,25 +131,30 @@ const AddOrder = () => {
             status: 'pending',
             shippingaddress: shipping,
             billingaddress: billing,
+            discountApplied: discount.code ? {
+                amount: discount?.amount,
+                percentage: discount?.percentage,
+                code: discount?.code
+            } : null,
         };
 
         removeEmptyFields(data); //removing empty objects
-
-        terminal
-            .request({
-                name: 'updateOrder',
-                params: { id: orderId },
-                body: data,
-            })
-            .then((res) => {
-                if (res.status === false) {
-                    toaster({ type: 'error', message: res.message });
-                } else {
-                    toaster({ type: 'success', message: 'successfully updated' });
-                    navigate(-1);
-                }
-            })
-            .catch((err) => console.error('order update error', err));
+        console.log(data);
+        // terminal
+        //     .request({
+        //         name: 'updateOrder',
+        //         params: { id: orderId },
+        //         body: data,
+        //     })
+        //     .then((res) => {
+        //         if (res.status === false) {
+        //             toaster({ type: 'error', message: res.message });
+        //         } else {
+        //             toaster({ type: 'success', message: 'successfully updated' });
+        //             navigate(-1);
+        //         }
+        //     })
+        //     .catch((err) => console.error('order update error', err));
     };
 
     // Find Customer
@@ -176,7 +197,6 @@ const AddOrder = () => {
                 }
             });
     };
-
 
     return (
         <div className='px-5 h-full'>

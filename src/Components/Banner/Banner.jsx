@@ -41,6 +41,7 @@ const Banner = () => {
 			setIsOpen(true);
 		}
 	}, [successModal, successModalState]);
+	
 
 	/**
 	 * Handles the form submission

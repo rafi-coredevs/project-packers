@@ -22,7 +22,7 @@ const Home = () => {
   return (
     <>
       <Banner />
-      <div className="container mx-auto -mt-[13rem]">
+      <div className="container mx-auto mt-[-11rem] md:-mt-[12rem]">
         <Carousel isHome={true} />
       </div>
       <Brands data={brand} />
