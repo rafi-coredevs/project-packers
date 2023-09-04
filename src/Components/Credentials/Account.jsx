@@ -31,7 +31,7 @@ const Account = ({ getResponse }) => {
 					if (data.status === false) {
 						toaster({ type: 'error', message: data.message });
 					} else {
-						getResponse({ component: 'otp', token: data.token });
+						getResponse({ component: 'otp', token: data.token , email: values.email});
 					}
 				}).catch(err=>console.error("Error in email verification", err))
 				.finally(() => {
