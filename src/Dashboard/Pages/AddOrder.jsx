@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { useTitle } from '../../Components/Hooks/useTitle';
 import { terminal } from '../../contexts/terminal/Terminal';
@@ -10,14 +10,14 @@ import Input from '../Components/UiElements/Input/Input';
 import search from '../../assets/icons/cd-search2.svg';
 import remove from '../../assets/icons/cd-cancel.svg';
 import toaster from '../../Util/toaster';
-import CustomSelect from '../../Components/UiElements/Input/CustomSelect';
 import removeEmptyFields from '../../Util/removeEmptyFields';
 
 const AddOrder = () => {
     useTitle('Order Details');
-    const { orderId } = useParams();
-    const [order, setOrder] = useState(null);
     const navigate = useNavigate();
+    const [price, setPrice] = useState(null);
+    const [order, setOrder] = useState(null);
+    const [products, setProducts] = useState([]);
     const [customers, setCustomers] = useState([]);
     const [user, setUser] = useState({})
     const [inside, setInside] = useState(true);
@@ -71,40 +71,7 @@ const AddOrder = () => {
                 : totalPrice + nondiscountItemsTotal;
             setPrice(totalPrice);
         }
-    }, [cart, discount]);
-    // Fetch order data when the component mounts
-    // useEffect(() => {
-    //     fetchData();
-    // }, []);
-
-    /**
-     * Fetches order data from the API and populates the form.
-     */
-    // const fetchData = () =>
-    //     terminal
-    //         .request({ name: 'singleOrder', params: { id: orderId } })
-    //         .then((res) => {
-    //             if (res.status === false) {
-    //                 toaster({ type: 'error', message: res.message });
-    //             } else {
-    //                 setOrder(res);
-
-    //                 //finding older status from order status array
-    //                 let olderStatus = orderStatuses.find(
-    //                     (status) => status.value === res.status,
-    //                 );
-
-    //                 // Set form values from the retrieved data
-    //                 odrerForm.setFieldValue('status', olderStatus.value);
-    //                 odrerForm.setFieldValue('address', res.shippingaddress.address);
-    //                 odrerForm.setFieldValue('city', res.shippingaddress.city);
-    //                 odrerForm.setFieldValue('area', res.shippingaddress.area);
-    //                 odrerForm.setFieldValue('zip', res.shippingaddress.zip);
-
-    //                 setSelectedOrderStatus(olderStatus);
-    //             }
-    //         })
-    //         .catch((err) => console.error('error when page loaded', err));
+    }, [order, discount]);
 
     /**
      * Handles updating the order details.
@@ -168,6 +135,16 @@ const AddOrder = () => {
         setCustomers([])
     }
 
+    const findProducts = (e) => {
+        if (e.target.value !== '') {
+            terminal.request({ name: 'allProduct', queries: { name: JSON.stringify({ $regex: e.target.value }) } }).then(data => {
+                setProducts(data.docs)
+            })
+            return
+        }
+        setProducts([])
+    }
+
 
     const addDiscount = async (e) => {
         e.preventDefault();
@@ -227,7 +204,7 @@ const AddOrder = () => {
                                     <img className='opacity-70' src={search} />
                                 </Input>
                             </div>
-                            <Button style='outline'>Browse</Button>
+                    
                         </div>
 
                         {/* product table */}
@@ -385,7 +362,7 @@ const AddOrder = () => {
                             {/* total */}
                             <div className='flex justify-between items-center'>
                                 <p className='text-base font-semibold'>Total</p>
-                                <p className='text-lg font-semibold'>৳ {order?.total}</p>
+                                <p className='text-lg font-semibold'>৳ {price}</p>
                             </div>
                         </div>
                     </div>

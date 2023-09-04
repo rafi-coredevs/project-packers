@@ -19,23 +19,21 @@ const Banner = () => {
 	const [modalState, setModalState] = useState('request'); // for modal type
 	const [loginModal, setLoginModal] = useState(false); // for showing login modal if user is not logged in
 	const [requestData, setRequestData] = useState({}); // for sending request item data to login modal
-  const [successModalState, setSuccessModalState] = useState(null); // for setting modal type from login modal
+	const [successModalState, setSuccessModalState] = useState(null); // for setting modal type from login modal
 	const [url, setUrl] = useState(''); // for storing url
 	const location = useLocation();
 	const successModal = location?.state;
 	const navigate = useNavigate();
-	
 
-  // for showing request successful modal after login
+	// for showing request successful modal after login
 	useEffect(() => {
-
-    // for big screen
+		// for big screen
 		if (successModal) {
 			setModalState('success');
 			setIsOpen(true);
 		}
 
-    // for mobile devices
+		// for mobile devices
 		if (successModalState === 'success') {
 			setModalState('success');
 			setIsOpen(true);
@@ -74,32 +72,32 @@ const Banner = () => {
 	};
 	return (
 		<div className='bg-secondary pb-[13rem] overflow-hidden '>
-			<div className='relative z-10 right-[-48rem] bottom-[-75rem] flex justify-center items-center'>
+			<div className='relative z-10 right-[-48rem] bottom-[-75rem] hidden md:flex justify-center items-center'>
 				<span className='absolute w-[150rem] h-[150rem] rounded-full border border-white opacity-25'></span>
 				<span className='absolute w-[120rem] h-[120rem] rounded-full border border-white opacity-25'></span>
 				<span className='absolute w-[90rem] h-[90rem] rounded-full border border-white opacity-25'></span>
 			</div>
-			<div className='container mx-auto grid grid-cols-2 relative z-20 justify-center flex-wrap '>
-				<div className='pt-24 pb-0 sm:pb-24 px-4 col-span-2 sm:col-span-1 '>
-					<div className=''>
-						<p className='font-sans font-bold md:text-[52px] text-[32px] text-white'>
+			<div className='container mx-auto grid grid-cols-2 gap-13 relative z-20 justify-center flex-wrap '>
+				<div className='pt-12 md:pt-[6.25rem] pb-0 md:pb-24 px-4 md:col-span-1 col-span-2 '>
+					<div className='grid gap-4'>
+						<p className='font-sans font-bold md:text-[52px] leading-10 md:leading-[3.5rem] tracking-[-0.04] md:tracking-[-0.065rem] text-[32px] text-white'>
 							Shop products from USA and save up to 40%
 						</p>
-						<p className='font-sans font-medium text-white opacity-70 text-[20px] max-w-[580px]'>
+						<p className="font-sans font-medium text-white opacity-70 text-[20px] max-w-[580px] leading-7 tracking-tight">
 							Thousands of deals on gadgets, shoes, cosmetics, watches -
 							everything from the US.
 						</p>
 					</div>
-					<form onSubmit={submitHandler} action=''>
-						<div className='flex mt-5 flex-wrap sm:flex-nowrap justify-center gap-2 sm:gap-0'>
+          <form className="mt-8" onSubmit={submitHandler} action="">
+            <div className="flex flex-wrap sm:flex-nowrap justify-center gap-2 sm:gap-0">
 							<div className='w-full'>
 								<Input
-									icon='search'
+									
 									type='text'
 									name='search'
 									placeholder='Paste Product url here'
 								>
-									<img src={search} alt='' className='py-5' />
+									<img src={search} alt='' className='py-4' />
 								</Input>
 							</div>
 							<Button buttonType='submit' type='primary'>
@@ -108,16 +106,16 @@ const Banner = () => {
 						</div>
 					</form>
 					<div className='hidden md:block'>
-						<div className='flex gap-[30px] mt-[5em]'>
+          <div className="flex gap-[1.88rem] mt-[5em] leading-5">
 							<div className='flex gap-2 items-start'>
 								<img src={check} alt='' />
-								<p className='text-white text-[14px] font-sans w-[145px] font-bold'>
+                <p className="text-white text-sm font-sans w-[145px] font-semibold leading-5">
 									Receive your product in 1–2 weeks
 								</p>
 							</div>
 							<div className='flex gap-2 items-start '>
 								<img src={check} alt='' />
-								<p className='text-white text-[14px] font-sans w-[145px] font-bold'>
+                <p className="text-white text-sm font-sans w-[145px] font-semibold leading-5">
 									Receive your product in 1–2 weeks
 								</p>
 							</div>
@@ -125,9 +123,9 @@ const Banner = () => {
 					</div>
 				</div>
 
-				<div className='col-span-2 sm:col-span-1'>
-					<img className='w-full h-auto' src={image} />
-				</div>
+        <div className="md:col-span-1 col-span-2">
+          <img  className="w-auto ml-auto -mt-8 md:mt-0 h-[17.875rem] md:h-[35.125rem] relative z-[-1]" src={image} />
+        </div>
 			</div>
 			<LoginModal
 				setSuccessModalState={setSuccessModalState}
