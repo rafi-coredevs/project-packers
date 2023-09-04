@@ -8,11 +8,12 @@ import profile from "../../../assets/icons/user-1.svg";
 import { useUserCtx } from "../../../contexts/user/UserContext";
 import { terminal } from "../../../contexts/terminal/Terminal";
 import { SearchField } from "../UiElements/SearchField/SearchField";
+import UserIcon from "../../../Components/UiElements/UserIcon/UserIcon";
 
 const Header = () => {
   const [notifyState, setNotifyState] = useState(false);
   const { user, Logout } = useUserCtx()
-  const [notifications, setNotifications] = useState()
+  const [notifications, setNotifications] = useState([])
   useEffect(() => {
     user?.id && terminal.request({ name: 'getNotification' }).then(data => data.docs && setNotifications(data.docs))
   }, [user])
@@ -75,7 +76,7 @@ const Header = () => {
                 to="/admin"
                 className="flex gap-2 items-center cursor-pointer"
               >
-                <Icon type="active" unread={false} icon={profile} />
+                <UserIcon name={user?.fullName} />
                 <p className="font-sans text-secondary text-sm font-semibold">
                   {user?.fullName || "User"}
                 </p>

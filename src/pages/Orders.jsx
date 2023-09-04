@@ -17,6 +17,7 @@ const Orders = () => {
   const { Logout, user } = useUserCtx()
   const [active, setActive] = useState("orders");
   const [order, setOrder] = useState([])
+  const [loading, setLoading] = useState(false)
   const navigate = useNavigate();
   useEffect(() => {
     profileForm.setValues({
@@ -74,7 +75,8 @@ const Orders = () => {
   };
 
   useEffect(() => {
-    terminal.request({ name: 'userOrder', queries: { sortBy: 'date:desc' } }).then(data => data.docs && setOrder(data.docs))
+    setLoading(true)
+    terminal.request({ name: 'userOrder', queries: { sortBy: 'date:desc' } }).then(data => { data.docs && setOrder(data.docs), setLoading(false) });
   }, [])
   return (
     <>
@@ -86,7 +88,7 @@ const Orders = () => {
               <div className="p-5 flex flex-row sm:flex-col gap-5 border rounded-xl text-base font-semibold ">
                 <button
                   onClick={() => setActive("orders")}
-                  className={`py-3 px-2 md:px-3 items-center justify-center md:justify-start flex  gap-[10px] w-full rounded-full hover:bg-primary ${active === "orders" ? "bg-primary" : "bg-white border"
+                  className={`py-3 px-2 lg:px-3 items-center justify-center lg:justify-start flex  gap-[10px] w-full rounded-full hover:bg-primary ${active === "orders" ? "bg-primary" : "bg-white border"
                     }`}
                 >
                   <img src={ordericon} />
@@ -94,7 +96,7 @@ const Orders = () => {
                 </button>
                 <button
                   onClick={() => setActive("profile")}
-                  className={`py-3 px-2 md:px-3 items-center justify-center md:justify-start flex  gap-[10px] w-full rounded-full hover:bg-primary ${active === "profile" ? "bg-primary" : "bg-white border"
+                  className={`py-3 px-2 lg:px-3 items-center justify-center lg:justify-start flex  gap-[10px] w-full rounded-full hover:bg-primary ${active === "profile" ? "bg-primary" : "bg-white border"
                     }`}
                 >
                   <img src={profile} />
@@ -102,7 +104,7 @@ const Orders = () => {
                 </button>
                 <button
                   onClick={logoutHandler}
-                  className={`py-3 px-2 md:px-3 items-center justify-center md:justify-start flex  gap-[10px] w-full rounded-full hover:bg-primary bg-white border`}
+                  className={`py-3 px-2 lg:px-3 items-center justify-center lg:justify-start flex  gap-[10px] w-full rounded-full hover:bg-primary bg-white border`}
                 >
                   <img src={logout} />
                   <span className="hidden lg:block">logout</span>
@@ -140,14 +142,23 @@ const Orders = () => {
                         </thead>
                         <tbody>
                           {
-                            order?.length < 1 ? [...Array(10)].map((arr, i) => <tr key={i} className="border-b">
-                                <td className="px-6 py-7 lazy-loading"></td>
-                                <td className="px-6 py-7 lazy-loading"></td>
-                                <td className="px-6 py-7 lazy-loading"></td>
-                                <td className="px-6 py-7 lazy-loading"></td>
-                                <td className="px-6 py-7 lazy-loading"></td>
-                                <td className="px-6 py-7 lazy-loading"></td>
-                              </tr>) :
+                            loading && [...Array(10)].map((arr, i) => <tr key={i} className="border-b">
+                              <td className="px-6 py-7 lazy-loading"></td>
+                              <td className="px-6 py-7 lazy-loading"></td>
+                              <td className="px-6 py-7 lazy-loading"></td>
+                              <td className="px-6 py-7 lazy-loading"></td>
+                              <td className="px-6 py-7 lazy-loading"></td>
+                              <td className="px-6 py-7 lazy-loading"></td>
+                            </tr>)
+                          }
+                          {
+                            order?.length < 1 ? <td colSpan={6}>
+                              <div className="flex w-full h-full items-center justify-center text-xl font-semibold text-black mt-10">
+                                <p>
+                                  No Orders Available
+                                </p>
+                              </div>
+                            </td> :
                               order?.map(item => {
                                 const formattedDate = new Intl.DateTimeFormat('en-US', {
                                   year: 'numeric',

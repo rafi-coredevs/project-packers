@@ -1,19 +1,18 @@
 import { useEffect, useState } from "react";
 import Heading from "../Components/UiElements/Heading/Heading";
-import filter from "../../assets/icons/cd-filter.svg";
 import sort from "../../assets/icons/cd-arrow-data-transfer-vertical-round.svg";
 import search from "../../assets/icons/cd-search2.svg";
 import Table from "../Components/UiElements/Table/Table";
 import Input from "../Components/UiElements/Input/Input";
-import { requestTable } from "../../Store/Data";
 import Button from "../Components/UiElements/Button/Button";
 import { useTitle } from "../../Components/Hooks/useTitle";
 import { terminal } from "../../contexts/terminal/Terminal";
 import CustomSelect from "../../Components/UiElements/Input/CustomSelect";
-// 
+import toaster from '../../Util/toaster';
+//
 const requestStatuses = [{ id: 'All', name: "All", value: "All" }, { id: 'Paid', name: "Paid", value: "Paid" }, { id: 'Pending', name: "Pending", value: "Pending" }]
 
-// 
+//
 const RequestItems = () => {
 
   useTitle("Requested Items")
@@ -21,6 +20,7 @@ const RequestItems = () => {
   const [tableData, setTabledata] = useState(null);
   const [loading, setLoading] = useState(true);
   const [sortBy, setSortBy] = useState('createdAt:asc');
+  const [requestIds, setRequestIds] = useState([]);
   useEffect(() => {
     fetchData();
 
@@ -32,7 +32,7 @@ const RequestItems = () => {
   setActive(val.toLowerCase());
  }
 
-  
+
 
   const fetchData = (page = 1) => {
     setLoading(true);
@@ -42,16 +42,27 @@ const RequestItems = () => {
   };
   const tableButtonHandler = (value) => {
     setActive(value);
-    console.log(value);
   };
   const deleteHandler = () => {
-    console.log("deleted");
+    terminal.request({ name: 'removeRequest', body: { id : requestIds} }).then(res => res.status === true ? (toaster({ type: 'success', message: res.message }), fetchData()) : (toaster({ type: 'error', message: res.message })))
   };
+
+  function handleSearch(e) {
+    if(e.target.value?.length >= 1) {
+      setLoading(true);
+      terminal.request({ name: 'allRequest', queries: { sortBy, status: active, search: e.target.value } }).then((res) => {
+        res.status === false ? '' : setTabledata(res), setLoading(false);
+      });
+    } else {
+      fetchData();
+    }
+  }
+
   return (
     <div className="h-full px-5 ">
       <Heading title="Item Request">
         <Button style="delete" onClick={deleteHandler}>
-          delete
+          Delete
         </Button>
       </Heading>
       <div className="grid grid-cols-3 gap-5 py-5">
@@ -104,7 +115,7 @@ const RequestItems = () => {
                 </button>
               </div>
               <div className="py-2 flex gap-1">
-                <Input type="text" placeholder="Search" styles="secondary">
+                <Input type="text" change={handleSearch} placeholder="Search" styles="secondary">
                   <img src={search} alt="" />
                 </Input>
 
@@ -117,7 +128,7 @@ const RequestItems = () => {
               </div>
             </div>
 
-            <Table paginate={fetchData} data={tableData} loading={loading} />
+            <Table paginate={fetchData} data={tableData} loading={loading} getData={setRequestIds}/>
           </div>
         </div>
       </div>

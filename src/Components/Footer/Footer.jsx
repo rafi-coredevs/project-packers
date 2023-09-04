@@ -15,6 +15,8 @@ import facebook from "../../assets/icons/cd-facebook.svg";
 import insta from "../../assets/icons/cd-instagram.svg";
 import twitter from "../../assets/icons/cd-twitter.svg";
 const Footer = () => {
+  const date = new Date().getFullYear();
+
   const location = useLocation().pathname;
   if (
     location === "/login" ||
@@ -27,7 +29,8 @@ const Footer = () => {
           <div className="flex w-full justify-center py-7 sm:px-0 flex-col sm:flex-row border-t border-[#FFFFFF33]">
             <p className="font-sans text-center font-normal text-base text-[#ffffffb0] ">
               Use of Project Packers signifies agreement with our Privacy Notice
-              and Terms of Service <br /> © 2023 Project Packers. All rights reserved.
+              and Terms of Service <br /> © {date} Project Packers. All rights
+              reserved.
             </p>
           </div>
         </div>
@@ -77,12 +80,24 @@ const Footer = () => {
               Quick Navigation
             </p>
             <div className="flex flex-col gap-5 text-white text-base font-sans font-normal">
-              <div><Link to="/">Home</Link></div>
-              <div><Link to="/about">About Us</Link></div>
-              <div><Link to="account/orders">My Request</Link></div>
-              <div><Link to="/comingsoon">Contact Us</Link></div>
-              <div><Link to="/blog">Blog</Link></div>
-              <div><Link to="/comingsoon">Careers</Link></div>
+              <div>
+                <Link to="/">Home</Link>
+              </div>
+              <div>
+                <Link to="/about">About Us</Link>
+              </div>
+              <div>
+                <Link to="account/orders">My Request</Link>
+              </div>
+              <div>
+                <Link to="/comingsoon">Contact Us</Link>
+              </div>
+              <div>
+                <Link to="/blog">Blog</Link>
+              </div>
+              <div>
+                <Link to="/comingsoon">Careers</Link>
+              </div>
             </div>
           </div>
           <div className="flex flex-col gap-8">
@@ -90,12 +105,24 @@ const Footer = () => {
               Help
             </p>
             <div className="flex flex-col gap-5 text-white text-base font-sans font-normal">
-              <div><Link to="/support">Support</Link></div>
-              <div><Link to="/comingsoon">How Project Packers Works</Link></div>
-              <div><Link to="/comingsoon">Shipping & Delivery</Link></div>
-              <div><Link to="/comingsoon">Cancellation & Refund</Link></div>
-              <div><Link to="/faq">FAQs</Link></div>
-              <div><Link to="/comingsoon">Live Chat Support</Link></div>
+              <div>
+                <Link to="/support">Support</Link>
+              </div>
+              <div>
+                <Link to="/comingsoon">How Project Packers Works</Link>
+              </div>
+              <div>
+                <Link to="/comingsoon">Shipping & Delivery</Link>
+              </div>
+              <div>
+                <Link to="/comingsoon">Cancellation & Refund</Link>
+              </div>
+              <div>
+                <Link to="/faq">FAQs</Link>
+              </div>
+              <div>
+                <Link to="/comingsoon">Live Chat Support</Link>
+              </div>
             </div>
           </div>
           <div className="flex flex-col gap-8">

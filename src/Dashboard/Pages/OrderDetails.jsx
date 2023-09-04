@@ -1,35 +1,37 @@
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useFormik } from 'formik';
+import { useTitle } from '../../Components/Hooks/useTitle';
+import { terminal } from '../../contexts/terminal/Terminal';
 import Button from '../Components/UiElements/Button/Button';
 import Heading from '../Components/UiElements/Heading/Heading';
-import { useNavigate, useParams } from 'react-router-dom';
 import SideCard from '../Components/UiElements/SideCard/SideCard';
 import Input from '../Components/UiElements/Input/Input';
 import search from '../../assets/icons/cd-search2.svg';
 import remove from '../../assets/icons/cd-cancel.svg';
-import { products } from '../../Store/Data';
-import { useTitle } from '../../Components/Hooks/useTitle';
-import { terminal } from '../../contexts/terminal/Terminal';
-import { useEffect, useState } from 'react';
 import toaster from '../../Util/toaster';
-import { BASE_URL } from '../../Util/apiCall';
-import { useFormik } from 'formik';
 import CustomSelect from '../../Components/UiElements/Input/CustomSelect';
+import removeEmptyFields from '../../Util/removeEmptyFields';
 
 const OrderDetails = () => {
 	useTitle('Order Details');
 	const { orderId } = useParams();
 	const [order, setOrder] = useState(null);
 	const navigate = useNavigate();
-	// const [selected, setSelected] = useState(DROP_DOWN[0]);
+	const [selectedOrderStatus, setSelectedOrderStatus] = useState({});
 
-	useEffect(() => {
-		fetchData();
-	}, []);
-
+	// formik initailization
 	const odrerForm = useFormik({
 		initialValues: {
 			status: '',
+			address: '',
+			city: '',
+			area: '',
+			zip: '',
 		},
 	});
+
+	// for status
 	const orderStatuses = [
 		{ id: 1, name: 'Completed', value: 'completed' },
 		{ id: 2, name: 'Pending', value: 'pending' },
@@ -41,14 +43,24 @@ const OrderDetails = () => {
 		{ id: 8, name: 'RefundProcessing', value: 'refundProcessing' },
 	];
 
-	const [selectedOrderStatus, setSelectedOrderStatus] = useState();
-
+	/**
+	 * Handles selecting an order status.
+	 * @param {number} id - The ID of the selected status.
+	 */
 	function orderStatusHandler(id) {
-		const newStatus = orderStatuses.find((item) => item.id === id);
+		const newStatus = orderStatuses.find((item) => item.id === id); // Find the selected order status by id
 		odrerForm.setFieldValue('status', newStatus.value);
 		setSelectedOrderStatus(newStatus);
 	}
 
+	// Fetch order data when the component mounts
+	useEffect(() => {
+		fetchData();
+	}, []);
+
+	/**
+	 * Fetches order data from the API and populates the form.
+	 */
 	const fetchData = () =>
 		terminal
 			.request({ name: 'singleOrder', params: { id: orderId } })
@@ -57,22 +69,59 @@ const OrderDetails = () => {
 					toaster({ type: 'error', message: res.message });
 				} else {
 					setOrder(res);
-					const olderStatus = orderStatuses.find(
+
+					//finding older status from order status array
+					let olderStatus = orderStatuses.find(
 						(status) => status.value === res.status,
 					);
-					odrerForm.setFieldValue('status', olderStatus.value);
-					setSelectedOrderStatus(olderStatus);
-					console.log(res);
-				}
-			});
 
+					// Set form values from the retrieved data
+					odrerForm.setFieldValue('status', olderStatus.value);
+					odrerForm.setFieldValue('address', res.shippingaddress.address);
+					odrerForm.setFieldValue('city', res.shippingaddress.city);
+					odrerForm.setFieldValue('area', res.shippingaddress.area);
+					odrerForm.setFieldValue('zip', res.shippingaddress.zip);
+
+					setSelectedOrderStatus(olderStatus);
+				}
+			})
+			.catch((err) => console.error('error when page loaded', err));
+
+	/**
+	 * Handles updating the order details.
+	 */
 	const updateHandler = () => {
-		// console.log(odrerForm.values);
+		const shipping = {
+			address: odrerForm.values.address,
+			city: odrerForm.values.city,
+			area: odrerForm.values.area,
+			zip: odrerForm.values.zip,
+		};
+
+		const billing = {
+			address: odrerForm.values.address,
+			city: odrerForm.values.city,
+			area: odrerForm.values.area,
+			zip: odrerForm.values.zip,
+		};
+
+		// Remove empty fields from shipping and billing
+		removeEmptyFields(shipping);
+		removeEmptyFields(billing);
+
+		let data = {
+			status: odrerForm.values.status,
+			shippingaddress: shipping,
+			billingaddress: billing,
+		};
+
+		removeEmptyFields(data); //removing empty objects
+
 		terminal
 			.request({
 				name: 'updateOrder',
 				params: { id: orderId },
-				body: odrerForm.values,
+				body: data,
 			})
 			.then((res) => {
 				if (res.status === false) {
@@ -81,14 +130,36 @@ const OrderDetails = () => {
 					toaster({ type: 'success', message: 'successfully updated' });
 					navigate(-1);
 				}
-			});
+			})
+			.catch((err) => console.error('order update error', err));
 	};
+
+	/**
+	 * Handles deletion of the order .
+	 */
+	const deleteHandler = (e) => {
+		e.preventDefault();
+
+		terminal
+			.request({ name: 'deleteOrder', body: { id: [orderId] } })
+			.then((res) =>
+				res?.status === false
+					? toaster({ type: 'success', message: res.message })
+					: (toaster({
+							type: 'success',
+							message: 'deleted successfully',
+					  }),
+					  navigate(-1)),
+			)
+			.catch((err) => console.error('order delete error', err));
+	};
+
 	return (
 		<div className='px-5 h-full'>
 			<Heading type='navigate' title={`#${orderId}`} back={'All Order'}>
 				<div className='flex items-center gap-1'>
 					<Button>Download Invoice</Button>
-					<Button style='delete' onClick={updateHandler}>
+					<Button style='delete' onClick={deleteHandler}>
 						Delete
 					</Button>
 					<Button style='primary' onClick={updateHandler}>
@@ -182,8 +253,8 @@ const OrderDetails = () => {
 																	<img
 																		className='w-8 h-8 rounded border-b border-[#0000001c]'
 																		src={
-																			BASE_URL +
-																			'/api/' +
+																			import.meta.env.VITE_SERVER_URL +
+																			'/' +
 																			product?.product?.images[0]
 																		}
 																		alt=''
@@ -211,7 +282,6 @@ const OrderDetails = () => {
 
 															{/* total */}
 															<td className='py-2'>
-																{' '}
 																৳
 																{product?.product?.price?.toFixed(2) *
 																	product?.productQuantity}
@@ -248,8 +318,8 @@ const OrderDetails = () => {
 																	<img
 																		className='w-8 h-8 rounded border-b border-[#0000001c]'
 																		src={
-																			BASE_URL +
-																			'/api/' +
+																			import.meta.env.VITE_SERVER_URL +
+																			'/' +
 																			request?.request?.images[0]
 																		}
 																		alt=''
@@ -406,7 +476,7 @@ const OrderDetails = () => {
 						<hr />
 
 						{/* status selector */}
-						<div className='py-5 ml-auto p-5 gap-2  border-[#0000001c] '>
+						<div className='py-5 ml-auto p-5 gap-2  border-[#0000001c] w-full max-w-[200px] '>
 							<CustomSelect
 								bg='green'
 								value={selectedOrderStatus?.name}
@@ -419,18 +489,25 @@ const OrderDetails = () => {
 				</div>
 				<div className='col-span-3 sm:col-span-1 h-fit grid gap-5 pb-3'>
 					<div className=' border border-[#0000001c] divide-y  rounded-lg '>
+						{/* customer name */}
 						<SideCard
 							types='customer'
-							value={order?.user?.fullName || 'No Name'}
+							customerName={order?.user?.fullName || 'No Name'}
 						/>
+
+						{/* customer information */}
 						<SideCard
 							types='contact'
 							email={order?.user?.email || 'No email'}
 							phone={order?.user?.phone || 'No Phone'}
 						/>
+
+						{/* shipping address */}
 						<SideCard
 							types='shipping'
 							title='Shipping Address'
+							editable={true}
+							formikProps={odrerForm}
 							address={
 								order?.shippingaddress?.address +
 								', ' +
@@ -441,9 +518,12 @@ const OrderDetails = () => {
 								order?.shippingaddress?.zip
 							}
 						/>
+						{/* billing */}
 						<SideCard
-							types='address'
+							types='billing'
 							title='Billing Address'
+							formikProps={odrerForm}
+							editable={true}
 							address={
 								order?.shippingaddress?.address +
 								', ' +

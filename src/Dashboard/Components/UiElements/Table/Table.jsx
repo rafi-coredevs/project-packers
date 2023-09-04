@@ -15,8 +15,7 @@ import edit from '../../../../assets/icons/cd-edit.svg';
 import dlt from '../../../../assets/icons/cd-delete.svg';
 import arrowLeft from '../../../../assets/icons/cd-arrow-left-1.svg';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useEffect, useRef, useState } from 'react';
-import { BASE_URL } from '../../../../Util/apiCall';
+import { useEffect, useState } from 'react';
 
 const head = {
   orders: [
@@ -47,7 +46,7 @@ const head = {
     'Usage/Limit',
     'Expiry Date',
   ],
-  category: ['Name', 'Slug', 'Post'],
+  category: ['Name', 'Slug'],
   payment: [
     'payment ID',
     'Customer Name',
@@ -68,9 +67,9 @@ const Table = ({ data, paginate, loading, dashboardToogle, modalHandler, getData
   const endIndex = startIndex + 10;
   const [selectedItem, setSelectItem] = useState([]);
 
-useEffect(()=>{
-  getData &&  getData(selectedItem)
-},[selectedItem])
+  useEffect(() => {
+    getData && getData(selectedItem)
+  }, [selectedItem])
 
   const checkboxHandler = (status) => {
     const ele = document.getElementsByName('check');
@@ -79,8 +78,8 @@ useEffect(()=>{
       for (let i = 0; i < ele.length; i++) {
         if (ele[i].type == 'checkbox')
           ele[i].checked = true;
-          setSelectItem(prev => [...prev, ele[i].id])
-     
+        setSelectItem(prev => [...prev, ele[i].id])
+
       }
     } else {
       for (let i = 0; i < ele.length; i++) {
@@ -91,11 +90,11 @@ useEffect(()=>{
     }
 
   }
-  const changeHandler = (event) =>{
-    if(event.target.checked){
+  const changeHandler = (event) => {
+    if (event.target.checked) {
       setSelectItem(prev => [...prev, event.target.id]);
-    }else{
-      const updateItem = selectedItem.filter((item)=> item != event.target.id );
+    } else {
+      const updateItem = selectedItem.filter((item) => item != event.target.id);
       setSelectItem(updateItem);
     }
 
@@ -148,13 +147,13 @@ useEffect(()=>{
                       <td className='px-4 py-[18px] text-black text-sm '>
                         <img
                           className='w-10 h-10 rounded border border-[#0000001c]'
-                          src={BASE_URL + '/api/' + item?.images[0]}
+                          src={`${import.meta.env.VITE_SERVER_URL}/${item?.images[0]}`}
                           alt=''
                         />
                       </td>
                       <td
                         onClick={() => navigate(`/admin/products/${item?.id}`)}
-                        className='px-4 py-[18px] text-black text-sm cursor-pointer line-clamp-2'
+                        className='px-4 py-[18px] text-black text-sm cursor-pointer max-w-md line-clamp-1'
                       >
                         {item?.name}
                       </td>
@@ -189,15 +188,15 @@ useEffect(()=>{
                         <input type='checkbox' name='check' className='accent-yellow-300' />
                       </td>
                       <td className='px-4 py-[18px] text-black text-sm '>
-                        #{item?.id}
+                        #{item?.orderNumber}
                       </td>
                       <td
                         onClick={() => navigate(`/admin/orders/${item?.id}`)}
-                        className='px-4 py-[18px] text-black text-sm cursor-pointer'
+                        className='px-4 py-[18px] text-black text-sm cursor-pointer max-w-md line-clamp-1  '
                       >
                         {item?.products?.length > 0
                           ? item?.products[0]?.product?.name
-                          : ''}
+                          : item?.requests?.length > 0 ? item?.requests[0]?.request?.name : 'No name available'}
                       </td>
                       <td className='px-4 py-[18px] text-black text-sm '>
                         {item?.date && new Intl.DateTimeFormat('en-US', {
@@ -213,7 +212,7 @@ useEffect(()=>{
                         <Badge text={item?.status} styles='' />{' '}
                       </td>
                       <td className='px-4 py-[18px] text-black text-sm '>
-                        {item?.products?.length}
+                        {item?.products?.length + item?.requests?.length}
                       </td>
                       <td className='px-4 py-[18px] text-black text-sm '>
                         {item?.total} Tk
@@ -247,14 +246,14 @@ useEffect(()=>{
                       className='border-y border-[#0000001c] hover:bg-[#FEF9DC]'
                     >
                       <td className='text-left py-[10px] pl-4 w-[10px]'>
-                        <input type='checkbox' name='check' className='accent-yellow-300' />
+                        <input onChange={changeHandler} id={item?.id} type='checkbox' name='check' className='accent-yellow-300' />
                       </td>
                       <td className='px-4 py-[18px] text-black text-sm '>
-                        #{item?.id}
+                        #{item?.requestNumber}
                       </td>
                       <td
                         onClick={() => navigate(`/admin/request/${item?.id}`)}
-                        className='px-4 py-[18px] text-black text-sm cursor-pointer'
+                        className='px-4 py-[18px] text-black text-sm cursor-pointer max-w-md line-clamp-1'
                       >
                         {item?.name}
                       </td>
@@ -294,16 +293,14 @@ useEffect(()=>{
 
                       <td
                         onClick={() => selectHandler(item.id)}
-                        className='px-4 py-[18px] text-black text-sm cursor-pointer line-clamp-2'
+                        className='px-4 py-[18px] text-black text-sm cursor-pointer max-w-md line-clamp-1'
                       >
                         {item.name}
                       </td>
                       <td className='px-4 py-[18px] text-black text-sm '>
                         {item.slug}
                       </td>
-                      <td className='px-4 py-[18px] text-black text-sm '>
-                        {item.post}
-                      </td>
+
                     </tr>
                   ))
                 }
@@ -320,7 +317,7 @@ useEffect(()=>{
 
                       <td
                         onClick={() => selectHandler(item.id)}
-                        className='px-4 py-[18px] text-black text-sm cursor-pointer line-clamp-2'
+                        className='px-4 py-[18px] text-black text-sm cursor-pointer max-w-md line-clamp-1'
                       >
                         {item?.fullName}
                       </td>
@@ -339,28 +336,28 @@ useEffect(()=>{
                     </tr>
                   ))}
 
-                  {dashboardToogle === 'customerDetails' && data?.docs?.map((item, index) => (
-                    <tr
-                      key={index}
-                      className='border-y border-[#0000001c] hover:bg-[#FEF9DC]'
+                {dashboardToogle === 'customerDetails' && data?.docs?.map((item, index) => (
+                  <tr
+                    key={index}
+                    className='border-y border-[#0000001c] hover:bg-[#FEF9DC]'
+                  >
+                    <td className='text-left py-[10px] pl-4 w-[10px]'>
+                      <input type='checkbox' className='accent-yellow-300' />
+                    </td>
+                    <td
+                      onClick={() => selectHandler(item.id)}
+                      className='px-4 py-[18px] text-black text-sm cursor-pointer max-w-md line-clamp-1'
                     >
-                      <td className='text-left py-[10px] pl-4 w-[10px]'>
-                        <input type='checkbox' className='accent-yellow-300' />
-                      </td>
-                      <td
-                        onClick={() => selectHandler(item.id)}
-                        className='px-4 py-[18px] text-black text-sm cursor-pointer line-clamp-2'
-                      >
-                        {item?.products?.length > 0 ? item?.products[0]?.product?.name : item?.requests?.length > 0 ? item?.requests[0]?.request?.name : ''}
-                      </td>
-                      <td className='px-4 py-[18px] text-black text-sm '>
-                        {item?.status}
-                      </td>
-                      <td className='px-4 py-[18px] text-black text-sm '>
-                        {item?.total}
-                      </td>
-                    </tr>
-                  ))}
+                      {item?.products?.length > 0 ? item?.products[0]?.product?.name : item?.requests?.length > 0 ? item?.requests[0]?.request?.name : ''}
+                    </td>
+                    <td className='px-4 py-[18px] text-black text-sm '>
+                      {item?.status}
+                    </td>
+                    <td className='px-4 py-[18px] text-black text-sm '>
+                      {item?.total}
+                    </td>
+                  </tr>
+                ))}
 
                 {location === 'discount' &&
                   data?.docs?.map((item, index) => (
@@ -374,7 +371,7 @@ useEffect(()=>{
 
                       <td
                         onClick={() => selectHandler(item?.id)}
-                        className='px-4 py-[18px] text-black text-sm cursor-pointer line-clamp-2'
+                        className='px-4 py-[18px] text-black text-sm cursor-pointer max-w-md line-clamp-1'
                       >
                         {item?.code}
                       </td>
@@ -405,10 +402,11 @@ useEffect(()=>{
       </table>
       {
         //Pagination for  category and subcategory
-        location === 'category' && (
+        (location === 'category' && data?.docs?.length !== 0) && (
           <div className='flex justify-between items-center py-6 px-4'>
             <p className='text-[#475569] text-sm'>
-              Showing {data?.docs?.slice(startIndex, endIndex).length} of{' '}
+
+              Showing {currentPage === 1 ? '1' : ((currentPage - 1) * 10) + 1} -  {currentPage === 1 ? data?.docs?.slice(startIndex, endIndex).length : ((currentPage - 1) * 10) + data?.docs?.slice(startIndex, endIndex).length} of{' '}
               {data?.docs?.length} results
             </p>
             <div className='flex'>
@@ -430,10 +428,10 @@ useEffect(()=>{
           </div>
         )
       }
-      {(location !== 'category' && loading === false) && (
+      {(location !== 'category' && loading === false && data?.docs?.length !== 0) && (
         <div className='flex justify-between items-center py-6 px-4'>
           <p className='text-[#475569] text-sm'>
-            Showing {data?.page === 1 ? 1 : ((data?.page - 1) * 10)} - {data?.page === 1 ? data?.docs?.length : ((data?.page - 1) * 10) + data?.docs?.length} of {data?.totalDocs} results
+            Showing {data?.page === 1 ? 1 : (((data?.page - 1) * 10) + 1)} - {data?.page === 1 ? data?.docs?.length : ((data?.page - 1) * 10) + data?.docs?.length} of {data?.totalDocs} results
           </p>
           <div className='flex'>
             <button

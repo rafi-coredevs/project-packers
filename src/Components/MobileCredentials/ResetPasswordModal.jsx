@@ -10,7 +10,6 @@
 import { useFormik } from 'formik';
 import Input from '../UiElements/Input/Input';
 import { changePassword } from '../../Util/ValidationSchema';
-import { postApi } from '../../Util/apiCall';
 import Button from '../UiElements/Buttons/Button';
 import { useState } from 'react';
 import { terminal } from '../../contexts/terminal/Terminal';
@@ -26,21 +25,7 @@ const ResetPasswordModal = ({ data, getResponse, stateHandler, onClose }) => {
 		validationSchema: changePassword,
 		onSubmit: (values) => {
 			setIsSubmit(true);
-			// resetForm.resetForm();
-			// postApi("/user/resetpass", {
-			//   otp: data.otp,
-			//   email: data.email,
-			//   token: data.data.token,
-			//   password: values.password,
-			// })
-			//   .then((res) => {
-			//     if (res.status !== 200) {
-			//       resetForm.setFieldError("password", "something went wrong");
-			//       resetForm.setFieldError("confirmPassword", "something went wrong");
-			//     } else {
-			//       getResponse({ ...res, component: "account" });
-			//     }
-			//   })
+
 			terminal
 				.request({
 					name: 'resetPassword',

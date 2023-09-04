@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import toaster from "../Util/toaster";
-import icon from "../assets/icons/product-ok.svg";
 import { useFormik } from "formik";
 import Modal from '../Components/UiElements/Modal/Modal'
 import Input from "../Components/UiElements/Input/Input";
@@ -9,12 +8,13 @@ import Button from "../Components/UiElements/Buttons/Button";
 import { checkoutSchema } from "../Util/ValidationSchema";
 import OrderSuccessModal from "../Components/OrderSuccessModal/OrderSuccessModal";
 import { terminal } from "../contexts/terminal/Terminal";
+
 const Checkout = () => {
   let totalPrice = 0;
-  const [cart, setCart] = useState();
-  const [discount, setDiscount] = useState();
-  const [price, setPrice] = useState();
-  const [subtotal, setSubTotal] = useState();
+  const [cart, setCart] = useState({});
+  const [discount, setDiscount] = useState(null);
+  const [price, setPrice] = useState(null);
+  const [subtotal, setSubTotal] = useState(null);
   const [inside, setInside] = useState(true);
   const [orderModal, setOrderModal] = useState(false);
   const [searchParams] = useSearchParams();
@@ -48,11 +48,14 @@ const Checkout = () => {
           discount?.code &&
           product.product.category.toString() === discount.category &&
           product.product.subcategory.toString() === discount.subcategory
-        ) { 
+        ) {
           discountItemsTotal += total;
         } else {
           nondiscountItemsTotal += total;
         }
+      });
+      cart.requests?.length > 0 && cart?.requests.forEach((request) => {
+        nondiscountItemsTotal = (request.request.price + request.request.tax + request.request.fee) * request.requestQuantity;
       });
       discountamount = discount?.percentage
         ? (discountItemsTotal * discount.percentage) / 100
@@ -354,7 +357,7 @@ const Checkout = () => {
             {/* Subtotal */}
             <div className="flex items-center justify-between border-b py-4 text-base text-slate-600 font-medium">
               <p className="text-start">Subtotal</p>
-              <p className="text-end text-black">৳ {subtotal > 0 ? subtotal : price + totalPrice}tk </p>
+              <p className="text-end text-black">৳ {subtotal}tk </p>
             </div>
           </div>
           <h4 className="flex items-center justify-between pt-4 text-base text-slate-600 font-medium">

@@ -11,7 +11,6 @@ import Input from '../UiElements/Input/Input';
 import { emailSchema } from '../../Util/ValidationSchema';
 import Button from '../UiElements/Buttons/Button';
 import { Link } from 'react-router-dom';
-import { postApi } from '../../Util/apiCall';
 import { useState } from 'react';
 import { terminal } from '../../contexts/terminal/Terminal';
 import toaster from '../../Util/toaster';

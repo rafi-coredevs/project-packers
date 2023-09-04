@@ -1,5 +1,5 @@
 import axios from "axios";
-export const BASE_URL = "http://localhost:4000";
+export const BASE_URL = import.meta.env.VITE_SERVER_URL;
 
 const config = {
   headers: {
@@ -11,7 +11,7 @@ const config = {
 export const postApi = async (endpoint, body) => {
   try {
     const res = await axios.post(
-      `${BASE_URL + "/api" + endpoint}`,
+      `${BASE_URL + "/" + endpoint}`,
       body,
       config
     );
@@ -23,7 +23,7 @@ export const postApi = async (endpoint, body) => {
 
 export const getApi = async (endpoint) => {
   try {
-    const response = await axios.get(`${BASE_URL + "/api" + endpoint}`, config);
+    const response = await axios.get(`${BASE_URL + "/" + endpoint}`, config);
     return response;
   } catch (err) {
     return err;
@@ -33,7 +33,7 @@ export const getApi = async (endpoint) => {
 export const patchApi = async (endpoint, data) => {
   try {
     const response = await axios.patch(
-      `${BASE_URL + "/api" + endpoint}`,
+      `${BASE_URL + "/" + endpoint}`,
       data,
 
       config

@@ -15,9 +15,8 @@ import CustomSelect from "../../Components/UiElements/Input/CustomSelect";
 const Staff = () => {
   useTitle("Staff");
   const [modal, setModal] = useState(false);
-  const [loading, setLoading] = useState(false);
   const [users, setUsers] = useState([])
-  const [user, setUser] = useState();
+  const [user, setUser] = useState([]);
   const [selectedRole, setSelectedRole] = useState({ name: 'Select', value: '', id: 0 })
   useEffect(() => {
     terminal.request({ name: 'allUser', queries: { role: JSON.stringify(['admin', 'staff', 'super-admin']) } }).then(data => data?.docs?.length && setUsers(data.docs))

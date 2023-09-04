@@ -11,7 +11,7 @@ const Breadcrumb = ({title}) => {
         </Link>
         {breadcrumb.map((item, index) => {
           return (
-            <div className="inline" key={index}>
+            <div className="inline line-clamp-1" key={index}>
               {index !== breadcrumb.length  && (
                 <span className="px-2 text-[#ffffff66]">/</span>
               )}
@@ -24,7 +24,7 @@ const Breadcrumb = ({title}) => {
                 } capitalize`}
                 to={item.url}
               >
-                {title && index === breadcrumb.length - 1 ? title : item.label}
+                <span>{title && index === breadcrumb.length - 1 ? title : item.label}</span>
               </Link>
             </div>
           );

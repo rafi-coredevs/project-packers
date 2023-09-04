@@ -20,7 +20,7 @@ import CustomSelect from "../../../Components/UiElements/Input/CustomSelect";
 
 const MainCategory = () => {
   const [categories, setCategories] = useState([]);
-  const [selected, setSelected] = useState({ name: 'Select', value: null, id: 0 });
+  const [selected, setSelected] = useState({ name: 'Select', value: null, id: null });
   const [isActive, setIsActive] = useState(true);
   useEffect(() => {
     fetchdata();
@@ -37,7 +37,6 @@ const MainCategory = () => {
     validationSchema: categorySchema,
     onSubmit: (values) => {
       terminal.request({ name: 'registerCategory', body: { categoryname: values?.name, categoryslug: values?.slug } }).then(res => res.status === false ? toaster({ type: 'error', message: res?.message }) : fetchdata())
-
     },
   });
   const subCategoryForm = useFormik({
@@ -47,13 +46,19 @@ const MainCategory = () => {
     },
     validationSchema: subCategorySchema,
     onSubmit: (values) => {
-      console.log(values);
-      console.log(selected);
-      terminal.request({ name: 'registerCategory', body: { categoryname: selected?.name, categoryslug: selected?.slug, subcategoryname: values?.name, subcategoryslug: values?.slug } }).then(res => res.status === false ? toaster({ type: 'error', message: res?.message }) : fetchdata());
+      terminal.request({ name: 'registerCategory', body: { categoryname: selected?.name, categoryslug: selected?.slug, subcategoryname: values?.name, subcategoryslug: values?.slug } }).then(res => {
+        res.status === false ? toaster({ type: 'error', message: res?.message }) : (toaster({type:'success',message: 'Sub Category Added'}),fetchdata())
+      });
 
 
     },
   });
+  useEffect(()=>{
+    if(selected.id){
+     categoryHandler(selected.id)
+    }
+
+  },[categories])
 
   const categoryHandler = (id) => setSelected(categories.find(item => item.id === id));
 
@@ -110,7 +115,7 @@ const MainCategory = () => {
             <div className="border border-[#0000001c] rounded-lg p-3 grid gap-3">
               <label className="text-[#475569] text-sm">Parent Category</label>
 
-              <CustomSelect value={selected.name} options={categories} onChange={categoryHandler} bg="white" appearance={"select"} />
+              <CustomSelect value={selected?.name} options={categories} onChange={categoryHandler} bg="white" appearance={"select"} />
 
               <Input
                 styles="basic"

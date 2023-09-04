@@ -4,22 +4,20 @@ import Heading from "../Components/UiElements/Heading/Heading";
 import Button from "../Components/UiElements/Button/Button";
 import Input from "../Components/UiElements/Input/Input";
 import Table from "../Components/UiElements/Table/Table";
-import filter from "../../assets/icons/cd-filter.svg";
 import sort from "../../assets/icons/cd-arrow-data-transfer-vertical-round.svg";
 import search from "../../assets/icons/cd-search2.svg";
-import { getApi } from "../../Util/apiCall";
 import { useTitle } from "../../Components/Hooks/useTitle";
 import { terminal } from "../../contexts/terminal/Terminal";
 import CustomSelect from "../../Components/UiElements/Input/CustomSelect";
 
-const productStatuses = [{ id: 1, name: "All", value: "all" }, { id: 2, name: "Active", value: "active" }, { id: 3, name: "Draft", value: "draft" }, { id: 4, name: "Archived", value: "archive" }]
+const productStatuses = [{ id: 1, name: "All", value: "all" }, { id: 2, name: "Active", value: "active" }, { id: 3, name: "Draft", value: "draft" }, { id: 4, name: "Archived", value: "archived" }]
 
 
 const Products = () => {
   useTitle("Products");
   const [active, setActive] = useState("all");
   const [tableData, setTabledata] = useState([]);
-  const [sortBy, setSortBy] = useState('createdAt:asc');
+  const [sortBy, setSortBy] = useState('createdAt:desc');
   const [loading, setLoading] = useState(true);
   const [selectedProductStatus, setSelectedProductStatus] = useState({ name: 'Select', value: null, id: 0 });
   const [selectedItem, setSelectedItem] = useState([]);
@@ -106,7 +104,7 @@ const Products = () => {
               </div>
             </div>
 
-            <Table type="products" data={tableData} paginate={fetchData} loading={loading} getData={setSelectedItem}/> 
+            <Table type="products" data={tableData} paginate={fetchData} loading={loading} getData={setSelectedItem}/>
           </div>
         </div>
       </div>

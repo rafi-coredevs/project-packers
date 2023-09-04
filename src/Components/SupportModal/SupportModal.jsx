@@ -4,7 +4,7 @@
  * @returns JSX Element
  *
  */
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import supportIcon from "../../assets/icons/cd-customer-support.svg";
 import Input from "../UiElements/Input/Input";
 import Button from "../UiElements/Buttons/Button";
@@ -15,13 +15,18 @@ import { terminal } from "../../contexts/terminal/Terminal";
 import { useUserCtx } from "../../contexts/user/UserContext";
 import UserIcon from "../UiElements/UserIcon/UserIcon";
 import cancel from '../../assets/icons/cd-cancel-w.svg';
+import loader from '../../assets/icons/cd-reload-white.svg'
 
 const SupportModal = () => {
   const { user } = useUserCtx()
   const [isVisible, setVisible] = useState(false);
   const [chat, setChat] = useState([]);
   const [images, setImages] = useState([])
-  const [support, setSupport] = useState()
+  const [support, setSupport] = useState(null)
+  const [page, setPage] = useState(1)
+  const [totalPage, setTotalPage] = useState(null)
+  const [loading, setLoading] = useState(false)
+  const messageBody = useRef(null)
   const supportForm = useFormik({
     initialValues: {
       name: "",
@@ -29,22 +34,25 @@ const SupportModal = () => {
       type: "",
       message: "",
     },
-    onSubmit: (values) => {
+    onSubmit: (values, { resetForm }) => {
       const data = { message: values.message, type: values.type };
       terminal.request({ name: 'registerSupport', body: { data, images } }).then(data => {
         if (data.id) {
           setVisible(false)
           terminal.request({ name: 'getMessage', params: { id: data.id } }).then(data => {
             if (data.docs) {
-
               setChat(data.docs)
+              setTotalPage(data.totalPages)
+              setPage(data.page)
               setVisible(true)
+              resetForm()
             }
           })
         }
       })
     },
   });
+
   useEffect(() => {
     let id = ''
     isVisible && terminal.request({ name: 'userSupport' }).then(data => {
@@ -53,8 +61,8 @@ const SupportModal = () => {
         id = data.id
         terminal.socket.on('entry')
         terminal.socket.emit('entry', { "entry": true, "room": data.id })
-        terminal.request({ name: 'getMessage', params: { id: data.id }, queries: { limit: 100 } }).then(data => {
-          data.docs?.length > 0 && setChat(data.docs)
+        terminal.request({ name: 'getMessage', params: { id: data.id }, queries: { page: 1 } }).then(data => {
+          data.docs?.length > 0 && setChat(data.docs), setTotalPage(data.totalPages), setPage(data.page)
         })
         terminal.socket.on('message', (data) => {
           if (data.id) {
@@ -78,6 +86,7 @@ const SupportModal = () => {
 
     }
   }, [isVisible])
+
   const handleImage = (event) => {
     const files = event.target.files;
     const filesArray = Array.from(files);
@@ -88,9 +97,40 @@ const SupportModal = () => {
     }
   };
 
+  let throttleTimer;
+  const debounce = (callback, time) => {
+    if (throttleTimer) return;
+    throttleTimer = true;
+    setTimeout(() => {
+      callback();
+      throttleTimer = false;
+    }, time);
+  };
+
+  const handleScroll = () => {
+    if (messageBody.current.scrollTop - messageBody.current.clientHeight + messageBody.current.scrollHeight < 1) {
+      setLoading(true);
+      if (page < totalPage) {
+        const nextPage = page + 1;
+        debounce(() => {
+          terminal.request({ name: 'getMessage', params: { id: support }, queries: { page: nextPage } }).then(data => {
+            if (data.docs?.length > 0) {
+              setChat(prev => [...prev, ...data.docs]);
+            }
+            setLoading(false);
+          });
+        }, 500)
+        setPage(nextPage);
+      } else {
+        setLoading(false);
+      }
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault()
     terminal.request({ name: 'sendMessage', params: { id: support }, body: { data: { message: e.target.message.value } } })
+    e.target.message.value = ''
   }
   return (
     <>
@@ -210,13 +250,19 @@ const SupportModal = () => {
             </Button>
           </form>
         ) : (
-          <div className="w-full h-full">
+          <div className="w-full h-full relative">
             {/* text area */}
-            <div className="w-full h-[22rem] md:h-[38rem]  mb-2 flex flex-col-reverse gap-3 scrollbar overflow-y-auto">
+            {
+              loading &&
+              <div className='absolute flex w-full justify-center text-primary'>
+                <img src={loader} alt="" className='animate-spin' />
+              </div>
+            }
+            <div ref={messageBody} onScroll={handleScroll} className="w-full h-[22rem] md:h-[38rem]  mb-2 flex flex-col-reverse gap-3 scrollbar overflow-y-auto">
               {chat?.map((chat, index) => {
                 return (
                   <div key={index}
-                    className={`flex gap-3 h-fit max-w-[25rem] ${chat.sender?.id === user?.id
+                    className={`flex gap-3 h-fit max-w-[15rem] ${chat.sender?.id === user?.id
                       ? "ml-auto flex-row-reverse"
                       : ""
                       }`}
@@ -235,7 +281,14 @@ const SupportModal = () => {
                           {chat?.name}
                         </p>
                         <p className="text-[#64748B] text-xs font-semibold">
-                          {chat?.time}
+                          {new Intl.DateTimeFormat('en-US', {
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric',
+                            hour: 'numeric',
+                            minute: 'numeric',
+                            hour12: true,
+                          }).format(new Date(chat?.time))}
                         </p>
                       </div>
                       <div
