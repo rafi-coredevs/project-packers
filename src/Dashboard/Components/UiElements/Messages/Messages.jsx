@@ -70,6 +70,7 @@ const Messages = ({ activeChat, chatCardHandler, setSupportData }) => {
                 setPage(nextPage);
             } else {
                 setLoading(false);
+                toaster({ type: 'error', message: 'No more messages available' })
             }
         }
     };
