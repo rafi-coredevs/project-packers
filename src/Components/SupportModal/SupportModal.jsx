@@ -1,14 +1,4 @@
 /**
- * Support() return Support Modal
- *
- * @returns JSX Element
- *
- */
-import { useEffect, useRef, useState } from "react";
-import supportIcon from "../../assets/icons/cd-customer-support.svg";
-import Input from "../UiElements/Input/Input";
-import Button from "../UiElements/Buttons/Button";
-/**
  * SupportModal()
  * This Element only shows when user logged in
  * 
@@ -17,6 +7,10 @@ import Button from "../UiElements/Buttons/Button";
  * @return JSX Element.
  */
 
+import { useEffect, useRef, useState } from "react";
+import supportIcon from "../../assets/icons/cd-customer-support.svg";
+import Input from "../UiElements/Input/Input";
+import Button from "../UiElements/Buttons/Button";
 import { useFormik } from "formik";
 import attachment from '../../assets/icons/attachment.svg'
 import toaster from "../../Util/toaster";
