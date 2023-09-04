@@ -15,10 +15,9 @@ const Shop = () => {
   const [query, setQuery] = useState(null);
   const [page, setPage] = useState(1);
 
-  console.log('shop', data);
 
   useEffect(() => {
-    fetchdata();
+    fetchData();
   }, [query]);
 
   useEffect(() => {
@@ -30,9 +29,9 @@ const Shop = () => {
   }, []);
   useEffect(() => {
 
-    fetchdata(page)
+    fetchData(page)
   }, [page])
-  const fetchdata = (page = 1) => {
+  const fetchData = (page = 1) => {
     setLoading(true);
     terminal.request({ name: 'allProduct', queries: { page: page, limit: 9, ...query } })
       .then(res => {
@@ -42,7 +41,7 @@ const Shop = () => {
 
   }
 
-  const refatch = (data) => {
+  const reFetch = (data) => {
     setQuery(data);
   }
 
@@ -55,7 +54,7 @@ const Shop = () => {
             <h3 className="font-semibold text-[28px] text-secondary mb-7">
               Trending Items
             </h3>
-            <Category data={categories} refatch={refatch} />
+            <Category data={categories} reFetch={reFetch} />
           </div>
           <div className="lg:w-3/4 flex">
             <div className="w-full h-full">

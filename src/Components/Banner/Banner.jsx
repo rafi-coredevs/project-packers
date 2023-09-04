@@ -65,7 +65,7 @@ const Banner = () => {
         <span className="absolute w-[90rem] h-[90rem] rounded-full border border-white opacity-25"></span>
       </div>
       <div className="container mx-auto grid grid-cols-2 relative z-20 justify-center flex-wrap ">
-        <div className="pt-24 pb-0 sm:pb-24 px-4 col-span-2 sm:col-span-1 ">
+        <div className="pt-24 pb-0 sm:pb-24 px-4 col-span-2 lg:col-span-1 ">
           <div className="">
             <p className="font-sans font-bold md:text-[52px] text-[32px] text-white">
               Shop products from USA and save up to 40%
@@ -110,7 +110,7 @@ const Banner = () => {
           </div>
         </div>
 
-        <div className="col-span-2 sm:col-span-1">
+        <div className="col-span-2 lg:col-span-1">
           <img className="w-full h-auto" src={image} />
         </div>
       </div>

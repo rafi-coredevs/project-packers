@@ -15,7 +15,6 @@ import toaster from '../../Util/toaster';
 import { terminal } from '../../contexts/terminal/Terminal';
 const NewPassword = ({ data, getResponse }) => {
 	const [isSubmit, setIsSubmit] = useState(false);
-	console.log(data);
 
 	const resetForm = useFormik({
 		initialValues: {
@@ -25,11 +24,6 @@ const NewPassword = ({ data, getResponse }) => {
 		validationSchema: changePassword,
 		onSubmit: (values) => {
 			setIsSubmit(true);
-			console.log({
-				newpassword: values.newPassword,
-				token: data.data.token,
-				otp: data.otp,
-			});
 			terminal
 				.request({
 					name: 'resetPassword',

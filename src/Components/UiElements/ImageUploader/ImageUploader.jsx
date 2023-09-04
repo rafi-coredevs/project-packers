@@ -66,7 +66,6 @@ const ImageUploader = ({
     setAllImages((prev) => [...prev, file]);
   };
 
-  console.log(allImages);
 
   return (
     <>

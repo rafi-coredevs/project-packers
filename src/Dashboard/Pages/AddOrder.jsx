@@ -274,8 +274,8 @@ const AddOrder = () => {
                                 {
                                     discount?.code ?
                                         <>
-                                            <button className='text-emerald-500 underline text-sm cursor-default'>
-                                                Discount
+                                            <button onClick={removeDiscount} className='text-emerald-500 underline text-sm cursor-default'>
+                                                Remove Discount
                                             </button>
                                             <p className=''>
                                                 ৳
