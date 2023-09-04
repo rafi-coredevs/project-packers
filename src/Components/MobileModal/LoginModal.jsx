@@ -38,7 +38,6 @@ const LoginModal = ({ show, onClose }) => {
 			}
 			setActiveScreen(res.component);
 			setData(res);
-			console.log(res);
 		} else {
 			toast.error(res.data, {
 				style: {

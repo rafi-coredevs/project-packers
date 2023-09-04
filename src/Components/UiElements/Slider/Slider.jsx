@@ -6,8 +6,6 @@ const Slider = ({items:cards}) => {
 
   const [currentIndex, setCurrentIndex] = useState(null);
 
-console.log(cards);
-
   const handleNextClick = () => {
     setCurrentIndex((prevIndex) => (prevIndex + 2 < cards.length ? prevIndex + 2 : 0));
   };

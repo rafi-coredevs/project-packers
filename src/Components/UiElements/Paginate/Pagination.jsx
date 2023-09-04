@@ -1,28 +1,16 @@
 import React from "react";
-
 import arrow_left from "../../../assets/icons/cd-arrow-left-1.svg";
-
 import arrow_right from "../../../assets/icons/cd-arrow-right-2.svg";
 
 /**
-
 * Pagination Component
-
 * @param {Number} page Current Page Number
-
 * @param {Number} setPage Set Current Page Number
-
 * @param {Number} pageLimit Max Page Number
-
 * @returns Pagination Component
-
 */
 
-const Pagination = ({
-  page = Number,
-  setPage = Number,
-  pageLimit = Number,
-}) => {
+const Pagination = ({ page, setPage, pageLimit }) => {
   const getPageNumbers = () => {
     const pageNumbers = [];
 
@@ -67,8 +55,7 @@ const Pagination = ({
       </button>
 
       {buttonsToShow.map((num, i) => (
-        <div key={i} className={`h-12 w-12 flex items-center justify-center  text-xs lg:text-sm rounded-full ${
-            page === num ? "bg-primary" : "bg-[#CFF6EF]"
+        <div key={i} className={`h-12 w-12 flex items-center justify-center  text-xs lg:text-sm rounded-full ${page === num ? "bg-primary" : "bg-[#CFF6EF]"
           }`}>
           <button
             key={i}
