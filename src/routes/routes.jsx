@@ -39,6 +39,7 @@ import { terminal } from "../contexts/terminal/Terminal";
 import ComingSoon from "../pages/ComingSoon";
 import ErrorPage from "../pages/ErrorPage";
 import UserOrderDetails from "../pages/UserOrderDetails";
+import AddOrder from "../Dashboard/Pages/AddOrder";
 
 export const router = createBrowserRouter([
   {
@@ -140,6 +141,14 @@ export const router = createBrowserRouter([
         element: (
           <ProtectedRoute accessTo={"order"}>
             <AllOrders />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "addorder",
+        element: (
+          <ProtectedRoute accessTo={"order"}>
+            <AddOrder />
           </ProtectedRoute>
         ),
       },

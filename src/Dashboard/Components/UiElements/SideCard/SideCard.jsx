@@ -81,10 +81,10 @@ const SideCard = ({
 					<input
 						type='text'
 						name={name}
-            readOnly
+						readOnly
 						className=' text-emerald-500'
 						value={email || 'No Details'}
-						 
+
 					/>
 					{email && <CopyButton textToCopy={email} />}
 				</div>
@@ -118,6 +118,7 @@ const SideCard = ({
 						<input
 							type='text'
 							name='address'
+							placeholder='address'
 							onChange={formikProps.handleChange}
 							onBlur={formikProps.handleBlur}
 							value={formikProps.values.address}
@@ -126,6 +127,7 @@ const SideCard = ({
 						<input
 							type='text'
 							name='city'
+							placeholder='city'
 							onChange={formikProps.handleChange}
 							onBlur={formikProps.handleBlur}
 							value={formikProps.values.city}
@@ -134,6 +136,7 @@ const SideCard = ({
 						<input
 							type='text'
 							name='area'
+							placeholder='area'
 							onChange={formikProps.handleChange}
 							onBlur={formikProps.handleBlur}
 							value={formikProps.values.area}
@@ -142,6 +145,7 @@ const SideCard = ({
 						<input
 							type='text'
 							name='zip'
+							placeholder='zip'
 							onChange={formikProps.handleChange}
 							onBlur={formikProps.handleBlur}
 							value={formikProps.values.zip}
