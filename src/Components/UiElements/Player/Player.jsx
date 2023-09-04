@@ -15,7 +15,7 @@ const Player = ({ url }) => {
   };
   return (
     <div className="relative">
-      <video ref={videoRef} width="100%" height="100%">
+      <video ref={videoRef} width="100%" height="100%" loop={true}>
         <source src={url} type="video/mp4" />
       </video>
       {

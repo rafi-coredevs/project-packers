@@ -20,11 +20,14 @@ const Carousel = ({ isHome = Boolean }) => {
 		{
 			videoId: 'V9Z7_6HCPsA',
 		},
+		{
+			videoId: 'V9Z7_6HCPsA',
+		}
 	];
 
 	return (
 		<section
-			className={`max-w flex gap-2 md:gap-[1.8rem] w-full px-5 overflow-scroll no-scrollbar 
+			className={`container flex gap-2 lg:gap-[1.8rem] w-full px-5 overflow-scroll no-scrollbar 
                  ${isHome && '-mb-12 relative -top-10 z-20'}`}
 		>
 			{slides?.map((slide, i) => (
