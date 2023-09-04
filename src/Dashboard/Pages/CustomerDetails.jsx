@@ -69,7 +69,7 @@ const CustomerDetails = () => {
             <div className="grid gap-3 relative overflow-x-auto">
               {/* table header */}
               <div className="flex justify-between">
-                <div className=" my-auto">
+                <div className="my-auto">
                   <button
                     onClick={() => tableButtonHandler("all")}
                     className={`py-2 px-3 text-[#475569] text-xs font-semibold ${
