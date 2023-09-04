@@ -142,6 +142,17 @@ export const user = {
             email: "Please provide email address"
         }
     },
+    resendOTP: {
+        method: "POST",
+        uri: "user/resendotp",
+        body: {
+            token: undefined
+        },
+        suggestions: {
+            raw: "A raw example of payload: {token:adaadadajsmijsaimooijihjisjposannjdpoisalkad}",
+            token: "Please provide token"
+        }
+    },
     verifyOTP: {
         method: "POST",
         uri: "user/verifyotp",

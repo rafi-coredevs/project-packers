@@ -12,11 +12,14 @@ import Input from '../UiElements/Input/Input';
 import Button from '../UiElements/Buttons/Button';
 import image from '../../assets/icons/otp.svg';
 import { useFormik } from 'formik';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { terminal } from '../../contexts/terminal/Terminal';
 import toaster from '../../Util/toaster';
 const Otp = ({ data, getResponse }) => {
 	const [isSubmit, setIsSubmit] = useState(false);
+	const [minute,setMinute]=useState(4);
+	const [second,setSecond]=useState(60);
+	const [isDisable,setIsdisable]= useState(true)
 	const otpForm = useFormik({
 		initialValues: {
 			field1: '',
@@ -57,6 +60,46 @@ const Otp = ({ data, getResponse }) => {
 			}
 		}
 	};
+	useEffect(() => {
+		const interval = setInterval(() => {
+		  if (minute === 0 && second === 0) {
+			clearInterval(interval);
+			
+			setIsdisable(false)
+		  } else {
+			if (second === 0) {
+			  setMinute(minute - 1);
+			  setSecond(59);
+			} else {
+			  setSecond(second - 1);
+			}
+		  }
+		}, 1000);
+	
+		
+		return () => clearInterval(interval);
+	  }, [minute, second]);
+	  const resendHandler = () =>{
+		setIsdisable(true)
+		
+		terminal
+		.request({ name: 'resendOTP', body: {token:data?.token} })
+		.then((res) => {
+			if (res.status === false) {
+				setIsdisable(false)
+				toaster({ type: 'error', message: res.message });
+			} else {
+				data.token=res.token
+				setMinute(5)
+				toaster({ type: 'success', message: 'OTP resend successfull' });
+				
+			}
+		})
+		
+		
+
+
+	  }
 
 	return (
 		<>
@@ -131,6 +174,7 @@ const Otp = ({ data, getResponse }) => {
 					>
 						{isSubmit ? 'Submitting...' : 'Verify Account'}
 					</Button>
+					<p className='text-white font-sans text-center pt-[4rem]'>Your code will expire in {minute}:{second}s  <button type='button' disabled={isDisable} onClick={resendHandler} className='text-primary cursor-pointer'>Resend a new code.</button></p>
 				</form>
 			</div>
 			<div className='flex flex-col  w-full h-full justify-center items-center'>
