@@ -38,6 +38,7 @@ const Login = () => {
 					toaster({ type: 'error', message: data.message });
 				} else {
 					setUser(data);
+					console.log("role: ",JSON.stringify(data))
 
 					if (sendRequest) {
 						terminal
@@ -50,7 +51,7 @@ const Login = () => {
 								navigate('/', { state: true });
 							});
 					} else {
-						destinedTo ? navigate(destinedTo) : navigate('/');
+						destinedTo ? navigate(destinedTo) : data.role=== "user" ? navigate('/'): navigate("/admin");
 					}
 				}
 			});
@@ -61,7 +62,7 @@ const Login = () => {
 			<div className='container mx-auto grid grid-cols-1 sm:grid-cols-2 relative z-20 justify-center divide-x divide-[#ffffff1a] flex-wrap'>
 				<div className='w-full sm:max-w-[30vw]'>
 					<p className='text-white text-[52px] font-sora font-extrabold'>
-						Welcome Back {JSON.stringify(destinedTo)}
+						Welcome Back
 					</p>
 					<form
 						className='flex flex-col gap-5'

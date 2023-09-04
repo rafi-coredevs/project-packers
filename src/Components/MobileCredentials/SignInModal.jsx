@@ -1,27 +1,38 @@
-/**
- * SignInModal() returns JSX Element
- * This function for user login
- *
- * @param {function} stateHandler takes string value to navigate state
- * @param {function} onClose callback function to close modal
- *
- * @returns JSX element
- */
 import { useFormik } from 'formik';
 import Button from '../UiElements/Buttons/Button';
 import Input from '../UiElements/Input/Input';
 import { loginSchema } from '../../Util/ValidationSchema';
 import toaster from '../../Util/toaster';
 import { useUserCtx } from '../../contexts/user/UserContext';
-const SignInModal = ({ stateHandler, onClose }) => {
+import { terminal } from '../../contexts/terminal/Terminal';
+
+/**
+ * SignInModal component for user login.
+ *
+ * @param {Function} stateHandler - Callback function to change the modal state.
+ * @param {Function} onClose - Callback function to close the modal.
+ * @param {Object} requestData - Data associated with the request.
+ * @param {Function} setSuccessModalState - Callback to set the state of the success modal.
+ * @returns {JSX.Element} - SignInModal component JSX
+ */
+const SignInModal = ({
+	stateHandler,
+	onClose,
+	requestData,
+	setSuccessModalState,
+}) => {
+
+	/**
+	 * Click handler for navigating between modal screens.
+	 * @param {string} state - The state to navigate to.
+	 */
 	const clickHandler = (state) => {
 		stateHandler(state);
 	};
 
-
-
 	const { Login, setUser } = useUserCtx();
 
+	// initialize formik for signIn modal
 	const loginForm = useFormik({
 		initialValues: {
 			email: '',
@@ -39,29 +50,30 @@ const SignInModal = ({ stateHandler, onClose }) => {
 			Login(data).then((data) => {
 				setUser(data);
 
-				// check is loggedIn successful or not
+				// check loggedIn successful or not
 				if (data.status === false) {
 					// show toaster
 					toaster({ type: 'error', message: data.message });
 				} else {
-					// check does login page need hit any api after login or not
-					// if (sendRequest) {
-					//   // hitting api for register request
-					//   plane
-					//     .request({
-					//       name: 'registerRequest',
-					//       body: requestItemData,
-					//     })
-					//     .then((d) => {
-					//       // console.log('item request response from login', d);
-					//       navigate('/home', { state: true });
-					//     });
-					// } else {
-					//   navigate(path);
-					// }
-					onClose();
+
+					// check request data
+					if (requestData) {
+						terminal
+							.request({
+								name: 'registerRequest',
+								body: requestData,
+							})
+							.then((d) => {
+								if (d.id) {
+									onClose();
+									setSuccessModalState('success');
+								}
+							}).catch((err)=>console.error("Error when request register in signIn modal", err ));
+					} else {
+						onClose();
+					}
 				}
-			});
+			}).catch(err=>console.error('Error sign in modal', err))
 		},
 	});
 

@@ -2,7 +2,7 @@ import { useState } from "react";
 import icon from '../../../assets/icons/cd-filter.svg';
 import arrow from '../../../assets/icons/cd-arrow-right-2.svg';
 
-const Category = ({ data, refatch }) => {
+const Category = ({ data, reFetch }) => {
   const [expandedCategory, setExpandedCategory] = useState(null);
   const [categoryHandler, setCategoryHandler] = useState(false)
   const toggleSubCategories = (categoryId) => {
@@ -10,14 +10,13 @@ const Category = ({ data, refatch }) => {
   };
 
   const handleCategory = (data) => {
-    refatch(data)
+    reFetch(data)
 
   }
 
-  const handleCategoryfetch = (category)=>{
-    console.log(category);
+  const handleCategoryFetch = (category)=>{
     if(category.subcategory.length===0) {
-      refatch({ category: category.id })
+      reFetch({ category: category.id })
     }
   }
 
@@ -33,7 +32,7 @@ const Category = ({ data, refatch }) => {
             }`}
           onClick={() => toggleSubCategories(category.id)}
         >
-          <p className="" onClick={ ()=>handleCategoryfetch(category)}>
+          <p className="" onClick={ ()=>handleCategoryFetch(category)}>
 
             {category.name}
           </p>

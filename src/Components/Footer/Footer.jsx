@@ -143,7 +143,7 @@ const Footer = () => {
         </div>
         <div className="flex w-full justify-between flex-wrap px-5 sm:px-0 flex-col sm:flex-row py-4">
           <p className="font-sans font-normal text-base text-[#ffffffb0] ">
-            © Copyright 2023 Project Packers
+            © Copyright {`${new Date().getFullYear()}`} Project Packers
           </p>
           <div className="pt-5 sm:pt-0 flex-wrap flex gap-5">
             <Link to="/">
