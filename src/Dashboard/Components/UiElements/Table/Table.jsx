@@ -56,15 +56,18 @@ const head = {
   ],
 };
 
-const Table = ({ data, paginate, loading, dashboardToogle, modalHandler, getData }) => {
+const Table = ({ data, paginate, loading, dashboardToogle, modalHandler, getData, isCategory }) => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const location = pathname.split('/')[pathname.split('/').length - 1];
   const tableHeadData = head[dashboardToogle || location];
   const [currentPage, setCurrentPage] = useState(1);
+  const [currentPageSub, setCurrentPageSub] = useState(1);
   const totalPages = Math.ceil(data?.docs?.length / 10);
   const startIndex = (currentPage - 1) * 10;
+  const startIndexSub = (currentPageSub - 1) * 10;
   const endIndex = startIndex + 10;
+  const endIndexSub = startIndexSub + 10;
   const [selectedItem, setSelectItem] = useState([]);
 
   useEffect(() => {
@@ -282,7 +285,7 @@ const Table = ({ data, paginate, loading, dashboardToogle, modalHandler, getData
                 {
                   //Category and Subcategory Data Table
                   location === 'category' &&
-                  data?.docs?.slice(startIndex, endIndex).map((item, index) => (
+                  data?.docs?.slice(isCategory?startIndex:startIndexSub, isCategory?endIndex:endIndexSub).map((item, index) => (
                     <tr
                       key={index}
                       className='border-y border-[#0000001c] hover:bg-[#FEF9DC]'
@@ -348,13 +351,25 @@ const Table = ({ data, paginate, loading, dashboardToogle, modalHandler, getData
                       // onClick={() => selectHandler(item.id)}
                       className='px-4 py-[18px] text-black text-sm cursor-pointer max-w-md line-clamp-1'
                     >
-                      {item?.products?.length > 0 ? item?.products[0]?.product?.name : item?.requests?.length > 0 ? item?.requests[0]?.request?.name : ''}
+                      {(() => {
+                        const firstProductName = item?.products?.length > 0
+                          ? item?.products[0]?.product?.name
+                          : item?.requests?.length > 0
+                            ? item?.requests[0]?.request?.name
+                            : '';
+
+                        const formattedProductName = firstProductName.length > 45
+                          ? firstProductName.slice(0, 50) + ' ..... '
+                          : firstProductName;
+
+                        return formattedProductName;
+                      })()}
                     </td>
                     <td className='px-4 py-[18px] text-black text-sm '>
-                      {item?.status}
+                      <Badge text={item?.status} />{' '}
                     </td>
                     <td className='px-4 py-[18px] text-black text-sm '>
-                      {item?.total}
+                    ৳{item?.total}
                     </td>
                   </tr>
                 ))}
@@ -402,13 +417,17 @@ const Table = ({ data, paginate, loading, dashboardToogle, modalHandler, getData
       </table>
       {
         //Pagination for  category and subcategory
-        (location === 'category' && data?.docs?.length !== 0) && (
+        (location === 'category'&& data?.docs && data?.docs?.length !== 0) && (
           <div className='flex justify-between items-center py-6 px-4'>
-            <p className='text-[#475569] text-sm'>
-
+            {isCategory? <p className='text-[#475569] text-sm'>
               Showing {currentPage === 1 ? '1' : ((currentPage - 1) * 10) + 1} -  {currentPage === 1 ? data?.docs?.slice(startIndex, endIndex).length : ((currentPage - 1) * 10) + data?.docs?.slice(startIndex, endIndex).length} of{' '}
+              {data?.docs?.length} results</p> 
+              :
+              <p className='text-[#475569] text-sm'>
+
+              Showing {currentPageSub === 1 ? '1' : ((currentPageSub - 1) * 10) + 1} -  {currentPageSub === 1 ? data?.docs?.slice(startIndexSub, endIndexSub).length : ((currentPageSub - 1) * 10) + data?.docs?.slice(startIndexSub, endIndexSub).length} of{' '}
               {data?.docs?.length} results
-            </p>
+            </p>}
             <div className='flex'>
               <button
                 disabled={currentPage === 1}

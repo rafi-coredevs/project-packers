@@ -16,13 +16,13 @@ const Home = () => {
     terminal.request({name: 'allProduct', queries : { limit: 8}})
     .then(res=> {
       setProducts(res?.docs);
-    })
+    }).catch((err)=>console.error("Error in home", err ));
 
   }, []);
   return (
     <>
       <Banner />
-      <div className="container mx-auto -mt-[13rem]">
+      <div className="container mx-auto mt-[-11rem] md:-mt-[12rem]">
         <Carousel isHome={true} />
       </div>
       <Brands data={brand} />

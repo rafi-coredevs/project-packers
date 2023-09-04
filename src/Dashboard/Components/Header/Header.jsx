@@ -13,6 +13,7 @@ import UserIcon from "../../../Components/UiElements/UserIcon/UserIcon";
 const Header = () => {
   const [notifyState, setNotifyState] = useState(false);
   const { user, Logout } = useUserCtx()
+  const [logoutDropD, setLogoutDropD] = useState(false)
   const [notifications, setNotifications] = useState([])
   useEffect(() => {
     user?.id && terminal.request({ name: 'getNotification' }).then(data => data.docs && setNotifications(data.docs))
@@ -72,15 +73,21 @@ const Header = () => {
               />
             </div>
             <div className="relative">
-              <Link
-                to="/admin"
+              <button
+                onClick={() => setLogoutDropD(!logoutDropD)}
                 className="flex gap-2 items-center cursor-pointer"
               >
                 <UserIcon name={user?.fullName} />
                 <p className="font-sans text-secondary text-sm font-semibold">
                   {user?.fullName || "User"}
                 </p>
-              </Link>
+              </button>
+              {logoutDropD && <div className="bg-white py-6 shadow-md shadow-primary px-2 border rounded-lg absolute top-10 left-0 right-0  mt-1">
+
+                <button onClick={() => { Logout(); navigate("/"); }} className="bg-primary px-2 w-full rounded-md py-2 text-secondary font-medium">Logout</button>
+              </div>
+
+              }
             </div>
             <Dropdown type="logout" isOpen={true} />
           </div>

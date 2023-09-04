@@ -33,7 +33,7 @@ const Signup = () => {
 				res.status === false
 					? toaster({ type: 'error', message: res.message })
 					: navigate('/login');
-			});
+			}).catch((err)=>console.error("Error in sign up", err ));
 		},
 	});
 
@@ -58,7 +58,7 @@ const Signup = () => {
 				<div className='flex flex-col  w-full h-full justify-center items-center'>
 					<div className='w-full sm:max-w-[30vw]'>
 						<p className='text-white text-[52px] font-sora font-extrabold'>
-							Welcome Back
+							Sign Up
 						</p>
 						<form
 							className='flex flex-col gap-5'

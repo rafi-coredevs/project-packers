@@ -13,6 +13,7 @@ import Button from "../../Dashboard/Components/UiElements/Button/Button";
 import toaster from "../../Util/toaster";
 import CustomSelect from "../../Components/UiElements/Input/CustomSelect";
 import DateRangeSelector from "../Components/UiElements/DateSelector/DateRangesSelector";
+import { Link } from "react-router-dom";
 
 const orderStatuses = [
   { id: 1, name: "All", value: "all" },
@@ -75,27 +76,27 @@ const AllOrders = () => {
         res?.status === false
           ? []
           : [
-              {
-                title: "Total Cost",
-                total: res?.totalCost,
-              },
-              {
-                title: "Total Revenue",
-                total: res?.totalRevenue,
-              },
-              {
-                title: "Total Order",
-                total: res?.totalOrder,
-              },
-              {
-                title: "Completed",
-                total: res?.completedOrder,
-              },
-              {
-                title: "Canceled",
-                total: res?.cancelledOrder,
-              },
-            ]
+            {
+              title: "Total Cost",
+              total: res?.totalCost,
+            },
+            {
+              title: "Total Revenue",
+              total: res?.totalRevenue,
+            },
+            {
+              title: "Total Order",
+              total: res?.totalOrder,
+            },
+            {
+              title: "Completed",
+              total: res?.completedOrder,
+            },
+            {
+              title: "Canceled",
+              total: res?.cancelledOrder,
+            },
+          ]
       )
     );
   }, []);
@@ -199,6 +200,11 @@ const AllOrders = () => {
       </Modal>
       <Heading title="All Orders">
         <div className="flex gap-1 items-center">
+          <Link to={'/admin/addorder'}>
+            <Button style='primary'>
+              Add Order
+            </Button>
+          </Link>
           <Input
             type="text"
             change={handleSearch}
@@ -223,59 +229,53 @@ const AllOrders = () => {
               <div className="py-2 my-auto">
                 <button
                   onClick={() => tableButtonHandler("all")}
-                  className={`py-2 px-3 text-[#475569] text-xs font-semibold ${
-                    active === "all" ? "bg-[#CFF6EF] rounded" : "bg-transparent"
-                  }`}
+                  className={`py-2 px-3 text-[#475569] text-xs font-semibold ${active === "all" ? "bg-[#CFF6EF] rounded" : "bg-transparent"
+                    }`}
                 >
                   All
                 </button>
                 <button
                   onClick={() => tableButtonHandler("pending")}
-                  className={`py-2 px-3 text-[#475569] text-xs font-semibold ${
-                    active === "pending"
-                      ? "bg-[#CFF6EF] rounded"
-                      : "bg-transparent"
-                  }`}
+                  className={`py-2 px-3 text-[#475569] text-xs font-semibold ${active === "pending"
+                    ? "bg-[#CFF6EF] rounded"
+                    : "bg-transparent"
+                    }`}
                 >
                   Pending
                 </button>
                 <button
                   onClick={() => tableButtonHandler("processing")}
-                  className={`py-2 px-3 text-[#475569] text-xs font-semibold ${
-                    active === "processing"
-                      ? "bg-[#CFF6EF] rounded"
-                      : "bg-transparent"
-                  }`}
+                  className={`py-2 px-3 text-[#475569] text-xs font-semibold ${active === "processing"
+                    ? "bg-[#CFF6EF] rounded"
+                    : "bg-transparent"
+                    }`}
                 >
                   Processing
                 </button>
                 <button
                   onClick={() => tableButtonHandler("shipping")}
-                  className={`py-2 px-3 text-[#475569] text-xs font-semibold ${
-                    active === "shipping"
-                      ? "bg-[#CFF6EF] rounded"
-                      : "bg-transparent"
-                  }`}
+                  className={`py-2 px-3 text-[#475569] text-xs font-semibold ${active === "shipping"
+                    ? "bg-[#CFF6EF] rounded"
+                    : "bg-transparent"
+                    }`}
                 >
                   Shipping
                 </button>
                 <button
                   onClick={() => tableButtonHandler("cancelled")}
-                  className={`py-2 px-3 text-[#475569] text-xs font-semibold ${
-                    active === "cancelled"
-                      ? "bg-[#CFF6EF] rounded"
-                      : "bg-transparent"
-                  }`}
+                  className={`py-2 px-3 text-[#475569] text-xs font-semibold ${active === "cancelled"
+                    ? "bg-[#CFF6EF] rounded"
+                    : "bg-transparent"
+                    }`}
                 >
                   Cancelled
                 </button>
                 <button
                   onClick={() => tableButtonHandler("completed")}
-                  className={`py-2 px-3 text-[#475569] text-xs font-semibold ${
-                    active === "completed"
-                      ? "bg-[#CFF6EF] rounded"
-                      : "bg-transparent"
-                  }`}
+                  className={`py-2 px-3 text-[#475569] text-xs font-semibold ${active === "completed"
+                    ? "bg-[#CFF6EF] rounded"
+                    : "bg-transparent"
+                    }`}
                 >
                   Completed
                 </button>
