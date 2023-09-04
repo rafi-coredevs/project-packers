@@ -62,10 +62,10 @@ const AccountModal = ({ stateHandler, onClose }) => {
 			</div>
 			<div className='grid gap-5 text-sm text-white'>
 				<p className='text-center'>or use your email</p>
-				<Button onClick={() => clickHandler('signup')} type='primary'>
+				<Button onClick={() => clickHandler('signup')} type='primary' className='h-[48px]'>
 					Sign Up
 				</Button>
-				<Button onClick={() => clickHandler('login')} type='light'>
+				<Button onClick={() => clickHandler('login')} type='light' className='h-[48px]'>
 					Login
 				</Button>
 			</div>

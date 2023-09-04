@@ -159,6 +159,7 @@ const SignInModal = ({
 						value={loginForm.values.email}
 						label='Email Address'
 						placeholder='Enter your email address'
+						className="h-[50px]"
 					/>
 
 					{/* password */}
@@ -175,9 +176,10 @@ const SignInModal = ({
 						value={loginForm.values.password}
 						label='Password'
 						placeholder='Enter your password'
+						className="h-[50px]"
 					/>
 					{/* login */}
-					<Button type='primary' buttonType='submit'>
+					<Button type='primary' buttonType='submit' className="h-[48px]">
 						Login
 					</Button>
 					<p
