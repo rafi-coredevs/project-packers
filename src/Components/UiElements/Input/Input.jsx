@@ -68,7 +68,7 @@ const Input = ({
           </div>
         )}
         <input
-          className={`px-5 py-2 ${
+          className={`px-5 py-2 focus:border-primary focus:shadow-2xl shadow-primary  ${
             children ? "rounded-e-full" : "rounded-full"
           } w-full outline-none placeholder-secondary text-secondary border ${
             error ? " border-red-600" : "border-white"

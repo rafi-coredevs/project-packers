@@ -122,6 +122,7 @@ const SignupModal = ({ stateHandler, onClose }) => {
 						value={signUpForm.values.name}
 						label='Full Name'
 						placeholder='Enter your name'
+						className='h-[50px]'
 					/>
 					{/* email */}
 					<Input
@@ -135,8 +136,9 @@ const SignupModal = ({ stateHandler, onClose }) => {
 								: null
 						}
 						type='email'
-						placeholder='Enter your Email Address'
+						placeholder='Enter your email address'
 						label='Email Address'
+						className='h-[50px]'
 					/>
 					{/* phone */}
 					<Input
@@ -150,8 +152,9 @@ const SignupModal = ({ stateHandler, onClose }) => {
 								: null
 						}
 						type='text'
-						placeholder='Enter Your Phone Number'
+						placeholder='Enter your phone number'
 						label='Phone Number'
+						className='h-[50px]'
 					>
 						{/* for country code */}
 						<CountryCodeSelector setCountryCode={setCountryCode} />
@@ -169,22 +172,22 @@ const SignupModal = ({ stateHandler, onClose }) => {
 								: null
 						}
 						type='password'
-						placeholder='Enter your Password'
+						placeholder='Enter your password'
 						label='Password'
+						className='h-[50px]'
 					/>
 
 					{/* signUp button */}
-					<Button type='primary' buttonType='submit'>
+					<Button type='primary' buttonType='submit' className='h-[48px]'>
 						Sign Up
 					</Button>
 				</div>
 			</form>
 
-			<div className='text-center text-white text-xs'>
-				Already have an Account?{' '}
-				<span
+			<div className='text-center text-white text-base font-sans'>
+				Already have an account?<span
 					onClick={() => clickHandler('login')}
-					className='text-primary underline'
+					className='text-primary underline '
 				>
 					Login
 				</span>
