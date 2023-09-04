@@ -33,7 +33,7 @@ const Signup = () => {
 				res.status === false
 					? toaster({ type: 'error', message: res.message })
 					: navigate('/login');
-			});
+			}).catch((err)=>console.error("Error in sign up", err ));
 		},
 	});
 

@@ -1,12 +1,3 @@
-/**
- * ResetPasswordModal() returns JSX Element
- * @param {object} data required data from server
- * @param {function} getResponse callback function
- * @param {function} stateHandler callback function
- * @param {function} onClose callback function
- * @returns JSX Element
- */
-
 import { useFormik } from 'formik';
 import Input from '../UiElements/Input/Input';
 import { changePassword } from '../../Util/ValidationSchema';
@@ -15,6 +6,16 @@ import { useState } from 'react';
 import { terminal } from '../../contexts/terminal/Terminal';
 import toaster from '../../Util/toaster';
 
+/**
+ * Represents a React component for resetting a password with a modal interface.
+ *
+ * @param {Object} data - Data required from the server, including the token and OTP.
+ * @param {function} getResponse - Callback function for handling responses from the server.
+ * @param {function} stateHandler - Callback function to change the state of the modal.
+ * @param {function} onClose - Callback function to close the modal.
+ *
+ * @returns {JSX.Element} - React JSX element for the password reset modal component.
+ */
 const ResetPasswordModal = ({ data, getResponse, stateHandler, onClose }) => {
 	const [isSubmit, setIsSubmit] = useState(false);
 	const resetForm = useFormik({
@@ -40,9 +41,9 @@ const ResetPasswordModal = ({ data, getResponse, stateHandler, onClose }) => {
 						toaster({ type: 'error', message: res.message });
 					} else {
 						getResponse({ component: 'done', res });
-            stateHandler("login")
+						stateHandler('login');
 					}
-				})
+				}).catch((err)=>console.error("Error in reset password modal when password resetting", err ))
 				.finally(() => {
 					resetForm.resetForm();
 					setIsSubmit(false);

@@ -1,10 +1,3 @@
-/**
- * NewPassword() returns JSX Element
- * @param {object} args.data
- * @param {function} args.getResponse validation from server
- *
- * @returns JSX element
- */
 import { useFormik } from 'formik';
 import Input from '../UiElements/Input/Input';
 import { changePassword } from '../../Util/ValidationSchema';
@@ -13,9 +6,17 @@ import image from '../../assets/icons/otp.svg';
 import { useState } from 'react';
 import toaster from '../../Util/toaster';
 import { terminal } from '../../contexts/terminal/Terminal';
+
+/**
+ * newPassword component for setting new password
+ *
+ * @param {object} data - Data containing the token and OTP for validation.
+ * @param {function} getResponse - Callback function to handle responses from this component.
+ *
+ * @returns {JSX.Element} - React JSX element for the OTP validation component.
+ */
 const NewPassword = ({ data, getResponse }) => {
 	const [isSubmit, setIsSubmit] = useState(false);
-	console.log(data);
 
 	const resetForm = useFormik({
 		initialValues: {
@@ -25,11 +26,8 @@ const NewPassword = ({ data, getResponse }) => {
 		validationSchema: changePassword,
 		onSubmit: (values) => {
 			setIsSubmit(true);
-			console.log({
-				newpassword: values.newPassword,
-				token: data.data.token,
-				otp: data.otp,
-			});
+
+			// reset password request
 			terminal
 				.request({
 					name: 'resetPassword',
@@ -45,7 +43,7 @@ const NewPassword = ({ data, getResponse }) => {
 					} else {
 						getResponse({ component: 'done', res });
 					}
-				})
+				}).catch(err=>console.error("Error in new password", err))
 				.finally(() => {
 					resetForm.resetForm();
 					setIsSubmit(false);
