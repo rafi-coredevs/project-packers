@@ -8,6 +8,15 @@ import { useEffect, useRef, useState } from "react";
 import supportIcon from "../../assets/icons/cd-customer-support.svg";
 import Input from "../UiElements/Input/Input";
 import Button from "../UiElements/Buttons/Button";
+/**
+ * SupportModal()
+ * This Element only shows when user logged in
+ * 
+ * @param {boolean} args.show - modal close and open based on this props
+ * 
+ * @return JSX Element.
+ */
+
 import { useFormik } from "formik";
 import attachment from '../../assets/icons/attachment.svg'
 import toaster from "../../Util/toaster";
@@ -17,9 +26,9 @@ import UserIcon from "../UiElements/UserIcon/UserIcon";
 import cancel from '../../assets/icons/cd-cancel-w.svg';
 import loader from '../../assets/icons/cd-reload-white.svg'
 
-const SupportModal = () => {
+const SupportModal = ({show = false}) => {
   const { user } = useUserCtx()
-  const [isVisible, setVisible] = useState(false);
+  const [isVisible, setVisible] = useState(show);
   const [chat, setChat] = useState([]);
   const [images, setImages] = useState([])
   const [support, setSupport] = useState(null)

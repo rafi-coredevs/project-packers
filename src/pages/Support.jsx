@@ -40,21 +40,21 @@ const Support = () => {
             <h1 className="text-white text-[48px] font-semibold">
               Support Center
             </h1>
-            <Input type="text" placeholder="Search...">
+            <Input className={'w-full'} type="text" placeholder="Search...">
               <img src={search} alt="" />
             </Input>
           </div>
         </div>
       </div>
       <div className="container mx-auto my-12 flex items-start flex-col md:flex-row gap-12 md:gap-[4.12rem]">
-        <div className="w-full md:w-[17.4375rem]">
+        <div className="w-full md:w-[17.5375rem]">
           {/* sidebar title */}
           <div className="font-semibold w-full text-xl text-[#124E58] p-[0.625rem]">
             Articles in this section
             <hr className="mt-3 w-full" />
           </div>
           {/* sidebar buttons */}
-          <ul className="flex flex-nowrap list-disc  sm:items-start items-center flex-row overflow-x-scroll sm:px-[1.0rem] px-[1.5rem]  md:flex-col w-full md:w-[17.4375rem] gap-[0.625rem]">
+          <ul className="flex flex-nowrap list-disc  sm:items-start items-center flex-row overflow-x-auto sm:px-[1.0rem] px-[1.5rem]  md:flex-col w-full md:w-[17.4375rem] gap-[0.625rem]">
             {suppoortArticles.map((articleHeader, index) => {
               return (
                 <SupportMenuButton
