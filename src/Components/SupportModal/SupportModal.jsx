@@ -3,6 +3,7 @@
  * This Element only shows when user logged in
  * 
  * @param {boolean} args.show - modal close and open based on this props
+ * @param {function} args.onChange - callback function to handle state.
  * 
  * @return JSX Element.
  */
@@ -20,9 +21,9 @@ import UserIcon from "../UiElements/UserIcon/UserIcon";
 import cancel from '../../assets/icons/cd-cancel-w.svg';
 import loader from '../../assets/icons/cd-reload-white.svg'
 
-const SupportModal = ({show = false}) => {
+const SupportModal = ({show = false, onChange}) => {
   const { user } = useUserCtx()
-  const [isVisible, setVisible] = useState(show);
+  const [isVisible, setVisible] = useState(false);
   const [chat, setChat] = useState([]);
   const [images, setImages] = useState([])
   const [support, setSupport] = useState(null)
@@ -56,6 +57,9 @@ const SupportModal = ({show = false}) => {
     },
   });
 
+  useEffect(()=>{
+    setVisible(show);
+  },[show])
   useEffect(() => {
     let id = ''
     isVisible && terminal.request({ name: 'userSupport' }).then(data => {
@@ -154,7 +158,7 @@ const SupportModal = ({show = false}) => {
           </span>
           <button
             className="cursor-pointer"
-            onClick={() => setVisible(false)}
+            onClick={() => {setVisible(false); onChange()}}
             type="button"
           >
             <img src={cancel} className="h-6 w-6" />

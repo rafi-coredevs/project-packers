@@ -54,10 +54,10 @@ const Support = () => {
             <hr className="mt-3 w-full" />
           </div>
           {/* sidebar buttons */}
-          <ul className="flex flex-nowrap list-disc  sm:items-start items-center flex-row overflow-x-auto sm:px-[1.0rem] px-[1.5rem]  md:flex-col w-full md:w-[17.4375rem] gap-[0.625rem]">
+          <ul className="flex flex-nowrap list-disc  sm:items-start items-center flex-row overflow-x-auto sm:px-[1.0rem] px-[1.5rem]  md:flex-col w-full md:w-[18rem] gap-[0.625rem]">
             {suppoortArticles.map((articleHeader, index) => {
               return (
-                <SupportMenuButton
+                <SupportMenuButton key={index}
                   buttonName={articleHeader}
                   activeContent={activeContent}
                   handleContentChange={() => handleContentChange(index)}
