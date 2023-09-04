@@ -109,7 +109,7 @@ const Otp = ({ data, getResponse }) => {
 						Enter your OTP verification code
 					</p>
 					<p className='font-sans text-lg font-medium text-[#ffffffb3]'>
-						To get a verification code, first confirm the phone number you added
+						To get a verification code, first confirm the email address you added
 						to your account <span className='text-primary'>{data?.email}</span>.
 						Standard rates apply.
 					</p>
@@ -118,7 +118,7 @@ const Otp = ({ data, getResponse }) => {
 					<div className='relative flex gap-2'>
 						<Input
 							name='field1'
-							placeholder='*'
+							placeholder='✱'
 							tabIndex={1}
 							change={otpForm.handleChange}
 							blur={otpForm.handleBlur}
@@ -126,11 +126,11 @@ const Otp = ({ data, getResponse }) => {
 							value={otpForm.values.field1}
 							type='text'
 							onKeyUp={handleKeys}
-							className='text-center text-lg font-semibold placeholder:text-3xl p-[1.125rem_1.25rem]'
+							className='text-center text-lg font-semibold placeholder:text-3xl p-[1.125rem_1.25rem] h-[64px] placeholder:translate-y-1 focus:placeholder:opacity-0'
 						/>
 						<Input
 							name='field2'
-							placeholder='*'
+							placeholder='✱'
 							tabIndex={2}
 							change={otpForm.handleChange}
 							blur={otpForm.handleBlur}
@@ -138,11 +138,11 @@ const Otp = ({ data, getResponse }) => {
 							value={otpForm.values.field2}
 							type='text'
 							onKeyUp={handleKeys}
-							className='text-center text-lg font-semibold placeholder:text-3xl p-[1.125rem_1.25rem]'
+							className='text-center text-lg font-semibold placeholder:text-3xl p-[1.125rem_1.25rem] h-[64px] placeholder:translate-y-1 focus:placeholder:opacity-0'
 						/>
 						<Input
 							name='field3'
-							placeholder='*'
+							placeholder='✱'
 							tabIndex={3}
 							change={otpForm.handleChange}
 							blur={otpForm.handleBlur}
@@ -150,11 +150,11 @@ const Otp = ({ data, getResponse }) => {
 							value={otpForm.values.field3}
 							type='text'
 							onKeyUp={handleKeys}
-							className='text-center text-lg font-semibold placeholder:text-3xl p-[1.125rem_1.25rem]'
+							className='text-center text-lg font-semibold placeholder:text-3xl p-[1.125rem_1.25rem] h-[64px] placeholder:translate-y-1 focus:placeholder:opacity-0'
 						/>
 						<Input
 							name='field4'
-							placeholder='*'
+							placeholder='✱'
 							tabIndex={4}
 							change={otpForm.handleChange}
 							blur={otpForm.handleBlur}
@@ -162,12 +162,12 @@ const Otp = ({ data, getResponse }) => {
 							value={otpForm.values.field4}
 							type='text'
 							onKeyUp={handleKeys}
-							className='text-center text-lg font-semibold placeholder:text-3xl p-[1.125rem_1.25rem]'
+							className='text-center text-lg font-semibold placeholder:text-3xl p-[1.125rem_1.25rem] h-[64px] placeholder:translate-y-1 focus:placeholder:opacity-0'
 						/>
 					</div>
 					<Button
 						full
-						className='w-full'
+						className='w-full h-[54px]'
 						type='primary'
 						buttonType='submit'
 						disabled={isSubmit}
