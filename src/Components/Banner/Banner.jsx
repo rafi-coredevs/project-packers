@@ -110,7 +110,7 @@ const Banner = () => {
           </div>
         </div>
 
-        <div className="col-span-2 lg:col-span-1">
+        <div className="col-span-2 lg:col-span-1 lg:absolute lg:right-0 lg:bottom-0">
           <img className="w-full h-auto" src={image} />
         </div>
       </div>
