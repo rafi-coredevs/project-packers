@@ -45,6 +45,7 @@ const OtpModal = ({ data, getResponse, stateHandler, onClose }) => {
 				});
 		},
 	});
+	console.log(data);
 
 	/**
 	 * Handles keyboard navigation between OTP input fields.
@@ -65,6 +66,18 @@ const OtpModal = ({ data, getResponse, stateHandler, onClose }) => {
 			}
 		}
 	};
+	function maskEmail(email) {
+		const atIndex = email.indexOf("@");
+		
+		if (atIndex !== -1) {
+		  const maskedPart = email.substring(1, atIndex).replace(/./g, "*");
+		  const maskedEmail = email.replace(email.substring(1, atIndex), maskedPart);
+		  return maskedEmail;
+		} else {
+		  return email; 
+		}
+	  }
+
 
 	return (
 		<>
@@ -131,16 +144,16 @@ const OtpModal = ({ data, getResponse, stateHandler, onClose }) => {
 			</div>
 			<div className=''>
 				<p className='text-center text-base font-medium text-white'>
-					To get a verification code, first confirm the phone number you added
-					to your account <span className='text-primary'>{data?.email}</span>{' '}
-					Standard rates apply.
+				To get a verification code, first confirm the email address you added
+						to your account <span >{maskEmail(data?.email)}</span>. <br />
+						Standard rates apply.
 				</p>
 			</div>
 			<form className='flex flex-col gap-5' onSubmit={otpForm.handleSubmit}>
 				<div className='relative flex gap-2'>
 					<Input
 						name='field1'
-						placeholder='*'
+						placeholder='✱'
 						change={otpForm.handleChange}
 						blur={otpForm.handleBlur}
 						max={1}
@@ -148,12 +161,12 @@ const OtpModal = ({ data, getResponse, stateHandler, onClose }) => {
 						type='text'
 						tabIndex={1}
 						onKeyUp={handleKeys}
-						className='text-center text-lg font-semibold placeholder:text-3xl p-[1.125rem_1.25rem]'
+						className='text-center text-lg font-semibold placeholder:text-3xl p-[1.125rem_1.25rem] placeholder:translate-y-1 focus:placeholder:opacity-0 h-[50px]'
 						required
 					/>
 					<Input
 						name='field2'
-						placeholder='*'
+						placeholder='✱'
 						change={otpForm.handleChange}
 						blur={otpForm.handleBlur}
 						max={1}
@@ -161,12 +174,12 @@ const OtpModal = ({ data, getResponse, stateHandler, onClose }) => {
 						type='text'
 						tabIndex={2}
 						onKeyUp={handleKeys}
-						className='text-center text-lg font-semibold placeholder:text-3xl p-[1.125rem_1.25rem]'
+						className='text-center text-lg font-semibold placeholder:text-3xl p-[1.125rem_1.25rem] placeholder:translate-y-1 focus:placeholder:opacity-0 h-[50px]'
 						required
 					/>
 					<Input
 						name='field3'
-						placeholder='*'
+						placeholder='✱'
 						change={otpForm.handleChange}
 						blur={otpForm.handleBlur}
 						max={1}
@@ -174,12 +187,12 @@ const OtpModal = ({ data, getResponse, stateHandler, onClose }) => {
 						type='text'
 						tabIndex={3}
 						onKeyUp={handleKeys}
-						className='text-center text-lg font-semibold placeholder:text-3xl p-[1.125rem_1.25rem]'
+						className='text-center text-lg font-semibold placeholder:text-3xl p-[1.125rem_1.25rem] placeholder:translate-y-1 focus:placeholder:opacity-0 h-[50px]'
 						required
 					/>
 					<Input
 						name='field4'
-						placeholder='*'
+						placeholder='✱'
 						change={otpForm.handleChange}
 						blur={otpForm.handleBlur}
 						max={1}
@@ -187,13 +200,13 @@ const OtpModal = ({ data, getResponse, stateHandler, onClose }) => {
 						type='text'
 						tabIndex={4}
 						onKeyUp={handleKeys}
-						className='text-center text-lg font-semibold placeholder:text-3xl p-[1.125rem_1.25rem]'
+						className='text-center text-lg font-semibold placeholder:text-3xl p-[1.125rem_1.25rem] placeholder:translate-y-1 focus:placeholder:opacity-0 h-[50px]'
 						required
 					/>
 				</div>
 				<Button
 					full
-					className='w-full'
+					className='w-full h-[48px]'
 					type='primary'
 					buttonType='submit'
 					disabled={isSubmit}
