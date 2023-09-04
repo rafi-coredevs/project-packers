@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { useTitle } from '../../Components/Hooks/useTitle';
@@ -11,12 +11,15 @@ import search from '../../assets/icons/cd-search2.svg';
 import remove from '../../assets/icons/cd-cancel.svg';
 import toaster from '../../Util/toaster';
 import removeEmptyFields from '../../Util/removeEmptyFields';
+import CartItem from '../../Components/UiElements/CartItem/CartItem';
 
 const AddOrder = () => {
     useTitle('Order Details');
     const navigate = useNavigate();
     const [price, setPrice] = useState(null);
-    const [order, setOrder] = useState(null);
+    const [order, setOrder] = useState({
+        products: [],
+    });
     const [products, setProducts] = useState([]);
     const [customers, setCustomers] = useState([]);
     const [user, setUser] = useState({})
@@ -69,14 +72,15 @@ const AddOrder = () => {
             totalPrice = discountamount
                 ? totalPrice + nondiscountItemsTotal - discountamount
                 : totalPrice + nondiscountItemsTotal;
+            totalPrice = inside ? totalPrice + 99 : totalPrice + 150;
             setPrice(totalPrice);
         }
-    }, [order, discount]);
+    }, [order, discount, inside]);
 
     /**
      * Handles updating the order details.
      */
-    const updateHandler = () => {
+    const addHandler = () => {
         const shipping = {
             address: shippingForm.values.address,
             city: shippingForm.values.city,
@@ -175,11 +179,33 @@ const AddOrder = () => {
             });
     };
 
+    const addProduct = (newProduct) => {
+        if (order?.products.find(item => item.product.id === newProduct.id)) {
+            return toaster({ type: 'error', message: 'Product already exists' })
+        }
+        setOrder(prev => {
+            const updatedProducts = [...prev.products, { product: newProduct, productQuantity: 1 }];
+            return { ...prev, products: updatedProducts };
+        });
+    }
+    console.log(order);
+    const updateQuantity = useCallback((id, quantity) => {
+        setOrder((prevOrder) => {
+            const updatedOrder = {
+                ...prevOrder,
+                products: prevOrder.products.map((item) =>
+                    item.product.id === id ? { ...item, productQuantity: quantity } : item
+                ),
+            };
+            return updatedOrder;
+        });
+    }, []);
+
     return (
         <div className='px-5 h-full'>
             <Heading type='navigate' title={`Add Order`} back={'All Order'}>
                 <div className='flex items-center gap-1'>
-                    <Button style='primary' onClick={updateHandler}>
+                    <Button style='primary' onClick={addHandler}>
                         Add Order
                     </Button>
                 </div>
@@ -194,32 +220,55 @@ const AddOrder = () => {
                         </div>
 
                         {/* search */}
-                        <div className='flex gap-2 items-center'>
+                        <div className='relative'>
                             <div className='w-full'>
                                 <Input
                                     styles='secondary'
                                     type='text'
                                     placeholder='Search Products'
+                                    change={(e) => { findProducts(e) }}
                                 >
                                     <img className='opacity-70' src={search} />
                                 </Input>
                             </div>
-                    
+                            <table className='bg-white shadow-md absolute top-[44px] left-0 w-full z-50'>
+                                {
+                                    products?.length > 0 &&
+                                    products.map(product =>
+                                        <tr onClick={() => addProduct(product)} className='hover:bg-primary hover:cursor-pointer'>
+                                            <td className='p-2 border-b border-slate-200'>
+                                                {product.name}
+                                            </td>
+                                        </tr>)
+                                }
+                            </table>
                         </div>
 
                         {/* product table */}
                         <div className='grid gap-3 relative overflow-x-auto'>
                             <table className='w-full '>
-                                <thead className='text-left font-semibold'>
-                                    <tr className='border-b border-[#0000001c]'>
-                                        <th className='w-8/12 py-2'>Product</th>
-                                        <th className='w-2/12 py-2'>Quantity</th>
-                                        <th className='w-1/12 py-2'>Total</th>
-                                        <th className='w-1/12 py-2'></th>
+                                <thead className=" text-secondary text-left border-b border-[#00000023]">
+                                    <tr>
+                                        <th className=" w-9/12 font-semibold pb-[14px]">
+                                            Product List
+                                        </th>
+                                        <th className="w-1/12 font-semibold pb-[14px]">Quantity</th>
+                                        <th className=" w-2/12 font-semibold pb-[14px] hidden sm:table-cell">
+                                            Price
+                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody>
-
+                                    {order?.products?.length > 0 && order?.products.map((product) => {
+                                        return (
+                                            <CartItem
+                                                key={product?.id}
+                                                data={product?.product}
+                                                quantity={product.productQuantity}
+                                                onChange={updateQuantity}
+                                            />
+                                        );
+                                    })}
                                 </tbody>
                             </table>
                         </div>
