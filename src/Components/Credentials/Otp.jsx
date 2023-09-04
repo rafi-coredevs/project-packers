@@ -1,13 +1,3 @@
-/**
- * Otp() returns JSX Element
- * OTP Validation from email
- *
- * @param {object} data elements for post method
- * @param {function} getResponse callback function
- *
- * @return JSX Element
- */
-
 import Input from '../UiElements/Input/Input';
 import Button from '../UiElements/Buttons/Button';
 import image from '../../assets/icons/otp.svg';
@@ -15,11 +5,22 @@ import { useFormik } from 'formik';
 import { useEffect, useState } from 'react';
 import { terminal } from '../../contexts/terminal/Terminal';
 import toaster from '../../Util/toaster';
+
+/**
+ * Otp component for OTP validation from email.
+ *
+ * @param {object} data - Data containing the token for validation.
+ * @param {function} getResponse - Callback function to handle responses from this component.
+ *
+ * @returns {JSX.Element} - React JSX element for the OTP validation component.
+ */
 const Otp = ({ data, getResponse }) => {
 	const [isSubmit, setIsSubmit] = useState(false);
 	const [minute,setMinute]=useState(4);
 	const [second,setSecond]=useState(60);
 	const [isDisable,setIsdisable]= useState(true)
+
+	// Formik configuration for OTP input form
 	const otpForm = useFormik({
 		initialValues: {
 			field1: '',
@@ -29,16 +30,18 @@ const Otp = ({ data, getResponse }) => {
 		},
 		onSubmit: (values) => {
 			setIsSubmit(true);
-			const otp = Object.values(values).join('');
+			const otp = Object.values(values).join(''); // joining all otp field values
+
+			// otp velidation request
 			terminal
-				.request({ name: 'verifyOTP', body: { otp, token:data.token } })
+				.request({ name: 'verifyOTP', body: { otp, token: data.token } })
 				.then((res) => {
 					if (res.status === false) {
 						toaster({ type: 'error', message: res.message });
 					} else {
 						getResponse({ component: 'newPass', data, otp: otp });
 					}
-				})
+				}).catch(err=>console.error("Error in otp verification", err))
 				.finally(() => {
 					setIsSubmit(false);
 					otpForm.resetForm();
@@ -46,6 +49,11 @@ const Otp = ({ data, getResponse }) => {
 		},
 	});
 
+	/**
+	 * Handles keyboard navigation between OTP input fields.
+	 *
+	 * @param {Event} elmnt - The key event triggered by the input field.
+	 */
 	const handleKeys = (elmnt) => {
 		if (elmnt.key === 'Delete' || elmnt.key === 'Backspace') {
 			const next = elmnt.target.tabIndex - 2;

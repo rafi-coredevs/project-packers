@@ -136,26 +136,6 @@ const AddOrder = () => {
             .catch((err) => console.error('order update error', err));
     };
 
-    /**
-     * Handles deletion of the order .
-     */
-    const deleteHandler = (e) => {
-        e.preventDefault();
-
-        terminal
-            .request({ name: 'deleteOrder', body: { id: [orderId] } })
-            .then((res) =>
-                res?.status === false
-                    ? toaster({ type: 'success', message: res.message })
-                    : (toaster({
-                        type: 'success',
-                        message: 'deleted successfully',
-                    }),
-                        navigate(-1)),
-            )
-            .catch((err) => console.error('order delete error', err));
-    };
-
     // Find Customer
     const findCustomer = (e) => {
         if (e.target.value !== '') {
@@ -202,11 +182,8 @@ const AddOrder = () => {
         <div className='px-5 h-full'>
             <Heading type='navigate' title={`Add Order`} back={'All Order'}>
                 <div className='flex items-center gap-1'>
-                    <Button style='delete' onClick={deleteHandler}>
-                        Delete
-                    </Button>
                     <Button style='primary' onClick={updateHandler}>
-                        Add to cart
+                        Add Order
                     </Button>
                 </div>
             </Heading>

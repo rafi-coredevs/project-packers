@@ -10,6 +10,8 @@ import ImageUpload from "../../../assets/icons/cd-camera.svg";
  * @param {string} uploadButtonIcon - Icon for the upload button.
  * @param {string} placeholder - Placeholder text for the image upload.
  * @param {string} title - title text for image uploader
+ * @param {object} allImages - receive uploaded images for preview
+ * @param {function} setAllImage - for setting new uploaded images
  */
 const ImageUploader = ({
   formikProps,
@@ -17,9 +19,10 @@ const ImageUploader = ({
   uploadButtonIcon,
   placeholder,
   title,
+  allImages,
+  setAllImages
 }) => {
-  const [allImages, setAllImages] = useState([]); // Define state variables to manage uploaded images.
-
+  
   /**
    * @description Handles the event when a file is selected for upload.
    * @param {Event} event - The file input change event.
