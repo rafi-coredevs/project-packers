@@ -20,9 +20,6 @@ const Carousel = ({ isHome = Boolean }) => {
 		{
 			videoId: 'V9Z7_6HCPsA',
 		},
-		{
-			videoId: 'V9Z7_6HCPsA',
-		}
 	];
 
 	return (

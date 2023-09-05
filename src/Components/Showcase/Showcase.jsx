@@ -6,7 +6,7 @@ const Showcase = ({ type, title, description, data }) => {
   const navigate = useNavigate();
   const item = type === "slide" ? 4 : 8;
   return (
-    <div className="container mx-auto flex flex-col items-center mb-20 px-4">
+    <div className="container mx-auto flex flex-col items-center mb-[9.25rem] px-4">
       <Heading title={title} description={description} />
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {data?.slice(0, item).map((item,i) => {
