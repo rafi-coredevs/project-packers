@@ -369,7 +369,7 @@ const NewProduct = () => {
                   blur={productForm.handleBlur}
                   value={productForm.values.quantity}
                   error={
-                    productForm.touched.from && productForm.errors.quantity
+                    productForm.touched.quantity && productForm.errors.quantity 
                       ? productForm.errors.quantity
                       : null
                   }

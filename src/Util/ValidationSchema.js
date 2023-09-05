@@ -70,8 +70,8 @@ export const productSchema = object({
 	fee: string()
 		.matches(/^\d+(\.\d+)?$/, 'Not valid')
 		.required(),
-	quantity: string()
-		.matches(/^\d+(\.\d+)?$/, 'Not valid')
+	quantity: number()
+		.matches(/^-?\d+$/, 'Not valid')
 		.required(),
 	origin: string().required(),
 	link: string().required(),
