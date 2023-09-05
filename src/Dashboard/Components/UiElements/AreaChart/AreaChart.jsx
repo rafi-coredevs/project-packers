@@ -126,11 +126,8 @@ const AreaChart = ({ data, selected, setSelected, OPTIONS, chartLoading }) => {
           <span>Request vs Order</span>
           <img src={cd_information} alt="cd_information" />
         </h4>
-<<<<<<< HEAD
-        <div className=" min-w-[8rem] py-1 absolute right-0 top-0  rounded z-[70] flex flex-shrink-0 justify-end items-center space-x-2">
-=======
+
         <div className=" min-w-[8rem] py-1 absolute right-0 top-0 flex flex-shrink-0 justify-end items-center space-x-2 z-50">
->>>>>>> 0f23258029f4d91b6cbe9c0bcdd6ec8b97d5639d
           {
             chartLoading &&
             <img src={loader} alt="" className='animate-spin' />
