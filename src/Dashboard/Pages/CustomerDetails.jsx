@@ -16,7 +16,7 @@ const CustomerDetails = () => {
   const [buttonType, setButtonType] = useState("all");
   const [tableData, setTabledata] = useState([]);
   const [user, setUser] = useState({});
-  const [loading,setLoading]=useState(false);
+  const [loading,setLoading]=useState(true);
   const updateHandler = () => {
     console.log("update clicked");
   };
@@ -25,15 +25,16 @@ const CustomerDetails = () => {
   }
 
   useEffect(() => {
+   
     
     fetchData();
   }, [customerId]);
 
   const fetchData = () => {
-    
+    setLoading(true)
     terminal
       .request({ name: "customerAllOrders", queries: { user: customerId } })
-      .then((res) => res.status===false? toaster({tyoe:'error', message:res?.message}): setTabledata(res), setLoading(false));
+      .then((res) => res.status===false? toaster({tyoe:'error', message:res?.message}): (setTabledata(res), setLoading(false)));
   };
   useEffect(()=>{
    fetchUsers();
@@ -42,6 +43,7 @@ const CustomerDetails = () => {
   const fetchUsers =()=>{
     terminal.request({name: 'getNext', params: {current: customerId}}).then(res=> res.status===false? toaster({tyoe:'error', message:res?.message}): setUser(res[0]))
   }
+  console.log(loading);
   
   return (
     <div className="px-5 h-full">
