@@ -56,14 +56,13 @@ const RequestModal = ({
 						body: { data: rest, images: images },
 					})
 					.then((d) => {
-					 
 						if (d.id) {
 							confirmSubmit('success');
 						}
-					}).catch((err)=>console.error("Error in request modal", err ));
+					})
+					.catch((err) => console.error('Error in request modal', err));
 			} else {
-
-        // checking devices
+				// checking devices
 				if (width > 767) {
 					setIsOpen(false);
 					navigate('/login', {
@@ -223,7 +222,7 @@ const RequestModal = ({
 						</p>
 					)}
 				</div>
-				<div className='w-full'>
+				<div className='w-full '>
 					<label className='block mb-3' htmlFor='note'>
 						Add Note (optional)
 					</label>
