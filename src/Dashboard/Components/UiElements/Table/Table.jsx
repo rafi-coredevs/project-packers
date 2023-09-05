@@ -69,19 +69,22 @@ const Table = ({ data, paginate, loading, dashboardToogle, modalHandler, getData
   const endIndex = startIndex + 10;
   const endIndexSub = startIndexSub + 10;
   const [selectedItem, setSelectItem] = useState([]);
+  const [selectedCategory, setSelectCategory] = useState([]);
 
   useEffect(() => {
-    getData && getData(selectedItem)
-  }, [selectedItem])
+    getData && ( isCategory? getData(selectedCategory) : getData(selectedItem))
+  }, [selectedItem, selectedCategory])
 
   const checkboxHandler = (status) => {
     const ele = document.getElementsByName('check');
     if (status.target.checked) {
       setSelectItem([]);
+      setSelectCategory([]);
       for (let i = 0; i < ele.length; i++) {
         if (ele[i].type == 'checkbox')
           ele[i].checked = true;
-        setSelectItem(prev => [...prev, ele[i].id])
+        isCategory? setSelectCategory(prev => [...prev, ele[i].id]) : setSelectItem(prev => [...prev, ele[i].id])
+        
 
       }
     } else {
@@ -90,15 +93,23 @@ const Table = ({ data, paginate, loading, dashboardToogle, modalHandler, getData
           ele[i].checked = false;
       }
       setSelectItem([]);
+      setSelectCategory([])
     }
 
   }
   const changeHandler = (event) => {
     if (event.target.checked) {
-      setSelectItem(prev => [...prev, event.target.id]);
+      isCategory?setSelectCategory(prev => [...prev, event.target.id]) : setSelectItem(prev => [...prev, event.target.id]);
     } else {
-      const updateItem = selectedItem.filter((item) => item != event.target.id);
+      if(isCategory){
+        const updateItem = selectedCategory.filter((item) => item != event.target.id);
+        setSelectCategory(updateItem);
+
+      }
+      else {
+        const updateItem = selectedItem.filter((item) => item != event.target.id);
       setSelectItem(updateItem);
+      }
     }
 
   }
@@ -291,7 +302,7 @@ const Table = ({ data, paginate, loading, dashboardToogle, modalHandler, getData
                       className='border-y border-[#0000001c] hover:bg-[#FEF9DC]'
                     >
                       <td className='text-left py-[10px] pl-4 w-[10px]'>
-                        <input type='checkbox' name='check' className='accent-yellow-300' />
+                        <input onChange={changeHandler} id={item?.id} type='checkbox' name='check' className='accent-yellow-300' />
                       </td>
 
                       <td

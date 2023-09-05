@@ -28,15 +28,15 @@ const StaffCard = ({ onClick, user, setUser }) => {
             {user.access.length === totalaccess.length
               ? "Full access"
               : user.access.length === 1
-              ? user.access
-              : user.access.length < 1
-              ? "No access"
-              : "Limited access"}
+                ? user.access
+                : user.access.length < 1
+                  ? "No access"
+                  : "Limited access"}
           </p>
         </div>
       </div>
       <div className="border-[1px] border-[#64748B] p-3 rounded flex justify-center items-center min-w-[5rem]">
-        <p>{user.role}</p>++++
+        <p>{user.role}</p>
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import Button from "../Components/UiElements/Button/Button";
 import Heading from "../Components/UiElements/Heading/Heading";
 import SideCard from "../Components/UiElements/SideCard/SideCard";
@@ -8,13 +8,15 @@ import { useTitle } from "../../Components/Hooks/useTitle";
 import { useEffect, useState } from "react";
 import sort from "../../assets/icons/cd-arrow-data-transfer-vertical-round.svg";
 import { terminal } from "../../contexts/terminal/Terminal";
+import toaster from "../../Util/toaster";
 //
 const CustomerDetails = () => {
   useTitle("replace-with-customer-name");
   const { customerId } = useParams();
   const [buttonType, setButtonType] = useState("all");
-  const [tableData, setTableData] = useState([]);
+  const [tableData, setTabledata] = useState([]);
   const [user, setUser] = useState({});
+  const [loading,setLoading]=useState(false);
   const updateHandler = () => {
     console.log("update clicked");
   };
@@ -23,24 +25,30 @@ const CustomerDetails = () => {
   }
 
   useEffect(() => {
+    
     fetchData();
-  }, []);
+  }, [customerId]);
 
   const fetchData = () => {
+    
     terminal
       .request({ name: "customerAllOrders", queries: { user: customerId } })
-      .then((res) => {
-        res.status === false ? "" : setTableData(res);
-        setUser(res.docs[0].user);
-      });
+      .then((res) => res.status===false? toaster({tyoe:'error', message:res?.message}): setTabledata(res), setLoading(false));
   };
+  useEffect(()=>{
+   fetchUsers();
 
+  },[customerId]);
+  const fetchUsers =()=>{
+    terminal.request({name: 'getNext', params: {current: customerId}}).then(res=> res.status===false? toaster({tyoe:'error', message:res?.message}): setUser(res[0]))
+  }
+  
   return (
     <div className="px-5 h-full">
       <Heading
         type={"navigate"}
         back={"Customers"}
-        title={`${user?.fullName || ""}`}
+        title={`${user?.current?.fullName || ""}`}
       >
         <div className="flex items-center gap-1">
           <Button style="delete" onClick={updateHandler}>
@@ -50,16 +58,18 @@ const CustomerDetails = () => {
             Create Order
           </Button>
           <div className="">
-            <Button style="outline">
+            <Link  to={`/admin/customers/${user?.previous?._id}`}><Button disabled={user?.previous===null} style="outline">
               <img className="h-[19px] w-[19px]" src={arrowLeft} alt="" />
-            </Button>
-            <Button style="outline">
+            </Button></Link>
+            <Link to={`/admin/customers/${user?.next?._id}`}>
+            <Button disabled={user?.next===null} style="outline">
               <img
                 className="h-[19px] w-[19px] rotate-180"
                 src={arrowLeft}
                 alt=""
               />
             </Button>
+            </Link>
           </div>
         </div>
       </Heading>
@@ -123,22 +133,24 @@ const CustomerDetails = () => {
                 type="customerDetails"
                 data={tableData}
                 dashboardToogle="customerDetails"
+                loading={loading}
               />
             </div>
           </div>
         </div>
         <div className="col-span-3 sm:col-span-1 h-fit grid gap-5 pb-3">
           <div className=" border border-[#0000001c] divide-y  rounded-lg ">
-            <SideCard types="customer" name="Ramjan Ali Anik" />
+            <SideCard types="customer" email={user?.current?.email} phone={user?.current?.phone}/>
             <SideCard
-              types="address"
+              types="custom"
               title="Address"
-              address="2118 Thornridge Cir. Syracuse, Connecticut 35624"
+              address={user?.current?.shippingAddress? (user?.current?.shippingaddress?.address +', '+ user?.current?.shippingaddress?.city +', '+ user?.current?.shippingaddress?.area +', '+ user?.current?.shippingaddress?.zip): 'Not Available'}
             />
             <SideCard
-              types="address"
+              types="custom"
               title="Total Spent"
-              address={`$${(244).toFixed(2)}`}
+              //amount={`$${(244).toFixed(2)}`}
+              amount={`not found from backend`}
             />
           </div>
         </div>

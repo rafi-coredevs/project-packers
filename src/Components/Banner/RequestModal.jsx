@@ -47,7 +47,6 @@ const RequestModal = ({
 			removeEmptyFields(rest); // removing empty fields
 
 			const width = window.screen.width;
-			console.log(width);
 
 			if (user) {
 				terminal

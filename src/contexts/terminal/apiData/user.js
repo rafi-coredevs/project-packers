@@ -69,6 +69,17 @@ export const user = {
             id: "Please provide 'id' field in the params object."
         }
     },
+    getNext: {
+        method: "GET",
+        uri: "user/next",
+        params: {
+            current: undefined
+        },
+        suggestions: {
+            raw: "A raw example of the uri: 'user/next/64b4cbc2bb769ae707dbfb4f'.",
+            curent: "Please provide 'current' field in the params object."
+        }
+    },
     allUser: {
         method: "GET",
         uri: "user",

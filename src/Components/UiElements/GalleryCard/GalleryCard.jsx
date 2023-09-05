@@ -7,10 +7,6 @@ const GalleryCard = ({ data }) => {
     setPresentImage(data[0]);
   }, [data]);
 
-  const handleLoading = (event) => {
-    // console.log(`Picture successfully ${event.currentTarget.src} loaded.`);
-
-  }
   const handleError = (event) => {
     event.currentTarget.src = errorImg;
     event.currentTarget.className = ""
@@ -21,7 +17,7 @@ const GalleryCard = ({ data }) => {
       <img
         key={i}
         onClick={() => setPresentImage(imgSrc)}
-        onLoad={handleLoading} onError={handleError}
+        onError={handleError}
         className="h-full p-4 border rounded-xl cursor-pointer duration-200 active:scale-95 w-full"
         src={`${import.meta.env.VITE_SERVER_URL}/${imgSrc}`}
         alt="product image"
