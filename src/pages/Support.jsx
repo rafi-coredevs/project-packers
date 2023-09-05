@@ -40,9 +40,11 @@ const Support = () => {
             <h1 className="text-white text-[48px] font-semibold">
               Support Center
             </h1>
+            <div className="w-[26.562rem]">
             <Input className={'w-full'} type="text" placeholder="Search...">
               <img src={search} alt="" />
             </Input>
+            </div>
           </div>
         </div>
       </div>

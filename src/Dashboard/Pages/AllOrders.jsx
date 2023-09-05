@@ -130,7 +130,8 @@ const AllOrders = () => {
 
   function handleDateRangeSearch(dateObj) {
     const startDate = convertISODate(dateObj.startDate);
-    const endingDate = convertISODate(dateObj.endDate);
+    const endingDate = new Date(dateObj.endDate);
+    endingDate.setDate(endingDate.getDate() + 1);
 
     setLoading(true);
     terminal
@@ -139,7 +140,7 @@ const AllOrders = () => {
         queries: {
           sortBy,
           status: active,
-          date: JSON.stringify({ $gte: startDate, $lte: endingDate }),
+          date: JSON.stringify({ $gte: startDate, $lte: endingDate.toISOString() }),
         },
       })
       .then((res) => {

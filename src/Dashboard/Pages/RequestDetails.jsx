@@ -31,7 +31,7 @@ const RequestDetails = () => {
       phone: "",
       link: "",
       note: "",
-      sellerTakes: 0,
+      price: 0,
       tax: 0,
       fee: 0,
       shippingaddress: "",
@@ -80,7 +80,7 @@ const RequestDetails = () => {
           quantity: res.quantity || 1,
           link: res.link,
           note: res.note,
-          sellerTakes: res.sellerTakes || 0,
+          price: res.price || 0,
           tax: res.tax || 0,
           fee: res.fee || 0,
           shippingaddress: res.shippingaddress,
@@ -272,19 +272,19 @@ const RequestDetails = () => {
                   <p className="text-lg font-semibold">৳</p>
                   <Input
                     styles="secondary"
-                    name="sellerTakes"
+                    name="price"
                     className={`text-end`}
                     type="number"
-                    id="sellerTakes"
+                    id="price"
                     error={
-                      requestForm.touched.sellerTakes &&
-                      requestForm.errors.sellerTakes
-                        ? requestForm.errors.sellerTakes
+                      requestForm.touched.price &&
+                      requestForm.errors.price
+                        ? requestForm.errors.price
                         : null
                     }
                     change={requestForm.handleChange}
                     blur={requestForm.handleBlur}
-                    value={requestForm.values.sellerTakes}
+                    value={requestForm.values.price}
                   />
                 </div>
               </div>
@@ -340,7 +340,7 @@ const RequestDetails = () => {
                 <p className="text-base font-semibold">Total</p>
                 <p className="text-lg font-semibold">
                   ৳{" "}
-                  {Number(parseFloat(requestForm.values.sellerTakes)) +
+                  {Number(parseFloat(requestForm.values.price)) +
                     Number(parseFloat(requestForm.values.tax)) +
                     Number(parseFloat(requestForm.values.fee))}
                 </p>

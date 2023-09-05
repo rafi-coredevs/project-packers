@@ -118,11 +118,11 @@ const Header = ({ sideBar, state }) => {
 
 		if (cart && cart?.requests?.length > 0) {
 			cart?.requests?.forEach((request) => {
-				request.request?.sellerTakes &&
+				request.request?.price >= 0 &&
 					cartData.push({
 						id: request.request?.id,
 						title: request.request?.name,
-						price: request.request?.sellerTakes || 0,
+						price: request.request?.price || 0,
 						image: request.request?.images[0] || 0,
 						qty: request.requestQuantity,
 					});

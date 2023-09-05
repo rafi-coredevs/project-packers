@@ -6,25 +6,21 @@ import Unauthorized from './Unauthorized';
 import { useLocation } from 'react-router-dom';
 
 export default function ProtectedRoute({ accessTo, children }) {
-
     const { user, loading } = useUserCtx();
     const navigate = useNavigate();
     const location = useLocation();
 
-    // 
     const accessByRole = {
         'super-admin': ['order', 'support', 'product', 'discount', 'request', 'dashboard', 'staff', 'customer', 'category', 'payment', 'general'],
         'admin': ['order', 'support', 'product', 'request', 'dashboard', 'customer', 'category', 'general'],
         'staff': ['order', 'support', 'request', 'customer', 'product', 'general'],
         'user': ['general'],
     }
-    //
-    // useEffect(() => {
-    // }, [user, loading,accessTo])
 
     if (loading) {
         return <Loading />
     }
+    
     else {
         if (!user) {
             if (accessTo == "login" || accessTo == "signup" || accessTo == "recover") {
@@ -35,7 +31,6 @@ export default function ProtectedRoute({ accessTo, children }) {
             }
         }
         else {
-            console.log(accessTo, "  <?>   ", user.role)
             if (accessTo == "login" || accessTo == "signup" || accessTo == "recover") {
                 return <Navigate to="/" replace={true} />
             }

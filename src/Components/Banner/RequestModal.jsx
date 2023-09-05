@@ -47,7 +47,6 @@ const RequestModal = ({
 			removeEmptyFields(rest); // removing empty fields
 
 			const width = window.screen.width;
-			console.log(width);
 
 			if (user) {
 				terminal
@@ -56,14 +55,13 @@ const RequestModal = ({
 						body: { data: rest, images: images },
 					})
 					.then((d) => {
-					 
 						if (d.id) {
 							confirmSubmit('success');
 						}
-					}).catch((err)=>console.error("Error in request modal", err ));
+					})
+					.catch((err) => console.error('Error in request modal', err));
 			} else {
-
-        // checking devices
+				// checking devices
 				if (width > 767) {
 					setIsOpen(false);
 					navigate('/login', {
@@ -171,61 +169,68 @@ const RequestModal = ({
 					/>
 				)}
 
-				<div className='flex gap-3 items-center'>
-					{/* quantity */}
-					<div className='border-[#0000004d] border rounded-full w-fit flex items-center justify-center'>
-						<button
-							className='px-5 pb-2 text-[#0000004d] text-3xl'
-							type='button'
-							onClick={() =>
-								itemRequestForm.values.quantity > 1
-									? itemRequestForm.setFieldValue(
-											'quantity',
-											itemRequestForm.values.quantity - 1,
-									  )
-									: null
-							}
-						>
-							-
-						</button>
-						<input
-							className='text-center max-w-[40px] text-secondary font-semibold outline-none'
-							name='quantity'
-							value={itemRequestForm.values.quantity}
-							onChange={itemRequestForm.handleChange}
-							onBlur={itemRequestForm.handleBlur}
-							min={1}
-							type='number'
-						/>
-						<button
-							className='px-5 pb-2 text-[#0000004d] text-3xl h-full'
-							type='button'
-							onClick={() =>
-								itemRequestForm.setFieldValue(
-									'quantity',
-									itemRequestForm.values.quantity + 1,
-								)
-							}
-						>
-							+
-						</button>
-					</div>
-					{active === 'link' && (
-						<p className=''>
-							By{' '}
-							<span className='text-secondary'>
-								{
-									itemRequestForm.values.link
-										?.replace(/^(https?:\/\/)?(www\.)?/, '')
-										.split('/')[0]
+				<div className='flex flex-col gap-3' >
+					<label htmlFor='quantity' className='text-base font-medium '>
+						Quantity
+					</label>
+					<div className='flex gap-3 items-center'>
+						{/* quantity */}
+						<div className='border-[#0000004d] border rounded-full w-fit flex items-center justify-center'>
+							<button
+								className='px-5 pb-2 text-[#0000004d] text-3xl'
+								type='button'
+								onClick={() =>
+									itemRequestForm.values.quantity > 1
+										? itemRequestForm.setFieldValue(
+												'quantity',
+												itemRequestForm.values.quantity - 1,
+										  )
+										: null
 								}
-							</span>
-						</p>
-					)}
+							>
+								-
+							</button>
+							<input
+								className='text-center max-w-[40px] text-secondary font-semibold outline-none'
+								name='quantity'
+								id='quantity'
+								value={itemRequestForm.values.quantity}
+								onChange={itemRequestForm.handleChange}
+								onBlur={itemRequestForm.handleBlur}
+								min={1}
+								type='number'
+							/>
+							<button
+								className='px-5 pb-2 text-[#0000004d] text-3xl h-full'
+								type='button'
+								onClick={() =>
+									itemRequestForm.setFieldValue(
+										'quantity',
+										itemRequestForm.values.quantity + 1,
+									)
+								}
+							>
+								+
+							</button>
+						</div>
+						{active === 'link' && (
+							<p className='text-base font-medium'>
+								 <span className='opacity-[65%]'>By</span>
+								<span className='text-[#3E949A] underline'>
+									{
+										itemRequestForm.values.link
+											?.replace(/^(https?:\/\/)?(www\.)?/, '')
+											.split('/')[0]
+									}
+								</span>
+							</p>
+						)}
+					</div>
 				</div>
-				<div className='w-full'>
-					<label className='block mb-3' htmlFor='note'>
-						Add Note (optional)
+
+				<div className='w-full '>
+					<label className='block mb-3 text-base font-medium' htmlFor='note'>
+						Add Note  <span className='text-black opacity-[65%] font-normal' >(optional)</span>
 					</label>
 					<textarea
 						className='border p-2 rounded-md w-full outline-none'
