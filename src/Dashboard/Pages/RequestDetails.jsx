@@ -57,9 +57,9 @@ const RequestDetails = () => {
           res?.status === false
             ? toaster({ type: "success", message: res.message })
             : (toaster({
-                type: "success",
-                message: "Invoice send successfully",
-              }),
+              type: "success",
+              message: "Invoice send successfully",
+            }),
               navigate(-1),
               setDisable(false))
         );
@@ -121,9 +121,9 @@ const RequestDetails = () => {
           res?.status === false
             ? toaster({ type: "success", message: res.message })
             : (toaster({
-                type: "success",
-                message: "Updated successfully",
-              }),
+              type: "success",
+              message: "Updated successfully",
+            }),
               setDisable(false)),
         navigate(-1)
       )
@@ -143,9 +143,9 @@ const RequestDetails = () => {
         res?.status === false
           ? toaster({ type: "success", message: res.message })
           : (toaster({
-              type: "success",
-              message: "Deleted successfully",
-            }),
+            type: "success",
+            message: "Deleted successfully",
+          }),
             navigate(-1),
             setDisable(false))
       )
@@ -198,7 +198,9 @@ const RequestDetails = () => {
                   <img className="opacity-70" src={globe} />
                 </Input>
               </div>
-              <Button style="outline">Go</Button>
+              <a href={requestForm.values.link} className="h-full w-auto" target="_blank">
+                <Button style="outline">Go</Button>
+              </a>
             </div>
 
             {/* quantity */}

@@ -21,7 +21,7 @@ import UserIcon from "../UiElements/UserIcon/UserIcon";
 import cancel from '../../assets/icons/cd-cancel-w.svg';
 import loader from '../../assets/icons/cd-reload-white.svg'
 
-const SupportModal = ({show = false, onChange}) => {
+const SupportModal = ({ show = false, onChange }) => {
   const { user } = useUserCtx()
   const [isVisible, setVisible] = useState(false);
   const [chat, setChat] = useState([]);
@@ -57,17 +57,17 @@ const SupportModal = ({show = false, onChange}) => {
     },
   });
 
-  useEffect(()=>{
+  useEffect(() => {
     setVisible(show);
-  },[show])
+  }, [show])
   useEffect(() => {
     let id = ''
     isVisible && terminal.request({ name: 'userSupport' }).then(data => {
       if (data.id) {
         setSupport(data.id)
-        id = data.id
-        terminal.socket.on('entry')
-        terminal.socket.emit('entry', { "entry": true, "room": data.id })
+        id = user.id
+        // terminal.socket.on('entry')
+        terminal.socket.emit('entry', { "entry": true, "room": id })
         terminal.request({ name: 'getMessage', params: { id: data.id }, queries: { page: 1 } }).then(data => {
           data.docs?.length > 0 && setChat(data.docs), setTotalPage(data.totalPages), setPage(data.page)
         })
@@ -88,7 +88,7 @@ const SupportModal = ({show = false, onChange}) => {
     })
     return () => {
       terminal.socket.emit('entry', { "entry": false, "room": id })
-      terminal.socket.off('entry')
+      // terminal.socket.off('entry')
       terminal.socket.off('message')
 
     }
@@ -158,7 +158,7 @@ const SupportModal = ({show = false, onChange}) => {
           </span>
           <button
             className="cursor-pointer"
-            onClick={() => {setVisible(false); onChange()}}
+            onClick={() => { setVisible(false); onChange() }}
             type="button"
           >
             <img src={cancel} className="h-6 w-6" />

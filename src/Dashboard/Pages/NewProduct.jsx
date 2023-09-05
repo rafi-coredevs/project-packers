@@ -239,6 +239,7 @@ const NewProduct = () => {
                 bg="white"
                 options={categories}
                 onChange={categorySelector}
+                // error={}
                 value={selectedCategeory?.name}
               />
 
