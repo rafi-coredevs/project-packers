@@ -72,7 +72,7 @@ const Table = ({ data, paginate, loading, dashboardToogle, modalHandler, getData
   const [selectedCategory, setSelectCategory] = useState([]);
 
   useEffect(() => {
-    getData && ( isCategory? getData(selectedCategory) : getData(selectedItem))
+    getData && (isCategory ? getData(selectedCategory) : getData(selectedItem))
   }, [selectedItem, selectedCategory])
 
   const checkboxHandler = (status) => {
@@ -83,8 +83,8 @@ const Table = ({ data, paginate, loading, dashboardToogle, modalHandler, getData
       for (let i = 0; i < ele.length; i++) {
         if (ele[i].type == 'checkbox')
           ele[i].checked = true;
-        isCategory? setSelectCategory(prev => [...prev, ele[i].id]) : setSelectItem(prev => [...prev, ele[i].id])
-        
+        isCategory ? setSelectCategory(prev => [...prev, ele[i].id]) : setSelectItem(prev => [...prev, ele[i].id])
+
 
       }
     } else {
@@ -99,16 +99,16 @@ const Table = ({ data, paginate, loading, dashboardToogle, modalHandler, getData
   }
   const changeHandler = (event) => {
     if (event.target.checked) {
-      isCategory?setSelectCategory(prev => [...prev, event.target.id]) : setSelectItem(prev => [...prev, event.target.id]);
+      isCategory ? setSelectCategory(prev => [...prev, event.target.id]) : setSelectItem(prev => [...prev, event.target.id]);
     } else {
-      if(isCategory){
+      if (isCategory) {
         const updateItem = selectedCategory.filter((item) => item != event.target.id);
         setSelectCategory(updateItem);
 
       }
       else {
         const updateItem = selectedItem.filter((item) => item != event.target.id);
-      setSelectItem(updateItem);
+        setSelectItem(updateItem);
       }
     }
 
@@ -271,11 +271,14 @@ const Table = ({ data, paginate, loading, dashboardToogle, modalHandler, getData
                       >
                         {item?.name}
                       </td>
-                      <td className='w-[25%] px-4 py-[18px] text-black text-sm '>
-                        {/* {new URL(
+                      <td className='w-[25%] px-4 py-[18px] text-black text-sm cursor-pointer '>
+                        <a href={item?.link} target='_blank'>
+
+                          {/* {new URL(
                           item?.products[0]?.product?.link,
                         ).hostname.replace('www.', '')} */}
-                        {item?.link}
+                          {item?.link?.slice(0, 40)}...
+                        </a>
                       </td>
                       <td className='px-4 py-[18px] text-black text-sm '>
                         {item?.createdAt && new Intl.DateTimeFormat('en-US', {
@@ -296,7 +299,7 @@ const Table = ({ data, paginate, loading, dashboardToogle, modalHandler, getData
                 {
                   //Category and Subcategory Data Table
                   location === 'category' &&
-                  data?.docs?.slice(isCategory?startIndex:startIndexSub, isCategory?endIndex:endIndexSub).map((item, index) => (
+                  data?.docs?.slice(isCategory ? startIndex : startIndexSub, isCategory ? endIndex : endIndexSub).map((item, index) => (
                     <tr
                       key={index}
                       className='border-y border-[#0000001c] hover:bg-[#FEF9DC]'
@@ -380,7 +383,7 @@ const Table = ({ data, paginate, loading, dashboardToogle, modalHandler, getData
                       <Badge text={item?.status} />{' '}
                     </td>
                     <td className='px-4 py-[18px] text-black text-sm '>
-                    ৳{item?.total}
+                      ৳{item?.total}
                     </td>
                   </tr>
                 ))}
@@ -428,17 +431,17 @@ const Table = ({ data, paginate, loading, dashboardToogle, modalHandler, getData
       </table>
       {
         //Pagination for  category and subcategory
-        (location === 'category'&& data?.docs && data?.docs?.length !== 0) && (
+        (location === 'category' && data?.docs && data?.docs?.length !== 0) && (
           <div className='flex justify-between items-center py-6 px-4'>
-            {isCategory? <p className='text-[#475569] text-sm'>
+            {isCategory ? <p className='text-[#475569] text-sm'>
               Showing {currentPage === 1 ? '1' : ((currentPage - 1) * 10) + 1} -  {currentPage === 1 ? data?.docs?.slice(startIndex, endIndex).length : ((currentPage - 1) * 10) + data?.docs?.slice(startIndex, endIndex).length} of{' '}
-              {data?.docs?.length} results</p> 
+              {data?.docs?.length} results</p>
               :
               <p className='text-[#475569] text-sm'>
 
-              Showing {currentPageSub === 1 ? '1' : ((currentPageSub - 1) * 10) + 1} -  {currentPageSub === 1 ? data?.docs?.slice(startIndexSub, endIndexSub).length : ((currentPageSub - 1) * 10) + data?.docs?.slice(startIndexSub, endIndexSub).length} of{' '}
-              {data?.docs?.length} results
-            </p>}
+                Showing {currentPageSub === 1 ? '1' : ((currentPageSub - 1) * 10) + 1} -  {currentPageSub === 1 ? data?.docs?.slice(startIndexSub, endIndexSub).length : ((currentPageSub - 1) * 10) + data?.docs?.slice(startIndexSub, endIndexSub).length} of{' '}
+                {data?.docs?.length} results
+              </p>}
             <div className='flex'>
               <button
                 disabled={currentPage === 1}
