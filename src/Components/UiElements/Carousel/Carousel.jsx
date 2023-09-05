@@ -24,11 +24,11 @@ const Carousel = ({ isHome = Boolean }) => {
 
 	return (
 		<section
-			className={`max-w flex gap-2 md:gap-[1.8rem] w-full px-5 overflow-scroll no-scrollbar 
+			className={`flex justify-start md:justify-center gap-2  md:gap-[1.879rem] w-full px-5 overflow-x-auto no-scrollbar 
                  ${isHome && '-mb-12 relative -top-10 z-20'}`}
 		>
 			{slides?.map((slide, i) => (
-				<React.Fragment key={i}>
+				<div className='' key={i}>
 					<iframe
 						title='YouTube Short Video'
 						src={`https://www.youtube.com/embed/${slide.videoId}?autoplay=0&loop=1&playlist=${slide.videoId}&controls=0`}
@@ -36,7 +36,7 @@ const Carousel = ({ isHome = Boolean }) => {
 						allowFullScreen
 						className='rounded-2xl h-[25rem] w-[17.6875rem] mx-auto'
 					/>
-				</React.Fragment>
+				</div>
 			))}
 		</section>
 	);
