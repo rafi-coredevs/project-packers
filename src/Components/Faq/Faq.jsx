@@ -14,7 +14,7 @@ const DUMMY_DATA = {
 };
 const Faq = () => {
   return (
-    <div className="container mx-auto flex flex-col items-center px-5 sm:p-0 my-12 md:my-[9.25rem] min-h-[1178px] md:min-h-[730px] lg:min-h-[550px]">
+    <div className="container mx-auto flex flex-col items-center px-5 sm:p-0 my-12 md:my-[9.25rem] ">
       <Heading title="Frequently Asked Questions" />
 
       <div className="grid grid-cols-1   md:grid-cols-3 gap-8 justify-center items-start">
