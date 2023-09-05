@@ -42,13 +42,13 @@ const Product = () => {
     <>
       <main>
         <Breadcrumb title={product?.name} />
-        <div className="container mx-auto my-12">
+        <div className="container mx-auto my-12 px-4">
           {/* <div className="grid grid-cols-5 px-2 sm:px-0 gap-8"> */}
-          <div className="w-full lg:h-[70vh] flex flex-col lg:flex-row gap-4">
-            <div className="w-full lg:w-[70%] h-full px-5 lg:px-0">
+          <div className="w-full md:h-[70vh] flex flex-col md:flex-row gap-4">
+            <div className="w-full md:w-[70%] h-full md:px-0">
               <GalleryCard data={product?.images} />
             </div>
-            <div className="w-full lg:w-[30%]">
+            <div className="w-full md:w-[40%] lg:[30%]">
               <PriceCard
                 type={"product"}
                 price={product?.price + product?.tax + product?.fee}
@@ -59,7 +59,7 @@ const Product = () => {
               />
             </div>
           </div>
-          <div className="pr-4 my-12 w-full lg:w-[70%]">
+          <div className="lg:pr-4 my-12 w-full lg:w-[70%]">
             <h3 className="text-secondary text-[20px] sm:text-[28px] font-semibold mb-4">
               {product?.name}
             </h3>
@@ -67,7 +67,7 @@ const Product = () => {
               {product?.description}
             </p>
           </div>
-          <div className="my-10 sm:my-36 text-center mx-auto">
+          <div className="text-center mx-auto">
             <Showcase
               type="slide"
               title="Related Items"

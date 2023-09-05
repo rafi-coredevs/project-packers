@@ -30,7 +30,7 @@ const CartItem = ({ data, onChange, quantity, removeProduct }) => {
 						alt=''
 					/>
 					<div className=''>
-						<p className='sm:text-base text-sm font-normal wrap line-clamp-2 '>
+						<p className='w-1/2 sm:text-base text-sm font-normal wrap line-clamp-1' title={data?.name}>
 							{data?.name}
 						</p>
 						<p className='sm:hidden block text-xs font-semibold'>
