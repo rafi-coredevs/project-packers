@@ -42,7 +42,7 @@ const Shop = () => {
   }
 
   const reFetch = (data) => {
-    setQuery(data);
+    data ? setQuery(data) : fetchData()
   }
 
   return (
