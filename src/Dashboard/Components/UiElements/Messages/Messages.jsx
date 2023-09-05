@@ -31,14 +31,15 @@ const Messages = ({ activeChat, chatCardHandler, setSupportData }) => {
         })
         if (activeChat && activeChat.status !== 'pending') {
             setModal(false)
-            // terminal.socket.on('entry')
-            terminal.socket.emit('entry', { "entry": true, "room": activeChat?.roomNumber })
+            terminal.socket.on('entry')
+            terminal.socket.emit('entry', { "entry": true, "room": activeChat?.id })
             terminal.socket.on('message', (data) => {
                 data.id && setMessages(prev => [data, ...prev])
             })
         }
         return () => {
-            terminal.socket.emit('entry', { "entry": false, "room": activeChat?.roomNumber })
+            terminal.socket.emit('entry', { "entry": false, "room": activeChat?.id })
+            terminal.socket.off('entry')
             terminal.socket.off('message')
         }
     }, [activeChat])
