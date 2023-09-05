@@ -83,16 +83,16 @@ const Banner = () => {
 						<p className='font-sans font-bold md:text-[52px] leading-10 md:leading-[3.5rem] tracking-[-0.04] md:tracking-[-0.065rem] text-[32px] text-white'>
 							Shop products from USA and save up to 40%
 						</p>
-						<p className="font-sans font-medium text-white opacity-70 text-[20px] max-w-[580px] leading-7 tracking-tight">
+						<p className='font-sans font-medium text-white opacity-70 text-[20px] max-w-[580px] leading-7 tracking-tight'>
 							Thousands of deals on gadgets, shoes, cosmetics, watches -
 							everything from the US.
 						</p>
 					</div>
-          <form className="mt-8" onSubmit={submitHandler} action="">
-            <div className="flex flex-wrap sm:flex-nowrap justify-center gap-2 sm:gap-0">
+					<form className="mt-8" onSubmit={submitHandler} action="">
+						<div className="flex flex-wrap sm:flex-nowrap justify-center gap-2 sm:gap-0">
 							<div className='w-full'>
 								<Input
-									
+
 									type='text'
 									name='search'
 									placeholder='Paste Product url here'
@@ -106,16 +106,16 @@ const Banner = () => {
 						</div>
 					</form>
 					<div className='hidden md:block'>
-          <div className="flex gap-[1.88rem] mt-[5em] leading-5">
+						<div className="flex gap-[1.88rem] mt-[5em] leading-5">
 							<div className='flex gap-2 items-start'>
 								<img src={check} alt='' />
-                <p className="text-white text-sm font-sans w-[145px] font-semibold leading-5">
+								<p className="text-white text-sm font-sans w-[145px] font-semibold leading-5">
 									Receive your product in 1–2 weeks
 								</p>
 							</div>
 							<div className='flex gap-2 items-start '>
 								<img src={check} alt='' />
-                <p className="text-white text-sm font-sans w-[145px] font-semibold leading-5">
+								<p className="text-white text-sm font-sans w-[145px] font-semibold leading-5">
 									Receive your product in 1–2 weeks
 								</p>
 							</div>
@@ -123,9 +123,9 @@ const Banner = () => {
 					</div>
 				</div>
 
-        <div className="lg:col-span-1 col-span-2 lg:absolute lg:right-0 lg:bottom-0">
-          <img  className="w-auto ml-auto -mt-8 md:mt-0 h-[17.875rem] md:h-[35.125rem] relative z-[-1]" src={image} />
-        </div>
+				<div className="md:col-span-1 col-span-2 flex items-end justify-center">
+					<img className="w-auto bottom-0 -mt-8 md:mt-0 h-[17.875rem] md:h-[35.125rem] relative z-[-1]" src={image} />
+				</div>
 			</div>
 			<LoginModal
 				setSuccessModalState={setSuccessModalState}

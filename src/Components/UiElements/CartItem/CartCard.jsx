@@ -1,6 +1,3 @@
-// import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
-
-
 /**
  *
  * @param {string} productImg - receive product image

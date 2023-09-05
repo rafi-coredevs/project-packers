@@ -45,7 +45,7 @@ export const router = createBrowserRouter([
   {
     path: "/",
     element: <Main />,
-    errorElement: <ErrorPage/>,
+    errorElement: <ErrorPage />,
     children: [
       {
         path: "/",
@@ -53,15 +53,15 @@ export const router = createBrowserRouter([
       },
       {
         path: "/login",
-        element: <Login />,
+        element: <ProtectedRoute accessTo="login"><Login /></ProtectedRoute>,
       },
       {
         path: "/reset",
-        element: <Recovery />,
+        element: <ProtectedRoute accessTo="recover"><Recovery /></ProtectedRoute>,
       },
       {
         path: "/signup",
-        element: <Signup />,
+        element: <ProtectedRoute accessTo="signup"><Signup /></ProtectedRoute>,
       },
       {
         path: "/shop",

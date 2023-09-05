@@ -1,6 +1,6 @@
 import React from 'react'
 import { useUserCtx } from '../contexts/user/UserContext'
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import Loading from './Loading';
 import Unauthorized from './Unauthorized';
 import { useLocation } from 'react-router-dom';
@@ -10,15 +10,18 @@ export default function ProtectedRoute({ accessTo, children }) {
     const { user, loading } = useUserCtx();
     const navigate = useNavigate();
     const location = useLocation();
+
     // 
     const accessByRole = {
-        //  to be checked; super-admin doesn't 
         'super-admin': ['order', 'support', 'product', 'discount', 'request', 'dashboard', 'staff', 'customer', 'category', 'payment', 'general'],
         'admin': ['order', 'support', 'product', 'request', 'dashboard', 'customer', 'category', 'general'],
         'staff': ['order', 'support', 'request', 'customer', 'product', 'general'],
         'user': ['general'],
     }
-    // 
+    //
+    // useEffect(() => {
+    // }, [user, loading,accessTo])
+
     if (loading) {
         return <Loading />
     }
@@ -32,8 +35,9 @@ export default function ProtectedRoute({ accessTo, children }) {
             }
         }
         else {
+            console.log(accessTo, "  <?>   ", user.role)
             if (accessTo == "login" || accessTo == "signup" || accessTo == "recover") {
-                navigate('/')
+                return <Navigate to="/" replace={true} />
             }
             else if (accessByRole[user.role].includes(accessTo)) {
                 return <>{children}</>
@@ -43,4 +47,5 @@ export default function ProtectedRoute({ accessTo, children }) {
             }
         }
     }
+
 }
