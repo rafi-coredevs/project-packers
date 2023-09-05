@@ -28,7 +28,6 @@ const UserOrderDetails = () => {
                     <div className="grid gap-5 p-5 border rounded-lg">
                         <div className="flex justify-between">
                             <h3 className="text-base font-semibold">Products</h3>
-                            <button className="text-emerald-500">Add custom item</button>
                         </div>
                         <div className="grid gap-3 relative overflow-x-auto">
                             <table className="w-full ">

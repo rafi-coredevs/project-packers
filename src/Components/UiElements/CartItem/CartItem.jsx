@@ -1,3 +1,5 @@
+import { useLocation } from 'react-router-dom';
+import close from '../../../assets/icons/cd-cancel.svg'
 /**
  * CartItem component displays a single item in the shopping cart.
  *
@@ -6,7 +8,7 @@
  * @param {number} quantity - The current quantity of the item.
  * @returns {JSX.Element} The rendered CartItem component.
  */
-const CartItem = ({ data, onChange, quantity }) => {
+const CartItem = ({ data, onChange, quantity, removeProduct }) => {
 	/**
 	 * Updates the quantity of the item.
 	 *
@@ -17,6 +19,7 @@ const CartItem = ({ data, onChange, quantity }) => {
 		onChange(id, quantity + updatedQuantity);
 	};
 
+	const { pathname } = useLocation();
 	return (
 		<tr className='border-b'>
 			<td>
@@ -59,6 +62,9 @@ const CartItem = ({ data, onChange, quantity }) => {
 			<td className='hidden px-2 sm:table-cell'>
 				৳ {data?.price + data?.tax + data?.fee} tk
 			</td>
+			{pathname.includes('admin') && <td className='px-2 sm:table-cell '>
+				<img onClick={() => removeProduct(data)} src={close} alt="" className='cursor-pointer' />
+			</td>}
 		</tr>
 	);
 };

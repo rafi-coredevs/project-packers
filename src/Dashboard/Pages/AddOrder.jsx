@@ -105,33 +105,26 @@ const AddOrder = () => {
             email: user.email,
             phone: user.phone,
             products,
-            status: 'pending',
             shippingaddress: shipping,
             billingaddress: billing,
-            discountApplied: discount.code ? {
-                amount: discount?.amount,
-                percentage: discount?.percentage,
-                code: discount?.code
-            } : null,
+            discountApplied: discount?.code,
         };
 
         removeEmptyFields(data); //removing empty objects
-        console.log(data);
-        // terminal
-        //     .request({
-        //         name: 'updateOrder',
-        //         params: { id: orderId },
-        //         body: data,
-        //     })
-        //     .then((res) => {
-        //         if (res.status === false) {
-        //             toaster({ type: 'error', message: res.message });
-        //         } else {
-        //             toaster({ type: 'success', message: 'successfully updated' });
-        //             navigate(-1);
-        //         }
-        //     })
-        //     .catch((err) => console.error('order update error', err));
+        terminal
+            .request({
+                name: 'createOrderByAdmin',
+                body: data,
+            })
+            .then((res) => {
+                if (res.status === false) {
+                    toaster({ type: 'error', message: res.message });
+                } else {
+                    toaster({ type: 'success', message: res.message });
+                    navigate(-1);
+                }
+            })
+            .catch((err) => console.error('order update error', err));
     };
 
     // Find Customer
@@ -166,6 +159,7 @@ const AddOrder = () => {
         }).then(response => {
             if (response.code) {
                 setDiscount(response);
+                toaster({ type: "success", message: 'Discount applied' });
             } else {
                 toaster({
                     type: "error",
@@ -197,6 +191,15 @@ const AddOrder = () => {
             return { ...prev, products: updatedProducts };
         });
     }
+
+    const removeProduct = (removedProduct) => {
+        setOrder((prevOrder) => {
+            const updatedProducts = prevOrder.products.filter(
+                (item) => item.product.id !== removedProduct.id
+            );
+            return { ...prevOrder, products: updatedProducts };
+        });
+    };
 
     const updateQuantity = useCallback((id, quantity) => {
         setOrder((prevOrder) => {
@@ -265,6 +268,9 @@ const AddOrder = () => {
                                         <th className=" w-2/12 font-semibold pb-[14px] hidden sm:table-cell">
                                             Price
                                         </th>
+                                        <th className="font-semibold pb-[14px] hidden sm:table-cell">
+                                            Remove
+                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -275,6 +281,7 @@ const AddOrder = () => {
                                                 data={product?.product}
                                                 quantity={product.productQuantity}
                                                 onChange={updateQuantity}
+                                                removeProduct={removeProduct}
                                             />
                                         );
                                     })}
@@ -306,7 +313,7 @@ const AddOrder = () => {
                                 {
                                     discount?.code ?
                                         <>
-                                            <button onClick={removeDiscount} className='text-emerald-500 underline text-sm cursor-default'>
+                                            <button onClick={removeDiscount} className='text-emerald-500 underline text-sm'>
                                                 Remove Discount
                                             </button>
                                             <p className=''>

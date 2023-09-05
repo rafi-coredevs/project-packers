@@ -14,6 +14,20 @@ export const order = {
             phone: "Please enter your phone number"
         }
     },
+    createOrderByAdmin: {
+        method: "POST",
+        uri: "adminorder",
+        body: {
+            email: undefined,
+            shippingaddress: undefined,
+        },
+        suggestions: {
+            raw: "A raw example of the payload: {email:'abcd@abc.com',products:[{product, productQuantity}], phone:'01111111111',shippingaddress:'{name:'a', address:'b', city:'c',area:'d',zip:'111'}'}.",
+            email: "Please enter your email address",
+            shippingaddress: "Please enter your shipping address",
+            phone: "Please enter your phone number"
+        }
+    },
     allOrders: {
         method: "GET",
         uri: "order",
