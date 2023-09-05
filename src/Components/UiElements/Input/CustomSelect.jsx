@@ -49,9 +49,9 @@ const CustomSelect = ({ options, value, onChange, appearance, bg, error }) => {
 
 
   const colorComb = {
-    green: "bg-[#3E949A] text-white",
-    white: "bg-white text-black",
-    paste: "bg-[#CFF6EF]"
+    green: "bg-[#3E949A] text-white py-2",
+    white: "bg-white text-black py-2",
+    paste: "bg-[#CFF6EF] py-1"
   }
   const iconComb = {
     green: downArrowWhite,
@@ -67,7 +67,7 @@ const CustomSelect = ({ options, value, onChange, appearance, bg, error }) => {
       {appearance == "select" &&
         <div
           id="customselect"
-          className={`py-2 px-4 ${bg} border ${error ? "border-red-600" : 'border-[#ededed]'} rounded-md  cursor-pointer flex justify-between ${bg === 'green' ? 'bg-[#3E949A] text-white' : ''}`}
+          className={` px-4 ${colorComb[bg]} border ${error ? "border-red-600" : 'border-[#ededed]'} rounded-md  cursor-pointer flex justify-between`}
           onClick={toggleDropdown}
         >
           {value ? value : 'Select'}
@@ -82,10 +82,10 @@ const CustomSelect = ({ options, value, onChange, appearance, bg, error }) => {
       }
 
       {isOpen ? (
-        <ul className={`absolute z-10 top-full  ${colorComb[bg]} ${sty_log()} border  rounded-t-none shadow   overflow-y-auto scrollbar bg-white max-h-60`}>
+        <ul className={`absolute z-10 top-full py-0  ${colorComb[bg]} ${sty_log()} border  rounded-t-none shadow   overflow-y-auto scrollbar bg-white max-h-60`}>
           {options?.map((option, index) => (<li
             key={index}
-            className={`${value === option.name ? 'bg-primary' : colorComb['white']} py-2 px-4 cursor-pointer   hover:bg-primary`}
+            className={`${value === option.name ? 'bg-primary' : colorComb['white']} py-2 px-4 cursor-pointer   hover:bg-primary text-black`}
             onClick={() => handleOptionSelect(option.id)}
           >
             {option.name}
