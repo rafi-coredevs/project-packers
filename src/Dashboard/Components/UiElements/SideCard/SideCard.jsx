@@ -32,6 +32,7 @@ const SideCard = ({
 	customerName,
 	formikProps,
 	editable,
+	amount
 }) => {
 	const [isEdit, setIsEdit] = useState(false);
 
@@ -50,12 +51,37 @@ const SideCard = ({
 				</button>
 			</div>
 			<div className='grid gap-2'>
-				{customerName && <p className='underline text-emerald-500'>{}</p> }
+				{email && <p className='underline text-emerald-500'>{email || 'Not available'}</p> }
+				{phone && <p className=' text-[#6d6d6d]'>{phone || 'Not available'}</p> }
 				
-				<p className='text-[#475569]'>{orders || 'No Orders'}</p>
+				
 			</div>
 		</div>
 	);
+	// for custom card
+	const customCard = () => (
+		<div className='grid gap-5 p-5'>
+			<div className='flex justify-between'>
+				<p className='text-base text-secondary font-semibold'>{title}</p>
+				<button
+					onClick={(e) => {
+						e.preventDefault();
+						onClick;
+					}}
+				>
+					<img src={canceled} alt='' />
+				</button>
+			</div>
+			<div className='grid gap-2'>
+				{address && <p className='text-[#6d6d6d]'>{address || 'Not available'}</p> }
+				{amount && <p className='text-[#black]'> ৳{amount || 0 }</p> }
+			
+				
+				
+			</div>
+		</div>
+	);
+
 
 	// for customer contact
 	const renderContactCard = () => (
@@ -198,6 +224,8 @@ const SideCard = ({
 			return renderBillingOrShippingCard(types === 'billing');
 		case 'note':
 			return renderNoteCard();
+		case 'custom':
+			return customCard();
 		default:
 			return null;
 	}
