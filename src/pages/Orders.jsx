@@ -12,6 +12,8 @@ import { useFormik } from "formik";
 import { profileSchema } from "../Util/ValidationSchema"
 import { useUserCtx } from "../contexts/user/UserContext";
 import { terminal } from "../contexts/terminal/Terminal";
+import dlt from '../assets/icons/cd-delete.svg';
+import toaster from '../Util/toaster';
 
 const Orders = () => {
   const { Logout, user } = useUserCtx()
@@ -75,9 +77,22 @@ const Orders = () => {
   };
 
   useEffect(() => {
+    fetchData();
+  }, [])
+
+  function fetchData() {
     setLoading(true)
     terminal.request({ name: 'userOrder', queries: { sortBy: 'date:desc' } }).then(data => { data.docs && setOrder(data.docs), setLoading(false) });
-  }, [])
+  }
+
+  function deleteOrderItem(id) {
+    console.log('order id ', id);
+    terminal.request({ name: "deleteOrder", body: { id } }).then((res) => {
+      res.status === true ? (toaster({ type: "success", message: res.message }), fetchData()) : (toaster({ type: "error", message: res.message }));
+    });
+  }
+
+
   return (
     <>
       <Breadcrumb title={active} />
@@ -178,7 +193,7 @@ const Orders = () => {
                                   <td className="px-6 py-4">
                                     <Badge text={item.status} />
                                   </td>
-                                  <td className="px-6 py-4">
+                                  <td className="px-6 py-4 flex gap-2">
                                     <Link to={`/account/orders/${item.id}`}>
                                       <img
                                         className="cursor-pointer"
@@ -186,6 +201,14 @@ const Orders = () => {
                                         alt=""
                                       />
                                     </Link>
+                                    {item?.status === 'pending' && (
+                                      <img
+                                      className='cursor-pointer'
+                                      onClick={() => deleteOrderItem(item?.id)}
+                                      src={dlt}
+                                      alt=''
+                                    />
+                                    )}
                                   </td>
                                 </tr>
                               })
