@@ -32,33 +32,35 @@ const SideCard = ({
 	customerName,
 	formikProps,
 	editable,
-	amount
+	amount,
 }) => {
 	const [isEdit, setIsEdit] = useState(false);
 
-	// for customer name
+	// for customer information
 	const renderCustomerCard = () => (
 		<div className='grid gap-5 p-5'>
 			<div className='flex justify-between'>
 				<p className='text-base text-secondary font-semibold'>Customer</p>
-				<button
-					onClick={(e) => {
-						e.preventDefault();
-						onClick;
-					}}
-				>
-					<img src={canceled} alt='' />
-				</button>
+			{
+				editable?	<button
+				onClick={(e) => {
+					e.preventDefault();
+					onClick;
+				}}
+			>
+				<img src={canceled} alt='' />
+			</button>:''
+			}
 			</div>
 			<div className='grid gap-2'>
-				{email && <p className='underline text-emerald-500'>{email || 'Not available'}</p> }
-				{phone && <p className=' text-[#6d6d6d]'>{phone || 'Not available'}</p> }
-				
-				
+				<p className='underline text-emerald-500'>
+					{customerName || 'Not available'}
+				</p>
+				<p className=' text-[#6d6d6d]'>{orders || 'Not available'}</p>
 			</div>
 		</div>
 	);
-	// for custom card
+	// for customer name and total order
 	const customCard = () => (
 		<div className='grid gap-5 p-5'>
 			<div className='flex justify-between'>
@@ -73,15 +75,13 @@ const SideCard = ({
 				</button>
 			</div>
 			<div className='grid gap-2'>
-				{address && <p className='text-[#6d6d6d]'>{address || 'Not available'}</p> }
-				{amount && <p className='text-[#black]'> ৳{amount || 0 }</p> }
-			
-				
-				
+				{address && (
+					<p className='text-[#6d6d6d]'>{address || 'Not available'}</p>
+				)}
+				{amount && <p className='text-[#black]'> ৳{amount || 0}</p>}
 			</div>
 		</div>
 	);
-
 
 	// for customer contact
 	const renderContactCard = () => (
@@ -92,7 +92,7 @@ const SideCard = ({
 				</p>
 				{cross === false ? (
 					<></>
-				) : (
+				) : editable ? (
 					<button
 						className='text-emerald-500'
 						onClick={(e) => {
@@ -101,6 +101,8 @@ const SideCard = ({
 					>
 						Edit
 					</button>
+				) : (
+					''
 				)}
 			</div>
 			<div className='grid gap-2'>
@@ -111,7 +113,6 @@ const SideCard = ({
 						readOnly
 						className=' text-emerald-500'
 						value={email || 'No Details'}
-
 					/>
 					{email && <CopyButton textToCopy={email} />}
 				</div>
@@ -127,16 +128,17 @@ const SideCard = ({
 				<p className='text-base text-secondary font-semibold'>{title}</p>
 				{cross === false ? (
 					<></>
-				) : (
+				) : editable ? (
 					<button
 						className='text-emerald-500'
 						onClick={(e) => {
 							e.preventDefault();
-							setIsEdit(!isEdit);
 						}}
 					>
 						Edit
 					</button>
+				) : (
+					''
 				)}
 			</div>
 			<div className='grid gap-2'>
