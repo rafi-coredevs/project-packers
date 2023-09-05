@@ -38,14 +38,14 @@ const OtpModal = ({ data, getResponse, stateHandler, onClose }) => {
 						getResponse({ component: 'newPass', data, otp: otp });
 						stateHandler('resetPassword');
 					}
-				}).catch((err)=>console.error("Error otp modal", err ))
+				})
+				.catch((err) => console.error('Error otp modal', err))
 				.finally(() => {
 					setIsSubmit(false);
 					otpForm.resetForm();
 				});
 		},
 	});
-	console.log(data);
 
 	/**
 	 * Handles keyboard navigation between OTP input fields.
@@ -66,18 +66,27 @@ const OtpModal = ({ data, getResponse, stateHandler, onClose }) => {
 			}
 		}
 	};
-	function maskEmail(email) {
-		const atIndex = email.indexOf("@");
-		
-		if (atIndex !== -1) {
-		  const maskedPart = email.substring(1, atIndex).replace(/./g, "*");
-		  const maskedEmail = email.replace(email.substring(1, atIndex), maskedPart);
-		  return maskedEmail;
-		} else {
-		  return email; 
-		}
-	  }
 
+	/**
+	 * Function to mask email for privacy
+	 *
+	 * @param {string} email - receive email for masking
+	 * @returns masked email
+	 */
+	function maskEmail(email) {
+		const atIndex = email.indexOf('@');
+
+		if (atIndex !== -1) {
+			const maskedPart = email.substring(1, atIndex).replace(/./g, '*');
+			const maskedEmail = email.replace(
+				email.substring(1, atIndex),
+				maskedPart,
+			);
+			return maskedEmail;
+		} else {
+			return email;
+		}
+	}
 
 	return (
 		<>
@@ -144,9 +153,9 @@ const OtpModal = ({ data, getResponse, stateHandler, onClose }) => {
 			</div>
 			<div className=''>
 				<p className='text-center text-base font-medium text-white'>
-				To get a verification code, first confirm the email address you added
-						to your account <span >{maskEmail(data?.email)}</span>. <br />
-						Standard rates apply.
+					To get a verification code, first confirm the email address you added
+					to your account <span>{maskEmail(data?.email)}</span>. <br />
+					Standard rates apply.
 				</p>
 			</div>
 			<form className='flex flex-col gap-5' onSubmit={otpForm.handleSubmit}>
@@ -155,10 +164,8 @@ const OtpModal = ({ data, getResponse, stateHandler, onClose }) => {
 						name='field1'
 						placeholder='✱'
 						change={otpForm.handleChange}
-						blur={otpForm.handleBlur}
-						max={1}
 						value={otpForm.values.field1}
-						type='text'
+						otp
 						tabIndex={1}
 						onKeyUp={handleKeys}
 						className='text-center text-lg font-semibold placeholder:text-3xl p-[1.125rem_1.25rem] placeholder:translate-y-1 focus:placeholder:opacity-0 h-[50px]'
@@ -168,10 +175,8 @@ const OtpModal = ({ data, getResponse, stateHandler, onClose }) => {
 						name='field2'
 						placeholder='✱'
 						change={otpForm.handleChange}
-						blur={otpForm.handleBlur}
-						max={1}
 						value={otpForm.values.field2}
-						type='text'
+						otp
 						tabIndex={2}
 						onKeyUp={handleKeys}
 						className='text-center text-lg font-semibold placeholder:text-3xl p-[1.125rem_1.25rem] placeholder:translate-y-1 focus:placeholder:opacity-0 h-[50px]'
@@ -181,10 +186,8 @@ const OtpModal = ({ data, getResponse, stateHandler, onClose }) => {
 						name='field3'
 						placeholder='✱'
 						change={otpForm.handleChange}
-						blur={otpForm.handleBlur}
-						max={1}
 						value={otpForm.values.field3}
-						type='text'
+						otp
 						tabIndex={3}
 						onKeyUp={handleKeys}
 						className='text-center text-lg font-semibold placeholder:text-3xl p-[1.125rem_1.25rem] placeholder:translate-y-1 focus:placeholder:opacity-0 h-[50px]'
@@ -194,10 +197,8 @@ const OtpModal = ({ data, getResponse, stateHandler, onClose }) => {
 						name='field4'
 						placeholder='✱'
 						change={otpForm.handleChange}
-						blur={otpForm.handleBlur}
-						max={1}
 						value={otpForm.values.field4}
-						type='text'
+						otp
 						tabIndex={4}
 						onKeyUp={handleKeys}
 						className='text-center text-lg font-semibold placeholder:text-3xl p-[1.125rem_1.25rem] placeholder:translate-y-1 focus:placeholder:opacity-0 h-[50px]'

@@ -16,9 +16,9 @@ import toaster from '../../Util/toaster';
  */
 const Otp = ({ data, getResponse }) => {
 	const [isSubmit, setIsSubmit] = useState(false);
-	const [minute,setMinute]=useState(4);
-	const [second,setSecond]=useState(60);
-	const [isDisable,setIsdisable]= useState(true)
+	const [minute, setMinute] = useState(4);
+	const [second, setSecond] = useState(60);
+	const [isDisable, setIsdisable] = useState(true);
 
 	// Formik configuration for OTP input form
 	const otpForm = useFormik({
@@ -32,7 +32,7 @@ const Otp = ({ data, getResponse }) => {
 			setIsSubmit(true);
 			const otp = Object.values(values).join(''); // joining all otp field values
 
-			// otp velidation request
+			// otp validation request
 			terminal
 				.request({ name: 'verifyOTP', body: { otp, token: data.token } })
 				.then((res) => {
@@ -41,7 +41,8 @@ const Otp = ({ data, getResponse }) => {
 					} else {
 						getResponse({ component: 'newPass', data, otp: otp });
 					}
-				}).catch(err=>console.error("Error in otp verification", err))
+				})
+				.catch((err) => console.error('Error in otp verification', err))
 				.finally(() => {
 					setIsSubmit(false);
 					otpForm.resetForm();
@@ -68,59 +69,67 @@ const Otp = ({ data, getResponse }) => {
 			}
 		}
 	};
+
+	// Effect for countdown timer
 	useEffect(() => {
 		const interval = setInterval(() => {
-		  if (minute === 0 && second === 0) {
-			clearInterval(interval);
-			
-			setIsdisable(false)
-		  } else {
-			if (second === 0) {
-			  setMinute(minute - 1);
-			  setSecond(59);
+			if (minute === 0 && second === 0) {
+				clearInterval(interval);
+
+				setIsdisable(false);
 			} else {
-			  setSecond(second - 1);
+				if (second === 0) {
+					setMinute(minute - 1);
+					setSecond(59);
+				} else {
+					setSecond(second - 1);
+				}
 			}
-		  }
 		}, 1000);
-	
-		
+
 		return () => clearInterval(interval);
-	  }, [minute, second]);
+	}, [minute, second]);
 
-	  const resendHandler = () =>{
-		setIsdisable(true)
-		
+	/**
+	 *  Handler for OTP resend
+	 */
+	const resendHandler = () => {
+		setIsdisable(true);
+
 		terminal
-		.request({ name: 'resendOTP', body: {token:data?.token} })
-		.then((res) => {
-			if (res.status === false) {
-				setIsdisable(false)
-				toaster({ type: 'error', message: res.message });
-			} else {
-				data.token=res.token
-				setMinute(5)
-				toaster({ type: 'success', message: 'OTP resend successfull' });
-				
-			}
-		})
-		
-		
+			.request({ name: 'resendOTP', body: { token: data?.token } })
+			.then((res) => {
+				if (res.status === false) {
+					setIsdisable(false);
+					toaster({ type: 'error', message: res.message });
+				} else {
+					data.token = res.token;
+					setMinute(5);
+					toaster({ type: 'success', message: 'OTP resend successfull' });
+				}
+			});
+	};
 
+	/**
+	 * Function to mask email for privacy
+	 *
+	 * @param {string} email - receive email for masking
+	 * @returns masked email
+	 */
+	function maskEmail(email) {
+		const atIndex = email.indexOf('@');
 
-	  }
-
-	  function maskEmail(email) {
-		const atIndex = email.indexOf("@");
-		
 		if (atIndex !== -1) {
-		  const maskedPart = email.substring(1, atIndex).replace(/./g, "*");
-		  const maskedEmail = email.replace(email.substring(1, atIndex), maskedPart);
-		  return maskedEmail;
+			const maskedPart = email.substring(1, atIndex).replace(/./g, '*');
+			const maskedEmail = email.replace(
+				email.substring(1, atIndex),
+				maskedPart,
+			);
+			return maskedEmail;
 		} else {
-		  return email; 
+			return email;
 		}
-	  }
+	}
 
 	return (
 		<>
@@ -130,8 +139,8 @@ const Otp = ({ data, getResponse }) => {
 						Enter your OTP verification code
 					</p>
 					<p className='font-sans text-lg font-medium text-[#ffffffb3]'>
-						To get a verification code, first confirm the email address you added
-						to your account <span >{maskEmail(data?.email)}</span>. <br />
+						To get a verification code, first confirm the email address you
+						added to your account <span>{maskEmail(data?.email)}</span>. <br />
 						Standard rates apply.
 					</p>
 				</div>
@@ -142,10 +151,8 @@ const Otp = ({ data, getResponse }) => {
 							placeholder='✱'
 							tabIndex={1}
 							change={otpForm.handleChange}
-							blur={otpForm.handleBlur}
-							max={1}
+							otp
 							value={otpForm.values.field1}
-							type='text'
 							onKeyUp={handleKeys}
 							className='text-center text-lg font-semibold placeholder:text-3xl p-[1.125rem_1.25rem] h-[64px] placeholder:translate-y-1 focus:placeholder:opacity-0'
 						/>
@@ -154,10 +161,8 @@ const Otp = ({ data, getResponse }) => {
 							placeholder='✱'
 							tabIndex={2}
 							change={otpForm.handleChange}
-							blur={otpForm.handleBlur}
-							max={1}
+							otp
 							value={otpForm.values.field2}
-							type='text'
 							onKeyUp={handleKeys}
 							className='text-center text-lg font-semibold placeholder:text-3xl p-[1.125rem_1.25rem] h-[64px] placeholder:translate-y-1 focus:placeholder:opacity-0'
 						/>
@@ -166,10 +171,8 @@ const Otp = ({ data, getResponse }) => {
 							placeholder='✱'
 							tabIndex={3}
 							change={otpForm.handleChange}
-							blur={otpForm.handleBlur}
-							max={1}
+							otp
 							value={otpForm.values.field3}
-							type='text'
 							onKeyUp={handleKeys}
 							className='text-center text-lg font-semibold placeholder:text-3xl p-[1.125rem_1.25rem] h-[64px] placeholder:translate-y-1 focus:placeholder:opacity-0'
 						/>
@@ -178,10 +181,8 @@ const Otp = ({ data, getResponse }) => {
 							placeholder='✱'
 							tabIndex={4}
 							change={otpForm.handleChange}
-							blur={otpForm.handleBlur}
-							max={1}
+							otp
 							value={otpForm.values.field4}
-							type='text'
 							onKeyUp={handleKeys}
 							className='text-center text-lg font-semibold placeholder:text-3xl p-[1.125rem_1.25rem] h-[64px] placeholder:translate-y-1 focus:placeholder:opacity-0'
 						/>
@@ -195,7 +196,17 @@ const Otp = ({ data, getResponse }) => {
 					>
 						{isSubmit ? 'Submitting...' : 'Verify Account'}
 					</Button>
-					<p className='text-white font-sans text-center pt-[4rem]'>Your code will expire in {minute}:{second}s  <button type='button' disabled={isDisable} onClick={resendHandler} className='text-primary cursor-pointer'>Resend a new code.</button></p>
+					<p className='text-white font-sans text-center pt-[4rem]'>
+						Your code will expire in {minute}:{second}s{' '}
+						<button
+							type='button'
+							disabled={isDisable}
+							onClick={resendHandler}
+							className='text-primary cursor-pointer'
+						>
+							Resend a new code.
+						</button>
+					</p>
 				</form>
 			</div>
 			<div className='flex flex-col  w-full h-full justify-center items-center'>
