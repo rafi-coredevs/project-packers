@@ -3,8 +3,7 @@ import { Link } from "react-router-dom";
 import Dropdown from "../../../Components/UiElements/Dropdown/Dropdown";
 import Icon from "../../../Components/UiElements/Icon/Icon";
 import logo from "../../../assets/logo.svg";
-import notification from "../../../assets/icons/cd-notification.svg";
-import profile from "../../../assets/icons/user-1.svg";
+import notification from "../../../assets/icons/cd-notification.svg"; 
 import { useUserCtx } from "../../../contexts/user/UserContext";
 import { terminal } from "../../../contexts/terminal/Terminal";
 import { SearchField } from "../UiElements/SearchField/SearchField";
@@ -29,20 +28,7 @@ const Header = () => {
       terminal.socket.off('notification')
     }
   })
-  function handleLogoutDropD(e) {
-    if (e.target.className.includes("LogoutDropD")) {
-      logoutDropD ? setLogoutDropD(false) : setLogoutDropD(true)
-    }
-    else {
-      setLogoutDropD(false)
-    }
-  }
-  useEffect(() => {
-    window.addEventListener("click", handleLogoutDropD);
-    return () => {
-      window.removeEventListener("click", handleLogoutDropD);
-    };
-  }, [logoutDropD]);
+ 
 
   return (
     <div className="sticky top-0 mt-0 pt-0  bg-white z-50 border-b border-gray-300">
@@ -89,20 +75,27 @@ const Header = () => {
             </div>
             <div className="relative">
               <button
-                className="LogoutDropD flex gap-2 items-center cursor-pointer"
+                onClick={() => {
+
+                  setLogoutDropD(true)
+                }}
+                className="  flex gap-2 items-center cursor-pointer"
               >
                 <UserIcon name={user?.fullName} />
-                <p className="LogoutDropD font-sans text-secondary text-sm font-semibold">
+                <p className="  font-sans text-secondary text-sm font-semibold">
                   {user?.fullName || "User"}
                 </p>
               </button>
-              {logoutDropD && <div className="LogoutDropD bg-white py-6 shadow-md shadow-primary px-2 border rounded-lg absolute top-10 left-0 right-0  mt-1">
-                <button onClick={() => { Logout(); navigate("/"); }} className="bg-primary px-2 w-full rounded-md py-2 text-secondary font-medium">Logout</button>
-              </div>
-
-              }
+              <Dropdown
+                type="logout"
+                isOpen={logoutDropD}
+                onClick={() => setLogoutDropD(false)}
+                title=""
+                logout={Logout}
+              />
+             
             </div>
-            <Dropdown type="logout" isOpen={true} />
+            
           </div>
         </div>
       </div>

@@ -6,7 +6,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useEffect, useRef } from 'react';
 import formatTimeAgo from '../../../Util/formatTimeAgo';
 
-const Dropdown = ({ isOpen, onClick, type, title, data }) => {
+
+const Dropdown = ({ isOpen, onClick, type, title, data, logout }) => {
 	const navidate = useNavigate();
 	const ref = useRef(null);
 	useEffect(() => {
@@ -138,6 +139,16 @@ const Dropdown = ({ isOpen, onClick, type, title, data }) => {
 			</div>
 		);
 	}
+	if (type === 'logout') {
+		return (
+			<div ref={ref}>
+				{isOpen && <div className=" p-5  w-[350px]  bg-white py-6 shadow-md shadow-primary px-2 border rounded-lg absolute top-12  right-0  mt-1">
+					<button onClick={() => { logout(); navigat("/"); }} className="bg-primary px-2 w-full rounded-md py-2 text-secondary font-medium">Logout</button>
+				</div>}
+			</div>
+		);
+	}
+
 };
 
 export default Dropdown;
