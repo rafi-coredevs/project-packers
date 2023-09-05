@@ -17,7 +17,6 @@ const Cart = () => {
   let sellerTakes = 0;
   let tax = 0;
   let fee = 0;
-  let totalPrice = 0;
   const [price, setPrice] = useState(null);
   const [discount, setDiscount] = useState(null);
   const { cart, setCart, getCart } = useCartCtx();
@@ -65,7 +64,7 @@ const Cart = () => {
         }
       });
       cart.requests?.length > 0 && cart?.requests.forEach((request) => {
-        nondiscountItemsTotal = (request.request.price + request.request.tax + request.request.fee) * request.requestQuantity;
+        nondiscountItemsTotal += (request.request.price + request.request.tax + request.request.fee) * request.requestQuantity;
       });
 
       discountamount = discount?.percentage
@@ -151,7 +150,6 @@ const Cart = () => {
   const submitHandler = () => {
     navigate('/checkout')
   }
-  console.log(cart);
   return (
     <>
       <Breadcrumb />
@@ -200,7 +198,7 @@ const Cart = () => {
                       tax += request?.request?.tax * request.requestQuantity;
                       fee += request?.request?.fee * request.requestQuantity;
                       return (
-                        request.request?.sellerTakes && <CartItem
+                        request.request?.price >= 0 && <CartItem
                           key={request?.id}
                           data={request?.request}
                           quantity={request.requestQuantity}
@@ -246,7 +244,7 @@ const Cart = () => {
                   sellerTakes={sellerTakes}
                   tax={tax}
                   fee={fee}
-                  estimated={price + totalPrice}
+                  estimated={price}
                   onSubmit={submitHandler}
                 />
               </div>

@@ -5,7 +5,7 @@
  * @param {string} origin product origin
  * @param {string} source product source
  * @param {string} arrival product delivery time
- * @param {number} sellerTakes cart price
+ * @param {number} price cart price
  * @param {array} products array of products for checkout type
  * @param {object} children only for checkout type
  *

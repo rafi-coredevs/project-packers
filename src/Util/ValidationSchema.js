@@ -101,7 +101,7 @@ export const requestItems = object({
 	phone:'',
 	link: string().required(),
 	note: string(),
-	sellerTakes: number().required(),
+	price: number().required(),
 	tax: number().required(),
 	fee: number().required(),
 	shippingaddress:string(),
