@@ -1,6 +1,6 @@
 import Player from '../UiElements/Player/Player';
 import Query from '../UiElements/Query/Query';
-import video from '../../assets/Image/video1.mp4';
+import video from '../../assets/production.mp4';
 
 /**
  * About Section
@@ -22,7 +22,7 @@ const About = () => {
             sint. Velit officia consequat duis enim velit mollit. Exercitation
             veniam consequat sunt nostrud amet.
           </p>
-          <div className="sm:h-auto md:w-[595px] mt-8 rounded-[30px] overflow-hidden">
+          <div className="sm:h-auto md:w-[595px] mt-8 rounded-2xl overflow-hidden">
             <Player url={video} />
           </div>
         </div>
