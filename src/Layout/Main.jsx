@@ -6,6 +6,7 @@ import { useState } from "react";
 import SupportModal from "../Components/SupportModal/SupportModal";
 import ReloadPage from "../pages/ReloadPage";
 import { useUserCtx } from "../contexts/user/UserContext";
+import ScrollTop from "../Util/ScrollTop";
 
 const Main = () => {
   const [toggle, setToggle] = useState(false);
@@ -17,15 +18,18 @@ const Main = () => {
   return <>
     {
       reload ? <ReloadPage /> :
-        <div className="overflow-x-hidden" >
-          <Sidebar state={toggle} onChange={toggleHandler} />
-          <div className={`min-h-screen flex flex-col min-w-full duration-300 shadow-2xl ${toggle ? "ml-[78vw] sm:ml-0 sm:duration-0" : ""}`}>
-            {user?.id && <SupportModal />}
-            <Header sideBar={toggleHandler} state={toggle} />
-            <Outlet />
-            <Footer />
-          </div>
-        </div >
+        <>
+          <ScrollTop />
+          <div className="overflow-x-hidden" >
+            <Sidebar state={toggle} onChange={toggleHandler} />
+            <div className={`min-h-screen flex flex-col min-w-full duration-300 shadow-2xl ${toggle ? "ml-[78vw] sm:ml-0 sm:duration-0" : ""}`}>
+              {user?.id && <SupportModal />}
+              <Header sideBar={toggleHandler} state={toggle} />
+              <Outlet />
+              <Footer />
+            </div>
+          </div >
+        </>
     }
   </>;
 };

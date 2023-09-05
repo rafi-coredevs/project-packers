@@ -19,19 +19,16 @@ const Carousel = ({ isHome = Boolean }) => {
 		},
 		{
 			videoId: 'V9Z7_6HCPsA',
-		},
-		{
-			videoId: 'V9Z7_6HCPsA',
 		}
 	];
 
 	return (
 		<section
-			className={`container flex gap-2 lg:gap-[1.8rem] w-full px-5 overflow-scroll no-scrollbar 
+			className={`container flex gap-2 lg:gap-[30px] justify-start lg:justify-center px-5 overflow-x-auto no-scrollbar 
                  ${isHome && '-mb-12 relative -top-10 z-20'}`}
 		>
 			{slides?.map((slide, i) => (
-				<React.Fragment key={i}>
+				<div className='w-fit' key={i}>
 					<iframe
 						title='YouTube Short Video'
 						src={`https://www.youtube.com/embed/${slide.videoId}?autoplay=0&loop=1&playlist=${slide.videoId}&controls=0`}
@@ -39,7 +36,7 @@ const Carousel = ({ isHome = Boolean }) => {
 						allowFullScreen
 						className='rounded-2xl h-[25rem] w-[17.6875rem] mx-auto'
 					/>
-				</React.Fragment>
+				</div>
 			))}
 		</section>
 	);
