@@ -15,7 +15,6 @@ import CartItem from '../../Components/UiElements/CartItem/CartItem';
 
 const AddOrder = () => {
     useTitle('Order Details');
-    const navigate = useNavigate();
     const [price, setPrice] = useState(null);
     const [order, setOrder] = useState({
         products: [],
@@ -25,6 +24,7 @@ const AddOrder = () => {
     const [user, setUser] = useState({})
     const [inside, setInside] = useState(true);
     const [discount, setDiscount] = useState({})
+    const [productDropDown, setProductDropDown] = useState(false)
 
     //formik intialization
     const shippingForm = useFormik({
@@ -130,7 +130,7 @@ const AddOrder = () => {
 
     // Find Customer
     const findCustomer = (e) => {
-        if (e.target.value !== '') {
+        if (e.target.value !== '' && e.target.value.length > 2) {
             terminal.request({ name: 'allUser', queries: { email: JSON.stringify({ $regex: e.target.value }) } }).then(data => {
                 setCustomers(data.docs)
             })
@@ -139,8 +139,9 @@ const AddOrder = () => {
         setCustomers([])
     }
 
+    //Find Product
     const findProducts = (e) => {
-        if (e.target.value !== '') {
+        if (e.target.value !== '' && e.target.value.length > 2) {
             terminal.request({ name: 'allProduct', queries: { name: JSON.stringify({ $regex: e.target.value }) } }).then(data => {
                 setProducts(data.docs)
             })
@@ -188,7 +189,7 @@ const AddOrder = () => {
             return { ...prev, products: updatedProducts };
         });
     }
-    console.log(order);
+
     const updateQuantity = useCallback((id, quantity) => {
         setOrder((prevOrder) => {
             const updatedOrder = {
@@ -436,7 +437,6 @@ const AddOrder = () => {
                                     styles='secondary'
                                     type='text'
                                     placeholder='Search User'
-                                    disabled={user.id}
                                     change={(e) => findCustomer(e)}
                                 >
                                     <img className='opacity-70' src={search} />

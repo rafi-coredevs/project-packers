@@ -8,7 +8,7 @@ const Category = ({ data, reFetch }) => {
   const toggleSubCategories = (categoryId) => {
     setExpandedCategory((prev) => (prev === categoryId ? null : categoryId));
   };
-
+  
   const handleCategory = (data) => {
     reFetch(data)
 

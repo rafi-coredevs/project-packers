@@ -83,7 +83,7 @@ const Banner = () => {
 						<p className='font-sans font-bold md:text-[52px] leading-10 md:leading-[3.5rem] tracking-[-0.04] md:tracking-[-0.065rem] text-[32px] text-white'>
 							Shop products from USA and save up to 40%
 						</p>
-						<p className="font-sans font-medium text-white opacity-70 text-[20px] max-w-[580px] leading-7 tracking-tight">
+						<p className='font-sans font-medium text-white opacity-70 text-[20px] max-w-[580px] leading-7 tracking-tight'>
 							Thousands of deals on gadgets, shoes, cosmetics, watches -
 							everything from the US.
 						</p>

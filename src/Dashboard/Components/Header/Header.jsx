@@ -29,6 +29,21 @@ const Header = () => {
       terminal.socket.off('notification')
     }
   })
+  function handleLogoutDropD(e) {
+    if (e.target.className.includes("LogoutDropD")) {
+      logoutDropD ? setLogoutDropD(false) : setLogoutDropD(true)
+    }
+    else {
+      setLogoutDropD(false)
+    }
+  }
+  useEffect(() => {
+    window.addEventListener("click", handleLogoutDropD);
+    return () => {
+      window.removeEventListener("click", handleLogoutDropD);
+    };
+  }, [logoutDropD]);
+
   return (
     <div className="sticky top-0 mt-0 pt-0  bg-white z-50 border-b border-gray-300">
       <div className="mx-6 hidden  sm:flex navbar gap-4 py-[10px] items-center justify-between">
@@ -74,16 +89,14 @@ const Header = () => {
             </div>
             <div className="relative">
               <button
-                onClick={() => setLogoutDropD(!logoutDropD)}
-                className="flex gap-2 items-center cursor-pointer"
+                className="LogoutDropD flex gap-2 items-center cursor-pointer"
               >
                 <UserIcon name={user?.fullName} />
-                <p className="font-sans text-secondary text-sm font-semibold">
+                <p className="LogoutDropD font-sans text-secondary text-sm font-semibold">
                   {user?.fullName || "User"}
                 </p>
               </button>
-              {logoutDropD && <div className="bg-white py-6 shadow-md shadow-primary px-2 border rounded-lg absolute top-10 left-0 right-0  mt-1">
-
+              {logoutDropD && <div className="LogoutDropD bg-white py-6 shadow-md shadow-primary px-2 border rounded-lg absolute top-10 left-0 right-0  mt-1">
                 <button onClick={() => { Logout(); navigate("/"); }} className="bg-primary px-2 w-full rounded-md py-2 text-secondary font-medium">Logout</button>
               </div>
 

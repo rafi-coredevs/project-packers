@@ -146,10 +146,10 @@ const OrderDetails = () => {
 				res?.status === false
 					? toaster({ type: 'success', message: res.message })
 					: (toaster({
-							type: 'success',
-							message: 'deleted successfully',
-					  }),
-					  navigate(-1)),
+						type: 'success',
+						message: 'deleted successfully',
+					}),
+						navigate(-1)),
 			)
 			.catch((err) => console.error('order delete error', err));
 	};
@@ -407,7 +407,7 @@ const OrderDetails = () => {
 								<p className=''>
 									৳
 									{order?.discountApplied?.amount ||
-									order?.discountApplied?.percentage
+										order?.discountApplied?.percentage
 										? order?.discountApplied?.percentage + ' %'
 										: 0}
 								</p>
@@ -535,7 +535,7 @@ const OrderDetails = () => {
 							}
 						/>
 					</div>
-					<div className=' border border-[#0000001c] divide-y  rounded-lg '>
+					<div className=' border border-[#0000001c] divide-y  rounded-lg '> 	
 						<SideCard
 							types='note'
 							message={order?.instructions || 'Not Available'}
