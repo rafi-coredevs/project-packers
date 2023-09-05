@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import arrow_left from "../../../assets/icons/cd-arrow-left-1.svg";
 import arrow_right from "../../../assets/icons/cd-arrow-right-2.svg";
 
@@ -20,6 +20,10 @@ const Pagination = ({ page, setPage, pageLimit }) => {
 
     return pageNumbers;
   };
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
+  }, [page])
 
   const pageNumbers = getPageNumbers();
 
