@@ -13,7 +13,7 @@ const CustomerDetails = () => {
   useTitle("replace-with-customer-name");
   const { customerId } = useParams();
   const [buttonType, setButtonType] = useState("all");
-  const [tableData, setTabledata] = useState([]);
+  const [tableData, setTableData] = useState([]);
   const [user, setUser] = useState({});
   const updateHandler = () => {
     console.log("update clicked");
@@ -30,7 +30,7 @@ const CustomerDetails = () => {
     terminal
       .request({ name: "customerAllOrders", queries: { user: customerId } })
       .then((res) => {
-        res.status === false ? "" : setTabledata(res);
+        res.status === false ? "" : setTableData(res);
         setUser(res.docs[0].user);
       });
   };

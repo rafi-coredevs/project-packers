@@ -145,7 +145,7 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: "addorder",
+        path: "orders/add-order",
         element: (
           <ProtectedRoute accessTo={"order"}>
             <AddOrder />

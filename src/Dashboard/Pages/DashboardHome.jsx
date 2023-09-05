@@ -30,7 +30,7 @@ const DashboardHome = () => {
   ]
   useTitle("Dashboard")
   const [active, setActive] = useState("orders");
-  const [tableData, setTabledata] = useState(orderTable);
+  const [tableData, setTableData] = useState(orderTable);
   const [loading, setLoading] = useState(false);
   const [chartLoading, setChartLoading] = useState(false);
   const [areaChartData, setAreaChartData] = useState(areaChart);;
@@ -98,12 +98,12 @@ const DashboardHome = () => {
 
   const fetchOrder = (page = 1) => {
     terminal.request({ name: 'allOrders', queries: { page } }).then((res) => {
-      res.status === false ? '' : setTabledata(res), setLoading(false);
+      res.status === false ? '' : setTableData(res), setLoading(false);
     });
   };
   const fetchRequest = (page = 1) => {
     terminal.request({ name: 'allRequest', queries: { page } }).then((res) => {
-      res.status === false ? '' : setTabledata(res), setLoading(false);
+      res.status === false ? '' : setTableData(res), setLoading(false);
     });
   };
 

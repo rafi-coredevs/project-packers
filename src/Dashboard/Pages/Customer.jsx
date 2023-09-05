@@ -19,7 +19,7 @@ const customerStatuses = [
 const Customer = () => {
   useTitle("Customers");
   const [active, setActive] = useState("all");
-  const [tableData, setTabledata] = useState(null);
+  const [tableData, setTableData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [sortBy, setSortBy] = useState(true);
 
@@ -44,7 +44,7 @@ const Customer = () => {
 
   const fetchData = (queries = {}) => {
     terminal.request({ name: "getCustomerOrder", queries }).then((res) => {
-      res.status === false ? "" : setTabledata(res), setLoading(false);
+      res.status === false ? "" : setTableData(res), setLoading(false);
     });
   };
 

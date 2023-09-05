@@ -16,7 +16,7 @@ const productStatuses = [{ id: 1, name: "All", value: "all" }, { id: 2, name: "A
 const Products = () => {
   useTitle("Products");
   const [active, setActive] = useState("all");
-  const [tableData, setTabledata] = useState([]);
+  const [tableData, setTableData] = useState([]);
   const [sortBy, setSortBy] = useState('createdAt:desc');
   const [loading, setLoading] = useState(true);
   const [selectedProductStatus, setSelectedProductStatus] = useState({ name: 'Select', value: null, id: 0 });
@@ -38,7 +38,7 @@ const Products = () => {
   const fetchData = (page = 1) => {
     setLoading(true);
     terminal.request({ name: 'allProduct', queries: { page, sortBy, status: active } }).then((res) => {
-      res.status === false ? '' : setTabledata(res), setLoading(false);
+      res.status === false ? '' : setTableData(res), setLoading(false);
     });
   };
 
