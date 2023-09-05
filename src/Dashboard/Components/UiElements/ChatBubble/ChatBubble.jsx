@@ -9,6 +9,7 @@
  */
 
 import UserIcon from "../../../../Components/UiElements/UserIcon/UserIcon";
+import escape from "../../../../Util/escapeHtml";
 
 
 const ChatBubble = ({ sender, name, date, message, userId }) => {
@@ -28,7 +29,7 @@ const ChatBubble = ({ sender, name, date, message, userId }) => {
                     }).format(new Date(date))}</p>
                 </div>
                 <div className={sender === userId ? "text-[#000316CC]" : "text-[#a7a7a7]"}>
-                    {message}
+                    {escape(message)}
                 </div>
             </div>
         </div>
