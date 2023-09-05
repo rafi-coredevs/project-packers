@@ -51,7 +51,7 @@ const CustomSelect = ({ options, value, onChange, appearance, bg, error }) => {
   const colorComb = {
     green: "bg-[#3E949A] text-white",
     white: "bg-white text-black",
-    paste:"bg-[#CFF6EF]"
+    paste: "bg-[#CFF6EF]"
   }
   const iconComb = {
     green: downArrowWhite,
@@ -67,7 +67,7 @@ const CustomSelect = ({ options, value, onChange, appearance, bg, error }) => {
       {appearance == "select" &&
         <div
           id="customselect"
-          className={`py-2 px-4 ${bg} border ${error ? "border-red-600" : 'border-[#ededed]'} rounded-md  cursor-pointer flex justify-between ${bg==='green'? 'bg-[#3E949A] text-white': ''}`}
+          className={`py-2 px-4 ${bg} border ${error ? "border-red-600" : 'border-[#ededed]'} rounded-md  cursor-pointer flex justify-between ${bg === 'green' ? 'bg-[#3E949A] text-white' : ''}`}
           onClick={toggleDropdown}
         >
           {value ? value : 'Select'}
