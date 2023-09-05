@@ -35,7 +35,7 @@ const Category = ({ data, reFetch }) => {
 
             {category.name}
           </p>
-          {category?.subcategory?.length > 0 && <img src={arrow} className='rotate-90' />}
+          {category?.subcategory?.length > 0 && <img src={arrow} className={expandedCategory === category.id ? 'rotate-90' : 'rotate-0'} />}
         </div>
         {expandedCategory === category.id && (
           <div className="ml-8 my-2">

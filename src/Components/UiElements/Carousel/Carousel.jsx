@@ -19,16 +19,16 @@ const Carousel = ({ isHome = Boolean }) => {
 		},
 		{
 			videoId: 'V9Z7_6HCPsA',
-		}
+		},
 	];
 
 	return (
 		<section
-			className={`container flex gap-2 lg:gap-[30px] justify-start lg:justify-center px-5 overflow-x-auto no-scrollbar 
+			className={`flex justify-start md:justify-center gap-2  md:gap-[1.879rem] w-full px-5 overflow-x-auto no-scrollbar 
                  ${isHome && '-mb-12 relative -top-10 z-20'}`}
 		>
 			{slides?.map((slide, i) => (
-				<div className='w-fit' key={i}>
+				<div className='' key={i}>
 					<iframe
 						title='YouTube Short Video'
 						src={`https://www.youtube.com/embed/${slide.videoId}?autoplay=0&loop=1&playlist=${slide.videoId}&controls=0`}
