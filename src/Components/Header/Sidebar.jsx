@@ -25,7 +25,7 @@ const Sidebar = ({ state, onChange }) => {
   };
   if (state) {
     return (
-      <div className=" absolute sm:hidden top-0 bottom-0 right-20 left-0 bg-white z-[101] p-5">
+      <div className="fixed md:hidden top-0 bottom-0 right-20 left-0 bg-white z-[101] p-5">
         <div className="flex gap-2 py-5 my-5 border-b border-[#124E581A]">
           <img src={logo} alt="" />
           {/* <Button type="secondary">Log in or Sign Up</Button> */}
