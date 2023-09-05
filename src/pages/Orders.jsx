@@ -81,7 +81,7 @@ const Orders = () => {
   return (
     <>
       <Breadcrumb title={active} />
-      <main>
+      <main className="min-h-screen">
         <div className="container mx-auto p-5 sm:p-0 overflow-hidden">
           <div className="grid grid-cols-5 sm:mt-[60px] sm:mb-[160px] mb-5 gap-[30px]">
             <div className="col-span-5 sm:col-span-1">
@@ -152,7 +152,7 @@ const Orders = () => {
                             </tr>)
                           }
                           {
-                            order?.length < 1 ? <td colSpan={6}>
+                            !loading && order?.length <= 0 ? <td colSpan={6}>
                               <div className="flex w-full h-full items-center justify-center text-xl font-semibold text-black mt-10">
                                 <p>
                                   No Orders Available
@@ -169,9 +169,9 @@ const Orders = () => {
                                   hour12: true,
                                 }).format(new Date(item.date));
                                 return <tr key={item.id} className="border-b text-sm text-black">
-                                  <th scope="row" className="p-3 font-normal">
+                                  <td scope="row" className="p-3 font-normal">
                                     # {item.orderNumber}
-                                  </th>
+                                  </td>
                                   <td className="px-6 py-4">{formattedDate}</td>
                                   <td className="px-6 py-4">{item?.products?.length + item?.requests?.length}</td>
                                   <td className="px-6 py-4">{item.total} tk</td>

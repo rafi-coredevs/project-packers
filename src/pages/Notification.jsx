@@ -62,32 +62,35 @@ const Notification = () => {
           <h3 className="text-2xl font-semibold text-secondary mt-[20px] mb-[12px]">
             Notification
           </h3>
-          {notifications?.length > 0 &&
-            notifications?.map((item) => {
-              return (
-                <div
-                  key={item.id}
-                  className="cursor-pointer flex gap-3 py-2 border-t border-[#0000001A]"
-                >
-                  <div className="h-12 w-12">
-                    {item.type === "account" ? (
-                      <img src={acc} />
-                    ) : (
-                      <img className="bg-[#CFF6EF] p-1 rounded-md" src={prod} />
-                    )}
-                  </div>
+          {notifications?.length <= 0 ? [...Array(10)].map((arr, i) => <div
+            key={i}
+            className='flex gap-3 py-2 border-t border-[#0000001A]'
+          >
+            <div className="h-12 w-12 rounded-full lazy-loading" />
+            <div className='h-12 w-1/2 lazy-loading' />
+          </div>) :
+            notifications?.map((item) => <div
+              key={item.id}
+              className="cursor-pointer flex gap-3 py-2 border-t border-[#0000001A]"
+            >
+              <div className="h-12 w-12">
+                {item.type === "account" ? (
+                  <img src={acc} />
+                ) : (
+                  <img className="bg-[#CFF6EF] p-1 rounded-md" src={prod} />
+                )}
+              </div>
 
-                  <div className="">
-                    <p className="font-sans font-medium text-sm overflow-hidden">
-                      {item.message}
-                    </p>
-                    <p className="font-sans font-normal text-xs text-[#00000066] overflow-hidden">
-                      {formatTimeAgo(item.time)}
-                    </p>
-                  </div>
-                </div>
-              );
-            })}
+              <div className="">
+                <p className="font-sans font-medium text-sm overflow-hidden">
+                  {item.message}
+                </p>
+                <p className="font-sans font-normal text-xs text-[#00000066] overflow-hidden">
+                  {formatTimeAgo(item.time)}
+                </p>
+              </div>
+            </div>
+            )}
         </div>
       </div>
     </main>
