@@ -17,7 +17,7 @@ const RequestItems = () => {
 
   useTitle("Requested Items")
   const [active, setActive] = useState("all");
-  const [tableData, setTabledata] = useState(null);
+  const [tableData, setTableData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [sortBy, setSortBy] = useState('createdAt:asc');
   const [requestIds, setRequestIds] = useState([]);
@@ -37,7 +37,7 @@ const RequestItems = () => {
   const fetchData = (page = 1) => {
     setLoading(true);
     terminal.request({ name: 'allRequest', queries: { page, sortBy, status: active } }).then((res) => {
-      res.status === false ? '' : setTabledata(res), setLoading(false);
+      res.status === false ? '' : setTableData(res), setLoading(false);
     })
   };
   const tableButtonHandler = (value) => {
@@ -51,7 +51,7 @@ const RequestItems = () => {
     if(e.target.value?.length >= 1) {
       setLoading(true);
       terminal.request({ name: 'allRequest', queries: { sortBy, status: active, search: e.target.value } }).then((res) => {
-        res.status === false ? '' : setTabledata(res), setLoading(false);
+        res.status === false ? '' : setTableData(res), setLoading(false);
       });
     } else {
       fetchData();

@@ -25,7 +25,7 @@ const orderStatuses = [
 const AllOrders = () => {
   useTitle("Order list");
   const [active, setActive] = useState("all");
-  const [tableData, setTabledata] = useState(orderTable);
+  const [tableData, setTableData] = useState(orderTable);
   const [isModal, setIsModal] = useState(false);
   const [overView, setOverView] = useState([
     {
@@ -106,7 +106,7 @@ const AllOrders = () => {
     terminal
       .request({ name: "allOrders", queries: { page, sortBy, status: active } })
       .then((res) => {
-        res.status === false ? "" : setTabledata(res), setLoading(false);
+        res.status === false ? "" : setTableData(res), setLoading(false);
       });
   };
 
@@ -143,7 +143,7 @@ const AllOrders = () => {
         },
       })
       .then((res) => {
-        res.status === false ? "" : setTabledata(res), setLoading(false);
+        res.status === false ? "" : setTableData(res), setLoading(false);
       });
   }
 
@@ -156,7 +156,7 @@ const AllOrders = () => {
           queries: { sortBy, status: active, search: e.target.value },
         })
         .then((res) => {
-          res.status === false ? "" : setTabledata(res), setLoading(false);
+          res.status === false ? "" : setTableData(res), setLoading(false);
         });
     } else {
       fetchData();
@@ -172,7 +172,7 @@ const AllOrders = () => {
           queries: { sortBy, status: active, search: e.target.value },
         })
         .then((res) => {
-          res.status === false ? "" : setTabledata(res), setLoading(false);
+          res.status === false ? "" : setTableData(res), setLoading(false);
         });
     } else {
       fetchData();
@@ -200,7 +200,7 @@ const AllOrders = () => {
       </Modal>
       <Heading title="All Orders">
         <div className="flex gap-1 items-center">
-          <Link to={'/admin/addorder'}>
+          <Link to={'/admin/orders/add-order'}>
             <Button style='primary'>
               Add Order
             </Button>

@@ -16,7 +16,7 @@ const discountStatuses = [{ id: 1, name: "All", value: "all" }, { id: 2, name: "
 const Discount = () => {
   useTitle("Active Discounts");
   const [active, setActive] = useState("all");
-  const [tableData, setTabledata] = useState(null);
+  const [tableData, setTableData] = useState(null);
   const [loading,setLoading]= useState(false);
   const [sortBy,setSortby]=useState('createdAt:desc');
   const [selectedDiscountStatus, setSelectedDiscountStatus] = useState({ name: 'Select', value: null, id: 0 });
@@ -40,7 +40,7 @@ const Discount = () => {
   const fetchData = (page = 1) => {
     setLoading(true);
     terminal.request({ name: 'allDiscount', queries: { page,filter: active , sortBy} }).then((res) => {
-      res.status === false ? '' : setTabledata(res), setLoading(false);
+      res.status === false ? '' : setTableData(res), setLoading(false);
     });
   };
 
