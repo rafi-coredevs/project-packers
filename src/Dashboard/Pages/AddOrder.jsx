@@ -95,10 +95,16 @@ const AddOrder = () => {
             zip: billingForm.values.zip,
         };
 
+        const products = order.products.map((product) => ({
+            product: product.product.id,
+            productQuantity: product.productQuantity,
+        }));
+
         let data = {
             user: user.id,
             email: user.email,
             phone: user.phone,
+            products,
             status: 'pending',
             shippingaddress: shipping,
             billingaddress: billing,
@@ -131,7 +137,7 @@ const AddOrder = () => {
     // Find Customer
     const findCustomer = (e) => {
         if (e.target.value !== '' && e.target.value.length > 2) {
-            terminal.request({ name: 'allUser', queries: { email: JSON.stringify({ $regex: e.target.value }) } }).then(data => {
+            terminal.request({ name: 'allUser', queries: { email: JSON.stringify({ $regex: e.target.value, $options: 'i' }) } }).then(data => {
                 setCustomers(data.docs)
             })
             return
@@ -142,7 +148,8 @@ const AddOrder = () => {
     //Find Product
     const findProducts = (e) => {
         if (e.target.value !== '' && e.target.value.length > 2) {
-            terminal.request({ name: 'allProduct', queries: { name: JSON.stringify({ $regex: e.target.value }) } }).then(data => {
+            setProductDropDown(true)
+            terminal.request({ name: 'allProduct', queries: { name: JSON.stringify({ $regex: e.target.value, $options: 'i' }) } }).then(data => {
                 setProducts(data.docs)
             })
             return
@@ -185,6 +192,7 @@ const AddOrder = () => {
             return toaster({ type: 'error', message: 'Product already exists' })
         }
         setOrder(prev => {
+            setProductDropDown(false)
             const updatedProducts = [...prev.products, { product: newProduct, productQuantity: 1 }];
             return { ...prev, products: updatedProducts };
         });
@@ -234,7 +242,7 @@ const AddOrder = () => {
                             </div>
                             <table className='bg-white shadow-md absolute top-[44px] left-0 w-full z-50'>
                                 {
-                                    products?.length > 0 &&
+                                    (products?.length > 0 && productDropDown) &&
                                     products.map(product =>
                                         <tr onClick={() => addProduct(product)} className='hover:bg-primary hover:cursor-pointer'>
                                             <td className='p-2 border-b border-slate-200'>
@@ -474,11 +482,11 @@ const AddOrder = () => {
                             formikProps={shippingForm}
                             address={
                                 shippingForm?.values?.address +
-                                ', ' +
+                                ' ' +
                                 shippingForm?.values?.city +
-                                ', ' +
+                                ' ' +
                                 shippingForm?.values?.area +
-                                ', ' +
+                                ' ' +
                                 shippingForm?.values?.zip
                             }
                         />
@@ -490,11 +498,11 @@ const AddOrder = () => {
                             editable={true}
                             address={
                                 billingForm?.values?.address +
-                                ', ' +
+                                ' ' +
                                 billingForm?.values?.city +
-                                ', ' +
+                                ' ' +
                                 billingForm?.values?.area +
-                                ', ' +
+                                ' ' +
                                 billingForm?.values?.zip
                             }
                         />
