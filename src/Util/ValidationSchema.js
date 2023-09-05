@@ -1,11 +1,11 @@
 import { boolean, object, string, ref, number } from 'yup';
 export const loginSchema = object({
-	email: string().email().required('Please Enter Your Email Address.'),
-	password: string().min(6).required('Password Can not be Empty'),
+	email: string().email().required('Please enter your email address.'),
+	password: string().min(6).required('Password can not be empty'),
 	remember: boolean(),
 });
 export const emailSchema = object({
-	email: string().email().required('Please Enter Your Email Address.'),
+	email: string().email().required('Please enter your email address.'),
 });
 export const changePassword = object({
 	newPassword: string()
@@ -23,8 +23,8 @@ export const changePassword = object({
 
 export const signupSchema = object({
 	fullName: string().required(),
-	email: string().email().required('Please Enter Your Email Address.'),
-	phone: string().min(6, 'Invalid Phone Number').max(20).required(),
+	email: string().email().required('Please enter your email address.'),
+	phone: string().min(6, 'Invalid Phone Number').max(20).required('Please enter your phone number'),
 	password: string()
 		.min(8)
 		.max(16)
@@ -79,11 +79,11 @@ export const productSchema = object({
 });
 
 export const checkoutSchema = object({
-	email: string().email().required('Please Enter Your Email Address.'),
-	phone: string().min(10, 'Invalid Phone Number').max(17).required(),
-	altPhone: string().min(10, 'Invalid Phone Number').max(17),
-	firstName: string().required('First Name Required'),
-	lastName: string().required('Last Name Required'),
+	email: string().email().required('Please enter your email address.'),
+	phone: string().min(10, 'Invalid phone number').max(17).required(),
+	altPhone: string().min(10, 'Invalid phone number').max(17),
+	firstName: string().required('First name required'),
+	lastName: string().required('Last name required'),
 	address: string().required(),
 	city: string().required(),
 	area: string().required(),
@@ -97,7 +97,7 @@ export const checkoutSchema = object({
 export const requestItems = object({
 	name: string(),
 	quantity: number(),
-	email: string().email().required('Please Enter Your Email Address.'),
+	email: string().email().required('Please enter your email address.'),
 	phone:'',
 	link: string().required(),
 	note: string(),
@@ -113,7 +113,7 @@ export const requestItems = object({
 export const customerSchema = object({
 	firstName: string().required(),
 	lastName: string().required(),
-	email: string().email().required('Please Enter Your Email Address.'),
+	email: string().email().required('Please enter your email address.'),
 	phone: string().matches(/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/, 'Invalid phone number').required(),
 	address: string().required(),
 	city: string().required(),

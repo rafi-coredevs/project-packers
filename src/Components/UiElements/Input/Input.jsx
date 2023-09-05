@@ -60,12 +60,16 @@ const Input = ({
 				</label>
 			)}
 			<div
-				className={` flex w-full bg-white rounded-full ${
+				className={` flex items-center w-full bg-[#ffffff] rounded-full ${
 					border ? 'border border-[#00000036]' : ''
 				}`}
 			>
 				{children && (
-					<div className='pl-[10px] sm:pl-5 my-auto h-full rounded-s-full'>
+					<div
+						className={`pl-[10px] sm:pl-5  rounded-s-full border py-2 ${
+							error ? ' border-red-600 border-r-0' : 'border-white'
+						}`}
+					>
 						{children}
 					</div>
 				)}
@@ -84,7 +88,7 @@ const Input = ({
 						placeholder={placeholder}
 						type='number'
 						onInput={(e) => {
-              // taking only 1st value
+							// taking only 1st value
 							if (e.target.value.length > 1) {
 								e.target.value = e.target.value.slice(0, 1);
 							}
@@ -99,7 +103,7 @@ const Input = ({
 				) : (
 					<input
 						className={`px-5 py-2 focus:  ${
-							children ? 'rounded-e-full' : 'rounded-full'
+							children ? 'rounded-e-full border-l-0' : 'rounded-full'
 						} w-full outline-none placeholder-secondary text-secondary border ${
 							error ? ' border-red-600' : 'border-white'
 						}
