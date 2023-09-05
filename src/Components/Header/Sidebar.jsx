@@ -1,21 +1,22 @@
+import logo from '../../assets/logo.svg';
+import Icon from '../UiElements/Icon/Icon';
+import profile from '../../assets/icons/Avatar.svg';
+import notification from '../../assets/icons/cd-notification.svg';
+import support from '../../assets/icons/cd-customer-support.svg';
+import logout from '../../assets/icons/logout-01.svg';
+import { Link, useNavigate } from 'react-router-dom';
+import { useUserCtx } from '../../contexts/user/UserContext';
+
 /**
  * SideBar() return JSX Element
  * mobile view side navbar
- * 
+ *
  * @param {boolean} state  used to change the visibility of sidebar.
  * @param {function} onChange callback function.
- * 
- * @returns JSX Elements. 
+ *
+ * @returns JSX Elements.
  */
 
-import logo from "../../assets/logo.svg";
-import Icon from "../UiElements/Icon/Icon";
-import profile from "../../assets/icons/Avatar.svg";
-import notification from "../../assets/icons/cd-notification.svg";
-import support from "../../assets/icons/cd-customer-support.svg";
-import logout from "../../assets/icons/logout-01.svg";
-import { Link, useNavigate } from "react-router-dom";
-import { useUserCtx } from "../../contexts/user/UserContext";
 const Sidebar = ({ state, onChange }) => {
   const navigate = useNavigate();
   const { Logout } = useUserCtx()

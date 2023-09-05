@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useCallback, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { useTitle } from '../../Components/Hooks/useTitle';
 import { terminal } from '../../contexts/terminal/Terminal';
@@ -10,19 +10,21 @@ import Input from '../Components/UiElements/Input/Input';
 import search from '../../assets/icons/cd-search2.svg';
 import remove from '../../assets/icons/cd-cancel.svg';
 import toaster from '../../Util/toaster';
-import CustomSelect from '../../Components/UiElements/Input/CustomSelect';
 import removeEmptyFields from '../../Util/removeEmptyFields';
+import CartItem from '../../Components/UiElements/CartItem/CartItem';
 
 const AddOrder = () => {
     useTitle('Order Details');
-    const { orderId } = useParams();
-    const [order, setOrder] = useState(null);
-    const navigate = useNavigate();
-    const [selectedOrderStatus, setSelectedOrderStatus] = useState({});
+    const [price, setPrice] = useState(null);
+    const [order, setOrder] = useState({
+        products: [],
+    });
+    const [products, setProducts] = useState([]);
     const [customers, setCustomers] = useState([]);
     const [user, setUser] = useState({})
     const [inside, setInside] = useState(true);
     const [discount, setDiscount] = useState({})
+    const [productDropDown, setProductDropDown] = useState(false)
 
     //formik intialization
     const shippingForm = useFormik({
@@ -42,54 +44,43 @@ const AddOrder = () => {
         },
     });
 
-    /**
-     * Handles selecting an order status.
-     * @param {number} id - The ID of the selected status.
-     */
-    function orderStatusHandler(id) {
-        const newStatus = orderStatuses.find((item) => item.id === id); // Find the selected order status by id
-        odrerForm.setFieldValue('status', newStatus.value);
-        setSelectedOrderStatus(newStatus);
-    }
+    useEffect(() => {
+        let discountItemsTotal = 0;
+        let nondiscountItemsTotal = 0;
+        let discountamount = 0;
+        let totalPrice = 0;
 
-    // Fetch order data when the component mounts
-    // useEffect(() => {
-    //     fetchData();
-    // }, []);
+        if (order) {
+            order.products?.length > 0 && order.products.forEach((product) => {
+                const total =
+                    (product.product.price + product.product.tax + product.product.fee) *
+                    product.productQuantity;
+                if (
+                    discount?.code &&
+                    product.product.category.toString() === discount.category &&
+                    product.product.subcategory.toString() === discount.subcategory
+                ) {
+                    discountItemsTotal += total;
+                } else {
+                    nondiscountItemsTotal += total;
+                }
+            });
 
-    /**
-     * Fetches order data from the API and populates the form.
-     */
-    // const fetchData = () =>
-    //     terminal
-    //         .request({ name: 'singleOrder', params: { id: orderId } })
-    //         .then((res) => {
-    //             if (res.status === false) {
-    //                 toaster({ type: 'error', message: res.message });
-    //             } else {
-    //                 setOrder(res);
-
-    //                 //finding older status from order status array
-    //                 let olderStatus = orderStatuses.find(
-    //                     (status) => status.value === res.status,
-    //                 );
-
-    //                 // Set form values from the retrieved data
-    //                 odrerForm.setFieldValue('status', olderStatus.value);
-    //                 odrerForm.setFieldValue('address', res.shippingaddress.address);
-    //                 odrerForm.setFieldValue('city', res.shippingaddress.city);
-    //                 odrerForm.setFieldValue('area', res.shippingaddress.area);
-    //                 odrerForm.setFieldValue('zip', res.shippingaddress.zip);
-
-    //                 setSelectedOrderStatus(olderStatus);
-    //             }
-    //         })
-    //         .catch((err) => console.error('error when page loaded', err));
+            discountamount = discount?.percentage
+                ? (discountItemsTotal * discount.percentage) / 100
+                : discount?.amount;
+            totalPrice = discountamount
+                ? totalPrice + nondiscountItemsTotal - discountamount
+                : totalPrice + nondiscountItemsTotal;
+            totalPrice = inside ? totalPrice + 99 : totalPrice + 150;
+            setPrice(totalPrice);
+        }
+    }, [order, discount, inside]);
 
     /**
      * Handles updating the order details.
      */
-    const updateHandler = () => {
+    const addHandler = () => {
         const shipping = {
             address: shippingForm.values.address,
             city: shippingForm.values.city,
@@ -104,47 +95,66 @@ const AddOrder = () => {
             zip: billingForm.values.zip,
         };
 
-        // Remove empty fields from shipping and billing
-        removeEmptyFields(shipping);
-        removeEmptyFields(billing);
+        const products = order.products.map((product) => ({
+            product: product.product.id,
+            productQuantity: product.productQuantity,
+        }));
 
         let data = {
             user: user.id,
             email: user.email,
             phone: user.phone,
+            products,
             status: 'pending',
             shippingaddress: shipping,
             billingaddress: billing,
+            discountApplied: discount.code ? {
+                amount: discount?.amount,
+                percentage: discount?.percentage,
+                code: discount?.code
+            } : null,
         };
 
         removeEmptyFields(data); //removing empty objects
-
-        terminal
-            .request({
-                name: 'updateOrder',
-                params: { id: orderId },
-                body: data,
-            })
-            .then((res) => {
-                if (res.status === false) {
-                    toaster({ type: 'error', message: res.message });
-                } else {
-                    toaster({ type: 'success', message: 'successfully updated' });
-                    navigate(-1);
-                }
-            })
-            .catch((err) => console.error('order update error', err));
+        console.log(data);
+        // terminal
+        //     .request({
+        //         name: 'updateOrder',
+        //         params: { id: orderId },
+        //         body: data,
+        //     })
+        //     .then((res) => {
+        //         if (res.status === false) {
+        //             toaster({ type: 'error', message: res.message });
+        //         } else {
+        //             toaster({ type: 'success', message: 'successfully updated' });
+        //             navigate(-1);
+        //         }
+        //     })
+        //     .catch((err) => console.error('order update error', err));
     };
 
     // Find Customer
     const findCustomer = (e) => {
-        if (e.target.value !== '') {
-            terminal.request({ name: 'allUser', queries: { email: JSON.stringify({ $regex: e.target.value }) } }).then(data => {
+        if (e.target.value !== '' && e.target.value.length > 2) {
+            terminal.request({ name: 'allUser', queries: { email: JSON.stringify({ $regex: e.target.value, $options: 'i' }) } }).then(data => {
                 setCustomers(data.docs)
             })
             return
         }
         setCustomers([])
+    }
+
+    //Find Product
+    const findProducts = (e) => {
+        if (e.target.value !== '' && e.target.value.length > 2) {
+            setProductDropDown(true)
+            terminal.request({ name: 'allProduct', queries: { name: JSON.stringify({ $regex: e.target.value, $options: 'i' }) } }).then(data => {
+                setProducts(data.docs)
+            })
+            return
+        }
+        setProducts([])
     }
 
 
@@ -177,12 +187,34 @@ const AddOrder = () => {
             });
     };
 
+    const addProduct = (newProduct) => {
+        if (order?.products.find(item => item.product.id === newProduct.id)) {
+            return toaster({ type: 'error', message: 'Product already exists' })
+        }
+        setOrder(prev => {
+            setProductDropDown(false)
+            const updatedProducts = [...prev.products, { product: newProduct, productQuantity: 1 }];
+            return { ...prev, products: updatedProducts };
+        });
+    }
+
+    const updateQuantity = useCallback((id, quantity) => {
+        setOrder((prevOrder) => {
+            const updatedOrder = {
+                ...prevOrder,
+                products: prevOrder.products.map((item) =>
+                    item.product.id === id ? { ...item, productQuantity: quantity } : item
+                ),
+            };
+            return updatedOrder;
+        });
+    }, []);
 
     return (
         <div className='px-5 h-full'>
             <Heading type='navigate' title={`Add Order`} back={'All Order'}>
                 <div className='flex items-center gap-1'>
-                    <Button style='primary' onClick={updateHandler}>
+                    <Button style='primary' onClick={addHandler}>
                         Add Order
                     </Button>
                 </div>
@@ -197,32 +229,55 @@ const AddOrder = () => {
                         </div>
 
                         {/* search */}
-                        <div className='flex gap-2 items-center'>
+                        <div className='relative'>
                             <div className='w-full'>
                                 <Input
                                     styles='secondary'
                                     type='text'
                                     placeholder='Search Products'
+                                    change={(e) => { findProducts(e) }}
                                 >
                                     <img className='opacity-70' src={search} />
                                 </Input>
                             </div>
-                            <Button style='outline'>Browse</Button>
+                            <table className='bg-white shadow-md absolute top-[44px] left-0 w-full z-50'>
+                                {
+                                    (products?.length > 0 && productDropDown) &&
+                                    products.map(product =>
+                                        <tr onClick={() => addProduct(product)} className='hover:bg-primary hover:cursor-pointer'>
+                                            <td className='p-2 border-b border-slate-200'>
+                                                {product.name}
+                                            </td>
+                                        </tr>)
+                                }
+                            </table>
                         </div>
 
                         {/* product table */}
                         <div className='grid gap-3 relative overflow-x-auto'>
                             <table className='w-full '>
-                                <thead className='text-left font-semibold'>
-                                    <tr className='border-b border-[#0000001c]'>
-                                        <th className='w-8/12 py-2'>Product</th>
-                                        <th className='w-2/12 py-2'>Quantity</th>
-                                        <th className='w-1/12 py-2'>Total</th>
-                                        <th className='w-1/12 py-2'></th>
+                                <thead className=" text-secondary text-left border-b border-[#00000023]">
+                                    <tr>
+                                        <th className=" w-9/12 font-semibold pb-[14px]">
+                                            Product List
+                                        </th>
+                                        <th className="w-1/12 font-semibold pb-[14px]">Quantity</th>
+                                        <th className=" w-2/12 font-semibold pb-[14px] hidden sm:table-cell">
+                                            Price
+                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody>
-
+                                    {order?.products?.length > 0 && order?.products.map((product) => {
+                                        return (
+                                            <CartItem
+                                                key={product?.id}
+                                                data={product?.product}
+                                                quantity={product.productQuantity}
+                                                onChange={updateQuantity}
+                                            />
+                                        );
+                                    })}
                                 </tbody>
                             </table>
                         </div>
@@ -365,7 +420,7 @@ const AddOrder = () => {
                             {/* total */}
                             <div className='flex justify-between items-center'>
                                 <p className='text-base font-semibold'>Total</p>
-                                <p className='text-lg font-semibold'>৳ {order?.total}</p>
+                                <p className='text-lg font-semibold'>৳ {price}</p>
                             </div>
                         </div>
                     </div>
@@ -390,7 +445,6 @@ const AddOrder = () => {
                                     styles='secondary'
                                     type='text'
                                     placeholder='Search User'
-                                    disabled={user.id}
                                     change={(e) => findCustomer(e)}
                                 >
                                     <img className='opacity-70' src={search} />
@@ -428,11 +482,11 @@ const AddOrder = () => {
                             formikProps={shippingForm}
                             address={
                                 shippingForm?.values?.address +
-                                ', ' +
+                                ' ' +
                                 shippingForm?.values?.city +
-                                ', ' +
+                                ' ' +
                                 shippingForm?.values?.area +
-                                ', ' +
+                                ' ' +
                                 shippingForm?.values?.zip
                             }
                         />
@@ -444,11 +498,11 @@ const AddOrder = () => {
                             editable={true}
                             address={
                                 billingForm?.values?.address +
-                                ', ' +
+                                ' ' +
                                 billingForm?.values?.city +
-                                ', ' +
+                                ' ' +
                                 billingForm?.values?.area +
-                                ', ' +
+                                ' ' +
                                 billingForm?.values?.zip
                             }
                         />

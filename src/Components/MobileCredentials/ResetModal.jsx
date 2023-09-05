@@ -32,7 +32,7 @@ const ResetModal = ({ getResponse, stateHandler, onClose }) => {
         if (data.status === false) {
           toaster({ type: 'error', message: data.message });
         } else {
-          getResponse({ component: 'otp', token: data.token });
+          getResponse({ component: 'otp', token: data.token , email: values?.email});
           stateHandler("otp")
         }
       }).catch((err)=>console.error("Error reset modal when email verification", err ))
@@ -109,8 +109,8 @@ const ResetModal = ({ getResponse, stateHandler, onClose }) => {
         <div className="grid gap-5">
           <Input
             name="email"
-            label="Email or Phone Number"
-            placeholder="Enter your email address or phone number"
+            label="Email address"
+            placeholder="Enter your email address"
             change={emailForm.handleChange}
             blur={emailForm.handleBlur}
             value={emailForm.values.email}
@@ -120,10 +120,11 @@ const ResetModal = ({ getResponse, stateHandler, onClose }) => {
                 : null
             }
             type="email"
+            className="h-[50px]"
           />
           <Button
             full
-            className="w-full"
+            className="w-full h-[48px]"
             type="primary"
             buttonType="submit"
             disabled={isSubmit}

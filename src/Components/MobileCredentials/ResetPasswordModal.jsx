@@ -118,7 +118,7 @@ const ResetPasswordModal = ({ data, getResponse, stateHandler, onClose }) => {
 					<Input
 						name='newPassword'
 						label='New Password'
-						placeholder='*****'
+						placeholder='✱✱✱✱✱'
 						change={resetForm.handleChange}
 						blur={resetForm.handleBlur}
 						value={resetForm.values.password}
@@ -128,13 +128,14 @@ const ResetPasswordModal = ({ data, getResponse, stateHandler, onClose }) => {
 								: null
 						}
 						type='password'
+						className='h-[50px]'
 					/>
 				</div>
 				<div className='relative'>
 					<Input
 						name='confirmPassword'
 						label='Confirm Password'
-						placeholder='*****'
+						placeholder='✱✱✱✱✱'
 						change={resetForm.handleChange}
 						blur={resetForm.handleBlur}
 						value={resetForm.values.confirmPassword}
@@ -145,10 +146,11 @@ const ResetPasswordModal = ({ data, getResponse, stateHandler, onClose }) => {
 								: null
 						}
 						type='password'
+						className='h-[50px]'
 					/>
 				</div>
 				<div className='mt-5'>
-					<Button full className='w-full' type='primary' buttonType='submit'>
+					<Button full className='w-full h-[48px]' type='primary' buttonType='submit'>
 						{isSubmit ? 'Submitting...' : 'Reset Password'}
 					</Button>
 				</div>

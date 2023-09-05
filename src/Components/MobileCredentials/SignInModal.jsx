@@ -159,6 +159,7 @@ const SignInModal = ({
 						value={loginForm.values.email}
 						label='Email Address'
 						placeholder='Enter your email address'
+						className="h-[50px]"
 					/>
 
 					{/* password */}
@@ -175,27 +176,22 @@ const SignInModal = ({
 						value={loginForm.values.password}
 						label='Password'
 						placeholder='Enter your password'
+						className="h-[50px]"
 					/>
 					{/* login */}
-					<Button type='primary' buttonType='submit'>
+					<Button type='primary' buttonType='submit' className="h-[48px]">
 						Login
 					</Button>
 					<p
 						onClick={() => clickHandler('reset')}
-						className='text-primary text-center'
+						className='text-primary text-center cursor-pointer'
 					>
 						Forgot your password?
 					</p>
 				</div>
 			</form>
-			<div className='text-center text-white text-xs'>
-				Don&apos;t have an Account?{' '}
-				<span
-					onClick={() => clickHandler('signup')}
-					className='text-primary underline'
-				>
-					Sign Up
-				</span>
+			<div className='text-center text-white text-base font-sans'>
+				Don&apos;t have an account yet? <span onClick={() => clickHandler('signup')} className='text-primary underline cursor-pointer'>Sign Up</span>
 			</div>
 		</>
 	);

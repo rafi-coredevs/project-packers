@@ -49,7 +49,7 @@ const Button = ({
              }
         `}
     >
-      <span className="justify-center flex gap-3 ">
+      <span className="justify-center flex gap-3 font-bold ">
         {children}
         {arrow && (
           <svg

@@ -11,6 +11,9 @@ export default {
         secondary: '#0D3D4B'
 
       },
+      fontSize: {
+        '1.5/2': ["1.5rem", "2rem"]
+      },
       content: {
         'arrowLeft': 'url(./src/assets/icons/cd-arrow-right-2.svg)',
 
@@ -66,7 +69,7 @@ export default {
           '0%': {
             left: '-200%'
           },
-          '50%':{
+          '50%': {
             left: '150%'
           },
           '100%': {

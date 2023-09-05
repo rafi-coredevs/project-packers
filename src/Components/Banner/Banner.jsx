@@ -39,6 +39,7 @@ const Banner = () => {
 			setIsOpen(true);
 		}
 	}, [successModal, successModalState]);
+	
 
 	/**
 	 * Handles the form submission
@@ -77,12 +78,12 @@ const Banner = () => {
 				<span className='absolute w-[90rem] h-[90rem] rounded-full border border-white opacity-25'></span>
 			</div>
 			<div className='container mx-auto grid grid-cols-2 gap-13 relative z-20 justify-center flex-wrap '>
-				<div className='pt-12 md:pt-[6.25rem] pb-0 md:pb-24 px-4 md:col-span-1 col-span-2 '>
+				<div className='pt-12 md:pt-[6.25rem] pb-0 md:pb-24 px-4 lg:col-span-1 col-span-2 '>
 					<div className='grid gap-4'>
 						<p className='font-sans font-bold md:text-[52px] leading-10 md:leading-[3.5rem] tracking-[-0.04] md:tracking-[-0.065rem] text-[32px] text-white'>
 							Shop products from USA and save up to 40%
 						</p>
-						<p className="font-sans font-medium text-white opacity-70 text-[20px] max-w-[580px] leading-7 tracking-tight">
+						<p className='font-sans font-medium text-white opacity-70 text-[20px] max-w-[580px] leading-7 tracking-tight'>
 							Thousands of deals on gadgets, shoes, cosmetics, watches -
 							everything from the US.
 						</p>
