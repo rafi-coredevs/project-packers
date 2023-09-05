@@ -22,12 +22,19 @@ const MainCategory = () => {
   const [categories, setCategories] = useState([]);
   const [selected, setSelected] = useState({ name: 'Select', value: null, id: null });
   const [isActive, setIsActive] = useState(true);
+  const [selectedCategory,setSelectedcategory]=useState([]);
+  const [selectedSubcategory,setSelectedsubcategory]=useState([]);
+  const [loading,setLoading]=useState(false);
   useEffect(() => {
     fetchData();
 
   }, []);
 
-  const fetchData = () => terminal.request({ name: 'allCategory' }).then(res => res.status === false ? toaster({ type: 'error', message: res.message }) : setCategories(res));
+  const fetchData = () =>{
+    setLoading(true)
+    setCategories([]);
+     terminal.request({ name: 'allCategory' }).then(res => res.status === false ? toaster({ type: 'error', message: res.message }) : (setCategories(res),setLoading(false)));
+    }
 
   const categoryForm = useFormik({
     initialValues: {
@@ -54,13 +61,17 @@ const MainCategory = () => {
     },
   });
   useEffect(()=>{
-    if(selected.id){
+    if(selected?.id){
      categoryHandler(selected.id)
     }
 
   },[categories])
 
   const categoryHandler = (id) => setSelected(categories.find(item => item.id === id));
+  const deleteHandler = ()=>{
+    terminal.request({name: 'deleteCategory', body:{ id : isActive? selectedCategory : selectedSubcategory}}).then(res=> res.status===false? toaster({ type: 'error', message: res.message}): (toaster({type: 'success', message: res.message}),fetchData()))
+
+  }
 
   return (
     <>
@@ -156,7 +167,7 @@ const MainCategory = () => {
       </div>
       <div className="col-span-6 sm:col-span-4 px-0 sm:pl-8">
         <div className="flex justify-between pb-2">
-          <Button style="delete">delete</Button>
+          <Button onClick={deleteHandler} style="delete">delete</Button>
           <div className="flex gap-2 items-center">
             <Button onClick={() => setIsActive(true)} style={isActive ? 'primary' : 'outline'}>Category Table</Button>
             <Button onClick={() => setIsActive(false)} style={!isActive ? 'primary' : 'outline'}>Sub Category Table</Button>
@@ -166,7 +177,7 @@ const MainCategory = () => {
           </div>
         </div>
         {
-          isActive ? <Table data={{ docs: categories }} isCategory={true}/> : <Table data={{ docs: selected?.subcategory } || []} isCategory={false} />
+          isActive ? <Table data={{ docs: categories }} isCategory={true} getData={setSelectedcategory} loading={loading}/> : <Table data={{ docs: selected?.subcategory } || []} isCategory={false} getData={setSelectedsubcategory} loading={loading} />
         }
 
       </div>

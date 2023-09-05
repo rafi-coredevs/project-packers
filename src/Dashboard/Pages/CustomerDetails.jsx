@@ -144,7 +144,7 @@ const CustomerDetails = () => {
             <SideCard
               types="custom"
               title="Address"
-              address={user?.current?.shippingaddress?.address +', '+ user?.current?.shippingaddress?.city +', '+ user?.current?.shippingaddress?.area +', '+ user?.current?.shippingaddress?.zip}
+              address={user?.current?.shippingAddress? (user?.current?.shippingaddress?.address +', '+ user?.current?.shippingaddress?.city +', '+ user?.current?.shippingaddress?.area +', '+ user?.current?.shippingaddress?.zip): 'Not Available'}
             />
             <SideCard
               types="custom"

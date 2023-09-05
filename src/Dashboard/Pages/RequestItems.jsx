@@ -33,7 +33,6 @@ const RequestItems = () => {
  }
 
 
-
   const fetchData = (page = 1) => {
     setLoading(true);
     terminal.request({ name: 'allRequest', queries: { page, sortBy, status: active } }).then((res) => {
