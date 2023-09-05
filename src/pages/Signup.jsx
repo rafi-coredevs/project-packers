@@ -29,11 +29,13 @@ const Signup = () => {
 		onSubmit: (values) => {
 			const data = { ...values, phone: countryCode + values.phone };
 
-			SignUp(data).then((res) => {
-				res.status === false
-					? toaster({ type: 'error', message: res.message })
-					: navigate('/login');
-			}).catch((err)=>console.error("Error in sign up", err ));
+			SignUp(data)
+				.then((res) => {
+					res.status === false
+						? toaster({ type: 'error', message: res.message })
+						: navigate('/login');
+				})
+				.catch((err) => console.error('Error in sign up', err));
 		},
 	});
 
@@ -117,7 +119,14 @@ const Signup = () => {
 									label='Phone Number'
 								>
 									{/* for country code */}
-									<CountryCodeSelector setCountryCode={setCountryCode} />
+									<CountryCodeSelector
+										error={
+											signUpForm.touched.phone && signUpForm.errors.phone
+												? signUpForm.errors.phone
+												: null
+										}
+										setCountryCode={setCountryCode}
+									/>
 								</Input>
 							</div>
 
@@ -140,20 +149,48 @@ const Signup = () => {
 							</div>
 
 							{/* terms */}
-							<div className='flex justify-between mt-[10px]'>
-								<div className='font-sans text-base '>
-									<input
-										type='checkbox'
-										onChange={() => setAccept(false)}
-										className='w-4 h-4 accent-primary border-white rounded'
-									/>
+							<div className='flex items-center justify-between mt-[10px]'>
+								<div className='font-sans text-base flex items-center'>
+									{/* check box */}
+									<div className='inline-flex items-center'>
+										<label
+											className='relative flex cursor-pointer items-center rounded-full'
+											htmlFor='checkbox-4'
+											data-ripple-dark='true'
+										>
+											<input
+												type='checkbox'
+												onChange={() => setAccept(!accept)}
+												className="before:content[''] peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border border-blue-gray-200 transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-12 before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-gray-500 before:opacity-0 before:transition-opacity checked:border-[#F2C852] checked:bg-[#F2C852] checked:before:bg-[#F2C852] "
+												id='checkbox-4'
+											/>
+											<div className='pointer-events-none absolute top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 text-secondary opacity-0 transition-opacity peer-checked:opacity-100'>
+												<svg
+													xmlns='http://www.w3.org/2000/svg'
+													className='h-3.5 w-3.5'
+													viewBox='0 0 20 20'
+													fill='currentColor'
+													stroke='currentColor'
+													strokeWidth='1'
+												>
+													<path
+														fillRule='evenodd'
+														d='M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z'
+														clipRule='evenodd'
+													></path>
+												</svg>
+											</div>
+										</label>
+									</div>
 									<label className='text-[#ffffffb3] pl-2'>
-										I agree to Project Packers Terms of Service and Privacy
-										notice
+										I agree to Project Packers
+										<span className='text-primary px-1'>
+											{' '}
+											Terms of Service
+										</span>{' '}
+										and{' '}
+										<span className='text-primary pl-1'>Privacy notice</span>
 									</label>
-									{signUpForm.errors.terms && signUpForm.touched.terms && (
-										<span></span>
-									)}
 								</div>
 							</div>
 							<div className='flex  gap-2 mt-12'>
