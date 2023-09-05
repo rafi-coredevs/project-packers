@@ -12,8 +12,9 @@ import CustomSelect from "../../Components/UiElements/Input/CustomSelect";
 //
 const customerStatuses = [
   { id: 1, name: "All", value: "all" },
-  { id: 2, name: "Paid", value: "paid" },
-  { id: 3, name: "Pending", value: "pending" },
+  { id: 2, name: "New", value: "new" },
+  { id: 3, name: "Returning", value: "returning" },
+  { id: 4, name: 'Abandoned Checkouts', value: 'abandoned' }
 ];
 
 const Customer = () => {
@@ -30,13 +31,17 @@ const Customer = () => {
   });
 
   function customerStatusHandler(id) {
-    setSelectedCustomerStatus(customerStatuses.find((item) => item.id === id));
+    const selected =  customerStatuses.find((item) => item.id === id);
+    setSelectedCustomerStatus(selected);
+    setActive(selected?.value)
+    fetchData({ status: selected?.value });
   }
 
   const navigate = useNavigate();
   const tableButtonHandler = (value) => {
     setActive(value);
     fetchData({ status: value });
+    setSelectedCustomerStatus(null)
   };
   useEffect(() => {
     fetchData();
@@ -125,7 +130,7 @@ const Customer = () => {
                 </Input>
                 <div className="flex ">
                   <CustomSelect
-                    value={selectedCustomerStatus.name}
+                    value={selectedCustomerStatus?.name}
                     options={customerStatuses}
                     onChange={customerStatusHandler}
                     bg="bg-white"
