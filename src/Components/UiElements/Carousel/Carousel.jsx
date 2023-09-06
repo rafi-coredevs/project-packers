@@ -31,7 +31,7 @@ const Carousel = ({ isHome = Boolean }) => {
 				<div className='' key={i}>
 					<iframe
 						title='YouTube Short Video'
-						src={`https://www.youtube.com/embed/${slide.videoId}?autoplay=0&loop=1&playlist=${slide.videoId}&controls=0`}
+						src={`https://www.youtube.com/embed/${slide.videoId}?autoplay=1&loop=1&playlist=${slide.videoId}&controls=0`}
 						allow='autoplay; encrypted-media'
 						allowFullScreen
 						className='rounded-2xl h-[25rem] w-[17.6875rem] mx-auto'

@@ -37,7 +37,7 @@ const SuccessModal = ({ confirmSubmit, setUrl }) => {
 					</p>
 				</div>
 			</div>
-			<div className='w-full'>
+			<form className='w-full grid gap-5' onSubmit={submitHandler}>
 				<Input
 					styles='primary'
 					label='Request or search another item'
@@ -47,11 +47,11 @@ const SuccessModal = ({ confirmSubmit, setUrl }) => {
 				>
 					<img src={globe} alt='' />
 				</Input>
-			</div>
 
-			<Button onClick={submitHandler} type='primary' full>
+			<Button  type='primary' buttonType='submit' full>
 				Search
 			</Button>
+			</form>
 		</div>
 	);
 };

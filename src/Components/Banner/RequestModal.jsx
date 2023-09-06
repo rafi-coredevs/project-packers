@@ -2,7 +2,7 @@ import Button from '../UiElements/Buttons/Button';
 import Input from '../UiElements/Input/Input';
 import globe from '../../assets/icons/cd-internet.svg';
 import reload from '../../assets/icons/cd-reload.svg';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ImageUploader from '../UiElements/ImageUploader/ImageUploader';
 import { useFormik } from 'formik';
 import removeEmptyFields from './../../Util/removeEmptyFields';
@@ -78,7 +78,9 @@ const RequestModal = ({
 			}
 		},
 	});
-
+	useEffect(()=>{
+		console.log(itemRequestForm.errors)
+	},[itemRequestForm.errors])
 	return (
 		<form action='' onSubmit={itemRequestForm.handleSubmit}>
 			<div className='flex flex-col gap-5'>
@@ -215,7 +217,7 @@ const RequestModal = ({
 						</div>
 						{active === 'link' && (
 							<p className='text-base font-medium'>
-								 <span className='opacity-[65%]'>By</span>
+								 <span className='opacity-[65%]'>By </span>
 								<span className='text-[#3E949A] underline'>
 									{
 										itemRequestForm.values.link
