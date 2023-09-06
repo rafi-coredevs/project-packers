@@ -48,6 +48,7 @@ const SupportModal = ({ show = false, onChange }) => {
               setChat(data.docs)
               setTotalPage(data.totalPages)
               setPage(data.page)
+              terminal.socket.emit('entry', { "entry": true, "room": data.id })
               setVisible(true)
               resetForm()
             }
@@ -137,7 +138,7 @@ const SupportModal = ({ show = false, onChange }) => {
     terminal.request({ name: 'sendMessage', params: { id: support }, body: { data: { message: e.target.message.value } } })
     e.target.message.value = ''
   }
-  
+
   return (
     <>
       {!isVisible && (
@@ -297,8 +298,7 @@ const SupportModal = ({ show = false, onChange }) => {
                           }).format(new Date(chat?.time))}
                         </p>
                       </div>
-                      <span className={`${
-                        chat.sender?.id === user.id ? "text-[#000316CC]" : "text-[#a7a7a7] w-[300px]"} break-all w-full `
+                      <span className={`${chat.sender?.id === user.id ? "text-[#000316CC]" : "text-[#a7a7a7] w-[300px]"} break-all w-full `
                       }>
                         {chat?.message}
                         {console.log(chat?.message)}
