@@ -483,6 +483,8 @@ const OrderDetails = () => {
 								options={orderStatuses}
 								onChange={orderStatusHandler}
 								appearance='select'
+								sitOnTop={true}
+								
 							/>
 						</div>
 					</div>

@@ -12,7 +12,7 @@ import React, { useEffect, useRef, useState } from "react";
 import downArrow from '../../../assets/icons/caret-down_minor.svg'
 import downArrowWhite from '../../../assets/icons/caret-down_minor_white.svg'
 import filter from "../../../assets/icons/cd-filter.svg";
-const CustomSelect = ({ options, value, onChange, appearance, bg, error }) => {
+const CustomSelect = ({ options, value, onChange, appearance, bg, error, sitOnTop }) => {
 
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -30,14 +30,6 @@ const CustomSelect = ({ options, value, onChange, appearance, bg, error }) => {
     };
   }, []);
 
-  // window.addEventListener('click', (e) => {
-  //   let triggerId = e.target.id;
-  //   console.log(triggerId)
-  //   if (triggerId == "customselect" || triggerId == "customselectfilter") { setIsOpen(true); }
-  //   else {
-  //     setIsOpen(false);
-  //   }
-  // })
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };
@@ -82,7 +74,7 @@ const CustomSelect = ({ options, value, onChange, appearance, bg, error }) => {
       }
 
       {isOpen ? (
-        <ul className={`absolute z-10 top-full py-0  ${colorComb[bg]} ${sty_log()} border  rounded-t-none shadow   overflow-y-auto scrollbar bg-white max-h-60`}>
+        <ul id="idul" className={`absolute z-10 rounded-md ${sitOnTop ? " bottom-full rounded-b-none " : "top-full rounded-t-none"} pt-0 pb-0 ${colorComb[bg]} ${sty_log()} border shadow   overflow-y-auto scrollbar bg-white max-h-60`}>
           {options?.map((option, index) => (<li
             key={index}
             className={`${value === option.name ? 'bg-primary' : colorComb['white']} py-2 px-4 cursor-pointer   hover:bg-primary text-black`}
