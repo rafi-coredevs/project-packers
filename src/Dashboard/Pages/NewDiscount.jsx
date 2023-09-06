@@ -151,6 +151,7 @@ const NewDiscount = () => {
                   </label>
                   <CustomSelect
                     appearance="select"
+                   
                     options={discountType}
                     onChange={(type) => {
                       discountForm.setFieldValue("type", type);
@@ -220,6 +221,7 @@ const NewDiscount = () => {
               </label>
               <CustomSelect
                 appearance={"select"}
+                sitOnTop={true}
                 options={category}
                 onChange={categorySelector}
                 value={selectedCategory?.name}
@@ -234,6 +236,7 @@ const NewDiscount = () => {
               </label>
               <CustomSelect
                 appearance={"select"}
+                sitOnTop={true}
                 options={selectedCategory?.subcategory}
                 onChange={subcategorySelector}
                 value={selectedSubcategory?.name}
