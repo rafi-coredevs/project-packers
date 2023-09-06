@@ -29,6 +29,7 @@ const ProductImageUpload = ({
     if (event.target.files.length > 0) {
       setAllImages((prev) => [...prev, file]);
     }
+    event.target.value = null;
   };
 
   /**
