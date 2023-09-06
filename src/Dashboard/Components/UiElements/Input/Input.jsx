@@ -114,7 +114,7 @@ const Input = ({
 					disabled={disabled}
 					minLength={min}
 					maxLength={max}
-					min='0'
+					min={min}
 					required={required}
 				/>
 			</div>
@@ -203,10 +203,11 @@ const Input = ({
 					onChange={change}
 					onKeyUp={keyenter}
 					onBlur={blur}
-					// min={0}
+					min={min}
 					disabled={disabled}
 					minLength={min}
 					maxLength={max}
+					step={0.01}
 				/>
 			</div>
 		</div>
