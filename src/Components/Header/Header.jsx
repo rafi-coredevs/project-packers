@@ -35,10 +35,15 @@ const Header = ({ sideBar, state }) => {
 	const navigate = useNavigate();
 	const [cartData, setCartData] = useState([]);
 	const { cart } = useCartCtx();
-
 	const [isOpen, setIsOpen] = useState(false);
 	const [modalState, setModalState] = useState('request');
 	const [url, setUrl] = useState('');
+	const [newNotification, setNewNotification] = useState(false)
+
+	//New notification logic
+	useEffect(()=>{
+		setNewNotification(true)
+	},[notifications])
 
 	/**
 	 * Handles form submission for URL search.
@@ -134,7 +139,7 @@ const Header = ({ sideBar, state }) => {
 
 	return (
 		<>
-			<div className='sticky top-0 mt-0 pt-0  bg-white z-50'>
+			<div className='fixed left-0 right-0 top-0 mt-0 pt-0  bg-white z-50'>
 				<div className=' z-[100]'></div>
 				<div className='container hidden  sm:flex mx-auto navbar gap-4 py-[10px] items-center justify-between'>
 					<Link
@@ -174,9 +179,10 @@ const Header = ({ sideBar, state }) => {
 										className='hover:cursor-pointer'
 										onClick={() => {
 											setNotifyState(!notifyState);
+											setNewNotification(false)
 										}}
 									>
-										<Icon unread={false} icon={notification} />
+										<Icon unread={newNotification} icon={notification} />
 									</span>
 									<Dropdown
 										type='notification'

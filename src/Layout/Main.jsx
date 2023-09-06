@@ -25,7 +25,10 @@ const Main = () => {
             <div className={`min-h-screen flex flex-col min-w-full duration-300 shadow-2xl ${toggle ? "ml-[78vw] sm:ml-0 sm:duration-0" : ""}`}>
               {user?.id && <SupportModal />}
               <Header sideBar={toggleHandler} state={toggle} />
+              <div className="md:mt-16">
+
               <Outlet />
+              </div>
               <Footer />
             </div>
           </div >
