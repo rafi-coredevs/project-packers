@@ -71,7 +71,7 @@ const Chat = () => {
           );
         });
       });
-  }, [activeStatusButton, supportType]);
+  }, [activeStatusButton, supportType, activeChat]);
 
   const chatCardHandler = (element) => {
     setActiveChat(element);
