@@ -21,7 +21,7 @@ import UserIcon from "../UiElements/UserIcon/UserIcon";
 import cancel from '../../assets/icons/cd-cancel-w.svg';
 import loader from '../../assets/icons/cd-reload-white.svg'
 
-const SupportModal = ({show = false, onChange}) => {
+const SupportModal = ({ show = false, onChange }) => {
   const { user } = useUserCtx()
   const [isVisible, setVisible] = useState(false);
   const [chat, setChat] = useState([]);
@@ -57,9 +57,9 @@ const SupportModal = ({show = false, onChange}) => {
     },
   });
 
-  useEffect(()=>{
+  useEffect(() => {
     setVisible(show);
-  },[show])
+  }, [show])
   useEffect(() => {
     let id = ''
     isVisible && terminal.request({ name: 'userSupport' }).then(data => {
@@ -157,7 +157,7 @@ const SupportModal = ({show = false, onChange}) => {
           </span>
           <button
             className="cursor-pointer"
-            onClick={() => {setVisible(false); onChange()}}
+            onClick={() => { setVisible(false); onChange() }}
             type="button"
           >
             <img src={cancel} className="h-6 w-6" />
@@ -268,7 +268,7 @@ const SupportModal = ({show = false, onChange}) => {
               {chat?.map((chat, index) => {
                 return (
                   <div key={index}
-                    className={`flex gap-3 h-fit max-w-[15rem] ${chat.sender?.id === user?.id
+                    className={`flex gap-3 h-fit max-w-[20rem] ${chat.sender?.id === user?.id
                       ? "ml-auto flex-row-reverse"
                       : ""
                       }`}
@@ -277,7 +277,7 @@ const SupportModal = ({show = false, onChange}) => {
                       <UserIcon name={chat.sender?.fullName} />
                     </span>
                     <div
-                      className={`p-2 ${chat.sender?.id === user?.id
+                      className={`p-2 w-[100%] ${chat.sender?.id === user?.id
                         ? " bg-[#CFF6EF]"
                         : "bg-[#092F3F]"
                         } w-full grid gap-2  rounded-md`}
@@ -297,13 +297,12 @@ const SupportModal = ({show = false, onChange}) => {
                           }).format(new Date(chat?.time))}
                         </p>
                       </div>
-                      <div
-                        className={
-                          chat.sender?.id === user.id ? "text-[#000316CC]" : "text-[#a7a7a7]"
-                        }
-                      >
+                      <span className={`${
+                        chat.sender?.id === user.id ? "text-[#000316CC]" : "text-[#a7a7a7] w-[300px]"} break-all w-full `
+                      }>
                         {chat?.message}
-                      </div>
+                        {console.log(chat?.message)}
+                      </span>
                     </div>
                   </div>
                 )
@@ -315,6 +314,7 @@ const SupportModal = ({show = false, onChange}) => {
                   className="outline-none w-full rounded-xl p-3"
                   type="text"
                   rows={3}
+                  maxLength={600}
                   name='message'
                   placeholder="Type text message"
                 />

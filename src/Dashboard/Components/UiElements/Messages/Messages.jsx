@@ -157,6 +157,7 @@ const Messages = ({ activeChat, chatCardHandler, setSupportData }) => {
                             type="text"
                             name='message'
                             placeholder="Type text message"
+                            maxLength={600}
                             required
 
                         />
