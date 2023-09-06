@@ -334,10 +334,11 @@ const AddOrder = () => {
                                                     Add Discount
                                                 </button>
                                                 <input
+                                                
                                                     name="code"
                                                     type="text"
                                                     placeholder="Discount code"
-                                                    className='py-1 px-2 border border-slate-200    '
+                                                    className='py-1 px-2 border border-slate-200  outline-none rounded  '
                                                 />
                                             </form>
                                         </>
