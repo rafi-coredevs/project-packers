@@ -147,7 +147,7 @@ const Chat = () => {
             {supportData.length === 0
               ? supportData.map((chat, i) => <LazyChatCard key={i} />)
               : supportData.length > 0 &&
-              supportData?.map((chat) => (
+              supportData?.reverse().map((chat) => (
                 <ChatCard
                   onClick={chatCardHandler}
                   active={activeChat?.id}
