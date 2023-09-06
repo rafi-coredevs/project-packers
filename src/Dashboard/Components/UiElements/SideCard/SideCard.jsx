@@ -38,7 +38,7 @@ const SideCard = ({
 
 	// for customer information
 	const renderCustomerCard = () => (
-		<div className='grid gap-5 p-5'>
+		<div className='grid p-5'>
 			<div className='flex justify-between'>
 				<p className='text-base text-secondary font-semibold'>Customer</p>
 			{
@@ -53,10 +53,8 @@ const SideCard = ({
 			}
 			</div>
 			<div className='grid gap-2'>
-				<p className='underline text-emerald-500'>
-					{customerName || 'Not available'}
-				</p>
-				<p className=' text-[#6d6d6d]'>{orders || 'Not available'}</p>
+				{email && <p className='underline text-emerald-500'>{email || 'Not available'}</p> }
+				{phone && <p className=' text-[#6d6d6d]'>{phone || 'Not available'}</p> }
 			</div>
 		</div>
 	);
