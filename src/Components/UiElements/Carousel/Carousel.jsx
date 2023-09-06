@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 /**
  * YouTube Shots
@@ -34,7 +34,7 @@ const Carousel = ({ isHome = Boolean }) => {
 						src={`https://www.youtube.com/embed/${slide.videoId}?autoplay=0&loop=1&playlist=${slide.videoId}&controls=0`}
 						allow='autoplay; encrypted-media'
 						allowFullScreen
-						className='rounded-2xl h-[25rem] w-[17.6875rem] mx-auto'
+						className='rounded-2xl h-[25rem] w-[17.6875rem]'
 					/>
 				</div>
 			))}
