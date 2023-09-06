@@ -8,9 +8,11 @@ import Button from "../Components/UiElements/Buttons/Button";
 import { checkoutSchema } from "../Util/ValidationSchema";
 import OrderSuccessModal from "../Components/OrderSuccessModal/OrderSuccessModal";
 import { terminal } from "../contexts/terminal/Terminal";
+import { useUserCtx } from "../contexts/user/UserContext";
 
 const Checkout = () => {
   let totalPrice = 0;
+  const { user } = useUserCtx();
   const [cart, setCart] = useState({});
   const [discount, setDiscount] = useState(null);
   const [price, setPrice] = useState(null);
@@ -71,15 +73,15 @@ const Checkout = () => {
 
   const checkoutForm = useFormik({
     initialValues: {
-      email: "",
-      phone: "",
+      email: user.email,
+      phone: user.phone,
       altPhone: "",
-      firstName: "",
-      lastName: "",
-      address: "",
-      city: "",
-      area: "",
-      zip: "",
+      firstName: user.fullName?.split(" ")[0],
+      lastName: user.fullName?.split(" ")[1],
+      address: user.shippingaddress?.address,
+      city:  user.shippingaddress?.city ,
+      area:  user.shippingaddress?.area,
+      zip:  user.shippingaddress?.zip,
       instruction: "",
     },
     validationSchema: checkoutSchema,
@@ -136,6 +138,7 @@ const Checkout = () => {
               }
               placeholder="Enter your Email Address."
               border
+              required
             />
             <Input
               styles="primary"
@@ -194,6 +197,7 @@ const Checkout = () => {
                 }
                 placeholder="Enter your first name."
                 border
+                required
               />
               <Input
                 styles="primary"
@@ -210,6 +214,7 @@ const Checkout = () => {
                 }
                 placeholder="Enter your last name."
                 border
+                required
               />
             </div>
             {/* address */}
@@ -228,6 +233,7 @@ const Checkout = () => {
               }
               placeholder="Enter your Address."
               border
+              required
             />
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -247,6 +253,7 @@ const Checkout = () => {
                 }
                 placeholder="City"
                 border
+                required
               />
               <Input
                 styles="primary"
@@ -263,6 +270,7 @@ const Checkout = () => {
                 }
                 placeholder="Area"
                 border
+                required
               />
               <Input
                 styles="primary"
@@ -279,6 +287,7 @@ const Checkout = () => {
                 }
                 placeholder="Zip Code"
                 border
+                required
               />
             </div>
             {/* Delivery Instruction */}

@@ -19,7 +19,7 @@ const RequestItems = () => {
   const [active, setActive] = useState("all");
   const [tableData, setTableData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [sortBy, setSortBy] = useState('createdAt:asc');
+  const [sortBy, setSortBy] = useState('createdAt:desc');
   const [requestIds, setRequestIds] = useState([]);
   useEffect(() => {
     fetchData();
