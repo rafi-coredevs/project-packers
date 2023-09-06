@@ -37,7 +37,7 @@ const Messages = ({ activeChat, chatCardHandler, setSupportData }) => {
             })
         }
         return () => {
-            terminal.socket.emit('entry', { "entry": false, "room": activeChat?.id })
+            terminal.socket.emit('entry', { "entry": false, "room": activeChat.id })
             terminal.socket.off('message')
         }
     }, [activeChat])
@@ -81,8 +81,8 @@ const Messages = ({ activeChat, chatCardHandler, setSupportData }) => {
         }
     }
 
-    const handleStatus = (e) => {
-        terminal.request({ name: 'updateSupport', params: { id: activeChat.id }, body: { status: e.target.value, user: null } }).then(data => {
+    const handleStatus = () => {
+        terminal.request({ name: 'updateSupport', params: { id: activeChat.id }, body: { status: 'close', user: null } }).then(data => {
             if (data.id) {
                 chatCardHandler({ id: data.id, status: data.status, type: data.type });
                 toaster({ type: 'success', message: 'Status updated successfully' })
@@ -116,19 +116,13 @@ const Messages = ({ activeChat, chatCardHandler, setSupportData }) => {
                     <p className="text-sm font-medium">{activeChat.number}</p>
                 </div>
                 <div>
-                    <select
-                        className="bg-transparent outline-none cursor-pointer w-20"
-                        onChange={handleStatus}
-                    >
-                        <option value="open" selected={activeChat.status === 'open'}>
-                            Open
-                        </option>
-                        <option value="close" selected={activeChat.status === 'close'}>
-                            Close
-                        </option>
-                    </select>
+                    {
+                        activeChat.status === 'open' && <Button onClick={() => handleStatus()} style='primary'>
+                            <p className='font-semibold'>Close</p>
+                        </Button>
+                    }
                 </div>
-            </div>
+            </div >
             <div className="px-8 py-2 relative h-[calc(100vh-215px)]  w-full">
                 {
                     loading &&

@@ -37,6 +37,7 @@ const Chat = () => {
                     status: support.status,
                     type: support.type,
                     number: support.supportNumber,
+                    room: support?.user?.id
                   };
                 })
               );
@@ -64,6 +65,7 @@ const Chat = () => {
                 status: support.status,
                 type: support.type,
                 number: support.supportNumber,
+                room: support?.user?.id
               };
             })
           );
@@ -88,11 +90,10 @@ const Chat = () => {
         <div className=" border border-[#0000001c] text-sm rounded-md overflow-hidden flex">
           <button
             onClick={() => actionButtonHandler("all")}
-            className={`py-2 px-4 font-medium ${
-              activeStatusButton === "all"
-                ? buttonStyle["active"]
-                : buttonStyle["deactive"]
-            }`}
+            className={`py-2 px-4 font-medium ${activeStatusButton === "all"
+              ? buttonStyle["active"]
+              : buttonStyle["deactive"]
+              }`}
           >
             <div className=" flex gap-2 items-center">
               <span className="w-2 h-2  rounded-full bg-yellow-500"></span>
@@ -101,11 +102,10 @@ const Chat = () => {
           </button>
           <button
             onClick={() => actionButtonHandler("open")}
-            className={`py-2 px-4 font-medium ${
-              activeStatusButton === "open"
-                ? buttonStyle["active"]
-                : buttonStyle["deactive"]
-            }`}
+            className={`py-2 px-4 font-medium ${activeStatusButton === "open"
+              ? buttonStyle["active"]
+              : buttonStyle["deactive"]
+              }`}
           >
             <div className=" flex gap-2 items-center">
               <span className="w-2 h-2  rounded-full bg-green-500"></span>
@@ -114,11 +114,10 @@ const Chat = () => {
           </button>
           <button
             onClick={() => actionButtonHandler("close")}
-            className={`py-2 px-4 font-medium ${
-              activeStatusButton === "close"
-                ? buttonStyle["active"]
-                : buttonStyle["deactive"]
-            }`}
+            className={`py-2 px-4 font-medium ${activeStatusButton === "close"
+              ? buttonStyle["active"]
+              : buttonStyle["deactive"]
+              }`}
           >
             <div className=" flex gap-2 items-center">
               <span className="w-2 h-2  rounded-full bg-red-500"></span>
@@ -148,18 +147,19 @@ const Chat = () => {
             {supportData.length === 0
               ? supportData.map((chat, i) => <LazyChatCard key={i} />)
               : supportData.length > 0 &&
-                supportData?.map((chat) => (
-                  <ChatCard
-                    onClick={chatCardHandler}
-                    active={activeChat?.id}
-                    key={chat.id}
-                    status={chat.status}
-                    type={chat.type}
-                    id={chat.id}
-                    number={chat.number}
-                    message={chat.message}
-                  />
-                ))}
+              supportData?.map((chat) => (
+                <ChatCard
+                  onClick={chatCardHandler}
+                  active={activeChat?.id}
+                  key={chat.id}
+                  status={chat.status}
+                  type={chat.type}
+                  id={chat.id}
+                  number={chat.number}
+                  message={chat.message}
+                  room={chat.room}
+                />
+              ))}
           </div>
         </div>
       </div>
