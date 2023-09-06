@@ -240,7 +240,7 @@ const RequestDetails = () => {
                     <span className="text-[#3E949A] underline">browser</span>
                     <br />
                     <span className="text-slate-600 text-center text-xs">
-                      Supports JPG, PNG
+                      Supports JPG, PNG, JPEG
                     </span>
                   </>
                 }
