@@ -11,6 +11,11 @@ const Badge = ({ text = 'completed' }) => {
 			bg: 'bg-green-300',
 			dot: 'bg-green-700',
 		},
+		accepted: {
+			text: 'Accepted',
+			bg: 'bg-green-300',
+			dot: 'bg-green-700',
+		},
 		pending: {
 			text: 'Pending',
 			bg: 'bg-[#F7DA7C]',
