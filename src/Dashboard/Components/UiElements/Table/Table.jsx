@@ -272,12 +272,8 @@ const Table = ({ data, paginate, loading, dashboardToogle, modalHandler, getData
                         {item?.name}
                       </td>
                       <td className='w-[25%] px-4 py-[18px] text-black text-sm cursor-pointer '>
-                        <a href={item?.link} target='_blank'>
-
-                          {/* {new URL(
-                          item?.products[0]?.product?.link,
-                        ).hostname.replace('www.', '')} */}
-                          {item?.link?.slice(0, 40)}...
+                        <a href={item?.link} target='_blank' className='w-full line-clamp-1'>
+                          {item?.link}
                         </a>
                       </td>
                       <td className='px-4 py-[18px] text-black text-sm '>
