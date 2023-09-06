@@ -66,8 +66,7 @@ const SupportModal = ({show = false, onChange}) => {
       if (data.id) {
         setSupport(data.id)
         id = data.id
-        terminal.socket.on('entry')
-        terminal.socket.emit('entry', { "entry": true, "room": data.id })
+        terminal.socket.emit('entry', { "entry": true, "room": id })
         terminal.request({ name: 'getMessage', params: { id: data.id }, queries: { page: 1 } }).then(data => {
           data.docs?.length > 0 && setChat(data.docs), setTotalPage(data.totalPages), setPage(data.page)
         })
@@ -88,7 +87,6 @@ const SupportModal = ({show = false, onChange}) => {
     })
     return () => {
       terminal.socket.emit('entry', { "entry": false, "room": id })
-      terminal.socket.off('entry')
       terminal.socket.off('message')
 
     }
@@ -139,6 +137,7 @@ const SupportModal = ({show = false, onChange}) => {
     terminal.request({ name: 'sendMessage', params: { id: support }, body: { data: { message: e.target.message.value } } })
     e.target.message.value = ''
   }
+  
   return (
     <>
       {!isVisible && (

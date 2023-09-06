@@ -31,15 +31,13 @@ const Messages = ({ activeChat, chatCardHandler, setSupportData }) => {
         })
         if (activeChat && activeChat.status !== 'pending') {
             setModal(false)
-            terminal.socket.on('entry')
-            terminal.socket.emit('entry', { "entry": true, "room": activeChat?.id })
+            terminal.socket.emit('entry', { "entry": true, "room": activeChat.id })
             terminal.socket.on('message', (data) => {
                 data.id && setMessages(prev => [data, ...prev])
             })
         }
         return () => {
             terminal.socket.emit('entry', { "entry": false, "room": activeChat?.id })
-            terminal.socket.off('entry')
             terminal.socket.off('message')
         }
     }, [activeChat])
@@ -84,7 +82,7 @@ const Messages = ({ activeChat, chatCardHandler, setSupportData }) => {
     }
 
     const handleStatus = (e) => {
-        terminal.request({ name: 'updateSupport', params: { id: activeChat.id }, body: { status: e.target.value } }).then(data => {
+        terminal.request({ name: 'updateSupport', params: { id: activeChat.id }, body: { status: e.target.value, user: null } }).then(data => {
             if (data.id) {
                 chatCardHandler({ id: data.id, status: data.status, type: data.type });
                 toaster({ type: 'success', message: 'Status updated successfully' })
