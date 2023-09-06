@@ -19,7 +19,7 @@ const RequestDetails = () => {
   const [preLoadedImages, setPreLoadedImages] = useState([]);
   const [disable, setDisable] = useState(false);
   const [inputDisable, setInputDisable] = useState(true);
-
+  const [isLoading, setIsloading] = useState(false)
   const navigate = useNavigate();
 
   // formik initialization
@@ -68,6 +68,7 @@ const RequestDetails = () => {
 
   // for fetching data when page is loaded
   useEffect(() => {
+    setIsloading(true)
     terminal
       .request({ name: "singleRequest", params: { id: requestId } })
       .then((res) => {
@@ -79,7 +80,7 @@ const RequestDetails = () => {
           phone: res.user?.phone,
           quantity: res.quantity || 1,
           link: res.link,
-          note: res.note,
+          note: res.note || "N/A",
           price: res.price || 0,
           tax: res.tax || 0,
           fee: res.fee || 0,
@@ -89,8 +90,7 @@ const RequestDetails = () => {
           images: res.images,
           fullName: res.user.fullName || "No Name",
         });
-      })
-      .catch((err) => console.error("request error when loaded", err));
+      }).catch((err) => console.error("request error when loaded", err)).finally(()=> setIsloading(false))
   }, []);
 
   /**
@@ -179,6 +179,9 @@ const RequestDetails = () => {
               Requested Items
             </h3>
             {/* link */}
+            {isLoading ?
+            <div className="mx-5 w-auto h-10 lazy-loading"></div>
+            :
             <div className="flex gap-2 items-center px-5">
               <div className="w-full">
                 <Input
@@ -201,9 +204,13 @@ const RequestDetails = () => {
               <a href={requestForm.values.link} className="h-full w-auto" target="_blank">
                 <Button style="outline">Go</Button>
               </a>
-            </div>
+            </div>}
 
             {/* quantity */}
+            {
+              isLoading ? 
+              <div className="ms-5 w-32 h-8 lazy-loading"></div>
+              :
             <div className="flex gap-2 items-center px-5">
               <p className="">Quantity</p>
               <Input
@@ -216,8 +223,12 @@ const RequestDetails = () => {
                 onClick={handleQuantity}
               />
             </div>
+            }
 
             {/* image upload */}
+            {isLoading ?
+            <div className="w-auto h-36 lazy-loading mx-5"></div>
+            :
             <div className="px-5">
               <RequestImageUpload
                 formikProps={requestForm}
@@ -235,6 +246,7 @@ const RequestDetails = () => {
                 }
               />
             </div>
+            }
             <hr />
             {/* note */}
             <div className="grid gap-3 px-5">
@@ -247,23 +259,30 @@ const RequestDetails = () => {
                   }}
                   className="text-[#3E949A] text-sm font-normal"
                 >
-                  Edit
+                  {inputDisable ? "Edit" : "Save"}
                 </button>
               </div>
-              <textarea
-                className="w-full text-[#475569] outline-none"
-                name="note"
-                onChange={requestForm.handleChange}
-                onBlur={requestForm.handleBlur}
-                id="note"
-                rows="3"
-                value={requestForm.values.note || "N/A"}
-                disabled={inputDisable}
-              ></textarea>
+            {isLoading ? 
+            <div className="w-full h-28 lazy-loading pb-4"></div>
+            :
+            <textarea
+              className={`w-full rounded p-3 text-[#475569] outline-none ${inputDisable ? "bg-white" : "border border=[#ededed] mb-5 " } `}
+              name="note"
+              onChange={requestForm.handleChange}
+              onBlur={requestForm.handleBlur}
+              id="note"
+              rows="3"
+              value={requestForm.values.note}
+              disabled={inputDisable}
+            ></textarea>}
             </div>
           </div>
 
           {/* payment details */}
+          {isLoading ? 
+          <div className="w-full h-96 lazy-loading">
+          </div>
+          :
           <div className="grid gap-5 border border-[#0000001c] rounded-lg ">
             <p className="text-base font-semibold p-5">Payment Details</p>
             <div className="grid gap-4">
@@ -278,6 +297,7 @@ const RequestDetails = () => {
                     className={`text-end`}
                     type="number"
                     id="price"
+                    min={0.0}
                     error={
                       requestForm.touched.price &&
                       requestForm.errors.price
@@ -301,6 +321,7 @@ const RequestDetails = () => {
                     className={`text-end`}
                     name="tax"
                     id="tax"
+                    min={0}
                     error={
                       requestForm.touched.tax && requestForm.errors.tax
                         ? requestForm.errors.tax
@@ -325,6 +346,7 @@ const RequestDetails = () => {
                     type="number"
                     className={`text-end`}
                     id="fee"
+                    min={0}
                     error={
                       requestForm.touched.fee && requestForm.errors.fee
                         ? requestForm.errors.fee
@@ -342,9 +364,9 @@ const RequestDetails = () => {
                 <p className="text-base font-semibold">Total</p>
                 <p className="text-lg font-semibold">
                   ৳{" "}
-                  {Number(parseFloat(requestForm.values.price)) +
+                  {(Number(parseFloat(requestForm.values.price)) +
                     Number(parseFloat(requestForm.values.tax)) +
-                    Number(parseFloat(requestForm.values.fee))}
+                    Number(parseFloat(requestForm.values.fee))).toFixed(2)}
                 </p>
               </div>
 
@@ -365,32 +387,27 @@ const RequestDetails = () => {
               </div>
             </div>
           </div>
+        }
         </div>
 
         {/* right side's customer details */}
         <div className="col-span-3 sm:col-span-1 h-fit grid gap-5 border border-[#0000001c] divide-y  rounded-lg ">
+          {isLoading ? <div className="w-full lazy-loading h-60"></div>
+          :
+          <>
           <SideCard
             types="customer"
-            customerName={requestForm.values.fullName}
+            customerName={requestForm.values?.fullName}
           />
           <SideCard
             name={"email"}
             types="contact"
             email={requestForm.values.email}
             phone={requestForm.values.phone}
-          />
-          <SideCard
-            types="shipping"
-            title="Shipping Address"
-            address="No Address"
-            editable={false}
-          />
-          <SideCard
-            types="billing"
-            title="Billing Address"
-            address="No Address"
-            editable={false}
-          />
+            />
+            </>
+            }
+         
         </div>
       </form>
     </div>
