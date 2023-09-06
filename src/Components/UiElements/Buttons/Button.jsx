@@ -5,6 +5,7 @@
  * @param {object} children - Child components to display inside the button.
  * @param {boolean} full - Determines whether the button should have full width.
  * @param {string} buttonType - Specifies the button type, e.g., "submit".
+ * @param {string} type - button style 
  * @param {string} className - Additional CSS classes for styling the button.
  * @param {boolean} disabled - Determines whether the button is disabled.
  * @param {function} onClick - Function to execute when the button is clicked.
