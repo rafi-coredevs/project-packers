@@ -14,9 +14,9 @@ import escape from "../../../../Util/escapeHtml";
 
 const ChatBubble = ({ sender, name, date, message, userId }) => {
     return (
-        <div className={`flex gap-3 h-fit min-w-[350px] max-w-[400px] ${sender === userId ? "ml-auto flex-row-reverse" : ""}`}>
+        <div className={`flex gap-3 h-fit min-w-[350px] max-w-[50%] ${sender === userId ? "ml-auto flex-row-reverse" : ""}`}>
             <span className="h-10 w-10 flex items-center justify-center shrink-0 rounded-full font-bold text-amber-800 bg-pink-400"><UserIcon name={name} /></span>
-            <div className={`p-2 ${sender === userId ? 'bg-[#CFF6EF]' : 'bg-secondary'} w-full grid gap-2  rounded-md`}>
+            <div className={`p-2 ${sender === userId ? 'bg-[#CFF6EF]' : 'bg-secondary'} w-full grid gap-2  rounded-md `}>
                 <div className="flex justify-between w-full">
                     <p className="text-[#3E949A] font-medium text-sm">{name}</p>
                     <p className="text-[#64748B] text-[10px] font-semibold">{new Intl.DateTimeFormat('en-US', {
@@ -28,8 +28,11 @@ const ChatBubble = ({ sender, name, date, message, userId }) => {
                         hour12: true,
                     }).format(new Date(date))}</p>
                 </div>
-                <div className={sender === userId ? "text-[#000316CC]" : "text-[#a7a7a7]"}>
+                <div className={`${sender === userId ? "text-[#000316CC]" : "text-[#a7a7a7]"} break-all`}>
+                  <span className="">
+                    {/* {message} */}
                     {escape(message)}
+                  </span>
                 </div>
             </div>
         </div>
