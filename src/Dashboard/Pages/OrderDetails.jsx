@@ -129,7 +129,7 @@ const OrderDetails = () => {
 					toaster({ type: 'error', message: res.message });
 				} else {
 					toaster({ type: 'success', message: 'successfully updated' });
-					navigate(-1);
+				
 				}
 			})
 			.catch((err) => console.error('order update error', err));
@@ -146,11 +146,11 @@ const OrderDetails = () => {
 			.then((res) =>
 				res?.status === false
 					? toaster({ type: 'success', message: res.message })
-					: (toaster({
+					: toaster({
 						type: 'success',
 						message: 'deleted successfully',
 					}),
-						navigate(-1)),
+						
 			)
 			.catch((err) => console.error('order delete error', err));
 	};

@@ -66,34 +66,34 @@ const NewProduct = () => {
       const { images, ...rest } = values;
       product
         ? terminal
-            .request({
-              name: "updateProduct",
-              params: { id: product?.id },
-              body: { data: rest, images: images },
-            })
-            .then((res) =>
-              res?.status === false
-                ? toaster({ type: "success", message: res.message })
-                : (toaster({
-                    type: "success",
-                    message: "Product successfully Updated",
-                  }),
-                  navigate(-1))
-            )
+          .request({
+            name: "updateProduct",
+            params: { id: product?.id },
+            body: { data: rest, images: images },
+          })
+          .then((res) =>
+            res?.status === false
+              ? toaster({ type: "success", message: res.message })
+              : toaster({
+                type: "success",
+                message: "Product successfully Updated",
+              }),
+
+          )
         : terminal
-            .request({
-              name: "registerProduct",
-              body: { data: rest, images: images },
-            })
-            .then((res) =>
-              res?.status === false
-                ? toaster({ type: "success", message: res.message })
-                : (toaster({
-                    type: "success",
-                    message: "Product successfully added",
-                  }),
-                  navigate(-1))
-            );
+          .request({
+            name: "registerProduct",
+            body: { data: rest, images: images },
+          })
+          .then((res) =>
+            res?.status === false
+              ? toaster({ type: "success", message: res.message })
+              : toaster({
+                type: "success",
+                message: "Product successfully added",
+              }),
+
+          );
     },
   });
 
@@ -222,7 +222,7 @@ const NewProduct = () => {
                 value={productForm.values.description}
                 error={
                   productForm.touched.description &&
-                  productForm.errors.description
+                    productForm.errors.description
                     ? productForm.errors.description
                     : null
                 }
@@ -370,7 +370,7 @@ const NewProduct = () => {
                   blur={productForm.handleBlur}
                   value={productForm.values.quantity}
                   error={
-                    productForm.touched.quantity && productForm.errors.quantity 
+                    productForm.touched.quantity && productForm.errors.quantity
                       ? productForm.errors.quantity
                       : null
                   }

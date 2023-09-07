@@ -98,7 +98,7 @@ const NewDiscount = () => {
                   type: "success",
                   message: "New Coupon Successfully Generated",
                 }),
-          navigate(-1)
+          
         );
       discountForm.resetForm();
     },
