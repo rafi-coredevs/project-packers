@@ -131,9 +131,10 @@ const SideCard = ({
 						className='text-emerald-500'
 						onClick={(e) => {
 							e.preventDefault();
+							setIsEdit(!isEdit)
 						}}
 					>
-						Edit
+						{isEdit ? "Save" :"Edit"}
 					</button>
 				) : (
 					''
@@ -149,7 +150,7 @@ const SideCard = ({
 							onChange={formikProps.handleChange}
 							onBlur={formikProps.handleBlur}
 							value={formikProps.values.address}
-							className='border border-gray-400 outline-none rounded w-full py-1 px-3'
+							className='border border-gray-300 outline-none rounded w-full py-1 px-3'
 						/>
 						<input
 							type='text'
@@ -158,7 +159,7 @@ const SideCard = ({
 							onChange={formikProps.handleChange}
 							onBlur={formikProps.handleBlur}
 							value={formikProps.values.city}
-							className='border border-gray-400 outline-none rounded w-full py-1 px-3'
+							className='border border-gray-300 outline-none rounded w-full py-1 px-3'
 						/>
 						<input
 							type='text'
@@ -167,7 +168,7 @@ const SideCard = ({
 							onChange={formikProps.handleChange}
 							onBlur={formikProps.handleBlur}
 							value={formikProps.values.area}
-							className='border border-gray-400 outline-none rounded w-full py-1 px-3'
+							className='border border-gray-300 outline-none rounded w-full py-1 px-3'
 						/>
 						<input
 							type='text'
@@ -176,7 +177,7 @@ const SideCard = ({
 							onChange={formikProps.handleChange}
 							onBlur={formikProps.handleBlur}
 							value={formikProps.values.zip}
-							className='border border-gray-400 outline-none rounded w-full py-1 px-3'
+							className='border border-gray-300 outline-none rounded w-full py-1 px-3'
 						/>
 					</div>
 				) : (

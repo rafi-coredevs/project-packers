@@ -121,7 +121,8 @@ const AddOrder = () => {
                     toaster({ type: 'error', message: res.message });
                 } else {
                     toaster({ type: 'success', message: res.message });
-                    navigate(-1);
+                    shippingForm.resetForm();
+                    billingForm.resetForm();
                 }
             })
             .catch((err) => console.error('order update error', err));
@@ -223,7 +224,7 @@ const AddOrder = () => {
                 </div>
             </Heading>
             <div className='grid grid-cols-3 gap-5'>
-                <div className='col-span-3 sm:col-span-2 grid gap-5'>
+                <div className='col-span-3 sm:col-span-2 grid gap-5 h-fit'>
                     {/* product or requests details */}
                     <div className='grid gap-5 p-5 border rounded-lg'>
                         {/*search title */}
@@ -363,6 +364,7 @@ const AddOrder = () => {
                                             }}
                                             name="inSideDhaka"
                                             className="accent-orange-600"
+                                            
                                         />
                                         <label
                                             htmlFor="shippingDhaka"
@@ -460,8 +462,8 @@ const AddOrder = () => {
                                 <table className='bg-white shadow-md absolute top-[44px] left-0 w-full'>
                                     {
                                         !user?.id && customers?.length > 0 &&
-                                        customers.map(user =>
-                                            <tr onClick={() => setUser(user)} className='hover:bg-primary hover:cursor-pointer'>
+                                        customers.map(user, index =>
+                                            <tr key={index} onClick={() => setUser(user)} className='hover:bg-primary hover:cursor-pointer'>
                                                 <td className='p-2 border-b border-slate-200'>
                                                     {user.fullName}
                                                 </td>
