@@ -12,14 +12,14 @@ import remove from '../../assets/icons/cd-cancel.svg';
 import toaster from '../../Util/toaster';
 import CustomSelect from '../../Components/UiElements/Input/CustomSelect';
 import removeEmptyFields from '../../Util/removeEmptyFields';
-
+import errorImg from '../../assets/noImages.svg'
 const OrderDetails = () => {
 	useTitle('Order Details');
 	const { orderId } = useParams();
 	const [order, setOrder] = useState(null);
 	const navigate = useNavigate();
 	const [selectedOrderStatus, setSelectedOrderStatus] = useState({});
-
+	
 	// formik initailization
 	const odrerForm = useFormik({
 		initialValues: {
@@ -65,6 +65,7 @@ const OrderDetails = () => {
 		terminal
 			.request({ name: 'singleOrder', params: { id: orderId } })
 			.then((res) => {
+				console.log(res)
 				if (res.status === false) {
 					toaster({ type: 'error', message: res.message });
 				} else {
@@ -156,7 +157,7 @@ const OrderDetails = () => {
 
 	return (
 		<div className='px-5 h-full'>
-			<Heading type='navigate' title={`#${orderId}`} back={'All Order'}>
+			<Heading type='navigate' title={`#${order?.orderNumber}`} back={'All Order'}>
 				<div className='flex items-center gap-1'>
 					<Button>Download Invoice</Button>
 					<Button style='delete' onClick={deleteHandler}>
@@ -257,6 +258,8 @@ const OrderDetails = () => {
 																			'/' +
 																			product?.product?.images[0]
 																		}
+																		onLoad={handleLoading}
+																		onError={handleError}
 																		alt=''
 																	/>
 																	<div className=''>
@@ -322,6 +325,7 @@ const OrderDetails = () => {
 																			'/' +
 																			request?.request?.images[0]
 																		}
+																		
 																		alt=''
 																	/>
 																	<div className=''>
@@ -493,6 +497,7 @@ const OrderDetails = () => {
 						<SideCard
 							types='customer'
 							customerName={order?.user?.fullName || 'No Name'}
+							editable={false}
 						/>
 
 						{/* customer information */}
@@ -506,7 +511,7 @@ const OrderDetails = () => {
 						<SideCard
 							types='shipping'
 							title='Shipping Address'
-							editable={true}
+							editable={false}
 							formikProps={odrerForm}
 							address={
 								order?.shippingaddress?.address +
@@ -523,7 +528,7 @@ const OrderDetails = () => {
 							types='billing'
 							title='Billing Address'
 							formikProps={odrerForm}
-							editable={true}
+							editable={false}
 							address={
 								order?.shippingaddress?.address +
 								', ' +
