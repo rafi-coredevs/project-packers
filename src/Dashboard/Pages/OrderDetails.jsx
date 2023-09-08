@@ -4,7 +4,7 @@
  * @returns JSX Element
  */
 const DUMMY_DATA = {
-	invoiceId: 1234,
+
 	orderId: 1234,
 	name: 'Jhon Doe',
 	email: "example@domain.com",
@@ -22,6 +22,21 @@ const DUMMY_DATA = {
 		price: 369,
 	},
 	{
+		title: 'Iphone 12 ',
+		quantity: 1,
+		price: 369,
+	},
+	{
+		title: 'Iphone 12 ',
+		quantity: 1,
+		price: 369,
+	},
+	{
+		title: 'Iphone 12 ',
+		quantity: 1,
+		price: 369,
+	},
+	{
 		title: 'samsung s20 Ultra samsung s20 Ultra samsung s20 Ultra',
 		quantity: 2,
 		price: 499,
@@ -31,7 +46,6 @@ const DUMMY_DATA = {
 	notes: 'Please pack carefully. its a Glass product'
 }
 import { useEffect, useRef, useState } from 'react';
-import { RednerToString, renderToString } from 'react-dom/server'
 import { useParams } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { useTitle } from '../../Components/Hooks/useTitle';
@@ -45,23 +59,31 @@ import toaster from '../../Util/toaster';
 import CustomSelect from '../../Components/UiElements/Input/CustomSelect';
 import removeEmptyFields from '../../Util/removeEmptyFields';
 import Invoice from '../Components/Invoice/Invoice';
-import { Margin, Resolution, usePDF } from 'react-to-pdf';
+
 const OrderDetails = () => {
 	useTitle('Order Details');
 	const { orderId } = useParams();
 	const [order, setOrder] = useState(null);
 	const [selectedOrderStatus, setSelectedOrderStatus] = useState({});
-	const pdfMaker = useRef()
-	const { toPDF, targetRef } = usePDF({
-		method: "save",
-		filename: "usepdf-example.pdf",
-		resolution: Resolution.HIGH,
-		page: {
-			margin: Margin.MEDIUM,
-			format: 'A4'
-		}
-	});
+	const [invoiceData, setInvoiceData] = useState({})
 
+	useEffect(()=>{
+		console.log(order)
+		const data = {
+			orderId: order?.orderNumber,
+			name: order?.user?.fullName,
+			email: order?.user?.email,
+			phone: order?.user?.phone,
+			address: `${order?.shippingaddress?.address}, ${order?.shippingaddress?.area}, ${order?.shippingaddress?.city}` ,	
+			date: new Date(),
+			products:order?.products,
+			request: order?.request,
+			notes: '',
+			total: order?.total
+		}
+		setInvoiceData(data);
+		console.log(data)
+	},[order])
 	// formik initailization
 	const odrerForm = useFormik({
 		initialValues: {
@@ -107,7 +129,6 @@ const OrderDetails = () => {
 		terminal
 			.request({ name: 'singleOrder', params: { id: orderId } })
 			.then((res) => {
-
 				if (res.status === false) {
 					toaster({ type: 'error', message: res.message });
 				} else {
@@ -199,19 +220,14 @@ const OrderDetails = () => {
 
 	const generatePdf = async () => {
 		const btn = document.getElementById('invoice')
-		console.log(btn.firstChild)
 		btn.firstChild.click();
+		
 	};
-
-	const invoiceHandler = async () => {
-		console.log('clicked')
-	}
 
 	return (
 		<div className='px-5 h-full'>
-			<Invoice data={DUMMY_DATA} />
-
-			<Heading type='navigate' title={`#${order?.orderNumber}`} back={'All Order'}>
+			<Invoice data={invoiceData} />
+			<Heading type='navigate' title={`#${order?.orderNumber || ""}`} back={'All Order'}>
 				<div className='flex items-center gap-1'>
 					<Button onClick={generatePdf}>Download Invoice</Button>
 					<Button style='delete' onClick={deleteHandler}>
@@ -300,8 +316,7 @@ const OrderDetails = () => {
 																			'/' +
 																			product?.product?.images[0]
 																		}
-																		onLoad={handleLoading}
-																		onError={handleError}
+																	
 																		alt=''
 																	/>
 																	<div className=''>
@@ -529,6 +544,7 @@ const OrderDetails = () => {
 								options={orderStatuses}
 								onChange={orderStatusHandler}
 								appearance='select'
+								sitOnTop={true}
 							/>
 						</div>
 					</div>
