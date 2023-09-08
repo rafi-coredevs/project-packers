@@ -73,7 +73,7 @@ const SupportModal = ({ show = false, onChange }) => {
           data.docs?.length > 0 && setChat(data.docs), setTotalPage(data.totalPages), setPage(data.page)
         })
         terminal.socket.on('message', (data) => {
-          console.log(data)
+         
           if (data.id) {
             setChat(prev => [data, ...prev])
             return
@@ -94,12 +94,12 @@ const SupportModal = ({ show = false, onChange }) => {
       terminal.socket.off('message')
 
     }
-    console.log(isVisible)
+   
   }, [isVisible])
 
   // Chat close
   const handleEnd = () => {
-    console.log(support)
+   
     setClosed(true);
     terminal.request({ name: 'updateSupport', params: { id: support }, body: { status: 'close', user: null } }).then(data => {
       if (data.id) {

@@ -18,7 +18,7 @@ const CustomerDetails = () => {
   const [user, setUser] = useState({});
   const [loading,setLoading]=useState(false);
   const updateHandler = () => {
-    console.log("update clicked");
+    console.log(user);
   };
   function tableButtonHandler(value) {
     setButtonType(value);
@@ -144,13 +144,13 @@ const CustomerDetails = () => {
             <SideCard
               types="custom"
               title="Address"
-              address={user?.current?.shippingAddress? (user?.current?.shippingaddress?.address +', '+ user?.current?.shippingaddress?.city +', '+ user?.current?.shippingaddress?.area +', '+ user?.current?.shippingaddress?.zip): 'Not Available'}
+              address={user?.current?.shippingaddress? (user?.current?.shippingaddress?.address +', '+ user?.current?.shippingaddress?.city +', '+ user?.current?.shippingaddress?.area +', '+ user?.current?.shippingaddress?.zip): 'Not Available'}
             />
             <SideCard
               types="custom"
               title="Total Spent"
-              //amount={`$${(244).toFixed(2)}`}
-              amount={`not found from backend`}
+              // amount={`$${(244).toFixed(2)}`}
+              // amount={`not found from backend`}
             />
           </div>
         </div>

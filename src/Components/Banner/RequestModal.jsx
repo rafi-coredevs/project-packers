@@ -80,9 +80,7 @@ const RequestModal = ({
 			}
 		},
 	});
-	useEffect(()=>{
-		console.log(itemRequestForm.errors)
-	},[itemRequestForm.errors])
+
 	return (
 		<form action='' onSubmit={itemRequestForm.handleSubmit}>
 			<div className='flex flex-col gap-5'>

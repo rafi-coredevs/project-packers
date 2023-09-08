@@ -3,6 +3,33 @@
  * order details page
  * @returns JSX Element
  */
+const DUMMY_DATA = {
+	invoiceId: 1234,
+	orderId: 1234,
+	name: 'Jhon Doe',
+	email: "example@domain.com",
+	phone: +8801743986617,
+	address: '101 E. Chapman Ave Orange, CA 92866',
+	date: new Date(),
+	products: [{
+		title: 'Iphone 12 pro',
+		quantity: 12,
+		price: 599,
+	},
+	{
+		title: 'Iphone 12 ',
+		quantity: 1,
+		price: 369,
+	},
+	{
+		title: 'samsung s20 Ultra samsung s20 Ultra samsung s20 Ultra',
+		quantity: 2,
+		price: 499,
+	}],
+	total: 12000,
+	paid: 7590,
+	notes: 'Please pack carefully. its a Glass product'
+}
 import { useEffect, useRef, useState } from 'react';
 import { RednerToString, renderToString } from 'react-dom/server'
 import { useParams } from 'react-router-dom';
@@ -17,14 +44,24 @@ import remove from '../../assets/icons/cd-cancel.svg';
 import toaster from '../../Util/toaster';
 import CustomSelect from '../../Components/UiElements/Input/CustomSelect';
 import removeEmptyFields from '../../Util/removeEmptyFields';
-import jsPDF from 'jspdf';
 import Invoice from '../Components/Invoice/Invoice';
+import { Margin, Resolution, usePDF } from 'react-to-pdf';
 const OrderDetails = () => {
 	useTitle('Order Details');
 	const { orderId } = useParams();
 	const [order, setOrder] = useState(null);
 	const [selectedOrderStatus, setSelectedOrderStatus] = useState({});
 	const pdfMaker = useRef()
+	const { toPDF, targetRef } = usePDF({
+		method: "save",
+		filename: "usepdf-example.pdf",
+		resolution: Resolution.HIGH,
+		page: {
+			margin: Margin.MEDIUM,
+			format: 'A4'
+		}
+	});
+
 	// formik initailization
 	const odrerForm = useFormik({
 		initialValues: {
@@ -160,35 +197,23 @@ const OrderDetails = () => {
 			.catch((err) => console.error('order delete error', err));
 	};
 
+	const generatePdf = async () => {
+		const btn = document.getElementById('invoice')
+		console.log(btn.firstChild)
+		btn.firstChild.click();
+	};
+
 	const invoiceHandler = async () => {
-		const doc = new jsPDF();
-
-		// Adding the fonts
-		//   doc.setFont("Inter-Regular", "normal");
-
-		doc.html(pdfMaker.current, {
-			async callback(doc) {
-				await doc.save("invoice.pdf");
-			}
-		});
+		console.log('clicked')
 	}
 
-	const dload = () => {
-		const string = renderToString(<Invoice />);
-		const pdf = new jsPDF('p', 'mm', 'a4');
-		pdf.addPage(string)
-		pdf.save('invoice')
-
-	}
 	return (
 		<div className='px-5 h-full'>
-			{/* test */}
-			{/* <div ref={pdfMaker}>
-				<Invoice />
-			</div> */}
+			<Invoice data={DUMMY_DATA} />
+
 			<Heading type='navigate' title={`#${order?.orderNumber}`} back={'All Order'}>
 				<div className='flex items-center gap-1'>
-					<Button onClick={dload}>Download Invoice</Button>
+					<Button onClick={generatePdf}>Download Invoice</Button>
 					<Button style='delete' onClick={deleteHandler}>
 						Delete
 					</Button>
