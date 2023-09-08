@@ -85,10 +85,14 @@ const Header = ({ sideBar, state }) => {
 	};
 
 	// Fetch notifications for the logged-in user
+	const currentDate = new Date();
+	const sevenDaysAgoTimestamp = currentDate.getTime() - 7 * 24 * 60 * 60 * 1000;
+	const sevenDaysAgoDate = new Date(sevenDaysAgoTimestamp);
+	const sevenDaysAgoISO = sevenDaysAgoDate.toISOString();
 	useEffect(() => {
 		user?.id &&
 			terminal
-				.request({ name: 'getNotification' })
+				.request({ name: 'getNotification',  queries: { limit: 100, time: { $gte: sevenDaysAgoISO } }})
 				.then((data) => data.docs && setNotifications(data.docs));
 	}, [user]);
 

@@ -124,3 +124,15 @@ export const discountSchema = object({
 	subCategory: string().required(),
 	tags: string().required()
 })
+
+export const itemRequestSchema = object({
+	name: string().required("Name should not be empty"),
+	link:string(),
+	quantity: number(),
+	note: string(),
+
+})
+
+export const itemRequest2 = object({
+	link: string().required('Please provide link')
+})

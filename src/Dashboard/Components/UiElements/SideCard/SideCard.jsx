@@ -36,6 +36,7 @@ const SideCard = ({
 }) => {
 	const [isEdit, setIsEdit] = useState(false);
 
+ 	
 	// for customer information
 	const renderCustomerCard = () => (
 		<div className='grid p-5'>
@@ -127,15 +128,18 @@ const SideCard = ({
 				{cross === false ? (
 					<></>
 				) : editable ? (
+					<div className="flex gap-2">
+						{types === 'billing' && isEdit ? <button onClick={onClick} className='text-emerald-500' type="button">As Shipping</button> : null}
 					<button
 						className='text-emerald-500'
 						onClick={(e) => {
 							e.preventDefault();
 							setIsEdit(!isEdit)
 						}}
-					>
+						>
 						{isEdit ? "Save" :"Edit"}
 					</button>
+						</div>
 				) : (
 					''
 				)}

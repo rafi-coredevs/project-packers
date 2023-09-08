@@ -91,7 +91,7 @@ const DateRangeSelector = ({ type, label, onSubmit, style, error }) => {
       <button
         onClick={() => setVisible(!isVisible)}
         type="button"
-        className="flex gap-2 items-center rounded-md border border-slate-300 px-2 py-[0.4rem]"
+        className="flex gap-2 items-center rounded-md border border-slate-300 px-2 pt-[0.4rem]"
       >
         <img src={calendar} alt="" />
         <span className="">{formatMonthYear(selectedDateRange.startDate)}</span>
@@ -109,16 +109,16 @@ const DateRangeSelector = ({ type, label, onSubmit, style, error }) => {
             rangeColors={['#F2C852']}
             direction="horizontal"
           />
-          <div className=" flex items-center justify-around">
+          <div className=" flex items-center divide-x border-t border-[#ededed] justify-around ">
             <button
               onClick={cancelHandler}
-              className="px-4 py-2 mb-2 text-red-700 hover:bg-primary rounded"
+              className="px-4 py-2  text-red-700 hover:bg-red-700 hover:text-white w-full"
             >
               Cancel
             </button>
             <button
               onClick={submitHandler}
-              className="px-4 py-2 mb-2 text-secondary hover:bg-primary rounded"
+              className="px-4 py-2  text-secondary hover:bg-secondary hover:text-white  w-full"
             >
               Ok
             </button>

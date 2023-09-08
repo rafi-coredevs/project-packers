@@ -10,10 +10,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@react-pdf/renderer": "^3.1.12",
     "apexcharts": "^3.41.1",
     "axios": "^1.4.0",
     "date-fns": "^2.30.0",
     "formik": "^2.4.2",
+    "jspdf": "^2.5.1",
     "react": "^18.2.0",
     "react-apexcharts": "^1.4.1",
     "react-date-range": "^1.4.0",

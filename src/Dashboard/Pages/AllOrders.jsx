@@ -15,7 +15,7 @@ import CustomSelect from "../../Components/UiElements/Input/CustomSelect";
 import DateRangeSelector from "../Components/UiElements/DateSelector/DateRangesSelector";
 import { Link } from "react-router-dom";
 
-const orderStatuses = [
+const orderStatuse = [
   { id: 1, name: "All", value: "all" },
   { id: 2, name: "Paid", value: "paid" },
   { id: 3, name: "Refunded", value: "refunded" },
@@ -93,7 +93,7 @@ const AllOrders = () => {
               total: res?.completedOrder,
             },
             {
-              title: "Canceled",
+              title: "Cancelled",
               total: res?.cancelledOrder,
             },
           ]
@@ -293,7 +293,7 @@ const AllOrders = () => {
                 <div className="flex ">
                   <CustomSelect
                     value={selectedOrderStatus.name}
-                    options={orderStatuses}
+                    options={orderStatuse}
                     onChange={orderStatusHandler}
                     bg="white"
                     appearance="filter"

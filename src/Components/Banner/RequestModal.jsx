@@ -9,6 +9,7 @@ import removeEmptyFields from './../../Util/removeEmptyFields';
 import { useUserCtx } from '../../contexts/user/UserContext';
 import { terminal } from '../../contexts/terminal/Terminal';
 import { useNavigate } from 'react-router-dom';
+import { itemRequestSchema } from '../../Util/ValidationSchema';
 
 /**
  * React component for a modal used for requesting an item.
@@ -42,6 +43,7 @@ const RequestModal = ({
 			note: '',
 			images: [],
 		},
+		validationSchema:itemRequestSchema,
 		onSubmit: (values) => {
 			const { images, ...rest } = values;
 			removeEmptyFields(rest); // removing empty fields
@@ -156,6 +158,7 @@ const RequestModal = ({
 								value={itemRequestForm.values.name}
 								placeholder='Product Name'
 								border
+								error={itemRequestForm.touched.name && itemRequestForm.errors.name ? itemRequestForm.errors.name : null }
 							/>
 						</div>
 					</>

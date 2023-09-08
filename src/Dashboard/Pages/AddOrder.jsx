@@ -77,6 +77,9 @@ const AddOrder = () => {
         }
     }, [order, discount, inside]);
 
+    useEffect(()=>{
+        user.shippingaddress ? shippingForm.setValues({...user.shippingaddress}) : null
+    },[user])
     /**
      * Handles updating the order details.
      */
@@ -214,6 +217,10 @@ const AddOrder = () => {
         });
     }, []);
 
+    // Copying billing address to shipping address
+    const shippingHandler = () =>{
+        billingForm.setValues({...shippingForm.values})
+	}
     return (
         <div className='px-5 h-full'>
             <Heading type='navigate' title={`Add Order`} back={'All Order'}>
@@ -462,7 +469,7 @@ const AddOrder = () => {
                                 <table className='bg-white shadow-md absolute top-[44px] left-0 w-full'>
                                     {
                                         !user?.id && customers?.length > 0 &&
-                                        customers.map(user, index =>
+                                        customers.map((user, index) =>
                                             <tr key={index} onClick={() => setUser(user)} className='hover:bg-primary hover:cursor-pointer'>
                                                 <td className='p-2 border-b border-slate-200'>
                                                     {user.fullName}
@@ -474,7 +481,7 @@ const AddOrder = () => {
                                     }
                                 </table>
                             </div>
-                            {user.fullName && <div className='flex justify-between items-center w-full'><p className='underline text-emerald-500'>{user.fullName}</p> <img src={remove} className='cursor-pointer' onClick={() => { setUser({}); setCustomers([]) }} alt="" /></div>}
+                            {user.fullName && <div className='flex justify-between items-center w-full'><p className='underline text-emerald-500'>{user.fullName}</p> <img src={remove} className='cursor-pointer' onClick={() => { setUser({}); setCustomers([]); shippingForm.resetForm(); billingForm.resetForm() }} alt="" /></div>}
                         </div>
                         {/* customer information */}
                         <SideCard
@@ -505,6 +512,7 @@ const AddOrder = () => {
                             types='billing'
                             title='Billing Address'
                             formikProps={billingForm}
+                            onClick={shippingHandler}
                             editable={true}
                             address={
                                 billingForm?.values?.address +

@@ -40,6 +40,7 @@ import ComingSoon from "../pages/ComingSoon";
 import ErrorPage from "../pages/ErrorPage";
 import UserOrderDetails from "../pages/UserOrderDetails";
 import AddOrder from "../Dashboard/Pages/AddOrder";
+import Invoice from "../Dashboard/Components/Invoice/Invoice";
 
 export const router = createBrowserRouter([
   {
@@ -120,6 +121,10 @@ export const router = createBrowserRouter([
       {
         path: "/support",
         element: <Support />,
+      },
+      {
+        path: "/invoice",
+        element: <Invoice />,
       },
     ],
   },
