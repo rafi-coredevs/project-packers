@@ -36,6 +36,7 @@ const SideCard = ({
 }) => {
 	const [isEdit, setIsEdit] = useState(false);
 
+ 	
 	// for customer information
 	const renderCustomerCard = () => (
 		<div className='grid p-5'>
@@ -127,14 +128,18 @@ const SideCard = ({
 				{cross === false ? (
 					<></>
 				) : editable ? (
+					<div className="flex gap-2">
+						{types === 'billing' && isEdit ? <button onClick={onClick} className='text-emerald-500' type="button">As Shipping</button> : null}
 					<button
 						className='text-emerald-500'
 						onClick={(e) => {
 							e.preventDefault();
+							setIsEdit(!isEdit)
 						}}
-					>
-						Edit
+						>
+						{isEdit ? "Save" :"Edit"}
 					</button>
+						</div>
 				) : (
 					''
 				)}
@@ -149,7 +154,7 @@ const SideCard = ({
 							onChange={formikProps.handleChange}
 							onBlur={formikProps.handleBlur}
 							value={formikProps.values.address}
-							className='border border-gray-400 outline-none rounded w-full py-1 px-3'
+							className='border border-gray-300 outline-none rounded w-full py-1 px-3'
 						/>
 						<input
 							type='text'
@@ -158,7 +163,7 @@ const SideCard = ({
 							onChange={formikProps.handleChange}
 							onBlur={formikProps.handleBlur}
 							value={formikProps.values.city}
-							className='border border-gray-400 outline-none rounded w-full py-1 px-3'
+							className='border border-gray-300 outline-none rounded w-full py-1 px-3'
 						/>
 						<input
 							type='text'
@@ -167,7 +172,7 @@ const SideCard = ({
 							onChange={formikProps.handleChange}
 							onBlur={formikProps.handleBlur}
 							value={formikProps.values.area}
-							className='border border-gray-400 outline-none rounded w-full py-1 px-3'
+							className='border border-gray-300 outline-none rounded w-full py-1 px-3'
 						/>
 						<input
 							type='text'
@@ -176,7 +181,7 @@ const SideCard = ({
 							onChange={formikProps.handleChange}
 							onBlur={formikProps.handleBlur}
 							value={formikProps.values.zip}
-							className='border border-gray-400 outline-none rounded w-full py-1 px-3'
+							className='border border-gray-300 outline-none rounded w-full py-1 px-3'
 						/>
 					</div>
 				) : (

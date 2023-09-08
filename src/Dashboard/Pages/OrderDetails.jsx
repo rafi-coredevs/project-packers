@@ -1,5 +1,11 @@
-import { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+/**
+ * OrderDetails()
+ * order details page
+ * @returns JSX Element
+ */
+import { useEffect, useRef, useState } from 'react';
+import { RednerToString, renderToString } from 'react-dom/server'
+import { useParams } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { useTitle } from '../../Components/Hooks/useTitle';
 import { terminal } from '../../contexts/terminal/Terminal';
@@ -7,19 +13,18 @@ import Button from '../Components/UiElements/Button/Button';
 import Heading from '../Components/UiElements/Heading/Heading';
 import SideCard from '../Components/UiElements/SideCard/SideCard';
 import Input from '../Components/UiElements/Input/Input';
-import search from '../../assets/icons/cd-search2.svg';
 import remove from '../../assets/icons/cd-cancel.svg';
 import toaster from '../../Util/toaster';
 import CustomSelect from '../../Components/UiElements/Input/CustomSelect';
 import removeEmptyFields from '../../Util/removeEmptyFields';
-
+import jsPDF from 'jspdf';
+import Invoice from '../Components/Invoice/Invoice';
 const OrderDetails = () => {
 	useTitle('Order Details');
 	const { orderId } = useParams();
 	const [order, setOrder] = useState(null);
-	const navigate = useNavigate();
 	const [selectedOrderStatus, setSelectedOrderStatus] = useState({});
-
+	const pdfMaker = useRef()
 	// formik initailization
 	const odrerForm = useFormik({
 		initialValues: {
@@ -65,6 +70,7 @@ const OrderDetails = () => {
 		terminal
 			.request({ name: 'singleOrder', params: { id: orderId } })
 			.then((res) => {
+
 				if (res.status === false) {
 					toaster({ type: 'error', message: res.message });
 				} else {
@@ -128,7 +134,7 @@ const OrderDetails = () => {
 					toaster({ type: 'error', message: res.message });
 				} else {
 					toaster({ type: 'success', message: 'successfully updated' });
-					navigate(-1);
+
 				}
 			})
 			.catch((err) => console.error('order update error', err));
@@ -145,20 +151,44 @@ const OrderDetails = () => {
 			.then((res) =>
 				res?.status === false
 					? toaster({ type: 'success', message: res.message })
-					: (toaster({
+					: toaster({
 						type: 'success',
 						message: 'deleted successfully',
 					}),
-						navigate(-1)),
+
 			)
 			.catch((err) => console.error('order delete error', err));
 	};
 
+	const invoiceHandler = async () => {
+		const doc = new jsPDF();
+
+		// Adding the fonts
+		//   doc.setFont("Inter-Regular", "normal");
+
+		doc.html(pdfMaker.current, {
+			async callback(doc) {
+				await doc.save("invoice.pdf");
+			}
+		});
+	}
+
+	const dload = () => {
+		const string = renderToString(<Invoice />);
+		const pdf = new jsPDF('p', 'mm', 'a4');
+		pdf.addPage(string)
+		pdf.save('invoice')
+
+	}
 	return (
 		<div className='px-5 h-full'>
-			<Heading type='navigate' title={`#${orderId}`} back={'All Order'}>
+			{/* test */}
+			{/* <div ref={pdfMaker}>
+				<Invoice />
+			</div> */}
+			<Heading type='navigate' title={`#${order?.orderNumber}`} back={'All Order'}>
 				<div className='flex items-center gap-1'>
-					<Button>Download Invoice</Button>
+					<Button onClick={dload}>Download Invoice</Button>
 					<Button style='delete' onClick={deleteHandler}>
 						Delete
 					</Button>
@@ -174,22 +204,10 @@ const OrderDetails = () => {
 						{/*search title */}
 						<div className='flex justify-between'>
 							<h3 className='text-base font-semibold'>Products</h3>
-							<button className='text-emerald-500'>Add custom item</button>
+
 						</div>
 
-						{/* search */}
-						<div className='flex gap-2 items-center'>
-							<div className='w-full'>
-								<Input
-									styles='secondary'
-									type='text'
-									placeholder='Search Products'
-								>
-									<img className='opacity-70' src={search} />
-								</Input>
-							</div>
-							<Button style='outline'>Browse</Button>
-						</div>
+
 
 						{/* product table */}
 						<div className='grid gap-3 relative overflow-x-auto'>
@@ -257,6 +275,8 @@ const OrderDetails = () => {
 																			'/' +
 																			product?.product?.images[0]
 																		}
+																		onLoad={handleLoading}
+																		onError={handleError}
 																		alt=''
 																	/>
 																	<div className=''>
@@ -322,6 +342,7 @@ const OrderDetails = () => {
 																			'/' +
 																			request?.request?.images[0]
 																		}
+
 																		alt=''
 																	/>
 																	<div className=''>
@@ -395,7 +416,7 @@ const OrderDetails = () => {
 												accumulator +
 												request?.requestQuantity * request?.request?.price,
 											0,
-										)}
+										) || 0}
 								</p>
 							</div>
 
@@ -406,10 +427,10 @@ const OrderDetails = () => {
 								</button>
 								<p className=''>
 									৳
-									{order?.discountApplied?.amount ||
+									{(order?.discountApplied?.amount ||
 										order?.discountApplied?.percentage
 										? order?.discountApplied?.percentage + ' %'
-										: 0}
+										: 0) || 0}
 								</p>
 							</div>
 
@@ -419,7 +440,7 @@ const OrderDetails = () => {
 									Shipping
 								</button>
 								<p className=''>{''}</p>
-								<p className=''>৳{order?.insideDhaka ? 99 : 199}</p>
+								<p className=''>৳{(order?.insideDhaka ? 99 : 199) || 0}</p>
 							</div>
 
 							{/* packers fee */}
@@ -440,7 +461,7 @@ const OrderDetails = () => {
 												accumulator +
 												request?.requestQuantity * request?.request?.fee,
 											0,
-										)}
+										) || 0}
 								</p>
 							</div>
 
@@ -462,14 +483,14 @@ const OrderDetails = () => {
 												accumulator +
 												request?.requestQuantity * request?.request?.tax,
 											0,
-										)}
+										) || 0}
 								</p>
 							</div>
 
 							{/* total */}
 							<div className='flex justify-between items-center'>
 								<p className='text-base font-semibold'>Total</p>
-								<p className='text-lg font-semibold'>৳ {order?.total}</p>
+								<p className='text-lg font-semibold'>৳ {order?.total || 0}</p>
 							</div>
 						</div>
 
@@ -493,6 +514,7 @@ const OrderDetails = () => {
 						<SideCard
 							types='customer'
 							customerName={order?.user?.fullName || 'No Name'}
+							editable={false}
 						/>
 
 						{/* customer information */}
@@ -506,7 +528,7 @@ const OrderDetails = () => {
 						<SideCard
 							types='shipping'
 							title='Shipping Address'
-							editable={true}
+							editable={false}
 							formikProps={odrerForm}
 							address={
 								order?.shippingaddress?.address +
@@ -523,7 +545,7 @@ const OrderDetails = () => {
 							types='billing'
 							title='Billing Address'
 							formikProps={odrerForm}
-							editable={true}
+							editable={false}
 							address={
 								order?.shippingaddress?.address +
 								', ' +
@@ -535,7 +557,7 @@ const OrderDetails = () => {
 							}
 						/>
 					</div>
-					<div className=' border border-[#0000001c] divide-y  rounded-lg '> 	
+					<div className=' border border-[#0000001c] divide-y  rounded-lg '>
 						<SideCard
 							types='note'
 							message={order?.instructions || 'Not Available'}

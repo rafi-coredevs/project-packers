@@ -25,8 +25,9 @@ const Dropdown = ({ isOpen, onClick, type, title, data, logout }) => {
 	}, [onClick]);
 
 	const clickHandler = (v) => {
-		type === 'notification' ? navidate('/notification') : navidate('/cart');
+		v === 'cart' && navidate('/cart') 
 		onClick(false);
+		
 	};
 
 	if (type === 'notification') {
@@ -47,9 +48,9 @@ const Dropdown = ({ isOpen, onClick, type, title, data, logout }) => {
 								data.map((item, i) => {
 									return (
 										<div
-											onClick={() => clickHandler(item.id)}
+											onClick={() => clickHandler(item?.type)}
 											key={i}
-											className='cursor-pointer flex gap-3 py-2 border-t border-[#0000001A]'
+											className='cursor-pointer flex gap-3 py-2 ps-1 border-t border-[#0000001A] hover:bg-[#A2EEE7]  rounded'
 										>
 											<div className='h-12 w-12'>
 												{item.type === 'account' ? (

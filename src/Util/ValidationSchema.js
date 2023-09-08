@@ -61,18 +61,10 @@ export const subCategorySchema = object({
 export const productSchema = object({
 	name: string().required(),
 	description: string().required(),
-	price: string()
-		.matches(/^\d+(\.\d+)?$/, 'Not valid')
-		.required(),
-	tax: string()
-		.matches(/^\d+(\.\d+)?$/, 'Not valid')
-		.required(),
-	fee: string()
-		.matches(/^\d+(\.\d+)?$/, 'Not valid')
-		.required(),
-	quantity: string()
-		.matches(/^-?\d+$/, 'Not valid')
-		.required(),
+	price: number().positive().required(),
+	tax: number().positive().required(),
+	fee: number().positive().required(),
+	quantity: number().positive().required(),
 	origin: string().required(),
 	link: string().required(),
 	tags: string().required(),
@@ -101,9 +93,9 @@ export const requestItems = object({
 	phone:'',
 	link: string().required(),
 	note: string(),
-	price: number().required(),
-	tax: number().required(),
-	fee: number().required(),
+	price: number().positive().required(),
+	tax: number().positive().required(),
+	fee: number().positive().required(),
 	shippingaddress:string(),
 	billingaddress: string(),
 })
@@ -125,10 +117,22 @@ export const customerSchema = object({
 export const discountSchema = object({
 	coupon: string().min(6).required(),
 	type: string().required(),
-	amount: number().required(),
-	limit: number().required(),
+	amount: number().positive().required(),
+	limit: number().positive().required(),
 	expiry: string().required(),
 	category: string().required(),
 	subCategory: string().required(),
 	tags: string().required()
+})
+
+export const itemRequestSchema = object({
+	name: string().required("Name should not be empty"),
+	link:string(),
+	quantity: number(),
+	note: string(),
+
+})
+
+export const itemRequest2 = object({
+	link: string().required('Please provide link')
 })

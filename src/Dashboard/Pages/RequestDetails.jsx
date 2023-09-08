@@ -19,7 +19,9 @@ const RequestDetails = () => {
   const [preLoadedImages, setPreLoadedImages] = useState([]);
   const [disable, setDisable] = useState(false);
   const [inputDisable, setInputDisable] = useState(true);
-  const [isLoading, setIsloading] = useState(false)
+  const [isLoading, setIsloading] = useState(false);
+  const [status, setStatus] = useState(null);
+  const [requestNumber, setRequestNumber] = useState('')
   const navigate = useNavigate();
 
 	// formik initialization
@@ -74,6 +76,8 @@ const RequestDetails = () => {
       .then((res) => {
         console.log(res);
         setPreLoadedImages(res.images);
+        setStatus(res?.status)
+        setRequestNumber(res?.requestNumber)
         requestForm.setValues({
           name: res.name,
           email: res.user?.email,
@@ -154,7 +158,7 @@ const RequestDetails = () => {
 
   return (
     <div onSubmit={requestForm.handleSubmit} className="h-full px-5">
-      <Heading type="navigate" title={`#${requestId}`} back={"Request"}>
+      <Heading type="navigate" title={`#${requestNumber}`} back={"Request"}>
         <div className="flex items-center gap-1">
           <Button style="delete" onClick={(e) => deleteHandler(e)}>
             Delete
@@ -240,7 +244,7 @@ const RequestDetails = () => {
                     <span className="text-[#3E949A] underline">browser</span>
                     <br />
                     <span className="text-slate-600 text-center text-xs">
-                      Supports JPG, PNG
+                      Supports JPG, PNG, JPEG
                     </span>
                   </>
                 }
@@ -381,7 +385,7 @@ const RequestDetails = () => {
                 >
                   Cancel
                 </Button>
-                <Button disabled={disable} type="submit" style="primary">
+                <Button disabled={disable || ['cancelled', 'accepted', 'closed', 'processing','sent'].includes(status)} type="submit" style="primary">
                   Send Invoice
                 </Button>
               </div>
