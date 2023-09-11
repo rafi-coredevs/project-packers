@@ -58,7 +58,7 @@ const AllOrders = () => {
   });
 
   function orderStatusHandler(id) {
-    const selected = orderStatuses.find((item) => item.id === id);
+    const selected = orderStatuse.find((item) => item.id === id);
     setSelectedOrderStatus(selected);
     setActive(selected?.value);
   }

@@ -87,11 +87,11 @@ const DateRangeSelector = ({ type, label, onSubmit, style, error }) => {
     )
   }
   return (
-    <div className="relative bg-white">
+    <div className="relative bg-white h-full">
       <button
         onClick={() => setVisible(!isVisible)}
         type="button"
-        className="flex gap-2 items-center rounded-md border border-slate-300 px-2 pt-[0.4rem]"
+        className="flex gap-2  items-center rounded-md border border-slate-300 px-2 py-[0.411rem] h-full"
       >
         <img src={calendar} alt="" />
         <span className="">{formatMonthYear(selectedDateRange.startDate)}</span>

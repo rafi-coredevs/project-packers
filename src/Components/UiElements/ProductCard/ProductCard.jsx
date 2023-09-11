@@ -47,9 +47,7 @@ export const ProductCard = ({
 	price = Number,
 	isShop = Boolean,
 }) => {
-	// console.log(`Picture successfully ${event.currentTarget.src} loaded.`);
 	const handleLoading = (event) => {
-		// console.log(`Picture successfully ${event.currentTarget.src} loaded.`);
 	};
 	const handleError = (event) => {
 		event.currentTarget.src = errorImg;

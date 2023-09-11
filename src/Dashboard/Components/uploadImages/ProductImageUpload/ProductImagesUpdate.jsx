@@ -96,7 +96,6 @@ const ProductImageUpload = ({
     const file = e.target.files[0];
     const replacedImage = allImages[index];
     setRemoveImages((prev) => [...prev, replacedImage]);
-    // console.log(allImages[index]);
     allImages[index] = file;
   };
 

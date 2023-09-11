@@ -3,8 +3,49 @@
  * order details page
  * @returns JSX Element
  */
+const DUMMY_DATA = {
+
+	orderId: 1234,
+	name: 'Jhon Doe',
+	email: "example@domain.com",
+	phone: +8801743986617,
+	address: '101 E. Chapman Ave Orange, CA 92866',
+	date: new Date(),
+	products: [{
+		title: 'Iphone 12 pro',
+		quantity: 12,
+		price: 599,
+	},
+	{
+		title: 'Iphone 12 ',
+		quantity: 1,
+		price: 369,
+	},
+	{
+		title: 'Iphone 12 ',
+		quantity: 1,
+		price: 369,
+	},
+	{
+		title: 'Iphone 12 ',
+		quantity: 1,
+		price: 369,
+	},
+	{
+		title: 'Iphone 12 ',
+		quantity: 1,
+		price: 369,
+	},
+	{
+		title: 'samsung s20 Ultra samsung s20 Ultra samsung s20 Ultra',
+		quantity: 2,
+		price: 499,
+	}],
+	total: 12000,
+	paid: 7590,
+	notes: 'Please pack carefully. its a Glass product'
+}
 import { useEffect, useRef, useState } from 'react';
-import { RednerToString, renderToString } from 'react-dom/server'
 import { useParams } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { useTitle } from '../../Components/Hooks/useTitle';
@@ -17,14 +58,32 @@ import remove from '../../assets/icons/cd-cancel.svg';
 import toaster from '../../Util/toaster';
 import CustomSelect from '../../Components/UiElements/Input/CustomSelect';
 import removeEmptyFields from '../../Util/removeEmptyFields';
-import jsPDF from 'jspdf';
 import Invoice from '../Components/Invoice/Invoice';
+
 const OrderDetails = () => {
 	useTitle('Order Details');
 	const { orderId } = useParams();
 	const [order, setOrder] = useState(null);
 	const [selectedOrderStatus, setSelectedOrderStatus] = useState({});
-	const pdfMaker = useRef()
+	const [invoiceData, setInvoiceData] = useState({})
+
+	useEffect(()=>{
+		// console.log(order)
+		const data = {
+			orderId: order?.orderNumber,
+			name: order?.user?.fullName,
+			email: order?.user?.email,
+			phone: order?.user?.phone,
+			address: `${order?.shippingaddress?.address}, ${order?.shippingaddress?.area}, ${order?.shippingaddress?.city}` ,	
+			date: new Date(),
+			products:order?.products,
+			request: order?.request,
+			notes: '',
+			total: order?.total
+		}
+		setInvoiceData(data);
+		// console.log(data)
+	},[order])
 	// formik initailization
 	const odrerForm = useFormik({
 		initialValues: {
@@ -70,7 +129,6 @@ const OrderDetails = () => {
 		terminal
 			.request({ name: 'singleOrder', params: { id: orderId } })
 			.then((res) => {
-
 				if (res.status === false) {
 					toaster({ type: 'error', message: res.message });
 				} else {
@@ -160,35 +218,20 @@ const OrderDetails = () => {
 			.catch((err) => console.error('order delete error', err));
 	};
 
-	const invoiceHandler = async () => {
-		const doc = new jsPDF();
+	const generatePdf = async () => {
+		const btn = document.getElementById('invoice')
+		btn.firstChild.click();
+		
+	};
 
-		// Adding the fonts
-		//   doc.setFont("Inter-Regular", "normal");
-
-		doc.html(pdfMaker.current, {
-			async callback(doc) {
-				await doc.save("invoice.pdf");
-			}
-		});
-	}
-
-	const dload = () => {
-		const string = renderToString(<Invoice />);
-		const pdf = new jsPDF('p', 'mm', 'a4');
-		pdf.addPage(string)
-		pdf.save('invoice')
-
-	}
 	return (
 		<div className='px-5 h-full'>
-			{/* test */}
-			{/* <div ref={pdfMaker}>
-				<Invoice />
-			</div> */}
-			<Heading type='navigate' title={`#${order?.orderNumber}`} back={'All Order'}>
+			<div className="absolute bottom-[500rem]">  
+			<Invoice data={invoiceData} />
+			</div>
+			<Heading type='navigate' title={`#${order?.orderNumber || ""}`} back={'All Order'}>
 				<div className='flex items-center gap-1'>
-					<Button onClick={dload}>Download Invoice</Button>
+					<Button onClick={generatePdf}>Download Invoice</Button>
 					<Button style='delete' onClick={deleteHandler}>
 						Delete
 					</Button>
@@ -275,8 +318,7 @@ const OrderDetails = () => {
 																			'/' +
 																			product?.product?.images[0]
 																		}
-																		onLoad={handleLoading}
-																		onError={handleError}
+																	
 																		alt=''
 																	/>
 																	<div className=''>
@@ -504,6 +546,7 @@ const OrderDetails = () => {
 								options={orderStatuses}
 								onChange={orderStatusHandler}
 								appearance='select'
+								sitOnTop={true}
 							/>
 						</div>
 					</div>
