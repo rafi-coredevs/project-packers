@@ -14,7 +14,7 @@ const Invoice = ({ data }) => {
     const { name, email, phone, address, date, orderId, products, request, total, paid, notes } = data;
     const [tax, setTax] = useState(0);
     const [fee, setFee] = useState(0);
-
+ let subTotal = 0;
     useEffect(() => {
         const initial = 0;
         const initial2 = 0;
@@ -38,7 +38,7 @@ const Invoice = ({ data }) => {
             <div id="invoice" className="h-10">
                 <Button onClick={toPDF}></Button>
             </div>
-            <div ref={targetRef} className='w-full h-auto border border-[#ededed] mx-auto p-5'>
+            <div ref={targetRef} className='w-full h-auto border border-[#ededed] mx-auto p-5 bg-white'>
                 <header className='my-4 text-xl'>
                     <div className="flex justify-between mt-2">
                         <img className='h-8 w-auto' src={logo} alt="" />
@@ -58,7 +58,7 @@ const Invoice = ({ data }) => {
                             <p>Address: {address || '101 E. Chapman Ave Orange, CA 92866'}</p>
                         </address>
                     </div>
-                    <h1 className=' text-primary text-center font-bold text-xl py-1'>Invoice</h1>
+                    <h1 className=' text-secondary text-center font-bold text-xl py-1'>Invoice</h1>
 
                 </header>
                 <article>
@@ -74,8 +74,7 @@ const Invoice = ({ data }) => {
                         </thead>
                         <tbody>
                             {products?.map((item, index) => {
-                                // console.log(item)
-
+                                subTotal += item?.product?.price * item?.productQuantity
                                 return (
                                     <tr key={index} className='border-[#ededed] border-b text-xl' >
                                         <td className='pb-3 w-[3%]'>{index + 1}</td>
@@ -87,7 +86,9 @@ const Invoice = ({ data }) => {
                                 )
                             })}
                             {request?.map((item, index) => {
-                                // console.log(item)
+                                console.log(item?.product?.price * item?.productQuantity)
+                                subTotal += item?.product?.price * item?.productQuantity
+
                                 return (
                                     <tr key={index} className='border-[#ededed] border-b text-xl' >
                                         <td className='pb-3 w-[3%]'>{index + 1}</td>
@@ -106,7 +107,7 @@ const Invoice = ({ data }) => {
 
                             <tr>
                                 <th className='text-start'><span >Subtotal:</span></th>
-                                <td className='text-end'><span>{0}</span><span > tk</span></td>
+                                <td className='text-end'><span>{subTotal}</span><span > tk</span></td>
                             </tr>
                             <tr>
                                 <th className='text-start'><span >Tax:</span></th>

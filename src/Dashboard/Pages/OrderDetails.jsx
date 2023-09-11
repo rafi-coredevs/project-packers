@@ -68,7 +68,7 @@ const OrderDetails = () => {
 	const [invoiceData, setInvoiceData] = useState({})
 
 	useEffect(()=>{
-		console.log(order)
+		// console.log(order)
 		const data = {
 			orderId: order?.orderNumber,
 			name: order?.user?.fullName,
@@ -82,7 +82,7 @@ const OrderDetails = () => {
 			total: order?.total
 		}
 		setInvoiceData(data);
-		console.log(data)
+		// console.log(data)
 	},[order])
 	// formik initailization
 	const odrerForm = useFormik({
@@ -226,7 +226,9 @@ const OrderDetails = () => {
 
 	return (
 		<div className='px-5 h-full'>
+			<div className="absolute bottom-[500rem]">  
 			<Invoice data={invoiceData} />
+			</div>
 			<Heading type='navigate' title={`#${order?.orderNumber || ""}`} back={'All Order'}>
 				<div className='flex items-center gap-1'>
 					<Button onClick={generatePdf}>Download Invoice</Button>
