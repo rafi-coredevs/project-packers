@@ -39,7 +39,7 @@ const Login = () => {
 					toaster({ type: 'error', message: data.message });
 				} else {
 					setUser(data);
-					console.log('role: ', JSON.stringify(data));
+				
 
 					if (sendRequest) {
 						terminal
@@ -48,7 +48,7 @@ const Login = () => {
 								body: requestItemData,
 							})
 							.then((d) => {
-								// console.log('item request response from login', d);
+						
 								navigate('/', { state: true });
 							});
 					} else {

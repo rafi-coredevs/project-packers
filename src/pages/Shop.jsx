@@ -15,7 +15,6 @@ const Shop = () => {
   const [query, setQuery] = useState(null);
   const [page, setPage] = useState(1);
 
-
   useEffect(() => {
     fetchData();
   }, [query]);

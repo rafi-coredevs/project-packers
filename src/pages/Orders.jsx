@@ -86,7 +86,7 @@ const Orders = () => {
   }
 
   function deleteOrderItem(id) {
-    console.log('order id ', id);
+   
     terminal.request({ name: "deleteOrder", body: { id } }).then((res) => {
       res.status === true ? (toaster({ type: "success", message: res.message }), fetchData()) : (toaster({ type: "error", message: res.message }));
     });

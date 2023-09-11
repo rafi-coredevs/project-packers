@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-
+import errorImg from '../../../assets/noImages.svg';
 /**
  * BlogCard component displays a card for a blog post with title, description, and a "Learn More" button.
  *
@@ -11,7 +11,13 @@ import { useNavigate } from 'react-router-dom';
  */
 const BlogCard = ({ id, image, title, description }) => {
 	const navigate = useNavigate();
-
+	const handleLoading = (event) => {
+	};
+	const handleError = (event) => {
+		event.currentTarget.src = errorImg;
+		event.currentTarget.className =
+			'flex items-center justify-center  my-auto  mx-auto';
+	};
 	return (
 		<div
 			id={id}
@@ -20,7 +26,9 @@ const BlogCard = ({ id, image, title, description }) => {
 			<div className='overflow-hidden'>
 				<img
 					className='rounded-t-md w-full h-60 duration-500 group-hover:scale-105'
-					src={image}
+					onLoad={handleLoading}
+							onError={handleError}
+					src={`${import.meta.env.VITE_SERVER_URL}/${image}`}
 					alt=''
 				/>
 			</div>
