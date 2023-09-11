@@ -61,9 +61,9 @@ export const subCategorySchema = object({
 export const productSchema = object({
 	name: string().required(),
 	description: string().required(),
-	price: number().positive().required(),
-	tax: number().positive().required(),
-	fee: number().positive().required(),
+	price: number().test("price","Invalid", value => value >= 0).required(),
+	tax: number().test("price","Invalid", value => value >= 0).required(),
+	fee: number().test("price","Invalid", value => value >= 0).required(),
 	quantity: number().positive().required(),
 	origin: string().required(),
 	link: string().required(),
@@ -93,9 +93,9 @@ export const requestItems = object({
 	phone:'',
 	link: string().required(),
 	note: string(),
-	price: number().positive().required(),
-	tax: number().positive().required(),
-	fee: number().positive().required(),
+	price: number().test("price","Invalid", value => value >= 0).required(),
+	tax: number().test("price","Invalid", value => value >= 0).required(),
+	fee: number().test("price","Invalid", value => value >= 0).required(),
 	shippingaddress:string(),
 	billingaddress: string(),
 })
@@ -117,8 +117,8 @@ export const customerSchema = object({
 export const discountSchema = object({
 	coupon: string().min(6).required(),
 	type: string().required(),
-	amount: number().positive().required(),
-	limit: number().positive().required(),
+	amount: number().test("price","Invalid", value => value >= 0).required(),
+	limit: number().test("price","Invalid", value => value >= 0).required(),
 	expiry: string().required(),
 	category: string().required(),
 	subCategory: string().required(),
@@ -128,7 +128,7 @@ export const discountSchema = object({
 export const itemRequestSchema = object({
 	name: string().required("Name should not be empty"),
 	link:string(),
-	quantity: number(),
+	quantity: number().test("price","Invalid", value => value >= 0).required(),
 	note: string(),
 
 })

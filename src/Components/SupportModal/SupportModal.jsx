@@ -224,7 +224,7 @@ const SupportModal = ({ show = false, onChange }) => {
                   value={supportForm.values.type}
                   onChange={supportForm.handleChange}
                   onBlur={supportForm.handleBlur}
-                  id=""
+                  
                 >
                   <option >-</option>
                   <option value="account" className="hover:bg-red-500">
@@ -248,7 +248,7 @@ const SupportModal = ({ show = false, onChange }) => {
                   onChange={supportForm.handleChange}
                   onBlur={supportForm.handleBlur}
                   value={supportForm.values.message}
-                  id=""
+                  
                   rows="3"
                   placeholder="-"
                 ></textarea>
@@ -257,7 +257,7 @@ const SupportModal = ({ show = false, onChange }) => {
               <div className="flex flex-col">
                 <p
                   className="text-white font-semibold text-lg block font-sans  pb-2"
-                  htmlFor="images"
+                  
                 >
                   Attatchment
                 </p>
