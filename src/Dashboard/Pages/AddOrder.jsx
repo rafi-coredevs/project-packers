@@ -122,10 +122,16 @@ const AddOrder = () => {
             .then((res) => {
                 if (res.status === false) {
                     toaster({ type: 'error', message: res.message });
+                    
                 } else {
                     toaster({ type: 'success', message: res.message });
                     shippingForm.resetForm();
                     billingForm.resetForm();
+                    setOrder({
+                        products:[]
+                    })
+                    setUser({})
+                    setCustomers([])
                 }
             })
             .catch((err) => console.error('order update error', err));
@@ -221,6 +227,8 @@ const AddOrder = () => {
     const shippingHandler = () =>{
         billingForm.setValues({...shippingForm.values})
 	}
+
+ 
     return (
         <div className='px-5 h-full'>
             <Heading type='navigate' title={`Add Order`} back={'All Order'}>
@@ -245,6 +253,7 @@ const AddOrder = () => {
                                 <Input
                                     styles='secondary'
                                     type='text'
+                                    name='products'
                                     placeholder='Search Products'
                                     change={(e) => { findProducts(e) }}
                                 >
@@ -252,15 +261,17 @@ const AddOrder = () => {
                                 </Input>
                             </div>
                             <table className='bg-white shadow-md absolute top-[44px] left-0 w-full z-50'>
+                               <tbody>
                                 {
                                     (products?.length > 0 && productDropDown) &&
                                     products.map(product =>
-                                        <tr onClick={() => addProduct(product)} className='hover:bg-primary hover:cursor-pointer'>
+                                        <tr key={product.id} onClick={() => {addProduct(product); document.getElementById('products').value = ""}} className='hover:bg-primary hover:cursor-pointer'>
                                             <td className='p-2 border-b border-slate-200'>
                                                 {product.name}
                                             </td>
                                         </tr>)
                                 }
+                                </tbody>
                             </table>
                         </div>
 
@@ -461,6 +472,7 @@ const AddOrder = () => {
                                 <Input
                                     styles='secondary'
                                     type='text'
+                                    name={'customer'}
                                     placeholder='Search User'
                                     change={(e) => findCustomer(e)}
                                 >
@@ -470,7 +482,7 @@ const AddOrder = () => {
                                     {
                                         !user?.id && customers?.length > 0 &&
                                         customers.map((user, index) =>
-                                            <tr key={index} onClick={() => setUser(user)} className='hover:bg-primary hover:cursor-pointer'>
+                                            <tr key={index} onClick={() => {setUser(user); document.getElementById('customer').value=""}} className='hover:bg-primary hover:cursor-pointer'>
                                                 <td className='p-2 border-b border-slate-200'>
                                                     {user.fullName}
                                                 </td>
