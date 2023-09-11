@@ -16,7 +16,7 @@ const Payment = () => {
 
   const tableButtonHandler = (value) => {
     setActive(value);
-    console.log(value);
+
   };
   const deleteHandler = () => {
     console.log("deleted");

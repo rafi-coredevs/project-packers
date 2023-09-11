@@ -46,9 +46,9 @@ const StaffModal = ({ setModal, user }) => {
                     </div>
                 </div>
                 <div className='flex-shrink min-w-[12rem]'>
-                <CustomSelect value={selectedRole.name} bg="white" options={roleOptions} onChange={selectedRoleHandler} appearance={"select"} />
+                    <CustomSelect value={selectedRole.name} bg="white" options={roleOptions} onChange={selectedRoleHandler} appearance={"select"} />
                 </div>
-                </div>
+            </div>
             <div className="p-5 grid gap-4 items-start">
                 <div className="space-x-2">
                     <input
@@ -65,7 +65,7 @@ const StaffModal = ({ setModal, user }) => {
                         type="checkbox"
                     />
                     <label htmlFor="" className="text-[#4F4F4F] font-normal">
-                        Support ticket / life chat
+                        Support ticket / live chat
                     </label>
                 </div>
                 <div className="space-x-2">

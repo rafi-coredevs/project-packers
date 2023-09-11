@@ -25,7 +25,7 @@ const Invoice = ({ data }) => {
     }, [data])
     const { toPDF, targetRef } = usePDF({
         method: "save",
-        filename: "usepdf-example.pdf",
+        filename: `invoice-${orderId}.pdf`,
         resolution: Resolution.NORMAL,
         page: {
             margin: Margin.SMALL,
@@ -86,7 +86,7 @@ const Invoice = ({ data }) => {
                                 )
                             })}
                             {request?.map((item, index) => {
-                                console.log(item?.product?.price * item?.productQuantity)
+                           
                                 subTotal += item?.product?.price * item?.productQuantity
 
                                 return (
