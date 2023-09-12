@@ -102,7 +102,7 @@ const ProductImageUpload = ({
   return (
     <>
       <div className="p-3 rounded-lg">
-        <div className={`flex items-center gap-3 ${className}`}>
+        <div className={`flex items-center gap-3 max-w-[700px] ${className}`}>
           <div className="flex md:max-w-[600px] scrollbar overflow-x-auto overflow-y-hidden">
             {allImages.map((image, index) => (
               <div

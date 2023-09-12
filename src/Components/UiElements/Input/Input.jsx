@@ -66,7 +66,7 @@ const Input = ({
 			>
 				{children && (
 					<div
-						className={`pl-[10px] sm:pl-5  rounded-s-full border py-2 ${
+						className={`pl-[10px] sm:pl-5  rounded-s-full border py-1 ${
 							error ? ' border-red-600 border-r-0' : 'border-white'
 						}`}
 					>

@@ -11,7 +11,7 @@ import { terminal } from "../../contexts/terminal/Terminal";
 import toaster from "../../Util/toaster";
 //
 const CustomerDetails = () => {
-  useTitle("replace-with-customer-name");
+  useTitle("Customer Details");
   const { customerId } = useParams();
   const [buttonType, setButtonType] = useState("all");
   const [tableData, setTabledata] = useState([]);

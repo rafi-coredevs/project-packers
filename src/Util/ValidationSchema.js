@@ -61,10 +61,12 @@ export const subCategorySchema = object({
 export const productSchema = object({
 	name: string().required(),
 	description: string().required(),
+	category:string(),
+	subcategory:string(),
 	price: number().test("price","Invalid", value => value >= 0).required(),
 	tax: number().test("price","Invalid", value => value >= 0).required(),
 	fee: number().test("price","Invalid", value => value >= 0).required(),
-	quantity: number().positive().required(),
+	quantity: number().test("price","Invalid", value => value >= 1).required(),
 	origin: string().required(),
 	link: string().required(),
 	tags: string().required(),

@@ -43,7 +43,7 @@ const MainCategory = () => {
     },
     validationSchema: categorySchema,
     onSubmit: (values) => {
-      terminal.request({ name: 'registerCategory', body: { categoryname: values?.name, categoryslug: values?.slug } }).then(res => res.status === false ? toaster({ type: 'error', message: res?.message }) : fetchData())
+      terminal.request({ name: 'registerCategory', body: { categoryname: values?.name, categoryslug: values?.slug } }).then(res => res.status === false ? toaster({ type: 'error', message: res?.message }) : (toaster({ type: 'success', message: 'Category Added' }),fetchData(), categoryForm.resetForm()))
     },
   });
   const subCategoryForm = useFormik({

@@ -32,7 +32,7 @@ const Shop = () => {
   }, [page])
   const fetchData = (page = 1) => {
     setLoading(true);
-    terminal.request({ name: 'allProduct', queries: { page: page, limit: 9, ...query } })
+    terminal.request({ name: 'allProduct', queries: { status: 'active', page: page, limit: 9, ...query } })
       .then(res => {
         setData(res);
         setLoading(false);
