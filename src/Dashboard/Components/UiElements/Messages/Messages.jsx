@@ -36,6 +36,7 @@ const Messages = ({ activeChat, chatCardHandler, setSupportData }) => {
                 data.id && setMessages(prev => [data, ...prev])
             })
         }
+        console.log(activeChat)
         return () => {
             terminal.socket.emit('entry', { "entry": false, "room": activeChat.id })
             terminal.socket.off('message')
@@ -113,7 +114,7 @@ const Messages = ({ activeChat, chatCardHandler, setSupportData }) => {
                             {activeChat.type}
                         </p>
                     </div>
-                    <p className="text-sm font-medium">{activeChat.number}</p>
+                    <p className="text-sm font-medium">Order Id# <span>{activeChat.number}</span></p>
                 </div>
                 <div>
                     {
@@ -144,7 +145,7 @@ const Messages = ({ activeChat, chatCardHandler, setSupportData }) => {
                             />)
                     }
                 </div>
-                <form onSubmit={handleSubmit} className="p-2 border border-[#0000002a] rounded bg-white">
+                {activeChat?.status !== 'close' ?<form onSubmit={handleSubmit} className="p-2 border border-[#0000002a] rounded bg-white">
                     <div className="w-full flex overflow-hidden">
                         <input
                             className="outline-none w-full"
@@ -163,7 +164,7 @@ const Messages = ({ activeChat, chatCardHandler, setSupportData }) => {
                             />
                         </button>
                     </div>
-                </form>
+                </form> : <p className='text-center text-red-400'>This chat has been closed</p>}
             </div>
         </>
     );
