@@ -130,7 +130,7 @@ const Chat = () => {
               className=" bg-white outline-none w-full "
               defaultValue="all"
             >
-              <option selected value="all">
+              <option value="all">
                 All
               </option>
               <option value="account">Account</option>

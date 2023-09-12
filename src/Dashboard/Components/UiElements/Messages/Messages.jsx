@@ -123,11 +123,11 @@ const Messages = ({ activeChat, chatCardHandler, setSupportData }) => {
                     }
                 </div>
             </div >
-            <div className="px-8 py-2 relative h-[calc(100vh-215px)]  w-full">
+            <div className="px-8 py-2 relative  h-[calc(100vh-215px)]  w-full">
                 {
                     loading &&
-                    <div className='absolute flex w-full justify-center text-primary'>
-                        <img src={loader} alt="" className='animate-spin' />
+                    <div className='absolute flex w-[90%] h-full justify-center items-center text-primary  overflow-x-hidden'>
+                        <img src={loader} alt="" className='animate-spin h-12 w-12' />
                     </div>
                 }
                 <div ref={messageBody} onScroll={handleScroll} className="h-full overflow-y-auto flex  flex-col-reverse gap-12 pb-2 scrollbar">
