@@ -138,3 +138,10 @@ export const itemRequestSchema = object({
 export const itemRequest2 = object({
 	link: string().required('Please provide link')
 })
+export const staffFormSchema = object({
+	firstName:string().required(),
+	lastName:string().required(),
+	email: string().email().required('Please enter your email address.'),
+	phone: string().matches(/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/, 'Invalid phone number').required(),
+	role: string()
+})

@@ -30,7 +30,7 @@ const Discount = () => {
   const tableButtonHandler = (value) => {
     setActive(value);
   };
- console.log(active);
+
   useEffect(() => {
     
     fetchData();

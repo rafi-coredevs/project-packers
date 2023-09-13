@@ -36,7 +36,7 @@ const Messages = ({ activeChat, chatCardHandler, setSupportData }) => {
                 data.id && setMessages(prev => [data, ...prev])
             })
         }
-        console.log(activeChat)
+       
         return () => {
             terminal.socket.emit('entry', { "entry": false, "room": activeChat.id })
             terminal.socket.off('message')
