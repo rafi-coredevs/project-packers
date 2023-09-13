@@ -34,19 +34,23 @@ const NewCustomer = () => {
         zip: values.zip,
       },
      }
-     terminal.request({ name: 'registerUser', body }).then(data=> {
+     terminal.request({ name: 'registerUser',params:{type:'customer'} ,body }).then(data=> {
+      console.log(data)
       if(data.id){
         toaster({type:'success',message:'Customer Created'})
       }
       else{
-        toaster({type:'error',message:'An error occured'})
+        toaster({type:'error',message:data?.message || 'An Error occured'})
+      }
+      if(data.message === "Email already exists"){
+        customerForm.setFieldError('email', true)
       }
      })
     },
   });
   return (
     <div className="px-5 h-full">
-      <Heading type="navigate" title={`New Customer`} back={"customer"} />
+      <Heading type="navigate" title={`New Customer`} back={"customers"} />
       <div className="grid grid-cols-2 gap-5">
         <div className="col-span-2 sm:col-span-1 grid">
           <div className="space-y-3">

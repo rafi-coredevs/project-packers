@@ -36,7 +36,7 @@ class Terminal {
     let api = apiData[name];
     if (!api) throw new Error(`Couldn't find your required api. name:${name}`);
     api = { ...api, queries: { ...api.queries, ...queries }, params: { ...api.params, ...params }, body: { ...api.body, ...body } };
-    api = this.data(api, api.method === "POST" && api.uri !== "sendmessage" && api.uri !== "refundorder" ? "body" : "params");
+    api = this.data(api, api.method === "POST" && api.uri !== "sendmessage" && api.uri !== "refundorder" && api.uri !== "user" ? "body" : "params");
     return this.req({ method: api.method, uri: api.uri, body: api.body, headers: api.headers });
   }
 }

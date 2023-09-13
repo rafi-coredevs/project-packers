@@ -5,7 +5,6 @@ export const user = {
         body: {
             fullName: undefined,
             email: undefined,
-            password: undefined
         },
         suggestions: {
             raw: "A raw example of the payload: { fullName:'Yeasir', email:'yeasir@mail.com', password:'packers123' }.",
