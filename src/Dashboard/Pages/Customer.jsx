@@ -47,8 +47,13 @@ const Customer = () => {
     fetchData();
   }, []);
 
-  const fetchData = (queries = {}) => {
-    terminal.request({ name: "getCustomerOrder", queries }).then((res) => {
+  const paginateHandler = (data) => {
+    console.log(data)
+    // fetchData({page: data})
+  }
+  const fetchData = (page = 1) => {
+    terminal.request({ name: "getCustomerOrder", queries: {page} }).then((res) => {
+     
       res.status === false ? "" : setTableData(res), setLoading(false);
     });
   };
@@ -68,7 +73,7 @@ const Customer = () => {
   const handleCustomerExport =async () => {
  
     // credentials: 'include',
-   const response = await fetch('http://localhost:4000/api/export-customer?format=xlsx', {
+   const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/export-customer?format=xlsx`, { 
       method:'GET',
       credentials: 'include'
     })
@@ -161,7 +166,7 @@ const Customer = () => {
               </div>
             </div>
 
-            <Table type="customer" data={tableData} loading={loading} />
+            <Table type="customer" data={tableData} loading={loading} paginate={fetchData} />
           </div>
         </div>
       </div>

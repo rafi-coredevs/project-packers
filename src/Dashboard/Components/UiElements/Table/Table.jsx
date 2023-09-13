@@ -355,7 +355,7 @@ const Table = ({ data, paginate, loading, dashboardToogle, modalHandler, getData
                     className='border-y border-[#0000001c] hover:bg-[#FEF9DC]'
                   >
                     <td className='text-left py-[10px] pl-4 w-[10px]'>
-                      <input type='checkbox' className='accent-yellow-300' />
+                      <input name='check' type='checkbox' className='accent-yellow-300' />
                     </td>
                     <td
                       // onClick={() => selectHandler(item.id)}
