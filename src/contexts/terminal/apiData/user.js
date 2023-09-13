@@ -14,6 +14,20 @@ export const user = {
 
         }
     },
+    registerCustomer: {
+        method: 'POST',
+        uri: 'customer',
+        body: {
+            fullName: undefined,
+            email: undefined,
+        },
+        suggestions: {
+            raw: "A raw example of the payload: { fullName:'Yeasir', email:'yeasir@mail.com', password:'packers123' }.",
+            fullName: "Please enter your full name",
+            email: "Please enter your email address",
+            password: "Please enter your password",
+        }
+    },
     registerStaff: {
         method: 'POST',
         uri: 'user/staff',
@@ -192,4 +206,11 @@ export const user = {
             raw: "A raw example of payload: {user/logoutall}",
         }
     },
+    exportCustomer:{
+        method:"GET",
+        uri:"export-customer",
+        suggestions:{
+            raw:"A raw example of payload: {export-customer",
+        }
+    }
 }

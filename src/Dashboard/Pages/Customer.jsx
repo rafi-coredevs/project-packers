@@ -31,7 +31,7 @@ const Customer = () => {
   });
 
   function customerStatusHandler(id) {
-    const selected =  customerStatuses.find((item) => item.id === id);
+    const selected = customerStatuses.find((item) => item.id === id);
     setSelectedCustomerStatus(selected);
     setActive(selected?.value)
     fetchData({ status: selected?.value });
@@ -65,11 +65,30 @@ const Customer = () => {
     }
   }
 
+  const handleCustomerExport =async () => {
+ 
+    // credentials: 'include',
+   const response = await fetch('http://localhost:4000/api/export-customer?format=xlsx', {
+      method:'GET',
+      credentials: 'include'
+    })
+      const blob = await response.blob()
+      const url = window.URL.createObjectURL(blob);
+      const downloadLink = document.createElement('a');
+      downloadLink.href = url;
+      downloadLink.download = 'customer-list.xlsx';
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+      document.body.removeChild(downloadLink);
+      window.URL.revokeObjectURL(blob);
+
+   
+  }
   return (
     <div className="h-full px-5 ">
       <Heading title="Customers">
         <div className="space-x-2">
-          <Button style="secondary" onClick={() => navigate("")}>
+          <Button style="secondary" onClick={handleCustomerExport}>
             Export
           </Button>
           <Button style="primary" onClick={() => navigate("new-customer")}>
@@ -84,37 +103,33 @@ const Customer = () => {
               <div className="py-2 my-auto">
                 <button
                   onClick={() => tableButtonHandler("all")}
-                  className={`py-2 px-3 text-[#475569] text-xs font-semibold ${
-                    active === "all" ? "bg-[#CFF6EF] rounded" : "bg-transparent"
-                  }`}
+                  className={`py-2 px-3 text-[#475569] text-xs font-semibold ${active === "all" ? "bg-[#CFF6EF] rounded" : "bg-transparent"
+                    }`}
                 >
                   All
                 </button>
                 <button
                   onClick={() => tableButtonHandler("new")}
-                  className={`py-2 px-3 text-[#475569] text-xs font-semibold ${
-                    active === "new" ? "bg-[#CFF6EF] rounded" : "bg-transparent"
-                  }`}
+                  className={`py-2 px-3 text-[#475569] text-xs font-semibold ${active === "new" ? "bg-[#CFF6EF] rounded" : "bg-transparent"
+                    }`}
                 >
                   New
                 </button>
                 <button
                   onClick={() => tableButtonHandler("returning")}
-                  className={`py-2 px-3 text-[#475569] text-xs font-semibold ${
-                    active === "returning"
+                  className={`py-2 px-3 text-[#475569] text-xs font-semibold ${active === "returning"
                       ? "bg-[#CFF6EF] rounded"
                       : "bg-transparent"
-                  }`}
+                    }`}
                 >
                   Returning
                 </button>
                 <button
                   onClick={() => tableButtonHandler("abandoned")}
-                  className={`py-2 px-3 text-[#475569] text-xs font-semibold ${
-                    active === "abandoned"
+                  className={`py-2 px-3 text-[#475569] text-xs font-semibold ${active === "abandoned"
                       ? "bg-[#CFF6EF] rounded"
                       : "bg-transparent"
-                  }`}
+                    }`}
                 >
                   Abandoned Checkouts
                 </button>
