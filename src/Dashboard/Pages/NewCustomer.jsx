@@ -35,7 +35,6 @@ const NewCustomer = () => {
       },
      }
      terminal.request({ name: 'registerUser',params:{type:'customer'} ,body }).then(data=> {
-      console.log(data)
       if(data.id){
         toaster({type:'success',message:'Customer Created'})
       }

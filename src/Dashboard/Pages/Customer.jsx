@@ -69,7 +69,7 @@ const Customer = () => {
   }
 
  async function handleSearch(e) {
-   if(e.target.value?.length >= 1){
+   if(e.target.value?.length != ""){
     const response = await terminal.request({ name: "getCustomerOrder", queries: { search: e.target.value }, }).then((res) => res);
     setTableData(response)
    }else{

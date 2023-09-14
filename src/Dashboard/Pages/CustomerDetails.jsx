@@ -19,7 +19,6 @@ const CustomerDetails = () => {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate()
   const createOrderHandler = () => {
-    console.log("create oreder");
     navigate('/admin/orders/add-order',{state:{
       userId: user?.current
     }})

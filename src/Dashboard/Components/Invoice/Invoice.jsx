@@ -10,7 +10,7 @@ import logo from '../../../assets/logo.svg'
 import { usePDF, Margin, Resolution } from 'react-to-pdf';
 import Button from '../UiElements/Button/Button';
 
-const Invoice = ({ data, fees, shipping, discount, tax }) => {
+const Invoice = ({ data = {}, fees, shipping, discount, tax }) => {
     const { name, email, phone, address, date, orderId, products, request, total,  notes,} = data;
 
     const [productData, setProductData] = useState([])
@@ -99,7 +99,6 @@ const Invoice = ({ data, fees, shipping, discount, tax }) => {
                         </thead>
                         <tbody>
                             {productData?.map((item, index) => {
-                                // console.log(first)
                                 subTotal += item?.price * item?.quantity
                                 return (
                                     <tr key={index} className='border-[#ededed] border-b text-xl' >
@@ -124,23 +123,23 @@ const Invoice = ({ data, fees, shipping, discount, tax }) => {
                             </tr>
                             <tr>
                                 <th className='text-start'><span >Tax:</span></th>
-                                <td className='text-end'><span >{tax}</span><span > tk</span></td>
+                                <td className='text-end'><span >{tax || 0}</span><span > tk</span></td>
                             </tr>
                             <tr>
                                 <th className='text-start'><span >packers Fee:</span></th>
-                                <td className='text-end'><span>{fees}</span><span > tk</span></td>
+                                <td className='text-end'><span>{fees || 0}</span><span > tk</span></td>
                             </tr>
                             <tr>
                                 <th className='text-start'><span >Shipping Fee:</span></th>
-                                <td className='text-end'><span>{shipping}</span><span > tk</span></td>
+                                <td className='text-end'><span>{shipping || 0}</span><span > tk</span></td>
                             </tr>
                             <tr>
                                 <th className='text-start'><span >Discount:</span></th>
-                                <td className='text-end'><span>{discount}</span></td>
+                                <td className='text-end'><span>{discount || 0}</span></td>
                             </tr>
                             <tr>
                                 <th className='text-start'><span >Total:</span></th>
-                                <td className='text-end'><span>{total?.toFixed(2)}</span><span > tk</span></td>
+                                <td className='text-end'><span>{total?.toFixed(2) || 0}</span><span > tk</span></td>
                             </tr>
                         </tbody>
                     </table>
