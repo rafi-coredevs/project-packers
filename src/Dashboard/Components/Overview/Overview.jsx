@@ -16,7 +16,7 @@ const Overview = ({ data }) => {
                             <h4>{data.title}</h4>
                             {
                                 data.title === 'Total Cost' ?
-                                    <p className='text-xl font-semibold'>৳ {data.total}</p> :
+                                    <p className='text-secondary text-xl font-semibold'>৳ {(Number(data.total) / 1000).toFixed(1)}k</p> :
                                     <div className='flex items-center gap-2'>
                                         <p className='text-xl font-semibold'>
                                             {data.total}
@@ -31,7 +31,15 @@ const Overview = ({ data }) => {
                                         />
                                     </div>
                             }
-                            <p className='text-gray-400'>New cost last 30 days</p>
+                            <p className='text-gray-400'>{
+                                data.title === 'Total Cost' && "New cost last 30 days"
+                                || data.title === 'Total Request' && "New Request last 30 days"
+                                || data.title === 'Total Order' && "New order last 30 days"
+                                || data.title === 'Completed' && "Completed order last 30 days"
+                                || data.title === 'Canceled' && "Canceled order last 30 days"
+                                || data.title === 'Cancelled' && "Cancelled order last 30 days"
+                                || data.title === 'Total Revenue' && "Total revenue last 30 days"
+                            }</p>
                         </div>
                     ))
                 }

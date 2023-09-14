@@ -49,7 +49,7 @@ const Customer = () => {
   useEffect(() => {
     setTableData({ ...tableData, nextPage: nextPage, prevPage: prevPage })
   }, [nextPage, prevPage])
-  const fetchData = async (page = 1) => {
+  const fetchData = async (page = 1, search = '') => {
     setLoading(true)
     const response = await terminal.request({ name: "getCustomerOrder", queries: { page: page, status: active }, }).then((res) => res);
     if (response?.totalPages == 1) {
@@ -68,9 +68,12 @@ const Customer = () => {
   }
 
   function handleSearch(e) {
-    if (e.key === "Enter") {
+    // if (e.key === "Enter") {
+    //   fetchData({ search: e.target.value });
+    //   e.target.value = "";
+    // }
+    if(e.target.value !== ""){
       fetchData({ search: e.target.value });
-      e.target.value = "";
     }
   }
 
