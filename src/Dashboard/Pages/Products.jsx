@@ -33,7 +33,14 @@ const Products = () => {
   // useEffect(()=>{
   //   console.log("products",selectedItem)
   // },[selectedItem])
-
+  const searchHandler = (e) => {
+    setLoading(true)
+    if(e?.target?.value != ''){
+      terminal.request({name: "allProduct", queries:{search: e.target.value}}).then(res => {setTableData(res); setLoading(false)})
+    }else{
+      fetchData();
+    }
+  }
 
   const fetchData = (page = 1) => {
     console.log(page)
@@ -93,7 +100,7 @@ const Products = () => {
                 </button>
               </div>
               <div className="py-2 flex gap-1 ">
-                <Input type="text" placeholder="Search" styles="secondary">
+                <Input type="text" placeholder="Search" styles="secondary" change={searchHandler} >
                   <img src={search} alt="" />
                 </Input>
                 <div className="flex ">
