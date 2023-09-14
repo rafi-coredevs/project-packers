@@ -74,7 +74,6 @@ const Table = ({ data, paginate, loading, dashboardToogle, modalHandler, getData
   useEffect(() => {
     getData && (isCategory ? getData(selectedCategory) : getData(selectedItem))
   }, [selectedItem, selectedCategory])
-
   const checkboxHandler = (status) => {
     const ele = document.getElementsByName('check');
     if (status.target.checked) {
@@ -145,7 +144,7 @@ const Table = ({ data, paginate, loading, dashboardToogle, modalHandler, getData
                     />))
                 }
               </tr>)
-            ) : (data?.docs == null || data?.docs?.length === 0) ? <tr><td className='w-full'>No data found</td></tr> : (
+            ) : (data?.docs == null || data?.docs?.length === 0) ? <tr><td className='w-full'><p className="text-center">No data found</p></td></tr> : (
               <>
                 {
                   //Products  Data Table

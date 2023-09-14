@@ -21,9 +21,10 @@ const Customer = () => {
   useTitle("Customers");
   const [active, setActive] = useState("all");
   const [tableData, setTableData] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [sortBy, setSortBy] = useState(true);
-
+  const[nextPage,setNextPage] = useState(null)
+  const [prevPage, setPrevPage] = useState(null)
   const [selectedCustomerStatus, setSelectedCustomerStatus] = useState({
     name: "Select",
     value: null,
@@ -46,16 +47,20 @@ const Customer = () => {
   useEffect(() => {
     fetchData();
   }, []);
-
-  const paginateHandler = (data) => {
-    console.log(data)
-    // fetchData({page: data})
-  }
-  const fetchData = (page = 1) => {
-    terminal.request({ name: "getCustomerOrder", queries: {page: page} }).then((res) => {
-     
-      res.status === false ? "" : setTableData(res), setLoading(false);
-    });
+  useEffect(()=>{
+    setTableData({...tableData, nextPage: nextPage,prevPage:prevPage})
+  },[nextPage,prevPage])
+  const fetchData = async  (page = 1) => {
+    setLoading(true)
+   const response = await terminal.request({ name: "getCustomerOrder", queries: {page: page} }).then((res) => res);
+    if(response?.totalPages == 1){
+      setNextPage(null);
+      setPrevPage(null);
+    }else{
+      setNextPage((Number(response?.page) + 1) > response?.totalPages ? null : Number(response?.page) + 1);
+      setPrevPage(Number(response?.page) - 1 <=0 ? null : Number(response?.page) - 1);
+    }
+    response.status === false ? "" : setTableData({...response, nextPage: nextPage,prevPage:prevPage}), setLoading(false);
   };
 
   function handleSorting() {
@@ -166,7 +171,7 @@ const Customer = () => {
               </div>
             </div>
 
-            <Table type="customer" data={tableData} loading={loading} paginate={fetchData} />
+            <Table type="customer" data={tableData} paginate={fetchData} loading={loading}  />
           </div>
         </div>
       </div>

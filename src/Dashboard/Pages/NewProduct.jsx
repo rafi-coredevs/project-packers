@@ -93,9 +93,7 @@ const NewProduct = () => {
           );
     },
   });
-  useEffect(() => {
-    console.log(productForm.errors)
-  }, [productForm.errors])
+
   // fetching all Category
   useEffect(() => {
     terminal.request({ name: "allCategory" }).then((res) => setCategories(res));

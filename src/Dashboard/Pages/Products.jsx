@@ -30,12 +30,13 @@ const Products = () => {
     fetchData();
 
   }, [sortBy, active]);
-  useEffect(()=>{
-    console.log("products",selectedItem)
-  },[selectedItem])
+  // useEffect(()=>{
+  //   console.log("products",selectedItem)
+  // },[selectedItem])
 
 
   const fetchData = (page = 1) => {
+    console.log(page)
     setLoading(true);
     terminal.request({ name: 'allProduct', queries: { page, sortBy, status: active } }).then((res) => {
       res.status === false ? '' : setTableData(res), setLoading(false);
