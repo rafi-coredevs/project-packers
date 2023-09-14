@@ -23,7 +23,7 @@ const Customer = () => {
   const [tableData, setTableData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [sortBy, setSortBy] = useState(true);
-  const[nextPage,setNextPage] = useState(null)
+  const [nextPage, setNextPage] = useState(null)
   const [prevPage, setPrevPage] = useState(null)
   const [selectedCustomerStatus, setSelectedCustomerStatus] = useState({
     name: "Select",
@@ -41,26 +41,25 @@ const Customer = () => {
   const navigate = useNavigate();
   const tableButtonHandler = (value) => {
     setActive(value);
-    fetchData({ status: value });
     setSelectedCustomerStatus(null)
   };
   useEffect(() => {
     fetchData();
-  }, []);
-  useEffect(()=>{
-    setTableData({...tableData, nextPage: nextPage,prevPage:prevPage})
-  },[nextPage,prevPage])
-  const fetchData = async  (page = 1) => {
+  }, [active]);
+  useEffect(() => {
+    setTableData({ ...tableData, nextPage: nextPage, prevPage: prevPage })
+  }, [nextPage, prevPage])
+  const fetchData = async (page = 1) => {
     setLoading(true)
-   const response = await terminal.request({ name: "getCustomerOrder", queries: {page: page} }).then((res) => res);
-    if(response?.totalPages == 1){
+    const response = await terminal.request({ name: "getCustomerOrder", queries: { page: page, status: active }, }).then((res) => res);
+    if (response?.totalPages == 1) {
       setNextPage(null);
       setPrevPage(null);
-    }else{
+    } else {
       setNextPage((Number(response?.page) + 1) > response?.totalPages ? null : Number(response?.page) + 1);
-      setPrevPage(Number(response?.page) - 1 <=0 ? null : Number(response?.page) - 1);
+      setPrevPage(Number(response?.page) - 1 <= 0 ? null : Number(response?.page) - 1);
     }
-    response.status === false ? "" : setTableData({...response, nextPage: nextPage,prevPage:prevPage}), setLoading(false);
+    response.status === false ? "" : setTableData({ ...response, nextPage: nextPage, prevPage: prevPage }), setLoading(false);
   };
 
   function handleSorting() {
@@ -75,25 +74,26 @@ const Customer = () => {
     }
   }
 
-  const handleCustomerExport =async () => {
- 
+  const handleCustomerExport = async () => {
+
     // credentials: 'include',
-   const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/export-customer?format=xlsx`, { 
-      method:'GET',
+    const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/export-customer?format=xlsx`, {
+      method: 'GET',
       credentials: 'include'
     })
-      const blob = await response.blob()
-      const url = window.URL.createObjectURL(blob);
-      const downloadLink = document.createElement('a');
-      downloadLink.href = url;
-      downloadLink.download = 'customer-list.xlsx';
-      document.body.appendChild(downloadLink);
-      downloadLink.click();
-      document.body.removeChild(downloadLink);
-      window.URL.revokeObjectURL(blob);
+    const blob = await response.blob()
+    const url = window.URL.createObjectURL(blob);
+    const downloadLink = document.createElement('a');
+    downloadLink.href = url;
+    downloadLink.download = 'customer-list.xlsx';
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
+    window.URL.revokeObjectURL(blob);
 
-   
+
   }
+
   return (
     <div className="h-full px-5 ">
       <Heading title="Customers">
@@ -128,8 +128,8 @@ const Customer = () => {
                 <button
                   onClick={() => tableButtonHandler("returning")}
                   className={`py-2 px-3 text-[#475569] text-xs font-semibold ${active === "returning"
-                      ? "bg-[#CFF6EF] rounded"
-                      : "bg-transparent"
+                    ? "bg-[#CFF6EF] rounded"
+                    : "bg-transparent"
                     }`}
                 >
                   Returning
@@ -137,8 +137,8 @@ const Customer = () => {
                 <button
                   onClick={() => tableButtonHandler("abandoned")}
                   className={`py-2 px-3 text-[#475569] text-xs font-semibold ${active === "abandoned"
-                      ? "bg-[#CFF6EF] rounded"
-                      : "bg-transparent"
+                    ? "bg-[#CFF6EF] rounded"
+                    : "bg-transparent"
                     }`}
                 >
                   Abandoned Checkouts
@@ -171,7 +171,7 @@ const Customer = () => {
               </div>
             </div>
 
-            <Table type="customer" data={tableData} paginate={fetchData} loading={loading}  />
+            <Table type="customer" data={tableData} paginate={fetchData} loading={loading} />
           </div>
         </div>
       </div>
