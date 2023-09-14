@@ -144,7 +144,7 @@ const Table = ({ data, paginate, loading, dashboardToogle, modalHandler, getData
                     />))
                 }
               </tr>)
-            ) : (data?.docs == null || data?.docs?.length === 0) ? <tr className='w-full' ><td colSpan={4}><p className="text-center w-full">No data found</p></td></tr> : (
+            ) : (data?.docs == null || data?.docs?.length === 0) ? <tr className='w-full' ><td colSpan={5}><p className="text-center w-full">No data found</p></td></tr> : (
               <>
                 {
                   //Products  Data Table

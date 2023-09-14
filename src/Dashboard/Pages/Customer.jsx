@@ -49,9 +49,10 @@ const Customer = () => {
   useEffect(() => {
     setTableData({ ...tableData, nextPage: nextPage, prevPage: prevPage })
   }, [nextPage, prevPage])
-  const fetchData = async (page = 1, search = '') => {
+  const fetchData = async (page = 1, ) => {
     setLoading(true)
-    const response = await terminal.request({ name: "getCustomerOrder", queries: { page: page, status: active }, }).then((res) => res);
+    const response = await terminal.request({ name: "getCustomerOrder", queries: { page: page, status: active, }, }).then((res) => res);
+    
     if (response?.totalPages == 1) {
       setNextPage(null);
       setPrevPage(null);
@@ -67,14 +68,13 @@ const Customer = () => {
     fetchData({ sortBy: `date|${sortBy === false ? "desc" : "asc"}` });
   }
 
-  function handleSearch(e) {
-    // if (e.key === "Enter") {
-    //   fetchData({ search: e.target.value });
-    //   e.target.value = "";
-    // }
-    if(e.target.value !== ""){
-      fetchData({ search: e.target.value });
-    }
+ async function handleSearch(e) {
+   if(e.target.value?.length >= 1){
+    const response = await terminal.request({ name: "getCustomerOrder", queries: { search: e.target.value }, }).then((res) => res);
+    setTableData(response)
+   }else{
+    fetchData()
+   }
   }
 
   const handleCustomerExport = async () => {

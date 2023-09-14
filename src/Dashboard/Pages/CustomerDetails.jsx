@@ -16,9 +16,23 @@ const CustomerDetails = () => {
   const [buttonType, setButtonType] = useState("all");
   const [tableData, setTabledata] = useState([]);
   const [user, setUser] = useState({});
-    const [loading, setLoading] = useState(true);
-  const updateHandler = () => {
-    console.log(user);
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate()
+  const createOrderHandler = () => {
+    console.log("create oreder");
+    navigate('/admin/orders/add-order',{state:{
+      userId: user?.current
+    }})
+  };
+   const deleteHandler = () => {
+    terminal.request({name: 'deleteUser', params:{id: user?.current?._id}}).then(res=>{
+      if(res.status === true){
+        toaster({type:'success', message: res?.message})
+        navigate(`/admin/customers/${user?.previous?._id}`)
+      }else{
+        toaster({type:'error', message: res?.message})
+      }
+    })
   };
   function tableButtonHandler(value) {
     setButtonType(value);
@@ -29,7 +43,7 @@ const CustomerDetails = () => {
     terminal
       .request({ name: "customerAllOrders", queries: { user: customerId, page: page, status:buttonType } })
       .then((res) => {
-        res.status === false ? toaster({ tyoe: 'error', message: res?.message }) : setTabledata(res);
+        res.status === false ? toaster({ type: 'error', message: res?.message }) : setTabledata(res);
         setLoading(false)
       });
     
@@ -38,7 +52,6 @@ const CustomerDetails = () => {
     terminal.request({ name: 'getNext', params: { current: customerId } }).then(res => res.status === false ? toaster({ tyoe: 'error', message: res?.message }) : setUser(res[0]))
   }
   useEffect(() => {
-
     fetchData();
   }, [customerId, buttonType]);
   useEffect(() => {
@@ -55,10 +68,10 @@ const CustomerDetails = () => {
         title={`${user?.current?.fullName || ""}`}
       >
         <div className="flex items-center gap-1">
-          <Button style="delete" onClick={updateHandler}>
+          <Button style="delete" onClick={deleteHandler}>
             Delete
           </Button>
-          <Button style="primary" onClick={updateHandler}>
+          <Button style="primary" onClick={createOrderHandler}>
             Create Order
           </Button>
           <div className="">
