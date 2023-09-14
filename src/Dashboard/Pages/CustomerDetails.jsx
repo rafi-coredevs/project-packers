@@ -16,7 +16,7 @@ const CustomerDetails = () => {
   const [buttonType, setButtonType] = useState("all");
   const [tableData, setTabledata] = useState([]);
   const [user, setUser] = useState({});
-  const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(true);
   const updateHandler = () => {
     console.log(user);
   };
@@ -24,10 +24,10 @@ const CustomerDetails = () => {
     setButtonType(value);
   }
 
-  const fetchData = (page = 1) => {
+  const fetchData = (page = 1,) => {
     setLoading(true)
     terminal
-      .request({ name: "customerAllOrders", queries: { user: customerId, page: page } })
+      .request({ name: "customerAllOrders", queries: { user: customerId, page: page, status:buttonType } })
       .then((res) => {
         res.status === false ? toaster({ tyoe: 'error', message: res?.message }) : setTabledata(res);
         setLoading(false)
@@ -40,7 +40,7 @@ const CustomerDetails = () => {
   useEffect(() => {
 
     fetchData();
-  }, [customerId]);
+  }, [customerId, buttonType]);
   useEffect(() => {
     fetchUsers();
 
