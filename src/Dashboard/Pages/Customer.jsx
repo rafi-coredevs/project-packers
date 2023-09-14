@@ -52,7 +52,7 @@ const Customer = () => {
     // fetchData({page: data})
   }
   const fetchData = (page = 1) => {
-    terminal.request({ name: "getCustomerOrder", queries: {page} }).then((res) => {
+    terminal.request({ name: "getCustomerOrder", queries: {page: page} }).then((res) => {
      
       res.status === false ? "" : setTableData(res), setLoading(false);
     });
