@@ -27,7 +27,7 @@ const CustomerDetails = () => {
     terminal.request({name: 'deleteUser', params:{id: user?.current?._id}}).then(res=>{
       if(res.status === true){
         toaster({type:'success', message: res?.message})
-        navigate(`/admin/customers/${user?.previous?._id}`)
+        navigate(`/admin/customers`)
       }else{
         toaster({type:'error', message: res?.message})
       }
@@ -55,9 +55,10 @@ const CustomerDetails = () => {
   }, [customerId, buttonType]);
   useEffect(() => {
     fetchUsers();
-
   }, [customerId]);
-
+  useEffect(() => {
+    console.log(user)
+  }, [user]);
 
   return (
     <div className="px-5 h-full">
