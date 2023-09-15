@@ -59,7 +59,7 @@ const Chat = () => {
         setSupportData(() => {
           return (
             data.length > 0 &&
-            data?.map((support) => {
+            data?.reverse().map((support) => {
               return {
                 id: support.id,
                 status: support.status,
@@ -147,7 +147,7 @@ const Chat = () => {
             {supportData.length === 0
               ? supportData.map((chat, i) => <LazyChatCard key={i} />)
               : supportData.length > 0 &&
-              supportData?.reverse().map((chat) => (
+              supportData?.map((chat) => (
                 <ChatCard
                   onClick={chatCardHandler}
                   active={activeChat?.id}
