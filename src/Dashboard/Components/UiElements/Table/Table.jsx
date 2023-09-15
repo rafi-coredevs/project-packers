@@ -222,7 +222,7 @@ const Table = ({ data, paginate, loading, dashboardToogle, modalHandler, getData
                         }).format(new Date(item?.date))}
                       </td>
                       <td className='px-4 py-[18px] text-black text-sm '>
-                        {item.user?.fullName || item.user.email}
+                        {item.user?.fullName || item.user?.email}
                       </td>
                       <td className='px-4 py-[18px] text-black text-sm '>
                         <Badge text={item?.status} styles='' />{' '}

@@ -44,6 +44,15 @@ const Discount = () => {
     });
   };
 
+  const searchHandler = (e) =>{
+    if(e.target.value != ""){
+      terminal.request({name: 'allDiscount', queries:{ search: e.target.value} }).then((res) => {
+        res.status === false ? '' : setTableData(res), setLoading(false);
+      });
+    }else{
+      fetchData();
+    }
+  }
   return (
     <div className="h-full px-5 ">
       <Heading title="Discount">
@@ -86,7 +95,7 @@ const Discount = () => {
                
               </div>
               <div className="py-2 flex gap-1">
-                <Input type="text" placeholder="Search" styles="secondary">
+                <Input type="text" placeholder="Search" styles="secondary" change={searchHandler}>
                   <img src={search} alt="" />
                 </Input>
                 <div className="flex">
