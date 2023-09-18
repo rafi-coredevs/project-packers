@@ -74,7 +74,6 @@ const RequestDetails = () => {
     terminal
       .request({ name: "singleRequest", params: { id: requestId } })
       .then((res) => {
-        console.log(res);
         setPreLoadedImages(res.images);
         setStatus(res?.status)
         setRequestNumber(res?.requestNumber)
@@ -113,7 +112,6 @@ const RequestDetails = () => {
     e.preventDefault();
     setDisable(true);
     const { images, user, ...rest } = requestForm.values;
-    console.log(Object.keys(requestForm.errors).length)
     if (Object.keys(requestForm.errors).length === 0) {
       terminal
         .request({

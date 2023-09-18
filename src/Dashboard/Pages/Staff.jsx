@@ -39,7 +39,6 @@ const Staff = () => {
         return
       }
       terminal.request({ name: 'registerStaff', body: { fullName: `${values.firstName} ${values.lastName}`, email:values.email, phone:values.phone, role: values.role } }).then(data => {
-        console.log(data)
         if (data.id) {
           setUsers(prev => [...prev, { id: data.id, fullName: data.fullName, role: data.role, access: data.access }])
          

@@ -14,7 +14,7 @@ const Blog = () => {
   const [data, setData] = useState({})
   const [query, setQuery] = useState(null)
   useEffect(() => {
-    terminal.request({ name: 'allBlog' }).then(res => {setData(res); console.log(res)}).finally(()=> setLoading(false))
+    terminal.request({ name: 'allBlog' }).then(res => {setData(res)}).finally(()=> setLoading(false))
   }, []);
 
   useEffect(()=>{
@@ -45,7 +45,6 @@ const Blog = () => {
           ) : (
             <>
               {data?.docs?.map((post) => {
-                console.log(post)
                 return (
                   <BlogCard
                     key={post?.id}
