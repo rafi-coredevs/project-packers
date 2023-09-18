@@ -33,7 +33,7 @@ const MainCategory = () => {
   const fetchData = () =>{
     setLoading(true)
     setCategories([]);
-     terminal.request({ name: 'allCategory' }).then(res => res.status === false ? toaster({ type: 'error', message: res.message }) : (setCategories(res),setLoading(false)));
+     terminal.request({ name: 'allCategory' }).then(res => res.status === false ? toaster({ type: 'error', message: res.message }) : (setCategories(res),setSelected(res[0]), setLoading(false)));
     }
 
   const categoryForm = useFormik({
@@ -54,10 +54,8 @@ const MainCategory = () => {
     validationSchema: subCategorySchema,
     onSubmit: (values) => {
       terminal.request({ name: 'registerCategory', body: { categoryname: selected?.name, categoryslug: selected?.slug, subcategoryname: values?.name, subcategoryslug: values?.slug } }).then(res => {
-        res.status === false ? toaster({ type: 'error', message: res?.message }) : (toaster({type:'success',message: 'Sub Category Added'}),fetchData())
+        res.status === false ? toaster({ type: 'error', message: res?.message }) : (toaster({type:'success',message: 'Sub Category Added'}),subCategoryForm.resetForm(), fetchData())
       });
-
-
     },
   });
   useEffect(()=>{

@@ -56,9 +56,7 @@ const CustomerDetails = () => {
   useEffect(() => {
     fetchUsers();
   }, [customerId]);
-  useEffect(() => {
-    console.log(user)
-  }, [user]);
+
 
   return (
     <div className="px-5 h-full">

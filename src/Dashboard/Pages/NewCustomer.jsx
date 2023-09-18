@@ -9,9 +9,9 @@ import toaster from "../../Util/toaster";
 
 const NewCustomer = () => {
   useTitle("New Customer");
-  const draftHandler = () => {
-    console.log(customerForm.values)
-  };
+  // const draftHandler = () => {
+  //   console.log(customerForm.values)
+  // };
   const customerForm = useFormik({
     initialValues: {
       firstName: "",
@@ -184,7 +184,7 @@ const NewCustomer = () => {
           <div className="flex justify-between">
             <Button type="button" onClick={customerForm.handleReset} style="outline">Discard</Button>
             <div className="space-x-2">
-              <Button onClick={draftHandler} type="button" style="outline">Draft</Button>
+              {/* <Button onClick={draftHandler} type="button" style="outline">Draft</Button> */}
               <Button type="submit" style="primary">Publish</Button>
             </div>
           </div>

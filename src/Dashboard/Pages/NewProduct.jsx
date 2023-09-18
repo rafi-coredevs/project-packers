@@ -63,7 +63,6 @@ const NewProduct = () => {
       values.subcategory = selectedSubCategeory.id;
       const { images, ...rest } = values;
       removeEmptyFields(rest)
-      console.log(values)
       product
         ? terminal
           .request({

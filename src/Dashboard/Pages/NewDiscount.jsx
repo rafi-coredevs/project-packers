@@ -59,10 +59,7 @@ const NewDiscount = () => {
     discountForm.setFieldValue("coupon", coupon);
   }
   useTitle("New Discount");
-  const submitHandler = (e) => {
-    e.preventDefault();
-    console.log("update clicked");
-  };
+
 
   const discountForm = useFormik({
     initialValues: {

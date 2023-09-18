@@ -13,6 +13,7 @@ import { useFormik } from "formik";
 import { subCategorySchema } from "../../../Util/ValidationSchema";
 import { useEffect, useState } from "react";
 import { getApi } from "../../../Util/apiCall";
+import toaster from "../../../Util/toaster";
 
 const SubCategory = () => {
   const [categories, setCategories] = useState([]);
@@ -26,6 +27,7 @@ const SubCategory = () => {
     validationSchema: subCategorySchema,
     onSubmit: (values) => {
       values.id = selected.id;
+      subCategoryForm.resetForm();
     },
   });
 
@@ -34,7 +36,7 @@ const SubCategory = () => {
       if (res.status === 200) {
         setCategories(res.data.docs);
         setSelected(res.data.docs[0]);
-      } else console.log("something wents wrong");
+      } else toaster({type: 'error', message:"Something went wrong"});
     });
   }, []);
 

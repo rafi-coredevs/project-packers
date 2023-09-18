@@ -11,7 +11,6 @@ const Category = ({ data, reFetch }) => {
   };
 
   const handleCategory = (data) => {
-    console.log(data?.subcategory)
     setActive(data?.subcategory)
     reFetch(data)
   }
@@ -22,7 +21,6 @@ const Category = ({ data, reFetch }) => {
       reFetch({ category: category.id })
     }
   }
-  console.log(data)
   const lgCategory = <div className="flex flex-col gap-2">
     <h5 id='all' onClick={() => {handleCategory({}); setActive('all')}} className={`${active === 'all' ? 'text-[#3E949A]' : "text-[#475569]"} text-base font-sans font-semibold cursor-pointer`}>
       All Category
@@ -79,7 +77,7 @@ const Category = ({ data, reFetch }) => {
           </div>
           {expandedCategory === category.id && (
             <div className="ml-8 my-2">
-              <ul className=" flex gap-2 flex-col list-disc">
+              <ul className="flex gap-2 flex-col list-disc">
                 {category.subcategory.map((subcategory) => (
                   <li onClick={() => handleCategory({ category: category.id, subcategory: subcategory.id })} className="text-[#475569] text-base font-normal cursor-pointer" key={subcategory.slug}>{subcategory.name}</li>
                 ))}

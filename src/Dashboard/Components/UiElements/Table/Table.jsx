@@ -78,7 +78,7 @@ const Table = ({ data, paginate, loading, dashboardToogle, modalHandler, getData
       document.getElementById('headerCheckbox').checked = false;
       setSelectItem([]);
       setSelectCategory([])
-  },[data])
+  },[loading])
   const checkboxHandler = (status) => {
     const ele = document.getElementsByName('check');
     if (status.target.checked) {

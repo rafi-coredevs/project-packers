@@ -17,12 +17,12 @@ const Discount = () => {
   useTitle("Active Discounts");
   const [active, setActive] = useState("all");
   const [tableData, setTableData] = useState(null);
-  const [loading,setLoading]= useState(false);
-  const [sortBy,setSortby]=useState('createdAt:desc');
+  const [loading, setLoading] = useState(false);
+  const [sortBy, setSortby] = useState('createdAt:desc');
   const [selectedDiscountStatus, setSelectedDiscountStatus] = useState({ name: 'Select', value: null, id: 0 });
 
   function discountStatusHandler(id) {
-    const  selected = discountStatuses.find(item => item.id === id)
+    const selected = discountStatuses.find(item => item.id === id)
     setSelectedDiscountStatus(selected);
     setActive(selected.value)
   }
@@ -32,24 +32,24 @@ const Discount = () => {
   };
 
   useEffect(() => {
-    
+
     fetchData();
 
   }, [active, sortBy]);
 
   const fetchData = (page = 1) => {
     setLoading(true);
-    terminal.request({ name: 'allDiscount', queries: { page,filter: active , sortBy} }).then((res) => {
+    terminal.request({ name: 'allDiscount', queries: { page, filter: active, sortBy } }).then((res) => {
       res.status === false ? '' : setTableData(res), setLoading(false);
     });
   };
 
-  const searchHandler = (e) =>{
-    if(e.target.value != ""){
-      terminal.request({name: 'allDiscount', queries:{ search: e.target.value} }).then((res) => {
+  const searchHandler = (e) => {
+    if (e.target.value != "") {
+      terminal.request({ name: 'allDiscount', queries: { search: e.target.value } }).then((res) => {
         res.status === false ? '' : setTableData(res), setLoading(false);
       });
-    }else{
+    } else {
       fetchData();
     }
   }
@@ -74,34 +74,32 @@ const Discount = () => {
                 </button>
                 <button
                   onClick={() => tableButtonHandler("valid")}
-                  className={`py-2 px-3 text-[#475569] text-xs font-semibold ${
-                    active === "valid"
+                  className={`py-2 px-3 text-[#475569] text-xs font-semibold ${active === "valid"
                       ? "bg-[#CFF6EF] rounded"
                       : "bg-transparent"
-                  }`}
+                    }`}
                 >
                   Valid
                 </button>
                 <button
                   onClick={() => tableButtonHandler("expired")}
-                  className={`py-2 px-3 text-[#475569] text-xs font-semibold ${
-                    active === "expired"
+                  className={`py-2 px-3 text-[#475569] text-xs font-semibold ${active === "expired"
                       ? "bg-[#CFF6EF] rounded"
                       : "bg-transparent"
-                  }`}
+                    }`}
                 >
                   Expired
                 </button>
-               
+
               </div>
               <div className="py-2 flex gap-1">
                 <Input type="text" placeholder="Search" styles="secondary" change={searchHandler}>
                   <img src={search} alt="" />
                 </Input>
                 <div className="flex">
-                <CustomSelect value={selectedDiscountStatus.name} options={discountStatuses} onChange={discountStatusHandler} bg="white" appearance="filter" />
-             </div>
-             
+                  <CustomSelect value={selectedDiscountStatus.name} options={discountStatuses} onChange={discountStatusHandler} bg="white" appearance="filter" />
+                </div>
+
                 <button onClick={() => setSortby(sortBy === 'createdAt:desc' ? 'createdAt:asc' : 'createdAt:desc')} className="border border-[#0000001f] p-2  ">
                   <img className="opacity-70" src={sort} alt="" />
                 </button>
