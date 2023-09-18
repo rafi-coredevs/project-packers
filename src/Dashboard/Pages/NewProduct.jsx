@@ -19,6 +19,7 @@ import { useTitle } from "../../Components/Hooks/useTitle";
 import UploadIcon from "../../assets/icons/UploadIcon.svg";
 import ProductImageUpload from "../Components/uploadImages/ProductImageUpload/ProductImagesUpdate";
 import CustomSelect from "../../Components/UiElements/Input/CustomSelect";
+import removeEmptyFields from "../../Util/removeEmptyFields";
 
 const NewProduct = () => {
   useTitle("New Product");
@@ -29,7 +30,7 @@ const NewProduct = () => {
   const [selectedCategeory, setSelectedCategory] = useState(null);
   const [selectedSubCategeory, setselectedSubCategeory] = useState(null);
   const [preLoadedImages, setPreLoadedImages] = useState([]);
-
+  const navigate = useNavigate();
   // formik and handleSubmit
   const productForm = useFormik({
     initialValues: {
@@ -37,7 +38,7 @@ const NewProduct = () => {
       description: "",
       price: "",
       category: "",
-      subcategory:"",
+      subcategory: "",
       tax: "",
       fee: "",
       quantity: "",
@@ -49,24 +50,26 @@ const NewProduct = () => {
     },
     validationSchema: productSchema,
     onSubmit: (values) => {
-      if(productForm.values.category === ""){
-        productForm.setFieldError('category',"select category")
+      if (productForm.values.category === "") {
+        productForm.setFieldError('category', "select category")
         return;
       }
-      if(productForm.values.subcategory === ""){
-        productForm.setFieldError('subcategory',"select category")
+      if (productForm.values.subcategory === "") {
+        productForm.setFieldError('subcategory', "select category")
         return;
       }
       values.status = btnType;
       values.category = selectedCategeory.id;
       values.subcategory = selectedSubCategeory.id;
       const { images, ...rest } = values;
+      removeEmptyFields(rest)
+      console.log(values)
       product
         ? terminal
           .request({
             name: "updateProduct",
             params: { id: product?.id },
-            body: { data: rest, images: images },
+            body: { data: rest, ...(images?.length && { images })  },
           })
           .then((res) =>
             res?.status === false
@@ -80,15 +83,15 @@ const NewProduct = () => {
         : terminal
           .request({
             name: "registerProduct",
-            body: { data: rest, images: images },
+            body: { data: rest, ...(images.length && { images }) },
           })
           .then((res) =>
             res?.status === false
               ? toaster({ type: "success", message: res.message })
-              : (toaster({
+              : toaster({
                 type: "success",
                 message: "Product successfully added",
-              }), productForm.resetForm()),
+              }), productForm.resetForm(), setTimeout(() => { navigate(-1) }, 3000),
 
           );
     },
@@ -169,7 +172,6 @@ const NewProduct = () => {
       setselectedSubCategeory(null);
     }
   }, [selectedCategeory, product]);
-
   return (
     <div className="h-full px-5">
       <Heading type="navigate" title="Add New Product" back="Products" />
@@ -233,7 +235,7 @@ const NewProduct = () => {
                 options={selectedCategeory?.subcategory}
                 onChange={subcategorySelector}
                 value={selectedSubCategeory?.name}
-                error={ productForm.errors.subcategory ? true : false}
+                error={productForm.errors.subcategory ? true : false}
               />
 
               <Input

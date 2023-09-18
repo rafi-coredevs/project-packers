@@ -5,43 +5,47 @@ import arrow from '../../../assets/icons/cd-arrow-right-2.svg';
 const Category = ({ data, reFetch }) => {
   const [expandedCategory, setExpandedCategory] = useState(null);
   const [categoryHandler, setCategoryHandler] = useState(false)
+  const [active, setActive] = useState('all')
   const toggleSubCategories = (categoryId) => {
     setExpandedCategory((prev) => (prev === categoryId ? null : categoryId));
   };
 
   const handleCategory = (data) => {
+    console.log(data?.subcategory)
+    setActive(data?.subcategory)
     reFetch(data)
   }
 
   const handleCategoryFetch = (category) => {
+    
     if (category.subcategory.length === 0) {
       reFetch({ category: category.id })
     }
   }
-
+  console.log(data)
   const lgCategory = <div className="flex flex-col gap-2">
-    <h5 onClick={() => handleCategory({})} className="text-[#3E949A] text-base font-sans font-semibold cursor-pointer">
+    <h5 id='all' onClick={() => {handleCategory({}); setActive('all')}} className={`${active === 'all' ? 'text-[#3E949A]' : "text-[#475569]"} text-base font-sans font-semibold cursor-pointer`}>
       All Category
     </h5>
     {data?.map((category, i) => (
       <div key={i} className="category">
 
         <div
-          className={`text-[#475569] text-base font-normal cursor-pointer flex justify-between category-name ${category?.subcategory?.length > 0 ? "collapsible" : ""
+          className={` text-base font-normal cursor-pointer flex justify-between category-name ${category?.subcategory?.length > 0 ? "collapsible" : ""
             }`}
           onClick={() => toggleSubCategories(category.id)}
         >
-          <p className="" onClick={() => handleCategoryFetch(category)}>
+        <p className={`${active === category.id ? 'text-[#3E949A]' : "text-[#475569]"}`} onClick={() =>{ handleCategoryFetch(category); setActive(category?.id)}}>
 
             {category.name}
           </p>
           {category?.subcategory?.length > 0 && <img src={arrow} className={expandedCategory === category.id ? 'rotate-90' : 'rotate-0'} />}
         </div>
-        {expandedCategory === category.id && (
+        {(expandedCategory === category.id && category?.subcategory?.length != 0) && (
           <div className="ml-8 my-2">
             <ul className=" flex gap-2 flex-col list-disc">
               {category.subcategory.map((subcategory) => (
-                <li onClick={() => handleCategory({ category: category.id, subcategory: subcategory.id })} className="text-[#475569] text-base font-normal cursor-pointer" key={subcategory.slug}>{subcategory.name}</li>
+                <li onClick={() => handleCategory({ category: category.id, subcategory: subcategory.id })} className={`${active === subcategory.id ? 'text-[#3E949A]' : 'text-[#475569]' } text-base font-normal cursor-pointer`} key={subcategory.slug}>{subcategory.name}</li>
               ))}
             </ul>
           </div>

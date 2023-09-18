@@ -25,13 +25,13 @@ export const signupSchema = object({
 	fullName: string().required(),
 	email: string().email().required('Please enter your email address.'),
 	phone: string().min(6, 'Invalid Phone Number').max(20).required('Please enter your phone number'),
-	password: string()
+	password: string().matches(
+		/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$%^&+=!]).*$/,
+		'required A-Z, a-z, 0-9, special character',
+	)
 		.min(8)
 		.max(16)
-		.matches(
-			/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$%^&+=!])(?=.{8,16}).*$/,
-			'required A-Z, a-z, 0-9, special character',
-		)
+		
 		.required('Password Can not be Empty'),
 });
 

@@ -287,12 +287,12 @@ const OrderDetails = () => {
 												<span className='py-2 px-8 lazy-loading'></span>
 											</td>
 											<td className='py-2 text-right'>
-												<button
+												{/* <button
 													className='pe-3'
 													onClick={() => console.log('first')}
 												>
 													<div className='h-4 w-4 lazy-loading' />
-												</button>
+												</button> */}
 											</td>
 										</tr>
 									) : (
@@ -349,7 +349,7 @@ const OrderDetails = () => {
 
 															{/* close */}
 															<td className='py-2 text-right'>
-																<button
+																{/* <button
 																	className='pe-3'
 																	onClick={() => console.log('first')}
 																>
@@ -358,7 +358,7 @@ const OrderDetails = () => {
 																		src={remove}
 																		alt=''
 																	/>
-																</button>
+																</button> */}
 															</td>
 														</tr>
 													);
@@ -415,7 +415,7 @@ const OrderDetails = () => {
 
 															{/* close */}
 															<td className='py-2 text-right'>
-																<button
+																{/* <button
 																	className='pe-3'
 																	onClick={() => console.log('first')}
 																>
@@ -424,7 +424,7 @@ const OrderDetails = () => {
 																		src={remove}
 																		alt=''
 																	/>
-																</button>
+																</button> */}
 															</td>
 														</tr>
 													);
