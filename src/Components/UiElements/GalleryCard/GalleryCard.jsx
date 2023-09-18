@@ -31,7 +31,7 @@ const GalleryCard = ({ data }) => {
       <aside className="w-1/4 rounded-xl  h-full flex flex-col gap-4 overflow-auto no-scrollbar">
         {data?.map((item, i) => imgFn(item, i))}
       </aside>
-      <aside className="w-full h-full border rounded-xl flex-1 overflow-hidden flex items-center justify-center">
+      <aside className="w-full h-full border rounded-xl flex-1  flex items-center justify-center">
         <img
           className="h-full  p-4 duration-500 hover:scale-105 object-contain "
           onLoad={handleLoading} onError={handleError}
