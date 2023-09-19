@@ -1,4 +1,4 @@
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import PriceCard from "../Components/PriceCard/PriceCard";
 import Showcase from "../Components/Showcase/Showcase";
 import Breadcrumb from "../Components/UiElements/Breadcrumb/Breadcrumb";
@@ -8,11 +8,14 @@ import { terminal } from "../contexts/terminal/Terminal";
 import { useTitle } from "../Components/Hooks/useTitle";
 import toaster from "../Util/toaster";
 import { useCartCtx } from "../contexts/cart/CartContext";
+import { useUserCtx } from "../contexts/user/UserContext";
 
 const Product = () => {
+  const {user} = useUserCtx();
+  const navigate = useNavigate();
   const product = useLoaderData();
   useTitle(product?.name);
-  const { getCart } = useCartCtx()
+  const { getCart } = useCartCtx();
   const [relatedProduct, setrelatedProduct] = useState([]);
   useEffect(() => {
     terminal
@@ -29,14 +32,30 @@ const Product = () => {
       });
   }, [product]);
   const requsetItemHandler = () => {
-    terminal.request({ name: 'registerCart', body: { products: [{ product: product.id, productQuantity: 1 }] } }).then(data => {
-      if (data.id) {
-        toaster({ type: 'success', message: 'Added to cart' })
-        getCart()
-        return
+    const width = window.screen.width;
+
+    if (user) {
+      terminal.request({ name: 'registerCart', body: { products: [{ product: product.id, productQuantity: 1 }] } }).then(data => {
+        if (data.id) {
+          toaster({ type: 'success', message: 'Added to cart' })
+          getCart()
+          return
+        }
+        toaster({ type: 'error', message: data.message || 'An error occured. Please try again later' })
+      })
+    } else {
+      // checking devices
+      if (width > 767) {
+        // setIsOpen(false);
+        navigate('/login' );
+      } else {
+        // setIsOpen(false);
+        // setLoginModal(true);
+        // setRequestData({ data: rest, images: images });
+        console.log("mobile view")
       }
-      toaster({ type: 'error', message: data.message || 'An error occured. Please try again later' })
-    })
+    }
+    
   };
 
   return (

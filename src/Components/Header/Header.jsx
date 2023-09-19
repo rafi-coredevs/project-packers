@@ -98,7 +98,7 @@ const Header = ({ sideBar, state }) => {
 
 	// Listen for real-time notifications via socket
 	useEffect(() => {
-		terminal.socket.on('notification', (data) => {
+		user?.id && terminal.socket.on('notification', (data) => {
 			if (data.logout) {
 				Logout();
 				navigate('/');

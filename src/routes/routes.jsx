@@ -53,15 +53,15 @@ export const router = createBrowserRouter([
       },
       {
         path: "/login",
-        element: <ProtectedRoute accessTo="login"><Login /></ProtectedRoute>,
+        element: <Login />,
       },
       {
         path: "/reset",
-        element: <ProtectedRoute accessTo="recover"><Recovery /></ProtectedRoute>,
+        element: <Recovery />,
       },
       {
         path: "/signup",
-        element: <ProtectedRoute accessTo="signup"><Signup /></ProtectedRoute>,
+        element:<Signup />,
       },
       {
         path: "/shop",

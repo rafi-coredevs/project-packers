@@ -5,7 +5,6 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Button from '../Components/UiElements/Buttons/Button';
 import google from '../assets/icons/google-icon.svg';
 import facebook from '../assets/icons/facebook.svg';
-import apple from '../assets/icons/apple.svg';
 import { useUserCtx } from '../contexts/user/UserContext';
 import toaster from '../Util/toaster';
 import { terminal } from '../contexts/terminal/Terminal';
