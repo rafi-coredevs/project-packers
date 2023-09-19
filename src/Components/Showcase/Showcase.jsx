@@ -10,17 +10,18 @@ const Showcase = ({ type, title, description, data }) => {
       <Heading title={title} description={description} />
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {data?.slice(0, item).map((item,i) => {
-          return (
-            <ProductCard
-            key={i}
-            id={item?.id}
-            img={item?.images[0]}
-            title={item?.name}
-            price={item?.price + item?.tax + item?.fee}
-            isShop={false}
-            />
-          );
-        })}
+            return (
+              <ProductCard
+              key={i}
+              id={item?.id}
+              img={item?.images[0]}
+              title={item?.name}
+              price={item?.price + item?.tax + item?.fee}
+              isShop={false}
+              />
+              );
+            }
+        )}
       </div>
       {type !== "slide" && (
         <div className="mt-8">

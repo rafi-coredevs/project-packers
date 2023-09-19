@@ -19,6 +19,7 @@ const Product = () => {
       .request({
         name: "allProduct",
         query: {
+          status: 'active',
           category: product?.category?.id,
           subcategory: product?.subcategory,
         },
