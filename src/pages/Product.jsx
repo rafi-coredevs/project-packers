@@ -3,6 +3,7 @@ import PriceCard from "../Components/PriceCard/PriceCard";
 import Showcase from "../Components/Showcase/Showcase";
 import Breadcrumb from "../Components/UiElements/Breadcrumb/Breadcrumb";
 import GalleryCard from "../Components/UiElements/GalleryCard/GalleryCard";
+import LoginModal from "../Components/MobileModal/LoginModal";
 import { useEffect, useState } from "react";
 import { terminal } from "../contexts/terminal/Terminal";
 import { useTitle } from "../Components/Hooks/useTitle";
@@ -17,6 +18,7 @@ const Product = () => {
   useTitle(product?.name);
   const { getCart } = useCartCtx();
   const [relatedProduct, setrelatedProduct] = useState([]);
+  const [loginMoadal, setLoginModal]  = useState(false);
   useEffect(() => {
     terminal
       .request({
@@ -47,10 +49,14 @@ const Product = () => {
       // checking devices
       if (width > 767) {
         // setIsOpen(false);
-        navigate('/login' );
+        navigate('/login', {
+          state:{
+            afterLogin: `/shop/${product?.id}`         
+           }
+        });
       } else {
         // setIsOpen(false);
-        // setLoginModal(true);
+        setLoginModal(true);
         // setRequestData({ data: rest, images: images });
         console.log("mobile view")
       }
@@ -97,6 +103,7 @@ const Product = () => {
             {/* <Slider items={relatedProduct} /> */}
           </div>
         </div>
+        <LoginModal ModalActiveScreen='account' show={loginMoadal} onClose={()=> setLoginModal(false)} />
       </main>
     </>
   );
