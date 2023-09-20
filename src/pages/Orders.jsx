@@ -167,13 +167,13 @@ const Orders = () => {
                             </tr>)
                           }
                           {
-                            !loading && order?.length <= 0 ? <td colSpan={6}>
+                            !loading && order?.length <= 0 ? <tr><td colSpan={6}>
                               <div className="flex w-full h-full items-center justify-center text-xl font-semibold text-black mt-10">
                                 <p>
                                   No Orders Available
                                 </p>
                               </div>
-                            </td> :
+                            </td></tr> :
                               order?.map(item => {
                                 const formattedDate = new Intl.DateTimeFormat('en-US', {
                                   year: 'numeric',
