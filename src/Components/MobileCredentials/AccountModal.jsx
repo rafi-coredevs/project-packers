@@ -57,9 +57,9 @@ const AccountModal = ({ stateHandler, onClose }) => {
 				</div>
 			</div>
 			<div className='flex gap-5 justify-center'>
-			<Link to={`${import.meta.env.VITE_SERVER_URL}/login/google`}><img className='bg-white p-5 rounded-full' src={google} alt='' /></Link>
+			<button onClick={()=> window.location.href=`${import.meta.env.VITE_SERVER_URL}/login/google`}><img className='bg-white p-5 rounded-full' src={google} alt='' /></button>
 			<Link to={`${import.meta.env.VITE_SERVER_URL}/login/facebook`}><img className='bg-white p-5 rounded-full' src={facebook} alt='' /></Link>
-				<img className='bg-white p-5 rounded-full' src={apple} alt='' />
+				{/* <img className='bg-white p-5 rounded-full' src={apple} alt='' /> */}
 			</div>
 			<div className='grid gap-5 text-sm text-white'>
 				<p className='text-center'>or use your email</p>

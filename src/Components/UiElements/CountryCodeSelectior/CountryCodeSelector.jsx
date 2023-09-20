@@ -10,9 +10,9 @@ const CountryCodeSelector = ({ setCountryCode, error }) => {
 	};
 
 	return (
-		<div className={`flex gap-2 border-r h-full border-[#E2E8F0]  `}>
+		<div className={`flex gap-2 border-r h-full w-full border-[#E2E8F0]  `}>
 			<select
-				className='bg-transparent border-none focus:outline-none w-[5rem] cursor-pointer'
+				className='bg-transparent border-none focus:outline-none w-[6rem] h-[2rem] cursor-pointer'
 				onChange={handleChange}
 				name='code'
 				id='code'
