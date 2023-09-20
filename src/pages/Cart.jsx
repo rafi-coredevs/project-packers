@@ -159,7 +159,7 @@ const Cart = () => {
             <img className="h-40 md:h-72" src={emptyCart} />
             <p className="text-center sm:text-2xl font-bold">Currently there are no items in your cart</p>
             <Link to={'/shop'}>
-              <Button type="primary" full className='px-20'>
+              <Button type="primary"  full={true} className='px-20'>
                 Keep Shopping
               </Button>
             </Link>
