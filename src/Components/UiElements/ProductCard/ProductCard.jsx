@@ -84,13 +84,13 @@ export const ProductCard = ({
 							{title}
 						</h3>
 						<div
-							className={`text-left flex lg:justify-between lg:items-center mt-4 text-base
+							className={`text-left flex gap-2 justify-between items-center mt-4 text-base
             ${isShop ? 'flex-col lg:flex-row' : 'flex-row'}`}
 						>
-							<p className='text-slate-600 text-base font-medium'>
+							<p className='text-slate-600 text-xs md:text-base font-medium'>
 								Retailer price
 							</p>
-							<p className='font-bold text-secondary lg:text-xl leading-6 tracking-[-0.0225rem]'>
+							<p className='font-bold text-secondary shrink-0 lg:text-xl leading-6 tracking-[-0.0225rem]'>
 								{price} TK
 							</p>
 						</div>
