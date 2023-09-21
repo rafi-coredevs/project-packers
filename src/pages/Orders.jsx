@@ -86,7 +86,7 @@ const Orders = () => {
   }
 
   function deleteOrderItem(id) {
-    console.log('order id ', id);
+   
     terminal.request({ name: "deleteOrder", body: { id } }).then((res) => {
       res.status === true ? (toaster({ type: "success", message: res.message }), fetchData()) : (toaster({ type: "error", message: res.message }));
     });
@@ -167,13 +167,13 @@ const Orders = () => {
                             </tr>)
                           }
                           {
-                            !loading && order?.length <= 0 ? <td colSpan={6}>
+                            !loading && order?.length <= 0 ? <tr><td colSpan={6}>
                               <div className="flex w-full h-full items-center justify-center text-xl font-semibold text-black mt-10">
                                 <p>
                                   No Orders Available
                                 </p>
                               </div>
-                            </td> :
+                            </td></tr> :
                               order?.map(item => {
                                 const formattedDate = new Intl.DateTimeFormat('en-US', {
                                   year: 'numeric',

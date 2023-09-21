@@ -21,7 +21,6 @@ const Messages = ({ activeChat, chatCardHandler, setSupportData }) => {
     const [loading, setLoading] = useState(false)
     const [page, setPage] = useState(1)
     const [totalPage, setTotalPage] = useState(null)
-
     useEffect(() => {
         setLoading(true)
         setModal(true)
@@ -36,6 +35,7 @@ const Messages = ({ activeChat, chatCardHandler, setSupportData }) => {
                 data.id && setMessages(prev => [data, ...prev])
             })
         }
+       
         return () => {
             terminal.socket.emit('entry', { "entry": false, "room": activeChat.id })
             terminal.socket.off('message')
@@ -113,7 +113,7 @@ const Messages = ({ activeChat, chatCardHandler, setSupportData }) => {
                             {activeChat.type}
                         </p>
                     </div>
-                    <p className="text-sm font-medium">{activeChat.number}</p>
+                    <p className="text-sm font-medium">Order Id# <span>{activeChat.number}</span></p>
                 </div>
                 <div>
                     {
@@ -123,11 +123,11 @@ const Messages = ({ activeChat, chatCardHandler, setSupportData }) => {
                     }
                 </div>
             </div >
-            <div className="px-8 py-2 relative h-[calc(100vh-215px)]  w-full">
+            <div className="px-8 py-2 relative  h-[calc(100vh-215px)]  w-full">
                 {
                     loading &&
-                    <div className='absolute flex w-full justify-center text-primary'>
-                        <img src={loader} alt="" className='animate-spin' />
+                    <div className='absolute flex w-[90%] h-full justify-center items-center text-primary  overflow-x-hidden'>
+                        <img src={loader} alt="" className='animate-spin h-12 w-12' />
                     </div>
                 }
                 <div ref={messageBody} onScroll={handleScroll} className="h-full overflow-y-auto flex  flex-col-reverse gap-12 pb-2 scrollbar">
@@ -144,7 +144,7 @@ const Messages = ({ activeChat, chatCardHandler, setSupportData }) => {
                             />)
                     }
                 </div>
-                <form onSubmit={handleSubmit} className="p-2 border border-[#0000002a] rounded bg-white">
+                {activeChat?.status !== 'close' ?<form onSubmit={handleSubmit} className="p-2 border border-[#0000002a] rounded bg-white">
                     <div className="w-full flex overflow-hidden">
                         <input
                             className="outline-none w-full"
@@ -163,7 +163,7 @@ const Messages = ({ activeChat, chatCardHandler, setSupportData }) => {
                             />
                         </button>
                     </div>
-                </form>
+                </form> : <p className='text-center text-red-400'>This chat has been closed</p>}
             </div>
         </>
     );

@@ -13,7 +13,7 @@ const Home = () => {
   useTitle("Home")
   const [products, setProducts] = useState([]);
   useEffect(() => {
-    terminal.request({name: 'allProduct', queries : { limit: 8}})
+    terminal.request({name: 'allProduct', queries : {status: 'active',  limit: 8}})
     .then(res=> {
       setProducts(res?.docs);
     }).catch((err)=>console.error("Error in home", err ));

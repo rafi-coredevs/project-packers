@@ -3,49 +3,8 @@
  * order details page
  * @returns JSX Element
  */
-const DUMMY_DATA = {
 
-	orderId: 1234,
-	name: 'Jhon Doe',
-	email: "example@domain.com",
-	phone: +8801743986617,
-	address: '101 E. Chapman Ave Orange, CA 92866',
-	date: new Date(),
-	products: [{
-		title: 'Iphone 12 pro',
-		quantity: 12,
-		price: 599,
-	},
-	{
-		title: 'Iphone 12 ',
-		quantity: 1,
-		price: 369,
-	},
-	{
-		title: 'Iphone 12 ',
-		quantity: 1,
-		price: 369,
-	},
-	{
-		title: 'Iphone 12 ',
-		quantity: 1,
-		price: 369,
-	},
-	{
-		title: 'Iphone 12 ',
-		quantity: 1,
-		price: 369,
-	},
-	{
-		title: 'samsung s20 Ultra samsung s20 Ultra samsung s20 Ultra',
-		quantity: 2,
-		price: 499,
-	}],
-	total: 12000,
-	paid: 7590,
-	notes: 'Please pack carefully. its a Glass product'
-}
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { useTitle } from '../../Components/Hooks/useTitle';
@@ -67,64 +26,6 @@ const OrderDetails = () => {
 	const [selectedOrderStatus, setSelectedOrderStatus] = useState({});
 	const [invoiceData, setInvoiceData] = useState({})
 
-	useEffect(()=>{
-		// console.log(order)
-		const data = {
-			orderId: order?.orderNumber,
-			name: order?.user?.fullName,
-			email: order?.user?.email,
-			phone: order?.user?.phone,
-			address: `${order?.shippingaddress?.address}, ${order?.shippingaddress?.area}, ${order?.shippingaddress?.city}` ,	
-			date: new Date(),
-			products:order?.products,
-			request: order?.request,
-			notes: '',
-			total: order?.total
-		}
-		setInvoiceData(data);
-		// console.log(data)
-	},[order])
-	// formik initailization
-	const odrerForm = useFormik({
-		initialValues: {
-			status: '',
-			address: '',
-			city: '',
-			area: '',
-			zip: '',
-		},
-	});
-
-	// for status
-	const orderStatuses = [
-		{ id: 1, name: 'Completed', value: 'completed' },
-		{ id: 2, name: 'Pending', value: 'pending' },
-		{ id: 3, name: 'Processing', value: 'processing' },
-		{ id: 4, name: 'Shipping', value: 'shipping' },
-		{ id: 5, name: 'cancelled', value: 'cancelled' },
-		{ id: 6, name: 'Paid', value: 'paid' },
-		{ id: 7, name: 'Refunded', value: 'refunded' },
-		{ id: 8, name: 'RefundProcessing', value: 'refundProcessing' },
-	];
-
-	/**
-	 * Handles selecting an order status.
-	 * @param {number} id - The ID of the selected status.
-	 */
-	function orderStatusHandler(id) {
-		const newStatus = orderStatuses.find((item) => item.id === id); // Find the selected order status by id
-		odrerForm.setFieldValue('status', newStatus.value);
-		setSelectedOrderStatus(newStatus);
-	}
-
-	// Fetch order data when the component mounts
-	useEffect(() => {
-		fetchData();
-	}, []);
-
-	/**
-	 * Fetches order data from the API and populates the form.
-	 */
 	const fetchData = () =>
 		terminal
 			.request({ name: 'singleOrder', params: { id: orderId } })
@@ -150,6 +51,46 @@ const OrderDetails = () => {
 				}
 			})
 			.catch((err) => console.error('error when page loaded', err));
+
+	// Fetch order data when the component mounts
+	useEffect(() => {
+		fetchData();
+
+	}, []);
+
+	// formik initailization
+	const odrerForm = useFormik({
+		initialValues: {
+			status: '',
+			address: '',
+			city: '',
+			area: '',
+			zip: '',
+		},
+	});
+
+	// for status
+	const orderStatuses = [
+		{ id: 1, name: 'Completed', value: 'completed' },
+		{ id: 2, name: 'Pending', value: 'pending' },
+		{ id: 3, name: 'Processing', value: 'processing' },
+		{ id: 4, name: 'Shipping', value: 'shipping' },
+		{ id: 5, name: 'Cancelled', value: 'cancelled' },
+		{ id: 6, name: 'Paid', value: 'paid' },
+		{ id: 7, name: 'Refunded', value: 'refunded' },
+		{ id: 8, name: 'Refund Processing', value: 'refundProcessing' },
+	];
+
+	/**
+	 * Handles selecting an order status.
+	 * @param {number} id - The ID of the selected status.
+	 */
+	function orderStatusHandler(id) {
+		const newStatus = orderStatuses.find((item) => item.id === id); // Find the selected order status by id
+		odrerForm.setFieldValue('status', newStatus.value);
+		setSelectedOrderStatus(newStatus);
+	}
+
 
 	/**
 	 * Handles updating the order details.
@@ -221,13 +162,70 @@ const OrderDetails = () => {
 	const generatePdf = async () => {
 		const btn = document.getElementById('invoice')
 		btn.firstChild.click();
-		
-	};
 
+	};
+	const feesCalculation = () => {
+		const packers = order?.products?.reduce(
+			(accumulator = 0, product) =>
+				accumulator +
+				product?.productQuantity * product?.product?.fee,
+			0,
+		) +
+			order?.requests?.reduce(
+				(accumulator = 0, request) =>
+					accumulator +
+					request?.requestQuantity * request?.request?.fee,
+				0,
+			)
+
+	}
+	useEffect(() => {
+		feesCalculation()
+		const data = {
+			orderId: order?.orderNumber,
+			name: order?.user?.fullName,
+			email: order?.user?.email,
+			phone: order?.user?.phone,
+			address: `${order?.shippingaddress?.address}, ${order?.shippingaddress?.area}, ${order?.shippingaddress?.city}`,
+			date: new Date(),
+			products: order?.products || [],
+			request: order?.requests || [],
+			notes: order?.instructions || '',
+			total: order?.total,
+
+		}
+		setInvoiceData(data);
+
+	}, [order])
 	return (
 		<div className='px-5 h-full'>
-			<div className="absolute bottom-[500rem]">  
-			<Invoice data={invoiceData} />
+			<div className="absolute bottom-[500rem]">  {/*absolute bottom-[500rem] */}
+				<Invoice data={invoiceData} shipping={(order?.insideDhaka ? 99 : 199) || 0} discount={(order?.discountApplied?.amount ||
+					order?.discountApplied?.percentage
+					? order?.discountApplied?.percentage + ' %'
+					: 0) || 0} tax={order?.products?.reduce(
+						(accumulator = 0, product) =>
+							accumulator +
+							product?.productQuantity * product?.product?.tax,
+						0,
+					) +
+						order?.requests?.reduce(
+							(accumulator = 0, request) =>
+								accumulator +
+								request?.requestQuantity * request?.request?.tax,
+							0,
+						) || 0} fees={order?.products?.reduce(
+						(accumulator = 0, product) =>
+							accumulator +
+							product?.productQuantity * product?.product?.fee,
+						0,
+					) +
+					order?.requests?.reduce(
+						(accumulator = 0, request) =>
+							accumulator +
+							request?.requestQuantity * request?.request?.fee,
+						0,
+					)} />
 			</div>
 			<Heading type='navigate' title={`#${order?.orderNumber || ""}`} back={'All Order'}>
 				<div className='flex items-center gap-1'>
@@ -289,12 +287,12 @@ const OrderDetails = () => {
 												<span className='py-2 px-8 lazy-loading'></span>
 											</td>
 											<td className='py-2 text-right'>
-												<button
+												{/* <button
 													className='pe-3'
 													onClick={() => console.log('first')}
 												>
 													<div className='h-4 w-4 lazy-loading' />
-												</button>
+												</button> */}
 											</td>
 										</tr>
 									) : (
@@ -318,7 +316,7 @@ const OrderDetails = () => {
 																			'/' +
 																			product?.product?.images[0]
 																		}
-																	
+
 																		alt=''
 																	/>
 																	<div className=''>
@@ -351,7 +349,7 @@ const OrderDetails = () => {
 
 															{/* close */}
 															<td className='py-2 text-right'>
-																<button
+																{/* <button
 																	className='pe-3'
 																	onClick={() => console.log('first')}
 																>
@@ -360,7 +358,7 @@ const OrderDetails = () => {
 																		src={remove}
 																		alt=''
 																	/>
-																</button>
+																</button> */}
 															</td>
 														</tr>
 													);
@@ -417,7 +415,7 @@ const OrderDetails = () => {
 
 															{/* close */}
 															<td className='py-2 text-right'>
-																<button
+																{/* <button
 																	className='pe-3'
 																	onClick={() => console.log('first')}
 																>
@@ -426,7 +424,7 @@ const OrderDetails = () => {
 																		src={remove}
 																		alt=''
 																	/>
-																</button>
+																</button> */}
 															</td>
 														</tr>
 													);
@@ -492,18 +490,20 @@ const OrderDetails = () => {
 								</button>
 								<p className=''>
 									৳
-									{order?.products?.reduce(
-										(accumulator = 0, product) =>
-											accumulator +
-											product?.productQuantity * product?.product?.fee,
-										0,
-									) +
+									{
+										order?.products?.reduce(
+											(accumulator = 0, product) =>
+												accumulator +
+												product?.productQuantity * product?.product?.fee,
+											0,
+										) +
 										order?.requests?.reduce(
 											(accumulator = 0, request) =>
 												accumulator +
 												request?.requestQuantity * request?.request?.fee,
 											0,
-										) || 0}
+										)
+									}
 								</p>
 							</div>
 

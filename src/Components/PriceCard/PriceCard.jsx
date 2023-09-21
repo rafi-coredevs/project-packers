@@ -159,7 +159,7 @@ const PriceCard = ({
           : "Continue to Payment"}
       </Button>
       {type === "product" && (
-        <div className="mt-12 py-4 ">
+        <div className="mt-3 py-4 ">
           <div className="flex gap-2">
             <img src={stamp} alt="" />
             <p className="font-semibold text-secondary">

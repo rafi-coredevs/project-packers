@@ -46,13 +46,14 @@ const StaffModal = ({ setModal, user }) => {
                     </div>
                 </div>
                 <div className='flex-shrink min-w-[12rem]'>
-                <CustomSelect value={selectedRole.name} bg="white" options={roleOptions} onChange={selectedRoleHandler} appearance={"select"} />
+                    <CustomSelect value={selectedRole.name} bg="white" options={roleOptions} onChange={selectedRoleHandler} appearance={"select"} />
                 </div>
-                </div>
+            </div>
             <div className="p-5 grid gap-4 items-start">
                 <div className="space-x-2">
                     <input
                         checked={access.includes('support')}
+                        id='support'
                         onChange={(e) => {
                             if (e.target.checked) {
                                 setAccess(prev => [...prev, 'support'])
@@ -64,13 +65,14 @@ const StaffModal = ({ setModal, user }) => {
                         className="accent-yellow-500"
                         type="checkbox"
                     />
-                    <label htmlFor="" className="text-[#4F4F4F] font-normal">
-                        Support ticket / life chat
+                    <label htmlFor="support" className="text-[#4F4F4F] font-normal">
+                        Support ticket / live chat
                     </label>
                 </div>
                 <div className="space-x-2">
                     <input
                         checked={access.includes('product')}
+                        id='product'
                         onChange={(e) => {
                             if (e.target.checked) {
                                 setAccess(prev => [...prev, 'product'])
@@ -82,13 +84,14 @@ const StaffModal = ({ setModal, user }) => {
                         className="accent-yellow-500"
                         type="checkbox"
                     />
-                    <label htmlFor="" className="text-[#4F4F4F] font-normal">
+                    <label htmlFor="product" className="text-[#4F4F4F] font-normal">
                         Product upload and edit
                     </label>
                 </div>
                 <div className="space-x-2">
                     <input
                         checked={access.includes('order')}
+                        id='order'
                         onChange={(e) => {
                             if (e.target.checked) {
                                 setAccess(prev => [...prev, 'order'])
@@ -100,13 +103,14 @@ const StaffModal = ({ setModal, user }) => {
                         className="accent-yellow-500"
                         type="checkbox"
                     />
-                    <label htmlFor="" className="text-[#4F4F4F] font-normal">
+                    <label htmlFor="order" className="text-[#4F4F4F] font-normal">
                         Order management
                     </label>
                 </div>
                 <div className="space-x-2">
                     <input
                         checked={access.includes('request')}
+                        id='request'
                         onChange={(e) => {
                             if (e.target.checked) {
                                 setAccess(prev => [...prev, 'request'])
@@ -118,7 +122,7 @@ const StaffModal = ({ setModal, user }) => {
                         className="accent-yellow-500"
                         type="checkbox"
                     />
-                    <label htmlFor="" className="text-[#4F4F4F] font-normal">
+                    <label htmlFor="request" className="text-[#4F4F4F] font-normal">
                         Request management
                     </label>
                 </div>

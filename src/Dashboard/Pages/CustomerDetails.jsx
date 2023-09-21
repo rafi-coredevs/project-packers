@@ -11,38 +11,53 @@ import { terminal } from "../../contexts/terminal/Terminal";
 import toaster from "../../Util/toaster";
 //
 const CustomerDetails = () => {
-  useTitle("replace-with-customer-name");
+  useTitle("Customer Details");
   const { customerId } = useParams();
   const [buttonType, setButtonType] = useState("all");
   const [tableData, setTabledata] = useState([]);
   const [user, setUser] = useState({});
-  const [loading,setLoading]=useState(false);
-  const updateHandler = () => {
-    console.log(user);
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate()
+  const createOrderHandler = () => {
+    navigate('/admin/orders/add-order',{state:{
+      userId: user?.current
+    }})
+  };
+   const deleteHandler = () => {
+    terminal.request({name: 'deleteUser', params:{id: user?.current?._id}}).then(res=>{
+      if(res.status === true){
+        toaster({type:'success', message: res?.message})
+        navigate(`/admin/customers`)
+      }else{
+        toaster({type:'error', message: res?.message})
+      }
+    })
   };
   function tableButtonHandler(value) {
     setButtonType(value);
   }
 
-  useEffect(() => {
+  const fetchData = (page = 1,) => {
+    setLoading(true)
+    terminal
+      .request({ name: "customerAllOrders", queries: { user: customerId, page: page, status:buttonType } })
+      .then((res) => {
+        res.status === false ? toaster({ type: 'error', message: res?.message }) : setTabledata(res);
+        setLoading(false)
+      });
     
+  };
+  const fetchUsers = () => {
+    terminal.request({ name: 'getNext', params: { current: customerId } }).then(res => res.status === false ? toaster({ tyoe: 'error', message: res?.message }) : setUser(res[0]))
+  }
+  useEffect(() => {
     fetchData();
+  }, [customerId, buttonType]);
+  useEffect(() => {
+    fetchUsers();
   }, [customerId]);
 
-  const fetchData = () => {
-    
-    terminal
-      .request({ name: "customerAllOrders", queries: { user: customerId } })
-      .then((res) => res.status===false? toaster({tyoe:'error', message:res?.message}): setTabledata(res), setLoading(false));
-  };
-  useEffect(()=>{
-   fetchUsers();
 
-  },[customerId]);
-  const fetchUsers =()=>{
-    terminal.request({name: 'getNext', params: {current: customerId}}).then(res=> res.status===false? toaster({tyoe:'error', message:res?.message}): setUser(res[0]))
-  }
-  
   return (
     <div className="px-5 h-full">
       <Heading
@@ -51,24 +66,24 @@ const CustomerDetails = () => {
         title={`${user?.current?.fullName || ""}`}
       >
         <div className="flex items-center gap-1">
-          <Button style="delete" onClick={updateHandler}>
+          <Button style="delete" onClick={deleteHandler}>
             Delete
           </Button>
-          <Button style="primary" onClick={updateHandler}>
+          <Button style="primary" onClick={createOrderHandler}>
             Create Order
           </Button>
           <div className="">
-            <Link  to={`/admin/customers/${user?.previous?._id}`}><Button disabled={user?.previous===null} style="outline">
+            <Link to={`/admin/customers/${user?.previous?._id}`}><Button disabled={user?.previous === null} style="outline">
               <img className="h-[19px] w-[19px]" src={arrowLeft} alt="" />
             </Button></Link>
             <Link to={`/admin/customers/${user?.next?._id}`}>
-            <Button disabled={user?.next===null} style="outline">
-              <img
-                className="h-[19px] w-[19px] rotate-180"
-                src={arrowLeft}
-                alt=""
-              />
-            </Button>
+              <Button disabled={user?.next === null} style="outline">
+                <img
+                  className="h-[19px] w-[19px] rotate-180"
+                  src={arrowLeft}
+                  alt=""
+                />
+              </Button>
             </Link>
           </div>
         </div>
@@ -82,41 +97,37 @@ const CustomerDetails = () => {
                 <div className="my-auto">
                   <button
                     onClick={() => tableButtonHandler("all")}
-                    className={`py-2 px-3 text-[#475569] text-xs font-semibold ${
-                      buttonType === "all"
+                    className={`py-2 px-3 text-[#475569] text-xs font-semibold ${buttonType === "all"
                         ? "bg-[#CFF6EF] rounded"
                         : "bg-transparent"
-                    }`}
+                      }`}
                   >
                     All
                   </button>
                   <button
                     onClick={() => tableButtonHandler("new")}
-                    className={`py-2 px-3 text-[#475569] text-xs font-semibold ${
-                      buttonType === "new"
+                    className={`py-2 px-3 text-[#475569] text-xs font-semibold ${buttonType === "new"
                         ? "bg-[#CFF6EF] rounded"
                         : "bg-transparent"
-                    }`}
+                      }`}
                   >
                     New
                   </button>
                   <button
                     onClick={() => tableButtonHandler("returning")}
-                    className={`py-2 px-3 text-[#475569] text-xs font-semibold ${
-                      buttonType === "returning"
+                    className={`py-2 px-3 text-[#475569] text-xs font-semibold ${buttonType === "returning"
                         ? "bg-[#CFF6EF] rounded"
                         : "bg-transparent"
-                    }`}
+                      }`}
                   >
                     Draft
                   </button>
                   <button
                     onClick={() => tableButtonHandler("abandoned")}
-                    className={`py-2 px-3 text-[#475569] text-xs font-semibold ${
-                      buttonType === "abandoned"
+                    className={`py-2 px-3 text-[#475569] text-xs font-semibold ${buttonType === "abandoned"
                         ? "bg-[#CFF6EF] rounded"
                         : "bg-transparent"
-                    }`}
+                      }`}
                   >
                     Abandoned Checkouts
                   </button>
@@ -134,23 +145,24 @@ const CustomerDetails = () => {
                 data={tableData}
                 dashboardToogle="customerDetails"
                 loading={loading}
+                paginate={fetchData}
               />
             </div>
           </div>
         </div>
         <div className="col-span-3 sm:col-span-1 h-fit grid gap-5 pb-3">
           <div className=" border border-[#0000001c] divide-y  rounded-lg ">
-            <SideCard types="customer" email={user?.current?.email} phone={user?.current?.phone}/>
+            <SideCard types="customer" email={user?.current?.email} phone={user?.current?.phone} />
             <SideCard
               types="custom"
               title="Address"
-              address={user?.current?.shippingaddress? (user?.current?.shippingaddress?.address +', '+ user?.current?.shippingaddress?.city +', '+ user?.current?.shippingaddress?.area +', '+ user?.current?.shippingaddress?.zip): 'Not Available'}
+              address={user?.current?.shippingaddress ? (user?.current?.shippingaddress?.address + ', ' + user?.current?.shippingaddress?.city + ', ' + user?.current?.shippingaddress?.area + ', ' + user?.current?.shippingaddress?.zip) : 'Not Available'}
             />
             <SideCard
               types="custom"
               title="Total Spent"
-              // amount={`$${(244).toFixed(2)}`}
-              // amount={`not found from backend`}
+            // amount={`$${(244).toFixed(2)}`}
+            // amount={`not found from backend`}
             />
           </div>
         </div>

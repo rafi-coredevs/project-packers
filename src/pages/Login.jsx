@@ -5,7 +5,6 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Button from '../Components/UiElements/Buttons/Button';
 import google from '../assets/icons/google-icon.svg';
 import facebook from '../assets/icons/facebook.svg';
-import apple from '../assets/icons/apple.svg';
 import { useUserCtx } from '../contexts/user/UserContext';
 import toaster from '../Util/toaster';
 import { terminal } from '../contexts/terminal/Terminal';
@@ -39,7 +38,7 @@ const Login = () => {
 					toaster({ type: 'error', message: data.message });
 				} else {
 					setUser(data);
-					console.log('role: ', JSON.stringify(data));
+				
 
 					if (sendRequest) {
 						terminal
@@ -48,7 +47,7 @@ const Login = () => {
 								body: requestItemData,
 							})
 							.then((d) => {
-								// console.log('item request response from login', d);
+						
 								navigate('/', { state: true });
 							});
 					} else {
@@ -154,23 +153,25 @@ const Login = () => {
 						{/* Login */}
 						<div className='flex  gap-2 mt-12'>
 							{/* google login */}
-							<Link
-								to={`${import.meta.env.VITE_SERVER_URL}/login/google`}
+							<button
+							type='button'
+								onClick={()=> window.location.href=`${import.meta.env.VITE_SERVER_URL}/login/google`}
 								className='p-[11px] cursor-pointer bg-white rounded-full shrink-0'
 							>
 								<img src={google} alt='' />
-							</Link>
+							</button>
 							{/* facebook login */}
-							<Link
-								to={`${import.meta.env.VITE_SERVER_URL}/login/facebook`}
+							<button
+							type='button'
+								onClick={()=> window.location.href=`${import.meta.env.VITE_SERVER_URL}/login/facebook`}
 								className='p-[11px] cursor-pointer bg-white rounded-full shrink-0'
 							>
 								<img src={facebook} alt='' />
-							</Link>
+							</button>
 							{/* apple login */}
-							<span className='p-[11px] cursor-pointer bg-white rounded-full shrink-0'>
+							{/* <span className='p-[11px] cursor-pointer bg-white rounded-full shrink-0'>
 								<img src={apple} alt='' />
-							</span>
+							</span> */}
 							{/* login button */}
 							<Button
 								full

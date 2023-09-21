@@ -85,7 +85,7 @@ const RequestModal = ({
 		<form action='' onSubmit={itemRequestForm.handleSubmit}>
 			<div className='flex flex-col gap-5'>
 				<div className='flex gap-8 pb-4 justify-between items-start border-b border-[#0000001e]'>
-					<div className='flex gap-2 items-center flex-wrap '>
+					<div className='flex gap-4 flex-col md:flex-row items-center flex-wrap '>
 						<p className='shrink-0 text-xl font-semibold'> Request Items</p>
 
 						{/* button */}

@@ -3,20 +3,22 @@ import logo from "../../assets/logo.svg";
 import IconCall from "../../assets/icons/cd-call-green.svg";
 import IconSupport from "../../assets/icons/cd-customer-support-green.svg";
 import IconLoaction from "../../assets/icons/cd-location-green.svg";
-import visa from "../../assets/icons/visa.png";
-import masterCard from "../../assets/icons/mastercard.png";
-import aExpress from "../../assets/icons/american-express.png";
-import bkash from "../../assets/icons/bkash.png";
-import rocket from "../../assets/icons/rocket.png";
-import nagad from "../../assets/icons/nagad.png";
-import dbbl from "../../assets/icons/dbbl.png";
-import paypal from "../../assets/icons/paypal.png";
+import visa from "../../assets/icons/visa.svg";
+import masterCard from "../../assets/icons/mastercard.svg";
+import aExpress from "../../assets/icons/american-express.svg";
+import bkash from "../../assets/icons/bkash.svg";
+import rocket from "../../assets/icons/rocket.svg";
+import nagad from "../../assets/icons/nagad.svg";
+import dbbl from "../../assets/icons/dbbl.svg";
+import paypal from "../../assets/icons/paypal.svg";
 import facebook from "../../assets/icons/cd-facebook.svg";
 import insta from "../../assets/icons/cd-instagram.svg";
 import twitter from "../../assets/icons/cd-twitter.svg";
+import SupportModal from "../SupportModal/SupportModal";
+import { useState } from "react";
 const Footer = () => {
   const date = new Date().getFullYear();
-
+  const [modal, setModal] = useState(false)
   const location = useLocation().pathname;
   if (
     location === "/login" ||
@@ -121,7 +123,7 @@ const Footer = () => {
                 <Link to="/faq">FAQs</Link>
               </div>
               <div>
-                <Link to="/comingsoon">Live Chat Support</Link>
+                <button onClick={()=>{setModal(true)}}>Live Chat Support</button>
               </div>
             </div>
           </div>
@@ -129,7 +131,7 @@ const Footer = () => {
             <p className="text-[#6BCCCB] font-sans text-lg font-semibold">
               Payment Methods
             </p>
-            <div className="grid grid-cols-4  gap-2">
+            <div className="grid grid-cols-4">
               <img className="w-full" src={visa} alt="" />
               <img className="w-full" src={masterCard} alt="" />
               <img className="w-full" src={aExpress} alt="" />
@@ -158,6 +160,7 @@ const Footer = () => {
           </div>
         </div>
       </div>
+      <SupportModal show={modal} onChange={()=> setModal(false)} />
     </footer>
   );
 };

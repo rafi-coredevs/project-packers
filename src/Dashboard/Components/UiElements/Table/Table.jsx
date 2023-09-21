@@ -74,7 +74,11 @@ const Table = ({ data, paginate, loading, dashboardToogle, modalHandler, getData
   useEffect(() => {
     getData && (isCategory ? getData(selectedCategory) : getData(selectedItem))
   }, [selectedItem, selectedCategory])
-
+  useEffect(()=>{
+      document.getElementById('headerCheckbox').checked = false;
+      setSelectItem([]);
+      setSelectCategory([])
+  },[loading])
   const checkboxHandler = (status) => {
     const ele = document.getElementsByName('check');
     if (status.target.checked) {
@@ -84,8 +88,6 @@ const Table = ({ data, paginate, loading, dashboardToogle, modalHandler, getData
         if (ele[i].type == 'checkbox')
           ele[i].checked = true;
         isCategory ? setSelectCategory(prev => [...prev, ele[i].id]) : setSelectItem(prev => [...prev, ele[i].id])
-
-
       }
     } else {
       for (let i = 0; i < ele.length; i++) {
@@ -120,7 +122,7 @@ const Table = ({ data, paginate, loading, dashboardToogle, modalHandler, getData
         <thead>
           <tr className='bg-[#F8FAFC] border-y border-[#0000001c]'>
             <th className='text-left py-[10px] pl-4 w-[10px]'>
-              <input type='checkbox' onChange={checkboxHandler} className='accent-yellow-300' />
+              <input type='checkbox' id='headerCheckbox' onChange={checkboxHandler} className='accent-yellow-300' />
             </th>
             {tableHeadData?.map((item, index) => (
               <th
@@ -145,7 +147,7 @@ const Table = ({ data, paginate, loading, dashboardToogle, modalHandler, getData
                     />))
                 }
               </tr>)
-            ) : (data?.docs == null || data?.docs?.length === 0) ? <tr><td className='w-full'>No data found</td></tr> : (
+            ) : (data?.docs == null || data?.docs?.length === 0) ? <tr className='w-full' ><td colSpan={5}><p className="text-center w-full">No data found</p></td></tr> : (
               <>
                 {
                   //Products  Data Table
@@ -220,7 +222,7 @@ const Table = ({ data, paginate, loading, dashboardToogle, modalHandler, getData
                         }).format(new Date(item?.date))}
                       </td>
                       <td className='px-4 py-[18px] text-black text-sm '>
-                        {item.user?.fullName || item.user.email}
+                        {item.user?.fullName || item.user?.email}
                       </td>
                       <td className='px-4 py-[18px] text-black text-sm '>
                         <Badge text={item?.status} styles='' />{' '}
@@ -322,14 +324,14 @@ const Table = ({ data, paginate, loading, dashboardToogle, modalHandler, getData
                     <tr
                       key={index}
                       className='border-y border-[#0000001c] hover:bg-[#FEF9DC]'
-                      onClick={() => navigate(`/admin/customers/${item._id}`)}
+                      
                     >
                       <td className='text-left py-[10px] pl-4 w-[10px]'>
                         <input type='checkbox' name='check' className='accent-yellow-300' />
                       </td>
 
                       <td
-                        // onClick={() => selectHandler(item.id)}
+                        onClick={() => navigate(`/admin/customers/${item._id}`)}
                         className='px-4 py-[18px] text-black text-sm cursor-pointer max-w-md line-clamp-1'
                       >
                         {item?.fullName}
@@ -355,10 +357,10 @@ const Table = ({ data, paginate, loading, dashboardToogle, modalHandler, getData
                     className='border-y border-[#0000001c] hover:bg-[#FEF9DC]'
                   >
                     <td className='text-left py-[10px] pl-4 w-[10px]'>
-                      <input type='checkbox' className='accent-yellow-300' />
+                      <input name='check' type='checkbox' className='accent-yellow-300' />
                     </td>
                     <td
-                      // onClick={() => selectHandler(item.id)}
+                      onClick={() => selectHandler(item.id)}
                       className='px-4 py-[18px] text-black text-sm cursor-pointer max-w-md line-clamp-1'
                     >
                       {(() => {

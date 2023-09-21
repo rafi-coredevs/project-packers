@@ -206,9 +206,9 @@ const Signup = () => {
 								>
 									<img src={facebook} alt='' />
 								</Link>
-								<span className='p-[11px] cursor-pointer bg-white rounded-full shrink-0'>
+								{/* <span className='p-[11px] cursor-pointer bg-white rounded-full shrink-0'>
 									<img src={apple} alt='' />
-								</span>
+								</span> */}
 								<Button
 									disabled={accept}
 									buttonType='submit'

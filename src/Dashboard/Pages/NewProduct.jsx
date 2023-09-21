@@ -13,13 +13,13 @@ import Button from "../Components/UiElements/Button/Button";
 import { useFormik } from "formik";
 import { productSchema } from "../../Util/ValidationSchema";
 import { useEffect, useState } from "react";
-import removeEmptyFields from "../../Util/removeEmptyFields";
 import { terminal } from "../../contexts/terminal/Terminal";
 import toaster from "../../Util/toaster";
 import { useTitle } from "../../Components/Hooks/useTitle";
 import UploadIcon from "../../assets/icons/UploadIcon.svg";
 import ProductImageUpload from "../Components/uploadImages/ProductImageUpload/ProductImagesUpdate";
 import CustomSelect from "../../Components/UiElements/Input/CustomSelect";
+import removeEmptyFields from "../../Util/removeEmptyFields";
 
 const NewProduct = () => {
   useTitle("New Product");
@@ -30,10 +30,6 @@ const NewProduct = () => {
   const [selectedCategeory, setSelectedCategory] = useState(null);
   const [selectedSubCategeory, setselectedSubCategeory] = useState(null);
   const [preLoadedImages, setPreLoadedImages] = useState([]);
-  const [categoryError, setCategoryerror] = useState({
-    category: false,
-    subCategory: false,
-  });
   const navigate = useNavigate();
   // formik and handleSubmit
   const productForm = useFormik({
@@ -41,6 +37,8 @@ const NewProduct = () => {
       name: "",
       description: "",
       price: "",
+      category: "",
+      subcategory: "",
       tax: "",
       fee: "",
       quantity: "",
@@ -52,24 +50,25 @@ const NewProduct = () => {
     },
     validationSchema: productSchema,
     onSubmit: (values) => {
-      if (
-        categoryError.category === true ||
-        categoryError.subCategory === true
-      ) {
+      if (productForm.values.category === "") {
+        productForm.setFieldError('category', "select category")
+        return;
+      }
+      if (productForm.values.subcategory === "") {
+        productForm.setFieldError('subcategory', "select category")
         return;
       }
       values.status = btnType;
       values.category = selectedCategeory.id;
       values.subcategory = selectedSubCategeory.id;
-      removeEmptyFields(values);
-
       const { images, ...rest } = values;
+      removeEmptyFields(rest)
       product
         ? terminal
           .request({
             name: "updateProduct",
             params: { id: product?.id },
-            body: { data: rest, images: images },
+            body: { data: rest, ...(images?.length && { images })  },
           })
           .then((res) =>
             res?.status === false
@@ -83,7 +82,7 @@ const NewProduct = () => {
         : terminal
           .request({
             name: "registerProduct",
-            body: { data: rest, images: images },
+            body: { data: rest, ...(images.length && { images }) },
           })
           .then((res) =>
             res?.status === false
@@ -91,7 +90,7 @@ const NewProduct = () => {
               : toaster({
                 type: "success",
                 message: "Product successfully added",
-              }),
+              }), productForm.resetForm(), setTimeout(() => { navigate(-1) }, 3000),
 
           );
     },
@@ -128,22 +127,6 @@ const NewProduct = () => {
     }
   }, []);
 
-  /**
-   * Handle category selection errors.
-   */
-  const handleCheck = () => {
-    if (selectedCategeory === null) {
-      setCategoryerror({
-        category: true,
-        subCategory: true,
-      });
-    } else if (selectedSubCategeory === null) {
-      setCategoryerror({
-        category: false,
-        subCategory: true,
-      });
-    }
-  };
 
   /**
    * Handle category selection.
@@ -151,6 +134,7 @@ const NewProduct = () => {
    */
   const categorySelector = (val) => {
     setSelectedCategory(categories.find((item) => item.id === val));
+    productForm.setFieldValue('category', val);
   };
 
   /**
@@ -161,6 +145,7 @@ const NewProduct = () => {
     setselectedSubCategeory(
       selectedCategeory.subcategory.find((item) => item.id === val)
     );
+    productForm.setFieldValue('subcategory', val);
   };
 
   /**
@@ -186,7 +171,6 @@ const NewProduct = () => {
       setselectedSubCategeory(null);
     }
   }, [selectedCategeory, product]);
-
   return (
     <div className="h-full px-5">
       <Heading type="navigate" title="Add New Product" back="Products" />
@@ -239,7 +223,7 @@ const NewProduct = () => {
                 bg="white"
                 options={categories}
                 onChange={categorySelector}
-                // error={}
+                error={productForm.errors.category ? true : false}
                 value={selectedCategeory?.name}
               />
 
@@ -250,6 +234,7 @@ const NewProduct = () => {
                 options={selectedCategeory?.subcategory}
                 onChange={subcategorySelector}
                 value={selectedSubCategeory?.name}
+                error={productForm.errors.subcategory ? true : false}
               />
 
               <Input
@@ -273,7 +258,7 @@ const NewProduct = () => {
             <h2 className="text-base text-secondary font-semibold">
               Product Images
             </h2>
-            <div className="border border-[#0000001c] rounded-lg p-3 min-h-[12rem]">
+            <div className="border border-[#0000001c] rounded-lg p-3 min-h-[12.15rem] ">
               <ProductImageUpload
                 formikProps={productForm}
                 className="flex-row-reverse items-center justify-end mr-auto"
@@ -366,6 +351,7 @@ const NewProduct = () => {
                   label="Stock"
                   type="number"
                   name="quantity"
+                  min={0}
                   change={productForm.handleChange}
                   blur={productForm.handleBlur}
                   value={productForm.values.quantity}
@@ -424,7 +410,7 @@ const NewProduct = () => {
                 </Button>
                 <Button
                   onClick={() => {
-                    handleCheck(), setBtnType("active");
+                    setBtnType("active");
                   }}
                   style="primary"
                   type="submit"

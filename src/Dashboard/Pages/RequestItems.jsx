@@ -37,7 +37,6 @@ const RequestItems = () => {
     setLoading(true);
     terminal.request({ name: 'allRequest', queries: { page, sortBy, status: active } }).then((res) => {
       res.status === false ? '' : setTableData(res), setLoading(false);
-      console.log(res)
     })
   };
   const tableButtonHandler = (value) => {

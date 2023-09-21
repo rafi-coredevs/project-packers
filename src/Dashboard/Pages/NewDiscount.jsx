@@ -59,10 +59,7 @@ const NewDiscount = () => {
     discountForm.setFieldValue("coupon", coupon);
   }
   useTitle("New Discount");
-  const submitHandler = (e) => {
-    e.preventDefault();
-    console.log("update clicked");
-  };
+
 
   const discountForm = useFormik({
     initialValues: {
@@ -152,7 +149,7 @@ const NewDiscount = () => {
                   <CustomSelect
                     appearance="select"
                     options={discountType}
-                    bg={'paste'}
+                    bg={'white'}
                     onChange={(type) => {
                       discountForm.setFieldValue("type", type);
                       setSelectedtype(type);
@@ -223,7 +220,7 @@ const NewDiscount = () => {
                 appearance={"select"}
                 options={category}
                 onChange={categorySelector}
-                bg={'paste'}
+                bg={'white'}
                 value={selectedCategory?.name}
                 error={
                   discountForm.touched.category && discountForm.errors.category
@@ -238,7 +235,7 @@ const NewDiscount = () => {
                 appearance={"select"}
                 options={selectedCategory?.subcategory}
                 onChange={subcategorySelector}
-                bg={'paste'}
+                bg={'white'}
                 value={selectedSubcategory?.name}
                 error={
                   discountForm.touched.subCategory &&

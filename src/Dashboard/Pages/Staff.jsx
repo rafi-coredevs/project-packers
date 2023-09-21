@@ -11,6 +11,8 @@ import StaffModal from "../Components/StaffCard/StaffModal";
 import UserIcon from "../../Components/UiElements/UserIcon/UserIcon";
 import toaster from "../../Util/toaster";
 import CustomSelect from "../../Components/UiElements/Input/CustomSelect";
+import { useFormik } from "formik";
+import { staffFormSchema } from "../../Util/ValidationSchema";
 
 const Staff = () => {
   useTitle("Staff");
@@ -22,28 +24,54 @@ const Staff = () => {
     terminal.request({ name: 'allUser', queries: { role: JSON.stringify(['admin', 'staff', 'super-admin']) } }).then(data => data?.docs?.length && setUsers(data.docs))
   }, [])
 
+  const staffForm = useFormik({
+    initialValues: {
+      firstName: '',
+      lastName: '',
+      email: '',
+      phone: '',
+      role: '',
+    },
+    validationSchema: staffFormSchema,
+    onSubmit: (values) => {
+      if(values.role === ''){
+        staffForm.setFieldError('role','please select role')
+        return
+      }
+      terminal.request({ name: 'registerStaff', body: { fullName: `${values.firstName} ${values.lastName}`, email:values.email, phone:values.phone, role: values.role } }).then(data => {
+        if (data.id) {
+          setUsers(prev => [...prev, { id: data.id, fullName: data.fullName, role: data.role, access: data.access }])
+         
+          toaster({ type: 'success', message: 'Staff created successfully' })
+        }
+        else {
+          toaster({ type: 'error', message: 'Error creating staff' })
+        }
+      })
+    }
+  })
   const handleLogout = () => {
     terminal.request({ name: 'logOutStaff' }).then(data => data.status && toaster({ type: 'success', message: data.message }))
   }
 
-  const submitHandler = (e) => {
-    e.preventDefault();
-    const [firstName, lastName, email, phone] = ['firstName', 'lastName', 'email', 'phone'].map((k) =>
-      e.target.elements[k].value
-    );
-    terminal.request({ name: 'registerStaff', body: { fullName: `${firstName} ${lastName}`, email, phone, role: selectedRole.value } }).then(data => {
-      if (data.id) {
-        setUsers(prev => [...prev, { id: data.id, fullName: data.fullName, role: data.role, access: data.access }])
-        ['firstName', 'lastName', 'email', 'phone'].map((k) =>
-          e.target.elements[k].value = ''
-        );
-        toaster({ type: 'success', message: 'Staff created successfully' })
-      }
-      else {
-        toaster({ type: 'error', message: 'Error creating staff' })
-      }
-    })
-  };
+  // const submitHandler = (e) => {
+  //   e.preventDefault();
+  //   const [firstName, lastName, email, phone] = ['firstName', 'lastName', 'email', 'phone'].map((k) =>
+  //     e.target.elements[k].value
+  //   );
+  //   terminal.request({ name: 'registerStaff', body: { fullName: `${firstName} ${lastName}`, email, phone, role: selectedRole.value } }).then(data => {
+  //     if (data.id) {
+  //       setUsers(prev => [...prev, { id: data.id, fullName: data.fullName, role: data.role, access: data.access }])
+  //       ['firstName', 'lastName', 'email', 'phone'].map((k) =>
+  //         e.target.elements[k].value = ''
+  //       );
+  //       toaster({ type: 'success', message: 'Staff created successfully' })
+  //     }
+  //     else {
+  //       toaster({ type: 'error', message: 'Error creating staff' })
+  //     }
+  //   })
+  // };
 
   const roleOptions =
     [
@@ -52,7 +80,11 @@ const Staff = () => {
       { name: "Staff", value: "staff", id: 3 },
       { name: "User", value: "user", id: 4 },
     ]
-  const categoryHandler = (id) => setSelectedRole(roleOptions.find(item => item.id === id));
+  const categoryHandler = (id) => {
+    const role = roleOptions.find(item => item.id === id)
+    setSelectedRole(role)
+    staffForm.setFieldValue('role',role.value);
+  };
 
   return (
     <div className="px-5 h-full">
@@ -108,7 +140,7 @@ const Staff = () => {
         </div>
         <div className="col-span-2 sm:col-span-1">
           <form
-            onSubmit={submitHandler}
+            onSubmit={staffForm.handleSubmit}
             className="col-span-2 sm:col-span-1 grid gap-5"
           >
             <div className="rounded-lg border border-[#0000001c] p-3 grid-cols-1 grid gap-3 ">
@@ -118,12 +150,20 @@ const Staff = () => {
                   label="First Name"
                   placeholder="First Name"
                   name='firstName'
+                  change={staffForm.handleChange}
+                  blur={staffForm.handleBlur}
+                  value={staffForm.values.firstName}
+                  error={staffForm.touched.firstName && staffForm.errors.firstName ? true : false}
                 />
                 <Input
                   styles="basic"
                   label="Last Name"
                   placeholder="Last Name"
                   name='lastName'
+                  change={staffForm.handleChange}
+                  blur={staffForm.handleBlur}
+                  value={staffForm.values.lastName}
+                  error={staffForm.touched.lastName && staffForm.errors.lastName ? true : false}
                 />
               </div>
               <Input
@@ -131,17 +171,25 @@ const Staff = () => {
                 label="Email"
                 placeholder="example@domain.com"
                 name='email'
+                change={staffForm.handleChange}
+                  blur={staffForm.handleBlur}
+                  value={staffForm.values.email}
+                  error={staffForm.touched.email && staffForm.errors.email ? true : false}
               />
               <Input
                 styles="basic"
                 label="Phone Number"
                 placeholder="01700000000"
                 name='phone'
+                change={staffForm.handleChange}
+                  blur={staffForm.handleBlur}
+                  value={staffForm.values.phone}
+                  error={staffForm.touched.phone && staffForm.errors.phone ? true : false}
               />
-              <CustomSelect value={selectedRole.name} options={roleOptions} bg="white" onChange={categoryHandler} appearance={'select'} />
+              <CustomSelect value={selectedRole.name} options={roleOptions} bg="white" onChange={categoryHandler} appearance={'select'} error={staffForm.errors.role ? true : false} />
             </div>
             <div className="flex justify-end">
-              <Button type="submit" style="green">Add user</Button>
+              <Button type="submit" style="green" >Add user</Button>
             </div>
           </form>
         </div>

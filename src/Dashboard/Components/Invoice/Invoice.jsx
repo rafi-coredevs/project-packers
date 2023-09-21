@@ -10,22 +10,47 @@ import logo from '../../../assets/logo.svg'
 import { usePDF, Margin, Resolution } from 'react-to-pdf';
 import Button from '../UiElements/Button/Button';
 
-const Invoice = ({ data }) => {
-    const { name, email, phone, address, date, orderId, products, request, total, paid, notes } = data;
-    const [tax, setTax] = useState(0);
-    const [fee, setFee] = useState(0);
- let subTotal = 0;
+const Invoice = ({ data = {}, fees, shipping, discount, tax }) => {
+    const { name, email, phone, address, date, orderId, products, request, total,  notes,} = data;
+
+    const [productData, setProductData] = useState([])
+    let subTotal = 0;
+    
     useEffect(() => {
-        const initial = 0;
-        const initial2 = 0;
-        const fees = products?.reduce((sum, item) => sum + item?.product?.fee, initial)
-        setFee((prev) => typeof fees === 'number' ? prev + fees : prev);
-        const taxes = products?.reduce((sum, item) => sum + item?.product?.tax, initial2)
-        setTax((prev)=> typeof taxes === 'number' ? prev + taxes : prev);
+        setProductData([])
+        products?.forEach(item => {
+            const data = {
+                name: item?.product?.name,
+                price: item?.product?.price,
+                quantity: item?.productQuantity
+            }
+            
+            setProductData(prev => [...prev, data])
+            
+        })
+        
     }, [data])
+    useEffect(()=>{
+        request?.forEach(item => {
+            const data = {
+                name: item?.request?.name,
+                price: item?.request?.price,
+                quantity: item?.requestQuantity
+            }
+            setProductData(prev => [...prev, data])
+        })
+    },[data])
+    // useEffect(() => {
+    //     const initial = 0;
+    //     const initial2 = 0;
+    //     const fees = products?.reduce((sum, item) => sum + item?.product?.fee, initial)
+    //     setFee((prev) => typeof fees === 'number' ? prev + fees : prev);
+    //     const taxes = products?.reduce((sum, item) => sum + item?.product?.tax, initial2)
+    //     setTax((prev) => typeof taxes === 'number' ? prev + taxes : prev);
+    // }, [data])
     const { toPDF, targetRef } = usePDF({
         method: "save",
-        filename: "usepdf-example.pdf",
+        filename: `invoice-${orderId}.pdf`,
         resolution: Resolution.NORMAL,
         page: {
             margin: Margin.SMALL,
@@ -73,32 +98,19 @@ const Invoice = ({ data }) => {
                             </tr>
                         </thead>
                         <tbody>
-                            {products?.map((item, index) => {
-                                subTotal += item?.product?.price * item?.productQuantity
+                            {productData?.map((item, index) => {
+                                subTotal += item?.price * item?.quantity
                                 return (
                                     <tr key={index} className='border-[#ededed] border-b text-xl' >
                                         <td className='pb-3 w-[3%]'>{index + 1}</td>
-                                        <td className='pb-3 w-[55%] text-xl'> {item?.product?.name || ""}</td>
-                                        <td className='pb-3 text-center w-[15%]'>{item?.productQuantity || 0}</td>
-                                        <td className='pb-3 w-[15%]'>{item?.product?.price || 0} tk</td>
-                                        <td className='pb-3 text-end w-[15%]'>{(item?.product?.price * item?.productQuantity) || 0} tk</td>
+                                        <td className='pb-3 w-[55%] text-xl'> {item?.name || ""}</td>
+                                        <td className='pb-3 text-center w-[15%]'>{item?.quantity || 0}</td>
+                                        <td className='pb-3 w-[15%]'>{item?.price || 0} tk</td>
+                                        <td className='pb-3 text-end w-[15%]'>{(item?.price * item?.quantity) || 0} tk</td>
                                     </tr>
                                 )
                             })}
-                            {request?.map((item, index) => {
-                                console.log(item?.product?.price * item?.productQuantity)
-                                subTotal += item?.product?.price * item?.productQuantity
-
-                                return (
-                                    <tr key={index} className='border-[#ededed] border-b text-xl' >
-                                        <td className='pb-3 w-[3%]'>{index + 1}</td>
-                                        <td className='pb-3 w-[55%] text-xl'> {item?.product?.name || ""}</td>
-                                        <td className='pb-3 text-center w-[15%]'>{item?.productQuantity || 0}</td>
-                                        <td className='pb-3 w-[15%]'>{item?.product?.price || 0} tk</td>
-                                        <td className='pb-3 text-end w-[15%]'>{(item?.product?.price * item?.productQuantity) || 0} tk</td>
-                                    </tr>
-                                )
-                            })}
+                         
                         </tbody>
                     </table>
 
@@ -107,23 +119,27 @@ const Invoice = ({ data }) => {
 
                             <tr>
                                 <th className='text-start'><span >Subtotal:</span></th>
-                                <td className='text-end'><span>{subTotal}</span><span > tk</span></td>
+                                <td className='text-end'><span>{subTotal || 0}</span><span > tk</span></td>
                             </tr>
                             <tr>
                                 <th className='text-start'><span >Tax:</span></th>
-                                <td className='text-end'><span >{tax}</span><span > tk</span></td>
+                                <td className='text-end'><span >{tax || 0}</span><span > tk</span></td>
                             </tr>
                             <tr>
                                 <th className='text-start'><span >packers Fee:</span></th>
-                                <td className='text-end'><span>{fee}</span><span > tk</span></td>
+                                <td className='text-end'><span>{fees || 0}</span><span > tk</span></td>
                             </tr>
                             <tr>
                                 <th className='text-start'><span >Shipping Fee:</span></th>
-                                <td className='text-end'><span>{fee}</span><span > tk</span></td>
+                                <td className='text-end'><span>{shipping || 0}</span><span > tk</span></td>
+                            </tr>
+                            <tr>
+                                <th className='text-start'><span >Discount:</span></th>
+                                <td className='text-end'><span>{discount || 0}</span></td>
                             </tr>
                             <tr>
                                 <th className='text-start'><span >Total:</span></th>
-                                <td className='text-end'><span>{total?.toFixed(2)}</span><span > tk</span></td>
+                                <td className='text-end'><span>{total?.toFixed(2) || 0}</span><span > tk</span></td>
                             </tr>
                         </tbody>
                     </table>

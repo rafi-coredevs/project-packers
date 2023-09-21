@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { useTitle } from '../../Components/Hooks/useTitle';
 import { terminal } from '../../contexts/terminal/Terminal';
@@ -12,6 +11,7 @@ import remove from '../../assets/icons/cd-cancel.svg';
 import toaster from '../../Util/toaster';
 import removeEmptyFields from '../../Util/removeEmptyFields';
 import CartItem from '../../Components/UiElements/CartItem/CartItem';
+import { useLocation, useParams } from 'react-router-dom';
 
 const AddOrder = () => {
     useTitle('Order Details');
@@ -19,6 +19,7 @@ const AddOrder = () => {
     const [order, setOrder] = useState({
         products: [],
     });
+    const location = useLocation();
     const [products, setProducts] = useState([]);
     const [customers, setCustomers] = useState([]);
     const [user, setUser] = useState({})
@@ -77,9 +78,14 @@ const AddOrder = () => {
         }
     }, [order, discount, inside]);
 
-    useEffect(()=>{
-        user.shippingaddress ? shippingForm.setValues({...user.shippingaddress}) : null
-    },[user])
+    useEffect(() => {
+        user.shippingaddress ? shippingForm.setValues({ ...user.shippingaddress }) : null
+    }, [user])
+    useEffect(() => {
+        if (location.state != null) {
+            setUser(location?.state?.userId)
+        }
+    }, [location])
     /**
      * Handles updating the order details.
      */
@@ -122,13 +128,13 @@ const AddOrder = () => {
             .then((res) => {
                 if (res.status === false) {
                     toaster({ type: 'error', message: res.message });
-                    
+
                 } else {
                     toaster({ type: 'success', message: res.message });
                     shippingForm.resetForm();
                     billingForm.resetForm();
                     setOrder({
-                        products:[]
+                        products: []
                     })
                     setUser({})
                     setCustomers([])
@@ -224,11 +230,11 @@ const AddOrder = () => {
     }, []);
 
     // Copying billing address to shipping address
-    const shippingHandler = () =>{
-        billingForm.setValues({...shippingForm.values})
-	}
+    const shippingHandler = () => {
+        billingForm.setValues({ ...shippingForm.values })
+    }
 
- 
+
     return (
         <div className='px-5 h-full'>
             <Heading type='navigate' title={`Add Order`} back={'All Order'}>
@@ -261,16 +267,16 @@ const AddOrder = () => {
                                 </Input>
                             </div>
                             <table className='bg-white shadow-md absolute top-[44px] left-0 w-full z-50'>
-                               <tbody>
-                                {
-                                    (products?.length > 0 && productDropDown) &&
-                                    products.map(product =>
-                                        <tr key={product.id} onClick={() => {addProduct(product); document.getElementById('products').value = ""}} className='hover:bg-primary hover:cursor-pointer'>
-                                            <td className='p-2 border-b border-slate-200'>
-                                                {product.name}
-                                            </td>
-                                        </tr>)
-                                }
+                                <tbody>
+                                    {
+                                        (products?.length > 0 && productDropDown) &&
+                                        products.map(product =>
+                                            <tr key={product.id} onClick={() => { addProduct(product); document.getElementById('products').value = "" }} className='hover:bg-primary hover:cursor-pointer'>
+                                                <td className='p-2 border-b border-slate-200'>
+                                                    {product.name}
+                                                </td>
+                                            </tr>)
+                                    }
                                 </tbody>
                             </table>
                         </div>
@@ -295,13 +301,15 @@ const AddOrder = () => {
                                 <tbody>
                                     {order?.products?.length > 0 && order?.products.map((product) => {
                                         return (
-                                            <CartItem
-                                                key={product?.id}
-                                                data={product?.product}
-                                                quantity={product.productQuantity}
-                                                onChange={updateQuantity}
-                                                removeProduct={removeProduct}
-                                            />
+                                            <div key={product?.id}>
+                                                <CartItem
+                                                    key={product?.id}
+                                                    data={product?.product}
+                                                    quantity={product.productQuantity}
+                                                    onChange={updateQuantity}
+                                                    removeProduct={removeProduct}
+                                                />
+                                            </div>
                                         );
                                     })}
                                 </tbody>
@@ -353,7 +361,7 @@ const AddOrder = () => {
                                                     Add Discount
                                                 </button>
                                                 <input
-                                                
+
                                                     name="code"
                                                     type="text"
                                                     placeholder="Discount code"
@@ -370,7 +378,7 @@ const AddOrder = () => {
                                 <button className='text-emerald-500 underline text-sm'>
                                     Shipping
                                 </button>
-                                <div className=' flex items-center space-x-2'>
+                                <div className='flex items-center space-x-2'>
                                     <div className="flex gap-1">
                                         <input
                                             type="radio"
@@ -382,7 +390,7 @@ const AddOrder = () => {
                                             }}
                                             name="inSideDhaka"
                                             className="accent-orange-600"
-                                            
+
                                         />
                                         <label
                                             htmlFor="shippingDhaka"
@@ -482,7 +490,7 @@ const AddOrder = () => {
                                     {
                                         !user?.id && customers?.length > 0 &&
                                         customers.map((user, index) =>
-                                            <tr key={index} onClick={() => {setUser(user); document.getElementById('customer').value=""}} className='hover:bg-primary hover:cursor-pointer'>
+                                            <tr key={index} onClick={() => { setUser(user); document.getElementById('customer').value = "" }} className='hover:bg-primary hover:cursor-pointer'>
                                                 <td className='p-2 border-b border-slate-200'>
                                                     {user.fullName}
                                                 </td>

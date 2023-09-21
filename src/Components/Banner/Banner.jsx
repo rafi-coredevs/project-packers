@@ -71,7 +71,7 @@ const Banner = () => {
 		setModalState(value);
 	};
 	return (
-		<div className='bg-secondary pb-[13rem] overflow-hidden '>
+		<div className='bg-secondary pb-[13rem] overflow-hidden'>
 			<div className='relative z-10 right-[-48rem] bottom-[-75rem] hidden md:flex justify-center items-center'>
 				<span className='absolute w-[150rem] h-[150rem] rounded-full border border-white opacity-25'></span>
 				<span className='absolute w-[120rem] h-[120rem] rounded-full border border-white opacity-25'></span>
@@ -97,7 +97,7 @@ const Banner = () => {
 									name='search'
 									placeholder='Paste Product url here'
 								>
-									<img src={search} alt='' className='py-4' />
+									<img src={search} alt='' className='py-3' />
 								</Input>
 							</div>
 							<Button buttonType='submit' type='primary'>
