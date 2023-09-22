@@ -134,6 +134,7 @@ const RequestModal = ({
 								</Input>
 							</div>
 							<button
+							onClick={()=> window.open(itemRequestForm.values.link)}
 								type='button'
 								className='cursor-pointer duration-500 active:rotate-180'
 							>
