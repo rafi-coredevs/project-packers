@@ -157,7 +157,7 @@ const Orders = () => {
                         </thead>
                         <tbody>
                           {
-                            loading && [...Array(10)].map((arr, i) => <tr key={i} className="border-b">
+                            loading ? [...Array(10)].map((arr, i) => <tr key={i} className="border-b">
                               <td className="px-6 py-7 lazy-loading"></td>
                               <td className="px-6 py-7 lazy-loading"></td>
                               <td className="px-6 py-7 lazy-loading"></td>
@@ -165,8 +165,7 @@ const Orders = () => {
                               <td className="px-6 py-7 lazy-loading"></td>
                               <td className="px-6 py-7 lazy-loading"></td>
                             </tr>)
-                          }
-                          {
+                          :
                             !loading && order?.length <= 0 ? <tr><td colSpan={6}>
                               <div className="flex w-full h-full items-center justify-center text-xl font-semibold text-black mt-10">
                                 <p>
