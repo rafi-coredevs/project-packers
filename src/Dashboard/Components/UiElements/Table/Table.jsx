@@ -269,13 +269,13 @@ const Table = ({ data, paginate, loading, dashboardToogle, modalHandler, getData
                       </td>
                       <td
                         onClick={() => navigate(`/admin/request/${item?.id}`)}
-                        className='px-4 py-[18px] text-black text-sm cursor-pointer max-w-md line-clamp-1'
+                        className='px-4 py-[18px] text-black text-sm cursor-pointer max-w-md '
                       >
-                        {item?.name}
+                        {item?.name.slice(0,40)}...
                       </td>
                       <td className='w-[25%] px-4 py-[18px] text-black text-sm cursor-pointer '>
                         <a href={item?.link} target='_blank' className='w-full line-clamp-1'>
-                          {item?.link}
+                          {item?.link.slice(0,40)}...
                         </a>
                       </td>
                       <td className='px-4 py-[18px] text-black text-sm '>
