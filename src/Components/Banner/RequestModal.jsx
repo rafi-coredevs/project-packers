@@ -134,7 +134,7 @@ const RequestModal = ({
 								</Input>
 							</div>
 							<button
-							onClick={()=> window.open(itemRequestForm.values.link)}
+							onClick={()=> itemRequestForm.values.link !== "" ? window.open(itemRequestForm.values.link) : null}
 								type='button'
 								className='cursor-pointer duration-500 active:rotate-180'
 							>
