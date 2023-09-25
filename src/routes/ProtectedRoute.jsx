@@ -7,8 +7,6 @@ import { useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 export default function ProtectedRoute({ accessTo, children }) {
     const { user, loading } = useUserCtx();
-    console.log(loading)
-    const navigate = useNavigate();
     const location = useLocation();
 
     const accessByRole = {

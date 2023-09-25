@@ -25,7 +25,7 @@ const Dropdown = ({ isOpen, onClick, type, title, data, logout }) => {
 	}, [onClick]);
 
 	const clickHandler = (v) => {
-		v === 'cart' && navidate('/cart') 
+		v === 'cart' && navigate('/cart') 
 		onClick(false);
 		
 	};
@@ -101,7 +101,7 @@ const Dropdown = ({ isOpen, onClick, type, title, data, logout }) => {
 								data.map((item, i) => {
 									return (
 										<div
-											onClick={() => clickHandler(item.id)}
+											onClick={() => clickHandler('cart')}
 											key={i}
 											className='cursor-pointer flex gap-4 justify-between py-2 border-t border-[#0000001A]'
 										>

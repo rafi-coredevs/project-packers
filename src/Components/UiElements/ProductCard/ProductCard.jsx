@@ -84,7 +84,7 @@ export const ProductCard = ({
 							{title}
 						</h3>
 						<div
-							className={`text-left flex gap-2 justify-between items-center mt-4 text-base
+							className={`text-left flex gap-2 justify-between items-start md:items-center mt-4 text-base
             ${isShop ? 'flex-col lg:flex-row' : 'flex-row'}`}
 						>
 							<p className='text-slate-600 text-xs md:text-base font-medium'>

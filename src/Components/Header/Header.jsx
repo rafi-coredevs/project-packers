@@ -182,7 +182,7 @@ const Header = ({ sideBar, state }) => {
 									<span
 										className='hover:cursor-pointer'
 										onClick={() => {
-											setNotifyState(!notifyState);
+											setNotifyState(prev => !prev);
 											setNewNotification(false)
 										}}
 									>
