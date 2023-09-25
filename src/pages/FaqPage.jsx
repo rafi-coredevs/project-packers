@@ -4,7 +4,7 @@ import { useTitle } from "../Components/Hooks/useTitle";
 const FaqPage = () => {
     useTitle("Frequently asked questions")
     return (
-        <main>
+        <main className="mb-36">
             <Faq />
         </main>
     );
