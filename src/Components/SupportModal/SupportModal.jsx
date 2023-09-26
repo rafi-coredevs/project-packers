@@ -32,7 +32,7 @@ const SupportModal = () => {
   const [isClosed, setClosed] = useState(false)
   const messageBody = useRef(null)
 
-  const {supportState, enableSupport, disableSupport} = useSupportCtx();
+  const { supportState, enableSupport, disableSupport } = useSupportCtx();
   const supportForm = useFormik({
     initialValues: {
       name: "",
@@ -67,31 +67,35 @@ const SupportModal = () => {
       if (data.id) {
         setSupport(data.id)
         id = data.id
-        terminal.socket.emit('entry', { "entry": true, "room": id })
-        terminal.request({ name: 'getMessage', params: { id: data.id }, queries: { page: 1 } }).then(data => {
-          data.docs?.length > 0 && setChat(data.docs), setTotalPage(data.totalPages), setPage(data.page)
-        })
-        terminal.socket.on('message', (data) => {
+        terminal.socket.emit('entry', { "entry": true, "room": id });
+        terminal
+          .request({ name: 'getMessage', params: { id }, queries: { page: 1 } })
+          .then(data => {
+            data.docs?.length && data.docs.length > 0 && setChat(data.docs), setTotalPage(data.totalPages), setPage(data.page);
+          })
+          .catch(err => console.error(err));
 
-          if (data.id) {
-            setChat(prev => [data, ...prev])
-            return
+        // Websocket
+        terminal.socket.on('message', (data) => {
+          if (typeof data === 'object' && data.id) {
+            return setChat(prev => [data, ...prev]);
           }
-          else if (data == 'closed') {
-            // condtions
-            disableSupport();
+          if (data.toLowerCase() === 'closed') {
+            return disableSupport();
           }
-        })
+        });
+
+        return;
       }
-      else {
-        setSupport()
-        setChat([])
-      }
+
+      setSupport();
+      setChat([]);
     })
+      .catch(err => console.error(err));
+
     return () => {
       terminal.socket.emit('entry', { "entry": false, "room": id })
       terminal.socket.off('message')
-
     }
 
   }, [supportState])
@@ -290,7 +294,7 @@ const SupportModal = () => {
             </span>
             <button
               className="cursor-pointer"
-              onClick={() => { disableSupport()}}
+              onClick={() => { disableSupport() }}
               type="button"
             >
               <img src={cancel} className="h-6 w-6" />
