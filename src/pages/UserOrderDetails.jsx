@@ -20,7 +20,7 @@ const UserOrderDetails = () => {
     return (
         <div className='container mx-auto my-12'>
             <div className='mb-5'>
-                <p className='text-xs text-slate-600'>Order Numer</p>
+                <p className='text-xs text-slate-600'>Order Number</p>
                 <p className='text-lg font-semibold'>#{order.orderNumber}</p>
             </div>
             <div className="grid grid-cols-3 gap-5">

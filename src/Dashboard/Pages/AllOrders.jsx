@@ -71,7 +71,8 @@ const AllOrders = () => {
     fetchData();
   }, [sortBy, active]);
   useEffect(() => {
-    terminal.request({ name: "overviewData" }).then((res) =>
+    terminal.request({ name: "overviewData" }).then((res) =>{
+      console.log(res)
       setOverView(
         res?.status === false
           ? []
@@ -97,7 +98,7 @@ const AllOrders = () => {
               total: res?.cancelledOrder,
             },
           ]
-      )
+      )}
     );
   }, []);
 

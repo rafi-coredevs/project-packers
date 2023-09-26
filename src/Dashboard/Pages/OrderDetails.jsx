@@ -5,7 +5,7 @@
  */
 
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useFormik } from 'formik';
 import { useTitle } from '../../Components/Hooks/useTitle';
 import { terminal } from '../../contexts/terminal/Terminal';
@@ -25,7 +25,7 @@ const OrderDetails = () => {
 	const [order, setOrder] = useState(null);
 	const [selectedOrderStatus, setSelectedOrderStatus] = useState({});
 	const [invoiceData, setInvoiceData] = useState({})
-
+	const navigate = useNavigate();
 	const fetchData = () =>
 		terminal
 			.request({ name: 'singleOrder', params: { id: orderId } })
@@ -149,11 +149,11 @@ const OrderDetails = () => {
 			.request({ name: 'deleteOrder', body: { id: [orderId] } })
 			.then((res) =>
 				res?.status === false
-					? toaster({ type: 'success', message: res.message })
-					: toaster({
+					? toaster({ type: 'error', message: res.message })
+					: (toaster({
 						type: 'success',
 						message: 'deleted successfully',
-					}),
+					}), navigate('/admin/orders',{replace: true})),
 
 			)
 			.catch((err) => console.error('order delete error', err));

@@ -44,14 +44,14 @@ const Footer = () => {
       <div className="container mx-auto flex flex-col items-center ">
         <div className="grid grid-cols-1 px-5 sm:px-0 sm:grid-cols-4 gap-8 pb-12 border-b border-[#FFFFFF33]">
           <div className="flex flex-col gap-8">
-            <div className="flex items-center gap-2">
+            <Link to={'/'} className="flex items-center gap-2">
               <img src={logo} alt="Project Packers" />
               <div className="text-white text-base font-bold leading-none">
                 Project
                 <br />
                 Packers
               </div>
-            </div>
+            </Link>
             <div className="flex flex-col gap-5">
               <div className="flex gap-2">
                 <img src={IconCall} alt="" />

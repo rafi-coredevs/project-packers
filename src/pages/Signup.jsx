@@ -33,7 +33,7 @@ const Signup = () => {
 				.then((res) => {
 					res.status === false
 						? toaster({ type: 'error', message: res.message })
-						: navigate('/login');
+						: (navigate('/login'), toaster({ type: 'success', message: 'Registration Complete' }));
 				})
 				.catch((err) => console.error('Error in sign up', err));
 		},
