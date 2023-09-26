@@ -41,9 +41,9 @@ const Header = ({ sideBar, state }) => {
 	const [newNotification, setNewNotification] = useState(false)
 
 	//New notification logic
-	useEffect(()=>{
+	useEffect(() => {
 		setNewNotification(true)
-	},[notifications])
+	}, [notifications])
 
 	/**
 	 * Handles form submission for URL search.
@@ -92,7 +92,7 @@ const Header = ({ sideBar, state }) => {
 	useEffect(() => {
 		user?.id &&
 			terminal
-				.request({ name: 'getNotification',  queries: { limit: 100, time: { $gte: sevenDaysAgoISO } }})
+				.request({ name: 'getNotification', queries: { limit: 100, time: { $gte: sevenDaysAgoISO } } })
 				.then((data) => data.docs && setNotifications(data.docs));
 	}, [user]);
 
@@ -119,6 +119,8 @@ const Header = ({ sideBar, state }) => {
 					id: product.product?.id,
 					title: product.product.name,
 					price: product.product.price,
+					tax: product.product?.tax || 0,
+					fee: product.product?.fee || 0,
 					image: product.product.images[0],
 					qty: product.productQuantity,
 				});
@@ -132,6 +134,8 @@ const Header = ({ sideBar, state }) => {
 						id: request.request?.id,
 						title: request.request?.name,
 						price: request.request?.price || 0,
+						tax: request.request?.tax || 0,
+						fee: request.request?.fee || 0,
 						image: request.request?.images[0] || 0,
 						qty: request.requestQuantity,
 					});

@@ -40,7 +40,7 @@ const CartItem = ({ data, onChange, quantity, removeProduct }) => {
 				</div>
 			</td>
 			<td>
-				<div className='border-[#0000004d] border rounded-md flex items-center justify-center'>
+				<div className='border-[#0000004d] w-[6rem] border rounded-md flex items-center justify-between'>
 					<button
 						disabled={quantity <= 0}
 						onClick={() => updateQuantity(data?.id, -1)}
@@ -60,7 +60,7 @@ const CartItem = ({ data, onChange, quantity, removeProduct }) => {
 				</div>
 			</td>
 			<td className='hidden px-2 sm:table-cell'>
-				৳ {data?.price + data?.tax + data?.fee} tk
+				৳ {data?.price } tk
 			</td>
 			{pathname.includes('admin') && <td className='px-2 sm:table-cell '>
 				<img onClick={() => removeProduct(data)} src={close} alt="" className='cursor-pointer' />

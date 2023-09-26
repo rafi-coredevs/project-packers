@@ -2,7 +2,7 @@ import icon from '../../../assets/icons/cd-arrow-right.svg';
 import acc from '../../../assets/icons/Avatar.svg';
 import prod from '../../../assets/icons/cd-products.svg';
 import minor from '../../../assets/icons/cd-select_minor.svg';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useRef } from 'react';
 import formatTimeAgo from '../../../Util/formatTimeAgo';
 
@@ -10,6 +10,11 @@ import formatTimeAgo from '../../../Util/formatTimeAgo';
 const Dropdown = ({ isOpen, onClick, type, title, data, logout }) => {
 	const navigate = useNavigate();
 	const ref = useRef(null);
+	const location = useLocation();
+
+	useEffect(()=>{
+		onClick()
+	},[location])
 	useEffect(() => {
 		const handleClickOutside = (event) => {
 			if (ref.current && !ref.current.contains(event.target)) {
@@ -121,7 +126,7 @@ const Dropdown = ({ isOpen, onClick, type, title, data, logout }) => {
 												</p>
 
 												<p className='font-sans font-normal text-xs text-[#000000] overflow-hidden'>
-													$ {item.price}
+													TK {item.price + item?.tax+ item?.fee}
 												</p>
 											</div>
 											<div className='flex gap-1 items-center'>
