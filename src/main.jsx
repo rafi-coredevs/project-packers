@@ -5,12 +5,15 @@ import { router } from "./routes/routes";
 import { Toaster } from "react-hot-toast";
 import { UserProvider } from "./contexts/user/UserContext";
 import { CartProvider } from "./contexts/cart/CartContext";
+import { SupportProvider } from "./contexts/support/SupportContext";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
     <>
         <UserProvider>
             <CartProvider>
-                <RouterProvider router={router} />
+                <SupportProvider>
+                    <RouterProvider router={router} />
+                </SupportProvider>
             </CartProvider>
         </UserProvider>
         <Toaster

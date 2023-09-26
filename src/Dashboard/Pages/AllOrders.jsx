@@ -72,7 +72,6 @@ const AllOrders = () => {
   }, [sortBy, active]);
   useEffect(() => {
     terminal.request({ name: "overviewData" }).then((res) =>{
-      console.log(res)
       setOverView(
         res?.status === false
           ? []

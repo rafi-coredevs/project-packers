@@ -7,7 +7,6 @@ import SupportModal from "../Components/SupportModal/SupportModal";
 import ReloadPage from "../pages/ReloadPage";
 import { useUserCtx } from "../contexts/user/UserContext";
 import ScrollTop from "../Util/ScrollTop";
-
 const Main = () => {
   const [toggle, setToggle] = useState(false);
   const toggleHandler = () => setToggle(!toggle);

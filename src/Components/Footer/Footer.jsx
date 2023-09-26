@@ -14,12 +14,11 @@ import paypal from "../../assets/icons/paypal.svg";
 import facebook from "../../assets/icons/cd-facebook.svg";
 import insta from "../../assets/icons/cd-instagram.svg";
 import twitter from "../../assets/icons/cd-twitter.svg";
-import SupportModal from "../SupportModal/SupportModal";
-import { useState } from "react";
+import { useSupportCtx } from "../../contexts/support/SupportContext";
 const Footer = () => {
   const date = new Date().getFullYear();
-  const [modal, setModal] = useState(false)
   const location = useLocation().pathname;
+  const {enableSupport} = useSupportCtx();
   if (
     location === "/login" ||
     location === "/reset" ||
@@ -123,7 +122,7 @@ const Footer = () => {
                 <Link to="/faq">FAQs</Link>
               </div>
               <div>
-                <button onClick={()=>{setModal(true)}}>Live Chat Support</button>
+                <button onClick={()=>enableSupport()}>Live Chat Support</button>
               </div>
             </div>
           </div>
@@ -160,7 +159,6 @@ const Footer = () => {
           </div>
         </div>
       </div>
-      <SupportModal show={modal} onChange={()=> setModal(false)} />
     </footer>
   );
 };

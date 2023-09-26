@@ -20,10 +20,9 @@ import { useUserCtx } from "../../contexts/user/UserContext";
 import UserIcon from "../UiElements/UserIcon/UserIcon";
 import cancel from '../../assets/icons/cd-cancel-w.svg';
 import loader from '../../assets/icons/cd-reload-white.svg'
-
-const SupportModal = ({ show = false, onChange }) => {
+import { useSupportCtx } from "../../contexts/support/SupportContext";
+const SupportModal = () => {
   const { user } = useUserCtx()
-  const [isVisible, setVisible] = useState(false);
   const [chat, setChat] = useState([]);
   const [images, setImages] = useState([])
   const [support, setSupport] = useState(null)
@@ -32,6 +31,8 @@ const SupportModal = ({ show = false, onChange }) => {
   const [loading, setLoading] = useState(false)
   const [isClosed, setClosed] = useState(false)
   const messageBody = useRef(null)
+
+  const {supportState, enableSupport, disableSupport} = useSupportCtx();
   const supportForm = useFormik({
     initialValues: {
       name: "",
@@ -43,7 +44,7 @@ const SupportModal = ({ show = false, onChange }) => {
       const data = { message: values.message, type: values.type };
       terminal.request({ name: 'registerSupport', body: { data, images } }).then(data => {
         if (data.id) {
-          
+
           terminal.request({ name: 'getMessage', params: { id: data.id } }).then(data => {
             if (data.docs) {
               setChat(data.docs)
@@ -59,12 +60,10 @@ const SupportModal = ({ show = false, onChange }) => {
     },
   });
 
-  useEffect(() => {
-    setVisible(show);
-  }, [show])
+
   useEffect(() => {
     let id = ''
-    isVisible && terminal.request({ name: 'userSupport' }).then(data => {
+    supportState && terminal.request({ name: 'userSupport' }).then(data => {
       if (data.id) {
         setSupport(data.id)
         id = data.id
@@ -73,14 +72,14 @@ const SupportModal = ({ show = false, onChange }) => {
           data.docs?.length > 0 && setChat(data.docs), setTotalPage(data.totalPages), setPage(data.page)
         })
         terminal.socket.on('message', (data) => {
-         
+
           if (data.id) {
             setChat(prev => [data, ...prev])
             return
           }
           else if (data == 'closed') {
             // condtions
-            setVisible(false)
+            disableSupport();
           }
         })
       }
@@ -94,12 +93,12 @@ const SupportModal = ({ show = false, onChange }) => {
       terminal.socket.off('message')
 
     }
-   
-  }, [isVisible])
+
+  }, [supportState])
 
   // Chat close
   const handleEnd = () => {
-   
+
     setClosed(true);
     terminal.request({ name: 'updateSupport', params: { id: support }, body: { status: 'close', user: null } }).then(data => {
       if (data.id) {
@@ -166,17 +165,17 @@ const SupportModal = ({ show = false, onChange }) => {
 
   return (
     <>
-      {!isVisible && (
+      {!supportState && (
         <div className=" cursor-pointer z-50 sm:block fixed bottom-4 right-4  ">
           <img
-            onClick={() => setVisible(true)}
+            onClick={() => enableSupport()}
             className="h-fit w-fit p-4 rounded-full bg-primary"
             src={supportIcon}
             alt=""
           />
         </div>
       )}
-      <div className={`bg-secondary p-5 min-w-[23.437rem] border-[#6BCCCB] border rounded-2xl fixed bottom-4 right-4 duration-500 origin-bottom-right ${isVisible ? 'bottom-4 right-4 overflow-y-auto scale-75 lg:scale-100 z-[100]' : 'bottom-6 right-6 overflow-hidden scale-0 z-[10]'}`}>
+      <div className={`bg-secondary p-5 min-w-[23.437rem] border-[#6BCCCB] border rounded-2xl fixed bottom-4 right-4 duration-500 origin-bottom-right ${supportState ? 'bottom-4 right-4 overflow-y-auto scale-75 lg:scale-100 z-[100]' : 'bottom-6 right-6 overflow-hidden scale-0 z-[10]'}`}>
 
         {chat?.length < 1 ? (
           <>          <div className="flex justify-between items-center mb-5">
@@ -185,7 +184,7 @@ const SupportModal = ({ show = false, onChange }) => {
             </span>
             <button
               className="cursor-pointer"
-              onClick={() => { setVisible(false); onChange() }}
+              onClick={() => { disableSupport() }}
               type="button"
             >
               <img src={cancel} className="h-6 w-6" />
@@ -224,7 +223,7 @@ const SupportModal = ({ show = false, onChange }) => {
                   value={supportForm.values.type}
                   onChange={supportForm.handleChange}
                   onBlur={supportForm.handleBlur}
-                  
+
                 >
                   <option >-</option>
                   <option value="account" className="hover:bg-red-500">
@@ -248,7 +247,7 @@ const SupportModal = ({ show = false, onChange }) => {
                   onChange={supportForm.handleChange}
                   onBlur={supportForm.handleBlur}
                   value={supportForm.values.message}
-                  
+
                   rows="3"
                   placeholder="-"
                 ></textarea>
@@ -257,7 +256,7 @@ const SupportModal = ({ show = false, onChange }) => {
               <div className="flex flex-col">
                 <p
                   className="text-white font-semibold text-lg block font-sans  pb-2"
-                  
+
                 >
                   Attatchment
                 </p>
@@ -291,7 +290,7 @@ const SupportModal = ({ show = false, onChange }) => {
             </span>
             <button
               className="cursor-pointer"
-              onClick={() => { setVisible(false) }}
+              onClick={() => { disableSupport()}}
               type="button"
             >
               <img src={cancel} className="h-6 w-6" />
