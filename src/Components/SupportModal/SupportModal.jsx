@@ -275,6 +275,7 @@ const SupportModal = () => {
                   onChange={handleImage}
                   className="hidden"
                   type="file"
+                  accept="image/jpeg, image/png"
                   name="images"
                   id="images"
                   multiple

@@ -124,7 +124,6 @@ const AreaChart = ({ data, selected, setSelected, OPTIONS, chartLoading }) => {
       <div className='w-full absolute flex justify-between items-start'>
         <h4 className="text-base font-semibold text-secondary flex items-center gap-2">
           <span>Request vs Order</span>
-          <img src={cd_information} alt="cd_information" />
         </h4>
         <div className=" min-w-[8rem] py-1 absolute right-0 top-0 flex flex-shrink-0 justify-end items-center space-x-2 z-50">
           {

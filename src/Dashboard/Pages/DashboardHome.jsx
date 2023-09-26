@@ -1,6 +1,5 @@
 import arrowRight from "../../assets/icons/cd-arrow-right-2.svg";
 import Heading from "../Components/UiElements/Heading/Heading";
-import { orderTable } from "../../Store/Data";
 import AreaChart from "../Components/UiElements/AreaChart/AreaChart";
 import { areaChart, heatMap } from "../../Store/Data";
 import HeatMap from "../Components/UiElements/HeatMap/HeatMap";
@@ -30,7 +29,7 @@ const DashboardHome = () => {
   ]
   useTitle("Dashboard")
   const [active, setActive] = useState("orders");
-  const [tableData, setTableData] = useState(orderTable);
+  const [tableData, setTableData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [chartLoading, setChartLoading] = useState(false);
   const [areaChartData, setAreaChartData] = useState(areaChart);;
@@ -60,8 +59,22 @@ const DashboardHome = () => {
       total: 0
     }
   ]);
-  useEffect(() => {
+
+  const fetchOrder = (page = 1) => {
     setLoading(true);
+    terminal.request({ name: 'allOrders', queries: { page } }).then((res) => {
+      res.status === false ? '' : setTableData(res), setLoading(false);
+    });
+  };
+  const fetchRequest = (page = 1) => {
+    setLoading(true);
+    terminal.request({ name: 'allRequest', queries: { page } }).then((res) => {
+      res.status === false ? '' : (setTableData(res), setLoading(false));
+    }).catch(err => console.log(err));
+  };
+
+  useEffect(() => {
+    
     active === 'orders' ? fetchOrder() : fetchRequest();
   }, [active]);
   useEffect(() => {
@@ -96,16 +109,7 @@ const DashboardHome = () => {
     });
   }, [selected]);
 
-  const fetchOrder = (page = 1) => {
-    terminal.request({ name: 'allOrders', queries: { page } }).then((res) => {
-      res.status === false ? '' : setTableData(res), setLoading(false);
-    });
-  };
-  const fetchRequest = (page = 1) => {
-    terminal.request({ name: 'allRequest', queries: { page } }).then((res) => {
-      res.status === false ? '' : setTableData(res), setLoading(false);
-    });
-  };
+
 
   const tableButtonHandler = (value) => {
     setActive(value);

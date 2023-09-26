@@ -137,7 +137,7 @@ const RequestImageUpload = ({
 						id='file'
 						onChange={handleFileChange}
 						className='hidden'
-						accept="image/*,.jpg.jpeg.png"
+						accept="image/jgeg, image/png"
 					/>
 				</div>
 			</div>
