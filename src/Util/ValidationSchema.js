@@ -24,14 +24,14 @@ export const changePassword = object({
 export const signupSchema = object({
 	fullName: string().required(),
 	email: string().email().required('Please enter your email address.'),
-	phone: string().min(6, 'Invalid Phone Number').max(20).required('Please enter your phone number'),
+	phone: string().matches(/(^(\+88|0088)?(01){1}[3456789]{1}(\d){8})$/, 'Invalid Phone Number').required('Please enter your phone number'),
 	password: string().matches(
 		/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$%^&+=!]).*$/,
 		'required A-Z, a-z, 0-9, special character',
 	)
 		.min(8)
 		.max(16)
-		
+
 		.required('Password Can not be Empty'),
 });
 
@@ -61,12 +61,12 @@ export const subCategorySchema = object({
 export const productSchema = object({
 	name: string().required(),
 	description: string().required(),
-	category:string(),
-	subcategory:string(),
-	price: number().test("price","Invalid", value => value >= 0).required(),
-	tax: number().test("price","Invalid", value => value >= 0).required(),
-	fee: number().test("price","Invalid", value => value >= 0).required(),
-	quantity: number().test("price","Invalid", value => value >= 1).required(),
+	category: string(),
+	subcategory: string(),
+	price: number().test("price", "Invalid", value => value >= 0).required(),
+	tax: number().test("price", "Invalid", value => value >= 0).required(),
+	fee: number().test("price", "Invalid", value => value >= 0).required(),
+	quantity: number().test("price", "Invalid", value => value >= 1).required(),
 	origin: string().required(),
 	link: string().required(),
 	tags: string().required(),
@@ -74,8 +74,8 @@ export const productSchema = object({
 
 export const checkoutSchema = object({
 	email: string().email().required('Please enter your email address.'),
-	phone: string().min(10, 'Invalid phone number').max(17).required(),
-	altPhone: string().min(10, 'Invalid phone number').max(17),
+	phone: string().matches(/(^(\+88|0088)?(01){1}[3456789]{1}(\d){8})$/, 'Invalid Phone Number').required('Please enter your phone number'),
+	altPhone: string().matches(/(^(\+88|0088)?(01){1}[3456789]{1}(\d){8})$/, 'Invalid Phone Number').required('Please enter your phone number'),
 	firstName: string().required('First name required'),
 	lastName: string().required('Last name required'),
 	address: string().required(),
@@ -92,13 +92,13 @@ export const requestItems = object({
 	name: string(),
 	quantity: number(),
 	email: string().email().required('Please enter your email address.'),
-	phone:'',
+	phone: '',
 	link: string().required(),
 	note: string(),
-	price: number().test("price","Invalid", value => value >= 0).required(),
-	tax: number().test("price","Invalid", value => value >= 0).required(),
-	fee: number().test("price","Invalid", value => value >= 0).required(),
-	shippingaddress:string(),
+	price: number().test("price", "Invalid", value => value >= 0).required(),
+	tax: number().test("price", "Invalid", value => value >= 0).required(),
+	fee: number().test("price", "Invalid", value => value >= 0).required(),
+	shippingaddress: string(),
 	billingaddress: string(),
 })
 
@@ -119,8 +119,8 @@ export const customerSchema = object({
 export const discountSchema = object({
 	coupon: string().min(6).required(),
 	type: string().required(),
-	amount: number().test("price","Invalid", value => value >= 0).required(),
-	limit: number().test("price","Invalid", value => value >= 0).required(),
+	amount: number().test("price", "Invalid", value => value >= 0).required(),
+	limit: number().test("price", "Invalid", value => value >= 0).required(),
 	expiry: string().required(),
 	category: string().required(),
 	subCategory: string().required(),
@@ -129,8 +129,8 @@ export const discountSchema = object({
 
 export const itemRequestSchema = object({
 	name: string().required("Name should not be empty"),
-	link:string(),
-	quantity: number().test("price","Invalid", value => value >= 0).required(),
+	link: string(),
+	quantity: number().test("price", "Invalid", value => value >= 0).required(),
 	note: string(),
 
 })
@@ -139,9 +139,9 @@ export const itemRequest2 = object({
 	link: string().required('Please provide link')
 })
 export const staffFormSchema = object({
-	firstName:string().required(),
-	lastName:string().required(),
+	firstName: string().required(),
+	lastName: string().required(),
 	email: string().email().required('Please enter your email address.'),
-	phone: string().matches(/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/, 'Invalid phone number').required(),
+	phone: string().matches(/(^(\+88|0088)?(01){1}[3456789]{1}(\d){8})$/, 'Invalid Phone Number').required('Please enter your phone number'),
 	role: string()
 })

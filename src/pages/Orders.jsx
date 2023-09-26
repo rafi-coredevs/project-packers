@@ -256,7 +256,7 @@ const Orders = () => {
                     />
                     <Input
                       styles="primary"
-                      type="phone"
+                      type="tel"
                       name="phone"
                       change={profileForm.handleChange}
                       blur={profileForm.handleBlur}

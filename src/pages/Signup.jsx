@@ -28,7 +28,7 @@ const Signup = () => {
 		validationSchema: signupSchema,
 		onSubmit: (values) => {
 			const data = { ...values, phone: countryCode + values.phone };
-
+			
 			SignUp(data)
 				.then((res) => {
 					res.status === false
@@ -114,7 +114,7 @@ const Signup = () => {
 											? signUpForm.errors.phone
 											: null
 									}
-									type='text'
+									type='tel'
 									placeholder='Enter Your Phone Number'
 									label='Phone Number'
 								>

@@ -181,6 +181,7 @@ const Staff = () => {
                 label="Phone Number"
                 placeholder="01700000000"
                 name='phone'
+                type={'tel'}
                 change={staffForm.handleChange}
                   blur={staffForm.handleBlur}
                   value={staffForm.values.phone}

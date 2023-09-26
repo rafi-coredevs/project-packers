@@ -3,16 +3,16 @@ import { COUNTRY_CODE } from './Data';
 
 const CountryCodeSelector = ({ setCountryCode, error }) => {
 	const data = COUNTRY_CODE;
-	const [selected, setSelected] = useState(data[0].dial_code);
+	const [selected, setSelected] = useState(data[18].dial_code);
 	const handleChange = (e) => {
 		setSelected(e.target.value);
 		setCountryCode(e.target.value);
 	};
 
 	return (
-		<div className={`flex gap-2 border-r h-full border-[#E2E8F0]  `}>
+		<div className={`flex gap-2 border-r h-full w-fit py-[4.5px] border-[#E2E8F0]  `}>
 			<select
-				className='bg-transparent border-none focus:outline-none w-[5rem] cursor-pointer'
+				className='bg-transparent border-none focus:outline-none w-fit cursor-pointer'
 				onChange={handleChange}
 				name='code'
 				id='code'

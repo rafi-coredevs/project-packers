@@ -46,29 +46,25 @@ const Input = ({
 		<div className='relative '>
 			{label && (
 				<label
-					className={`${
-						styles === 'primary'
+					className={`${styles === 'primary'
 							? 'text-black text-base font-normal'
 							: 'text-white font-semibold text-lg'
-					} block font-sans  pb-2 ${
-						required
+						} block font-sans  pb-2 ${required
 							? `after:content-['*'] after:ml-0.5 after:text-red-500`
 							: ''
-					} `}
+						} `}
 				>
 					{label}
 				</label>
 			)}
 			<div
-				className={` flex items-center w-full bg-[#ffffff] rounded-full ${
-					border ? 'border border-[#00000036]' : ''
-				}`}
+				className={` flex items-center w-full bg-[#ffffff] rounded-full ${border ? 'border border-[#00000036]' : ''
+					}`}
 			>
 				{children && (
 					<div
-						className={`pl-[10px] sm:pl-5 h-full rounded-s-full border py-1 ${
-							error ? ' border-red-600 border-r-0' : 'border-white'
-						}`}
+						className={`pl-[10px] sm:pl-5 h-full w-fit rounded-s-full border py-1 ${error ? ' border-red-600 border-r-0' : 'border-white'
+							}`}
 					>
 						{children}
 					</div>
@@ -76,11 +72,9 @@ const Input = ({
 				{/* checking for otp */}
 				{otp ? (
 					<input
-						className={`px-5 py-2 focus:  ${
-							children ? 'rounded-e-full' : 'rounded-full'
-						} w-full outline-none placeholder-secondary text-secondary border ${
-							error ? ' border-red-600' : 'border-white'
-						}
+						className={`px-5 py-2 focus:  ${children ? 'rounded-e-full' : 'rounded-full'
+							} w-full outline-none placeholder-secondary text-secondary border ${error ? ' border-red-600' : 'border-white'
+							}
           ${className}
           `}
 						value={value}
@@ -102,11 +96,9 @@ const Input = ({
 					/>
 				) : (
 					<input
-						className={`px-5 py-2 focus:  ${
-							children ? 'rounded-e-full border-l-0' : 'rounded-full'
-						} w-full outline-none placeholder-secondary text-secondary border ${
-							error ? ' border-red-600' : 'border-white'
-						}
+						className={`px-5 py-2 focus:  ${children ? 'rounded-e-full border-l-0' : 'rounded-full'
+							} w-full outline-none placeholder-secondary text-secondary border ${error ? ' border-red-600' : 'border-white'
+							}
           ${className}
           `}
 						value={value}

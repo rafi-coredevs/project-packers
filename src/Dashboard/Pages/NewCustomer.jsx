@@ -124,6 +124,7 @@ const NewCustomer = () => {
               styles="basic"
               label="Phone Number"
               name={"phone"}
+              type={'tel'}
               change={customerForm.handleChange}
               blur={customerForm.handleBlur}
               error={
