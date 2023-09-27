@@ -21,6 +21,8 @@ import UserIcon from "../UiElements/UserIcon/UserIcon";
 import cancel from '../../assets/icons/cd-cancel-w.svg';
 import loader from '../../assets/icons/cd-reload-white.svg'
 import { useSupportCtx } from "../../contexts/support/SupportContext";
+
+
 const SupportModal = () => {
   const { user } = useUserCtx()
   const [chat, setChat] = useState([]);
@@ -43,19 +45,21 @@ const SupportModal = () => {
     onSubmit: (values, { resetForm }) => {
       const data = { message: values.message, type: values.type };
       terminal.request({ name: 'registerSupport', body: { data, images } }).then(data => {
+        console.log('Support Data:', data);
         if (data.id) {
-
+          setSupport(data.id);
+          setImages([])
+          terminal.socket.emit('entry', { "entry": true, "room": data.id });
           terminal.request({ name: 'getMessage', params: { id: data.id } }).then(data => {
             if (data.docs) {
               setChat(data.docs)
               setTotalPage(data.totalPages)
               setPage(data.page)
-              terminal.socket.emit('entry', { "entry": true, "room": data.id })
               resetForm()
             }
           })
         }
-      })
+      }).catch(err => console.error(err))
       setClosed(false);
     },
   });
@@ -65,7 +69,7 @@ const SupportModal = () => {
     let id = ''
     supportState && terminal.request({ name: 'userSupport' }).then(data => {
       if (data.id) {
-        setSupport(data.id)
+        setSupport(data.id);
         id = data.id
         terminal.socket.emit('entry', { "entry": true, "room": id });
         terminal
@@ -80,12 +84,12 @@ const SupportModal = () => {
           if (typeof data === 'object' && data.id) {
             return setChat(prev => [data, ...prev]);
           }
-          if (data.toLowerCase() === 'closed') {
+          if (data.toLowerCase() == 'closed') {
             return disableSupport();
           }
         });
 
-        return;
+        return; 
       }
 
       setSupport();
@@ -346,7 +350,13 @@ const SupportModal = () => {
                         <span className={`${chat.sender?.id === user.id ? "text-[#000316CC]" : "text-[#a7a7a7] w-[300px]"} break-all w-full `
                         }>
                           {chat?.message}
-
+                          {chat?.images &&
+                            chat?.images?.map((image, index) => {
+                              return <a key={index} target="_blank" href={import.meta.env.VITE_SERVER_URL + "/" + image}>
+                                <img className="py-[2px]" src={import.meta.env.VITE_SERVER_URL + "/" + image} alt="" />
+                              </a>
+                            })
+                          }
                         </span>
                       </div>
                     </div>

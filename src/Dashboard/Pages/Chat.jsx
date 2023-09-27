@@ -7,6 +7,7 @@ import { terminal } from "../../contexts/terminal/Terminal";
 import Messages from "../Components/UiElements/Messages/Messages";
 import EmptyMassage from "../Components/UiElements/Messages/EmptyMassage";
 import { useTitle } from "../../Components/Hooks/useTitle";
+import toaster from "../../Util/toaster";
 
 const buttonStyle = {
   active: "bg-secondary text-white",
@@ -22,6 +23,7 @@ const Chat = () => {
   useEffect(() => {
     terminal.socket.on("notification", (data) => {
       if (data.message == "There is a new support request") {
+        toaster({type:'success', message:'There is a new support request'})
         terminal
           .request({
             name: "allSupport",
@@ -31,7 +33,7 @@ const Chat = () => {
             setSupportData(() => {
               return (
                 data.length > 0 &&
-                data?.map((support) => {
+                data?.reverse().map((support) => {
                   return {
                     id: support.id,
                     status: support.status,

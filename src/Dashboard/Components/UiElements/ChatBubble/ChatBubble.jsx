@@ -12,7 +12,7 @@ import UserIcon from "../../../../Components/UiElements/UserIcon/UserIcon";
 import escape from "../../../../Util/escapeHtml";
 
 
-const ChatBubble = ({ sender, name, date, message, userId }) => {
+const ChatBubble = ({ sender, name, date, message, userId,images }) => {
     return (
         <div className={`flex gap-3 h-fit min-w-[350px] max-w-[50%] ${sender === userId ? "ml-auto flex-row-reverse" : ""}`}>
             <span className="h-10 w-10 flex items-center justify-center shrink-0 rounded-full font-bold text-amber-800 bg-pink-400"><UserIcon name={name} /></span>
@@ -28,11 +28,20 @@ const ChatBubble = ({ sender, name, date, message, userId }) => {
                         hour12: true,
                     }).format(new Date(date))}</p>
                 </div>
-                <div className={`${sender === userId ? "text-[#000316CC]" : "text-[#a7a7a7]"} break-all`}>
-                  <span className="">
-                    {/* {message} */}
-                    {escape(message)}
-                  </span>
+                <div className="">
+                    <div className={`${sender === userId ? "text-[#000316CC]" : "text-[#a7a7a7]"} break-all`}>
+                        <span className="">
+                            {/* {message} */}
+                            {escape(message)}
+                        </span>
+                    </div>
+                    {images && 
+                    images.map((image, index) => {
+                        return <a key={index} target="_blank" href={import.meta.env.VITE_SERVER_URL + "/" + image}>
+                          <img className="py-[2px] w-full" src={import.meta.env.VITE_SERVER_URL + "/" + image} alt="" />
+                        </a>
+                      })
+                    }
                 </div>
             </div>
         </div>

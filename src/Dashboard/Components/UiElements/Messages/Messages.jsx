@@ -32,7 +32,13 @@ const Messages = ({ activeChat, chatCardHandler, setSupportData }) => {
             setModal(false)
             terminal.socket.emit('entry', { "entry": true, "room": activeChat.id })
             terminal.socket.on('message', (data) => {
-                data.id && setMessages(prev => [data, ...prev])
+                if(typeof data === "object" && data.id){
+                    data.id && setMessages(prev => [data, ...prev])
+                }
+                console.log(data)
+                //  if(data.toLowerCase() === 'closed'){
+                //     handleStatus();
+                // }
             })
         }
        
@@ -133,15 +139,16 @@ const Messages = ({ activeChat, chatCardHandler, setSupportData }) => {
                 <div ref={messageBody} onScroll={handleScroll} className="h-full overflow-y-auto flex  flex-col-reverse gap-12 pb-2 scrollbar">
 
                     {
-                        messages?.length > 0 && messages.map((message) =>
-                            <ChatBubble
+                        messages?.length > 0 && messages.map((message) =>{
+                            return <ChatBubble
                                 key={message?.id}
                                 userId={user?.id}
                                 sender={message?.sender?.id}
                                 name={message?.sender?.fullName || message?.sender?.email}
                                 date={message?.createdAt}
                                 message={message?.message}
-                            />)
+                                images={message?.images}
+                            />})
                     }
                 </div>
                 {activeChat?.status !== 'close' ?<form onSubmit={handleSubmit} className="p-2 border border-[#0000002a] rounded bg-white">

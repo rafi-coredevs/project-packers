@@ -82,7 +82,7 @@ const Header = () => {
                 className="  flex gap-2 items-center cursor-pointer"
               >
                 <UserIcon name={user?.fullName} />
-                <p className="  font-sans text-secondary text-sm font-semibold">
+                <p className="  font-sans text-secondary text-sm font-semibold shrink-0">
                   {user?.fullName || "User"}
                 </p>
               </button>
