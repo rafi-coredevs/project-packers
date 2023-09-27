@@ -32,7 +32,13 @@ const Messages = ({ activeChat, chatCardHandler, setSupportData }) => {
             setModal(false)
             terminal.socket.emit('entry', { "entry": true, "room": activeChat.id })
             terminal.socket.on('message', (data) => {
-                data.id && setMessages(prev => [data, ...prev])
+                if(typeof data === "object" && data.id){
+                    data.id && setMessages(prev => [data, ...prev])
+                }
+                console.log(data)
+                //  if(data.toLowerCase() === 'closed'){
+                //     handleStatus();
+                // }
             })
         }
        

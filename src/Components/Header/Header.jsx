@@ -19,6 +19,7 @@ import Modal from '../UiElements/Modal/Modal';
 import RequestModal from '../Banner/RequestModal';
 import SuccessModal from '../Banner/SuccessModal';
 import { useCartCtx } from '../../contexts/cart/CartContext';
+import toaster from '../../Util/toaster';
 
 /**
  * Function to handle the header component.
@@ -102,7 +103,10 @@ const Header = ({ sideBar, state }) => {
 			if (data.logout) {
 				Logout();
 				navigate('/');
-			} else setNotifications((prev) => [data, ...prev]);
+			} else {
+				toaster({type: 'success', message: data.message})
+				setNotifications((prev) => [data, ...prev]);
+			}
 		});
 		return () => {
 			terminal.socket.off('notification'); // Clean up socket event listener
