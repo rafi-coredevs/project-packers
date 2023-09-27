@@ -26,7 +26,6 @@ const Messages = ({ activeChat, chatCardHandler, setSupportData }) => {
         setModal(true)
         setMessages([])
         terminal.request({ name: 'getMessage', params: { id: activeChat?.id }, queries: { page: 1 } }).then(data => {
-            console.log(data)
             data.docs?.length > 0 && setMessages(data.docs), setTotalPage(data.totalPages), setPage(data.page), setLoading(false);
         })
         if (activeChat && activeChat.status !== 'pending') {
@@ -134,15 +133,16 @@ const Messages = ({ activeChat, chatCardHandler, setSupportData }) => {
                 <div ref={messageBody} onScroll={handleScroll} className="h-full overflow-y-auto flex  flex-col-reverse gap-12 pb-2 scrollbar">
 
                     {
-                        messages?.length > 0 && messages.map((message) =>
-                            <ChatBubble
+                        messages?.length > 0 && messages.map((message) =>{
+                            return <ChatBubble
                                 key={message?.id}
                                 userId={user?.id}
                                 sender={message?.sender?.id}
                                 name={message?.sender?.fullName || message?.sender?.email}
                                 date={message?.createdAt}
                                 message={message?.message}
-                            />)
+                                images={message?.images}
+                            />})
                     }
                 </div>
                 {activeChat?.status !== 'close' ?<form onSubmit={handleSubmit} className="p-2 border border-[#0000002a] rounded bg-white">

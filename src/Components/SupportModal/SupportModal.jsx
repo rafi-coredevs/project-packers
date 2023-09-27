@@ -347,8 +347,8 @@ const SupportModal = () => {
                         }>
                           {chat?.message}
                           {chat?.images &&
-                            chat?.images?.map(image => {
-                              return <a target="_blank" href={import.meta.env.VITE_SERVER_URL + "/" + image}>
+                            chat?.images?.map((image, index) => {
+                              return <a key={index} target="_blank" href={import.meta.env.VITE_SERVER_URL + "/" + image}>
                                 <img className="py-[2px]" src={import.meta.env.VITE_SERVER_URL + "/" + image} alt="" />
                               </a>
                             })
