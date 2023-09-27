@@ -44,7 +44,7 @@ const SupportModal = () => {
       const data = { message: values.message, type: values.type };
       terminal.request({ name: 'registerSupport', body: { data, images } }).then(data => {
         if (data.id) {
-
+          setImages([])
           terminal.request({ name: 'getMessage', params: { id: data.id } }).then(data => {
             if (data.docs) {
               setChat(data.docs)
@@ -55,7 +55,7 @@ const SupportModal = () => {
             }
           })
         }
-      })
+      }).catch(err => console.error(err))
       setClosed(false);
     },
   });
@@ -346,7 +346,13 @@ const SupportModal = () => {
                         <span className={`${chat.sender?.id === user.id ? "text-[#000316CC]" : "text-[#a7a7a7] w-[300px]"} break-all w-full `
                         }>
                           {chat?.message}
-
+                          {chat?.images &&
+                            chat?.images?.map(image => {
+                              return <a target="_blank" href={import.meta.env.VITE_SERVER_URL + "/" + image}>
+                                <img className="py-[2px]" src={import.meta.env.VITE_SERVER_URL + "/" + image} alt="" />
+                              </a>
+                            })
+                          }
                         </span>
                       </div>
                     </div>

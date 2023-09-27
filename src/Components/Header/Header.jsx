@@ -220,10 +220,10 @@ const Header = ({ sideBar, state }) => {
 								<div className='relative'>
 									<Link
 										to='/account/orders'
-										className='flex gap-2 items-center cursor-pointer'
+										className='flex gap-2 items-center cursor-pointer shrink-0'
 									>
 										<Icon type='active' unread={false} icon={profile} />
-										<p className='font-sans text-secondary text-sm font-semibold'>
+										<p className='font-sans text-secondary text-sm font-semibold shrink-0'>
 											{user.fullName || 'User'}
 										</p>
 									</Link>

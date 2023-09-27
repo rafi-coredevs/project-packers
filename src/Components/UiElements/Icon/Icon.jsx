@@ -16,7 +16,7 @@ const Icon = ({ type, icon, unread }) => {
     <div
       className={
         (type ? styles[type] : styles.actual) +
-        ` relative  flex items-center justify-center rounded-full h-9 w-9 p-[6px] `
+        ` relative  flex items-center justify-center rounded-full h-9 w-9 p-[6px] shrink-0`
       }
     >
       {unread && (

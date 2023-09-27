@@ -26,6 +26,7 @@ const Messages = ({ activeChat, chatCardHandler, setSupportData }) => {
         setModal(true)
         setMessages([])
         terminal.request({ name: 'getMessage', params: { id: activeChat?.id }, queries: { page: 1 } }).then(data => {
+            console.log(data)
             data.docs?.length > 0 && setMessages(data.docs), setTotalPage(data.totalPages), setPage(data.page), setLoading(false);
         })
         if (activeChat && activeChat.status !== 'pending') {

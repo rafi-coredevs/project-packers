@@ -10,7 +10,7 @@ const UserIcon = ({ name }) => {
     const lastName = userName[1];
     const initials = lastName ? (firstName[0] + lastName[0]).toUpperCase() : firstName[0].toUpperCase();
     return (
-        <span className='LogoutDropD w-10 h-10 flex justify-center items-center bg-primary font-bold text-secondary rounded-full duration-200 active:scale-95'>
+        <span className='LogoutDropD w-10 h-10 flex justify-center items-center bg-primary font-bold text-secondary rounded-full duration-200 active:scale-95 shrink-0'>
             <span className='LogoutDropD text-lg font-normal'>{initials}</span>
         </span>
     );
