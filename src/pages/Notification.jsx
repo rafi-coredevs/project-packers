@@ -39,6 +39,7 @@ const DUMMY_NOTIFICATION = [
 const Notification = () => {
   useTitle("My Notifications");
   const [notifications, setNotifications] = useState([]);
+  const [loading, setLoaading] = useState(false);
   const { user } = useUserCtx();
   const currentDate = new Date();
   const sevenDaysAgoTimestamp = currentDate.getTime() - 7 * 24 * 60 * 60 * 1000;
@@ -46,13 +47,14 @@ const Notification = () => {
   const sevenDaysAgoISO = sevenDaysAgoDate.toISOString();
 
   useEffect(() => {
+    setLoaading(true)
     user?.id &&
       terminal
         .request({
           name: "getNotification",
           queries: { limit: 100, time: { $gte: sevenDaysAgoISO } },
         })
-        .then((data) => data.docs && setNotifications(data.docs));
+        .then((data) => data.docs && setNotifications(data.docs)).catch(error => console.log(error)).finally(()=> setLoaading(false));
   }, [user]);
   return (
     <main>
@@ -62,14 +64,14 @@ const Notification = () => {
           <h3 className="text-2xl font-semibold text-secondary mt-[20px] mb-[12px]">
             Notification
           </h3>
-          {notifications?.length <= 0 ? [...Array(10)].map((arr, i) => <div
+          {loading ? [...Array(10)].map((arr, i) => <div
             key={i}
             className='flex gap-3 py-2 border-t border-[#0000001A]'
           >
             <div className="h-12 w-12 rounded-full lazy-loading" />
             <div className='h-12 w-1/2 lazy-loading' />
           </div>) :
-            notifications?.map((item) => <div
+           notifications?.length >= 0 ? <p className="font-semibold text-2xl pt-10 w-full text-center">No Notification</p> : notifications?.map((item) => <div
               key={item.id}
               className="cursor-pointer flex gap-3 py-2 border-t border-[#0000001A]"
             >

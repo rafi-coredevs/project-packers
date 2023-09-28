@@ -1,7 +1,12 @@
 import { boolean, object, string, ref, number } from 'yup';
 export const loginSchema = object({
 	email: string().email().required('Please enter your email address.'),
-	password: string().min(6).required('Password can not be empty'),
+	password: string().matches(
+		/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$%^&+=!]).*$/,
+		'required A-Z, a-z, 0-9, special character',
+	)
+		.min(8)
+		.max(16).required(),
 	remember: boolean(),
 });
 export const emailSchema = object({
