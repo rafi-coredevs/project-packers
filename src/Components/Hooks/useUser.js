@@ -59,7 +59,7 @@ const useUser = () => {
 				terminal.socket.disconnect();
 			}
 			setLoading(false);
-		});
+		}).catch(err => console.log(err));
 	};
 
 	useEffect(() => {

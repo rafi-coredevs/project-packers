@@ -16,7 +16,7 @@ import dlt from '../assets/icons/cd-delete.svg';
 import toaster from '../Util/toaster';
 
 const Orders = () => {
-  const { Logout, user } = useUserCtx()
+  const { Logout, user, setUser } = useUserCtx();
   const [active, setActive] = useState("orders");
   const [order, setOrder] = useState([])
   const [loading, setLoading] = useState(false)

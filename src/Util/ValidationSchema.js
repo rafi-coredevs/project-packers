@@ -75,7 +75,7 @@ export const productSchema = object({
 export const checkoutSchema = object({
 	email: string().email().required('Please enter your email address.'),
 	phone: string().matches(/(^(\+88|0088)?(01){1}[3456789]{1}(\d){8})$/, 'Invalid Phone Number').required('Please enter your phone number'),
-	altPhone: string().matches(/(^(\+88|0088)?(01){1}[3456789]{1}(\d){8})$/, 'Invalid Phone Number').required('Please enter your phone number'),
+	altPhone: string().matches(/(^(\+88|0088)?(01){1}[3456789]{1}(\d){8})$/, 'Invalid Phone Number'),
 	firstName: string().required('First name required'),
 	lastName: string().required('Last name required'),
 	address: string().required(),

@@ -42,6 +42,7 @@ const SideCard = ({
 		<div className='grid p-5'>
 			<div className='flex justify-between'>
 				<p className='text-base text-secondary font-semibold'>Customer</p>
+				
 			{
 				editable?	<button
 				onClick={(e) => {
@@ -53,6 +54,7 @@ const SideCard = ({
 			</button>:''
 			}
 			</div>
+			<p className="text-[#3E949A] underline mt-2">{customerName}</p>
 			<div className='grid gap-2'>
 				{email && <p className='underline text-emerald-500'>{email || 'Not available'}</p> }
 				{phone && <p className=' text-[#6d6d6d]'>{phone || 'Not available'}</p> }
@@ -124,7 +126,7 @@ const SideCard = ({
 	const renderBillingOrShippingCard = (isBilling) => (
 		<div className='grid gap-5 p-5'>
 			<div className='flex justify-between'>
-				<p className='text-base text-secondary font-semibold'>{title}</p>
+				<p className='text-base text-secondary font-semibold'>{title || ""}</p>
 				{cross === false ? (
 					<></>
 				) : editable ? (

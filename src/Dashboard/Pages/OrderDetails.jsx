@@ -18,6 +18,7 @@ import toaster from '../../Util/toaster';
 import CustomSelect from '../../Components/UiElements/Input/CustomSelect';
 import removeEmptyFields from '../../Util/removeEmptyFields';
 import Invoice from '../Components/Invoice/Invoice';
+import toast from 'react-hot-toast';
 
 const OrderDetails = () => {
 	useTitle('Order Details');
@@ -144,7 +145,6 @@ const OrderDetails = () => {
 	 */
 	const deleteHandler = (e) => {
 		e.preventDefault();
-
 		terminal
 			.request({ name: 'deleteOrder', body: { id: [orderId] } })
 			.then((res) =>
@@ -153,7 +153,7 @@ const OrderDetails = () => {
 					: (toaster({
 						type: 'success',
 						message: 'deleted successfully',
-					}), navigate('/admin/orders',{replace: true})),
+					}), navigate('/admin/orders', { replace: true })),
 
 			)
 			.catch((err) => console.error('order delete error', err));
@@ -215,17 +215,17 @@ const OrderDetails = () => {
 								request?.requestQuantity * request?.request?.tax,
 							0,
 						) || 0} fees={order?.products?.reduce(
-						(accumulator = 0, product) =>
-							accumulator +
-							product?.productQuantity * product?.product?.fee,
-						0,
-					) +
-					order?.requests?.reduce(
-						(accumulator = 0, request) =>
-							accumulator +
-							request?.requestQuantity * request?.request?.fee,
-						0,
-					)} />
+							(accumulator = 0, product) =>
+								accumulator +
+								product?.productQuantity * product?.product?.fee,
+							0,
+						) +
+							order?.requests?.reduce(
+								(accumulator = 0, request) =>
+									accumulator +
+									request?.requestQuantity * request?.request?.fee,
+								0,
+							)} />
 			</div>
 			<Heading type='navigate' title={`#${order?.orderNumber || ""}`} back={'All Order'}>
 				<div className='flex items-center gap-1'>
@@ -556,15 +556,15 @@ const OrderDetails = () => {
 						{/* customer name */}
 						<SideCard
 							types='customer'
-							customerName={order?.user?.fullName || 'No Name'}
+							customerName={order?.user?.fullName}
 							editable={false}
 						/>
 
 						{/* customer information */}
 						<SideCard
 							types='contact'
-							email={order?.user?.email || 'No email'}
-							phone={order?.user?.phone || 'No Phone'}
+							email={order?.user?.email}
+							phone={order?.user?.phone}
 						/>
 
 						{/* shipping address */}
@@ -574,13 +574,13 @@ const OrderDetails = () => {
 							editable={false}
 							formikProps={odrerForm}
 							address={
-								order?.shippingaddress?.address +
-								', ' +
-								order?.shippingaddress?.area +
-								', ' +
-								order?.shippingaddress?.city +
-								', ' +
-								order?.shippingaddress?.zip
+								order ? (order?.shippingaddress?.address +
+									', ' +
+									order?.shippingaddress?.area +
+									', ' +
+									order?.shippingaddress?.city +
+									', ' +
+									order?.shippingaddress?.zip) : ""
 							}
 						/>
 						{/* billing */}
@@ -590,20 +590,20 @@ const OrderDetails = () => {
 							formikProps={odrerForm}
 							editable={false}
 							address={
-								order?.shippingaddress?.address +
-								', ' +
-								order?.shippingaddress?.area +
-								', ' +
-								order?.shippingaddress?.city +
-								', ' +
-								order?.shippingaddress?.zip
+								order ? (order?.shippingaddress?.address +
+									', ' +
+									order?.shippingaddress?.area +
+									', ' +
+									order?.shippingaddress?.city +
+									', ' +
+									order?.shippingaddress?.zip) : ""
 							}
 						/>
 					</div>
 					<div className=' border border-[#0000001c] divide-y  rounded-lg '>
 						<SideCard
 							types='note'
-							message={order?.instructions || 'Not Available'}
+							message={order?.instructions || 'No Notes'}
 						/>
 					</div>
 				</div>

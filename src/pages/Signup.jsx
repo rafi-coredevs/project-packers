@@ -7,12 +7,12 @@ import google from '../assets/icons/google-icon.svg';
 import apple from '../assets/icons/apple.svg';
 import facebook from '../assets/icons/facebook.svg';
 import CountryCodeSelector from '../Components/UiElements/CountryCodeSelectior/CountryCodeSelector';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useUserCtx } from '../contexts/user/UserContext';
 import toaster from '../Util/toaster';
 
 const Signup = () => {
-	const [countryCode, setCountryCode] = useState(null);
+	const [countryCode, setCountryCode] = useState(+880);
 	const [accept, setAccept] = useState(true);
 	const navigate = useNavigate();
 
@@ -27,9 +27,7 @@ const Signup = () => {
 		},
 		validationSchema: signupSchema,
 		onSubmit: (values) => {
-			const data = { ...values, phone: countryCode + values.phone };
-			
-			SignUp(data)
+			SignUp(values)
 				.then((res) => {
 					res.status === false
 						? toaster({ type: 'error', message: res.message })
@@ -39,6 +37,9 @@ const Signup = () => {
 		},
 	});
 
+	useEffect(()=>{
+		signUpForm.setFieldValue("phone", countryCode)
+	},[countryCode])
 	return (
 		<div className='bg-secondary pt-[5vh]  min-h-[calc(100vh-225px)]'>
 			<div className='container mx-auto grid grid-cols-1 sm:grid-cols-2 relative z-20 justify-center divide-x divide-[#ffffff1a] flex-wrap '>

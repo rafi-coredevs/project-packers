@@ -17,7 +17,7 @@ export const COUNTRY_CODE = [
   { name: "Azerbaijan", flag: "🇦🇿", code: "AZ", dial_code: "+994" },
   { name: "Bahamas", flag: "🇧🇸", code: "BS", dial_code: "+1242" },
   { name: "Bahrain", flag: "🇧🇭", code: "BH", dial_code: "+973" },
-  { name: "Bangladesh", flag: "🇧🇩", code: "BD", dial_code: "+88" },
+  { name: "Bangladesh", flag: "🇧🇩", code: "BD", dial_code: "+880" },
   { name: "Barbados", flag: "🇧🇧", code: "BB", dial_code: "+1246" },
   { name: "Belarus", flag: "🇧🇾", code: "BY", dial_code: "+375" },
   { name: "Belgium", flag: "🇧🇪", code: "BE", dial_code: "+32" },
