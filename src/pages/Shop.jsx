@@ -47,7 +47,7 @@ const Shop = () => {
   return (
     <>
       <Breadcrumb />
-      <div className="container py-12 mx-auto">
+      <div className="container py-12 mx-auto px-5 md:px-0">
         <div className="lg:flex gap-4">
           <div className="lg:w-1/4 mb-4">
             <h3 className="font-semibold text-[28px] text-secondary mb-7">

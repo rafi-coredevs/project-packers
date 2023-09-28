@@ -38,7 +38,7 @@ const Button = ({
       onClick={onClick}
       type={buttonType}
       disabled={disabled}
-      className={`shrink-0 disabled:cursor-not-allowed
+      className={`disabled:cursor-not-allowed
              rounded-[50px] font-sans w-full ${
                full != undefined ? "w-full" : "sm:max-w-fit"
              } text-center  text-sm font-bold

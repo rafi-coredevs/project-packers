@@ -67,7 +67,7 @@ const Category = ({ data, reFetch }) => {
           <div
             className={`text-[#475569] text-base font-normal cursor-pointer flex justify-between category-name ${category?.subcategory?.length > 0 ? "collapsible" : ""
               }`}
-            onClick={() => toggleSubCategories(category.id)}
+            onClick={() => {toggleSubCategories(category.id)}}
           >
             <p className="">
 
@@ -79,7 +79,7 @@ const Category = ({ data, reFetch }) => {
             <div className="ml-8 my-2">
               <ul className="flex gap-2 flex-col list-disc">
                 {category.subcategory.map((subcategory) => (
-                  <li onClick={() => handleCategory({ category: category.id, subcategory: subcategory.id })} className="text-[#475569] text-base font-normal cursor-pointer" key={subcategory.slug}>{subcategory.name}</li>
+                  <li onClick={() => {handleCategory({ category: category.id, subcategory: subcategory.id });  setCategoryHandler(false)}} className="text-[#475569] text-base font-normal cursor-pointer" key={subcategory.slug}>{subcategory.name}</li>
                 ))}
               </ul>
             </div>
