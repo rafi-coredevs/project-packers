@@ -30,7 +30,7 @@ const Product = () => {
         },
       })
       .then((res) => {
-        setrelatedProduct(res.docs.filter((item) => item.id !== product.id));
+        setrelatedProduct(res.docs.filter((item) => item.id !== product.id && item.status === "active"));
       });
   }, [product]);
   const requsetItemHandler = () => {
