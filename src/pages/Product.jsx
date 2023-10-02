@@ -30,6 +30,7 @@ const Product = () => {
         },
       })
       .then((res) => {
+        console.log(res.docs)
         setrelatedProduct(res.docs.filter((item) => item.id !== product.id && item.status === "active"));
       });
   }, [product]);
