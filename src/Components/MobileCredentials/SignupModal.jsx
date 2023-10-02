@@ -13,12 +13,12 @@ import { signupSchema } from '../../Util/ValidationSchema';
 import Input from '../UiElements/Input/Input';
 import CountryCodeSelector from '../UiElements/CountryCodeSelectior/CountryCodeSelector';
 import Button from '../UiElements/Buttons/Button';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useUserCtx } from '../../contexts/user/UserContext';
 import toaster from '../../Util/toaster';
 
 const SignupModal = ({ stateHandler, onClose }) => {
-	const [countryCode, setCountryCode] = useState(null);
+	const [countryCode, setCountryCode] = useState('+880');
 	const { SignUp } = useUserCtx();
 	const clickHandler = (state) => {
 		stateHandler(state);
@@ -32,9 +32,7 @@ const SignupModal = ({ stateHandler, onClose }) => {
 		},
 		validationSchema: signupSchema,
 		onSubmit: (values) => {
-			const data = { ...values, phone: countryCode + values.phone };
-
-			SignUp(data).then((res) => {
+			SignUp(values).then((res) => {
 				res.status === false
 					? toaster({ type: 'error', message: res.message })
 					: clickHandler('login');
@@ -43,6 +41,9 @@ const SignupModal = ({ stateHandler, onClose }) => {
 			signUpForm.resetForm();
 		},
 	});
+	useEffect(()=>{
+		signUpForm.setFieldValue('phone', countryCode)
+	},[countryCode])
 	return (
 		<>
 			<div className='grid grid-cols-3'>
@@ -157,7 +158,7 @@ const SignupModal = ({ stateHandler, onClose }) => {
 						className='h-[50px]'
 					>
 						{/* for country code */}
-						<CountryCodeSelector setCountryCode={setCountryCode} />
+						<CountryCodeSelector setCountryCode={setCountryCode} className={'pt-[0.5625rem] pb-[0.5rem]'} />
 					</Input>
 
 					{/* password */}

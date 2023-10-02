@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { COUNTRY_CODE } from './Data';
 
-const CountryCodeSelector = ({ setCountryCode, error }) => {
+const CountryCodeSelector = ({ setCountryCode, error, className }) => {
 	const data = COUNTRY_CODE;
 	const [selected, setSelected] = useState(data[18].dial_code);
 	const handleChange = (e) => {
@@ -10,7 +10,7 @@ const CountryCodeSelector = ({ setCountryCode, error }) => {
 	};
 
 	return (
-		<div className={`flex gap-2 border-r h-full w-fit py-[4.5px] border-[#E2E8F0]  `}>
+		<div className={`flex gap-2 border-r h-full w-fit py-[4.5px] border-[#E2E8F0] ${className}`}>
 			<select
 				className='bg-transparent border-none focus:outline-none w-fit cursor-pointer'
 				onChange={handleChange}
